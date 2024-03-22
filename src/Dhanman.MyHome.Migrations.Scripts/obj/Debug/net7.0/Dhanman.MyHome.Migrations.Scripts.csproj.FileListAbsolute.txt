@@ -1,0 +1,11 @@
+C:\Users\DELL\source\repos\Dhanman-myhome\src\Dhanman.MyHome.Migrations.Scripts\bin\Debug\net7.0\Dhanman.MyHome.Migrations.Scripts.deps.json
+C:\Users\DELL\source\repos\Dhanman-myhome\src\Dhanman.MyHome.Migrations.Scripts\bin\Debug\net7.0\Dhanman.MyHome.Migrations.Scripts.dll
+C:\Users\DELL\source\repos\Dhanman-myhome\src\Dhanman.MyHome.Migrations.Scripts\bin\Debug\net7.0\Dhanman.MyHome.Migrations.Scripts.pdb
+C:\Users\DELL\source\repos\Dhanman-myhome\src\Dhanman.MyHome.Migrations.Scripts\obj\Debug\net7.0\Dhanman.MyHome.Migrations.Scripts.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\DELL\source\repos\Dhanman-myhome\src\Dhanman.MyHome.Migrations.Scripts\obj\Debug\net7.0\Dhanman.MyHome.Migrations.Scripts.AssemblyInfoInputs.cache
+C:\Users\DELL\source\repos\Dhanman-myhome\src\Dhanman.MyHome.Migrations.Scripts\obj\Debug\net7.0\Dhanman.MyHome.Migrations.Scripts.AssemblyInfo.cs
+C:\Users\DELL\source\repos\Dhanman-myhome\src\Dhanman.MyHome.Migrations.Scripts\obj\Debug\net7.0\Dhanman.MyHome.Migrations.Scripts.csproj.CoreCompileInputs.cache
+C:\Users\DELL\source\repos\Dhanman-myhome\src\Dhanman.MyHome.Migrations.Scripts\obj\Debug\net7.0\Dhanman.MyHome.Migrations.Scripts.dll
+C:\Users\DELL\source\repos\Dhanman-myhome\src\Dhanman.MyHome.Migrations.Scripts\obj\Debug\net7.0\refint\Dhanman.MyHome.Migrations.Scripts.dll
+C:\Users\DELL\source\repos\Dhanman-myhome\src\Dhanman.MyHome.Migrations.Scripts\obj\Debug\net7.0\Dhanman.MyHome.Migrations.Scripts.pdb
+C:\Users\DELL\source\repos\Dhanman-myhome\src\Dhanman.MyHome.Migrations.Scripts\obj\Debug\net7.0\ref\Dhanman.MyHome.Migrations.Scripts.dll

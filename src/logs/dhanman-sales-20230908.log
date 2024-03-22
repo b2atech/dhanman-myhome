@@ -1,0 +1,15 @@
+2023-09-08 14:30:20.609 +05:30  WRN  Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2023-09-08 14:31:44.571 +05:30  INF  User profile is available. Using 'C:\Users\DELL\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2023-09-08 14:31:47.623 +05:30  INF  Now listening on: https://localhost:7240
+2023-09-08 14:31:47.623 +05:30  INF  Now listening on: http://localhost:5138
+2023-09-08 14:31:47.625 +05:30  INF  Application started. Press Ctrl+C to shut down.
+2023-09-08 14:31:47.634 +05:30  INF  Hosting environment: Development
+2023-09-08 14:31:47.634 +05:30  INF  Content root path: C:\Users\DELL\source\repos\dhanman-sales\src\Dhanman.Purchase.Api
+2023-09-08 14:32:17.454 +05:30 7e477c9a-e2ee-4995-8840-89b975ed6dbf INF  Request starting HTTP/2 GET https://localhost:7240/swagger/index.html - -
+2023-09-08 14:32:22.231 +05:30 92b62d7d-9ee3-476f-9f9d-b5b134050838 INF  Request starting HTTP/2 GET https://localhost:7240/_framework/aspnetcore-browser-refresh.js - -
+2023-09-08 14:32:22.242 +05:30 4b1b4fde-2639-4bed-aa7e-4a984ffc9f02 INF  Request starting HTTP/2 GET https://localhost:7240/_vs/browserLink - -
+2023-09-08 14:32:22.265 +05:30 7e477c9a-e2ee-4995-8840-89b975ed6dbf INF  Request finished HTTP/2 GET https://localhost:7240/swagger/index.html - - - 200 - text/html;charset=utf-8 4846.2501ms
+2023-09-08 14:32:22.315 +05:30 92b62d7d-9ee3-476f-9f9d-b5b134050838 INF  Request finished HTTP/2 GET https://localhost:7240/_framework/aspnetcore-browser-refresh.js - - - 200 12366 application/javascript;+charset=utf-8 84.2944ms
+2023-09-08 14:32:22.798 +05:30 4b1b4fde-2639-4bed-aa7e-4a984ffc9f02 INF  Request finished HTTP/2 GET https://localhost:7240/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 555.7187ms
+2023-09-08 14:32:22.933 +05:30 f1050040-9c4b-4c62-9085-92fa8083e783 INF  Request starting HTTP/2 GET https://localhost:7240/swagger/v1/swagger.json - -
+2023-09-08 14:32:23.591 +05:30 f1050040-9c4b-4c62-9085-92fa8083e783 INF  Request finished HTTP/2 GET https://localhost:7240/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 657.7625ms

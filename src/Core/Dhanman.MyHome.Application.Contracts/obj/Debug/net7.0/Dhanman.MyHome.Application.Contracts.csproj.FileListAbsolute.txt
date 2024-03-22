@@ -1,0 +1,11 @@
+C:\Users\DELL\source\repos\Dhanman-myhome\src\Core\Dhanman.MyHome.Application.Contracts\bin\Debug\net7.0\Dhanman.MyHome.Application.Contracts.deps.json
+C:\Users\DELL\source\repos\Dhanman-myhome\src\Core\Dhanman.MyHome.Application.Contracts\bin\Debug\net7.0\Dhanman.MyHome.Application.Contracts.dll
+C:\Users\DELL\source\repos\Dhanman-myhome\src\Core\Dhanman.MyHome.Application.Contracts\bin\Debug\net7.0\Dhanman.MyHome.Application.Contracts.pdb
+C:\Users\DELL\source\repos\Dhanman-myhome\src\Core\Dhanman.MyHome.Application.Contracts\obj\Debug\net7.0\Dhanman.MyHome.Application.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\DELL\source\repos\Dhanman-myhome\src\Core\Dhanman.MyHome.Application.Contracts\obj\Debug\net7.0\Dhanman.MyHome.Application.Contracts.AssemblyInfoInputs.cache
+C:\Users\DELL\source\repos\Dhanman-myhome\src\Core\Dhanman.MyHome.Application.Contracts\obj\Debug\net7.0\Dhanman.MyHome.Application.Contracts.AssemblyInfo.cs
+C:\Users\DELL\source\repos\Dhanman-myhome\src\Core\Dhanman.MyHome.Application.Contracts\obj\Debug\net7.0\Dhanman.MyHome.Application.Contracts.csproj.CoreCompileInputs.cache
+C:\Users\DELL\source\repos\Dhanman-myhome\src\Core\Dhanman.MyHome.Application.Contracts\obj\Debug\net7.0\Dhanman.MyHome.Application.Contracts.dll
+C:\Users\DELL\source\repos\Dhanman-myhome\src\Core\Dhanman.MyHome.Application.Contracts\obj\Debug\net7.0\refint\Dhanman.MyHome.Application.Contracts.dll
+C:\Users\DELL\source\repos\Dhanman-myhome\src\Core\Dhanman.MyHome.Application.Contracts\obj\Debug\net7.0\Dhanman.MyHome.Application.Contracts.pdb
+C:\Users\DELL\source\repos\Dhanman-myhome\src\Core\Dhanman.MyHome.Application.Contracts\obj\Debug\net7.0\ref\Dhanman.MyHome.Application.Contracts.dll

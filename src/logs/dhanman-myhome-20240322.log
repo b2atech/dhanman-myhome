@@ -1,0 +1,138 @@
+2024-03-22 17:27:12.880 +05:30  WRN  Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2024-03-22 17:27:14.699 +05:30  INF  Executed DbCommand (186ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE c.relname='__EFMigrationsHistory');
+2024-03-22 17:27:16.547 +05:30  INF  Executed DbCommand (410ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE "__EFMigrationsHistory" (
+    migration_id character varying(150) NOT NULL,
+    product_version character varying(32) NOT NULL,
+    CONSTRAINT pk___ef_migrations_history PRIMARY KEY (migration_id)
+);
+2024-03-22 17:27:17.896 +05:30  INF  Executed DbCommand (136ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE c.relname='__EFMigrationsHistory');
+2024-03-22 17:27:18.087 +05:30  INF  Executed DbCommand (187ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT migration_id, product_version
+FROM "__EFMigrationsHistory"
+ORDER BY migration_id;
+2024-03-22 17:27:18.108 +05:30  INF  Applying migration '20230730132513_Initial-commit-Application'.
+2024-03-22 17:27:18.298 +05:30  INF  Executed DbCommand (148ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE customers (
+    id uuid NOT NULL,
+    first_name character varying(100) NOT NULL,
+    last_name character varying(100) NOT NULL,
+    email character varying(256) NOT NULL,
+    phone_number character varying(15) NOT NULL,
+    city character varying(50) NULL,
+    client_id uuid NOT NULL,
+    created_on_utc timestamp NOT NULL,
+    modified_on_utc timestamp NULL,
+    deleted_on_utc timestamp NULL,
+    is_deleted boolean NOT NULL DEFAULT FALSE,
+    created_by uuid NOT NULL,
+    modified_by uuid NULL,
+    CONSTRAINT pk_customers PRIMARY KEY (id)
+);
+2024-03-22 17:27:18.451 +05:30  INF  Executed DbCommand (153ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "__EFMigrationsHistory" (migration_id, product_version)
+VALUES ('20230730132513_Initial-commit-Application', '7.0.9');
+2024-03-22 17:27:18.599 +05:30  INF  Applying migration '20230805133114_user-entity'.
+2024-03-22 17:27:18.726 +05:30  INF  Executed DbCommand (117ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "__EFMigrationsHistory" (migration_id, product_version)
+VALUES ('20230805133114_user-entity', '7.0.9');
+2024-03-22 17:27:18.852 +05:30  INF  Applying migration '20230805144958_authentication'.
+2024-03-22 17:27:19.025 +05:30  INF  Executed DbCommand (147ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE roles (
+    name character varying(50) NOT NULL,
+    description character varying(200) NULL,
+    CONSTRAINT pk_roles PRIMARY KEY (name)
+);
+2024-03-22 17:27:19.178 +05:30  INF  Executed DbCommand (152ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE users (
+    id uuid NOT NULL,
+    first_name character varying(100) NOT NULL,
+    last_name character varying(100) NOT NULL,
+    email character varying(256) NOT NULL,
+    created_on_utc timestamp NOT NULL,
+    modified_on_utc timestamp NULL,
+    deleted_on_utc timestamp NULL,
+    is_deleted boolean NOT NULL DEFAULT FALSE,
+    created_by uuid NOT NULL,
+    modified_by uuid NULL,
+    password_hash text NOT NULL,
+    CONSTRAINT pk_users PRIMARY KEY (id)
+);
+2024-03-22 17:27:19.367 +05:30  INF  Executed DbCommand (189ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE "UserToPaidModulesMapping" (
+    user_id uuid NOT NULL,
+    paid_modules bigint NOT NULL,
+    CONSTRAINT pk_user_to_paid_modules_mapping PRIMARY KEY (user_id)
+);
+2024-03-22 17:27:19.515 +05:30  INF  Executed DbCommand (147ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE "UserToRoleMapping" (
+    user_id uuid NOT NULL,
+    role_name text NOT NULL,
+    CONSTRAINT pk_user_to_role_mapping PRIMARY KEY (user_id, role_name)
+);
+2024-03-22 17:27:19.641 +05:30  INF  Executed DbCommand (127ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "__EFMigrationsHistory" (migration_id, product_version)
+VALUES ('20230805144958_authentication', '7.0.9');
+2024-03-22 17:27:19.801 +05:30  INF  Applying migration '20230805145456_authentication_updates'.
+2024-03-22 17:27:19.975 +05:30  INF  Executed DbCommand (142ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE "UserToRoleMapping" DROP CONSTRAINT pk_user_to_role_mapping;
+2024-03-22 17:27:20.111 +05:30  INF  Executed DbCommand (136ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE "UserToPaidModulesMapping" DROP CONSTRAINT pk_user_to_paid_modules_mapping;
+2024-03-22 17:27:20.241 +05:30  INF  Executed DbCommand (129ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE "UserToRoleMapping" RENAME TO user_paid_modules;
+2024-03-22 17:27:20.377 +05:30  INF  Executed DbCommand (136ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE "UserToPaidModulesMapping" RENAME TO user_roles;
+2024-03-22 17:27:20.550 +05:30  ERR  Failed executing DbCommand (171ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE "invoiceStatuses" RENAME TO invoice_statuses;
+2024-03-22 17:29:41.644 +05:30  WRN  Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2024-03-22 17:29:43.150 +05:30  INF  Executed DbCommand (145ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE c.relname='__EFMigrationsHistory');
+2024-03-22 17:29:44.330 +05:30  INF  Executed DbCommand (134ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE c.relname='__EFMigrationsHistory');
+2024-03-22 17:29:44.517 +05:30  INF  Executed DbCommand (146ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT migration_id, product_version
+FROM "__EFMigrationsHistory"
+ORDER BY migration_id;
+2024-03-22 17:29:44.593 +05:30  INF  Applying migration '20230805145456_authentication_updates'.
+2024-03-22 17:29:44.796 +05:30  INF  Executed DbCommand (134ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE "UserToRoleMapping" DROP CONSTRAINT pk_user_to_role_mapping;
+2024-03-22 17:29:44.929 +05:30  INF  Executed DbCommand (131ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE "UserToPaidModulesMapping" DROP CONSTRAINT pk_user_to_paid_modules_mapping;
+2024-03-22 17:29:45.110 +05:30  INF  Executed DbCommand (180ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE "UserToRoleMapping" RENAME TO user_paid_modules;
+2024-03-22 17:29:45.273 +05:30  INF  Executed DbCommand (163ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE "UserToPaidModulesMapping" RENAME TO user_roles;
+2024-03-22 17:29:45.534 +05:30  ERR  Failed executing DbCommand (258ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE "invoiceStatuses" RENAME TO invoice_statuses;
+2024-03-22 17:30:27.130 +05:30  INF  User profile is available. Using 'C:\Users\DELL\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-03-22 17:30:29.406 +05:30  INF  Now listening on: https://localhost:7240
+2024-03-22 17:30:29.406 +05:30  INF  Now listening on: http://localhost:5138
+2024-03-22 17:30:29.408 +05:30  INF  Application started. Press Ctrl+C to shut down.
+2024-03-22 17:30:29.408 +05:30  INF  Hosting environment: Development
+2024-03-22 17:30:29.409 +05:30  INF  Content root path: C:\Users\DELL\source\repos\Dhanman-myhome\src\Dhanman.Purchase.Api
+2024-03-22 17:30:33.509 +05:30 040ae8dd-a004-4d69-961b-f94bbd07f07d INF  Request starting HTTP/2 GET https://localhost:7240/swagger/index.html - -
+2024-03-22 17:30:35.394 +05:30 040ae8dd-a004-4d69-961b-f94bbd07f07d INF  Request finished HTTP/2 GET https://localhost:7240/swagger/index.html - - - 200 - text/html;charset=utf-8 2391.0852ms
+2024-03-22 17:30:35.416 +05:30 cf31ddbb-285b-4825-ae86-7ed5cd6d6fad INF  Request starting HTTP/2 GET https://localhost:7240/_framework/aspnetcore-browser-refresh.js - -
+2024-03-22 17:30:35.438 +05:30 cf31ddbb-285b-4825-ae86-7ed5cd6d6fad INF  Request finished HTTP/2 GET https://localhost:7240/_framework/aspnetcore-browser-refresh.js - - - 200 12368 application/javascript;+charset=utf-8 21.6847ms
+2024-03-22 17:30:35.444 +05:30 2dbb2bb1-add2-414a-b85b-8b4aa9f34bf8 INF  Request starting HTTP/2 GET https://localhost:7240/_vs/browserLink - -
+2024-03-22 17:30:35.752 +05:30 2dbb2bb1-add2-414a-b85b-8b4aa9f34bf8 INF  Request finished HTTP/2 GET https://localhost:7240/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 307.6130ms
+2024-03-22 17:30:36.198 +05:30 d4b9ab92-bbd7-48b9-83b6-13af67dfd0e4 INF  Request starting HTTP/2 GET https://localhost:7240/swagger/v1/swagger.json - -
+2024-03-22 17:30:36.445 +05:30 d4b9ab92-bbd7-48b9-83b6-13af67dfd0e4 INF  Request finished HTTP/2 GET https://localhost:7240/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 246.8028ms
+2024-03-22 18:17:46.355 +05:30  WRN  Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2024-03-22 18:18:53.092 +05:30  WRN  Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2024-03-22 18:18:56.418 +05:30  INF  Executed DbCommand (164ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE c.relname='__EFMigrationsHistory');
+2024-03-22 18:18:56.738 +05:30  INF  Executed DbCommand (302ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT migration_id, product_version
+FROM "__EFMigrationsHistory"
+ORDER BY migration_id;
+2024-03-22 18:20:07.577 +05:30  WRN  Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2024-03-22 18:20:45.496 +05:30  WRN  Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2024-03-22 18:20:48.716 +05:30  INF  Executed DbCommand (243ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE c.relname='__EFMigrationsHistory');
+2024-03-22 18:20:48.876 +05:30  INF  Executed DbCommand (135ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT migration_id, product_version
+FROM "__EFMigrationsHistory"
+ORDER BY migration_id;

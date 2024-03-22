@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "1yusjt16dBo2D/nDnL4RcGMMpr1ailDOIHXdWPe989oYp6sC7uEe6tYC4VMHfXNiR11dsjohzy50NSG1qdiiWg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Domain\\Dhanman.MyHome.Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\DELL\\.nuget\\packages\\b2atech.crosscuttingconcern\\1.0.5\\b2atech.crosscuttingconcern.1.0.5.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,58 @@
+2023-09-05 19:37:07.211 +05:30  WRN  Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2023-09-05 19:37:08.901 +05:30  INF  Executed DbCommand (122ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE c.relname='__EFMigrationsHistory');
+2023-09-05 19:37:09.663 +05:30  INF  Executed DbCommand (114ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE c.relname='__EFMigrationsHistory');
+2023-09-05 19:37:10.710 +05:30  INF  Executed DbCommand (118ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT migration_id, product_version
+FROM "__EFMigrationsHistory"
+ORDER BY migration_id;
+2023-09-05 19:37:10.743 +05:30  INF  No migrations were applied. The database is already up to date.
+2023-09-05 19:37:11.259 +05:30  INF  User profile is available. Using 'C:\Users\DELL\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2023-09-05 19:37:11.811 +05:30  INF  Now listening on: https://localhost:7240
+2023-09-05 19:37:11.811 +05:30  INF  Now listening on: http://localhost:5138
+2023-09-05 19:37:11.814 +05:30  INF  Application started. Press Ctrl+C to shut down.
+2023-09-05 19:37:11.814 +05:30  INF  Hosting environment: Development
+2023-09-05 19:37:11.814 +05:30  INF  Content root path: C:\Users\DELL\source\repos\dhanman-sales\src\Dhanman.Purchase.Api
+2023-09-05 19:37:19.069 +05:30 11db1a76-1db9-4fb3-afc5-cf94d27897ad INF  Request starting HTTP/2 GET https://localhost:7240/swagger/index.html - -
+2023-09-05 19:37:20.735 +05:30 11db1a76-1db9-4fb3-afc5-cf94d27897ad INF  Request finished HTTP/2 GET https://localhost:7240/swagger/index.html - - - 200 - text/html;charset=utf-8 1675.9510ms
+2023-09-05 19:37:20.819 +05:30 e4579fb3-d5ea-43dd-a8c3-9706a387ee2c INF  Request starting HTTP/2 GET https://localhost:7240/_framework/aspnetcore-browser-refresh.js - -
+2023-09-05 19:37:20.820 +05:30 47d9ec9e-784f-4fe9-898d-e7b79a839e60 INF  Request starting HTTP/2 GET https://localhost:7240/_vs/browserLink - -
+2023-09-05 19:37:20.876 +05:30 e4579fb3-d5ea-43dd-a8c3-9706a387ee2c INF  Request finished HTTP/2 GET https://localhost:7240/_framework/aspnetcore-browser-refresh.js - - - 200 12366 application/javascript;+charset=utf-8 56.9748ms
+2023-09-05 19:37:22.772 +05:30 47d9ec9e-784f-4fe9-898d-e7b79a839e60 INF  Request finished HTTP/2 GET https://localhost:7240/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 1951.7623ms
+2023-09-05 19:37:22.844 +05:30 5f730984-c0a5-41c3-a2de-cf2db1db4a1e INF  Request starting HTTP/2 GET https://localhost:7240/swagger/v1/swagger.json - -
+2023-09-05 19:37:24.360 +05:30 5f730984-c0a5-41c3-a2de-cf2db1db4a1e INF  Request finished HTTP/2 GET https://localhost:7240/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 1515.4758ms
+2023-09-05 19:43:52.359 +05:30 13333af0-c45e-4ae2-8375-d564b93c7a7c INF  Request starting HTTP/2 GET https://localhost:7240/api/v1/GetAllInvoices?clientId=a80418ee-94e5-4f2c-94d4-376a95ef18ce - -
+2023-09-05 19:43:52.426 +05:30 13333af0-c45e-4ae2-8375-d564b93c7a7c INF  Executing endpoint 'Dhanman.MyHome.Api.Controllers.InvoicesController.GetAllInvoices (Dhanman.MyHome.Api)'
+2023-09-05 19:43:52.474 +05:30 13333af0-c45e-4ae2-8375-d564b93c7a7c INF  Route matched with {action = "GetAllInvoices", controller = "Invoices"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllInvoices(System.Guid) on controller Dhanman.MyHome.Api.Controllers.InvoicesController (Dhanman.MyHome.Api).
+2023-09-05 19:43:54.036 +05:30 13333af0-c45e-4ae2-8375-d564b93c7a7c INF  Executed DbCommand (128ms) [Parameters=[@__query_Clientid_0='a80418ee-94e5-4f2c-94d4-376a95ef18ce'], CommandType='"Text"', CommandTimeout='30']
+SELECT i.id, i.invoice_payment_id, i.invoice_number, i.invoice_voucher, i.coa_id, i.customer_id, i.due_date, i.invoice_date, i.payment_term, i.total_amount, i.tax, i.discount, i.note, t.name, t.description, t.price, t.quantity, t.amount, t.id
+FROM invoice_headers AS i
+LEFT JOIN (
+    SELECT i0.name, i0.description, i0.price, i0.quantity, i0.amount, i0.id, i0.invoice_header_id
+    FROM invoice_details AS i0
+    WHERE NOT (i0.is_deleted)
+) AS t ON i.id = t.invoice_header_id
+WHERE NOT (i.is_deleted) AND i.client_id = @__query_Clientid_0
+ORDER BY i.id
+2023-09-05 19:43:54.079 +05:30 13333af0-c45e-4ae2-8375-d564b93c7a7c INF  Executing OkObjectResult, writing value of type 'Dhanman.MyHome.Application.Contracts.Invoice.InvoiceListResponse'.
+2023-09-05 19:43:54.135 +05:30 13333af0-c45e-4ae2-8375-d564b93c7a7c INF  Executed action Dhanman.MyHome.Api.Controllers.InvoicesController.GetAllInvoices (Dhanman.MyHome.Api) in 1652.7494ms
+2023-09-05 19:43:54.136 +05:30 13333af0-c45e-4ae2-8375-d564b93c7a7c INF  Executed endpoint 'Dhanman.MyHome.Api.Controllers.InvoicesController.GetAllInvoices (Dhanman.MyHome.Api)'
+2023-09-05 19:43:54.145 +05:30 13333af0-c45e-4ae2-8375-d564b93c7a7c INF  Request finished HTTP/2 GET https://localhost:7240/api/v1/GetAllInvoices?clientId=a80418ee-94e5-4f2c-94d4-376a95ef18ce - - - 200 - application/json;+charset=utf-8 1786.8401ms
+2023-09-05 19:45:33.953 +05:30 1d1e2009-cd71-4a0e-ab36-ad640857af72 INF  Request starting HTTP/2 GET https://localhost:7240/api/v1/GetAllInvoices?clientId=3fa85f64-5717-4562-b3fc-2c963f66afa6 - -
+2023-09-05 19:45:33.994 +05:30 1d1e2009-cd71-4a0e-ab36-ad640857af72 INF  Executing endpoint 'Dhanman.MyHome.Api.Controllers.InvoicesController.GetAllInvoices (Dhanman.MyHome.Api)'
+2023-09-05 19:45:33.995 +05:30 1d1e2009-cd71-4a0e-ab36-ad640857af72 INF  Route matched with {action = "GetAllInvoices", controller = "Invoices"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllInvoices(System.Guid) on controller Dhanman.MyHome.Api.Controllers.InvoicesController (Dhanman.MyHome.Api).
+2023-09-05 19:45:34.185 +05:30 1d1e2009-cd71-4a0e-ab36-ad640857af72 INF  Executed DbCommand (106ms) [Parameters=[@__query_Clientid_0='3fa85f64-5717-4562-b3fc-2c963f66afa6'], CommandType='"Text"', CommandTimeout='30']
+SELECT i.id, i.invoice_payment_id, i.invoice_number, i.invoice_voucher, i.coa_id, i.customer_id, i.due_date, i.invoice_date, i.payment_term, i.total_amount, i.tax, i.discount, i.note, t.name, t.description, t.price, t.quantity, t.amount, t.id
+FROM invoice_headers AS i
+LEFT JOIN (
+    SELECT i0.name, i0.description, i0.price, i0.quantity, i0.amount, i0.id, i0.invoice_header_id
+    FROM invoice_details AS i0
+    WHERE NOT (i0.is_deleted)
+) AS t ON i.id = t.invoice_header_id
+WHERE NOT (i.is_deleted) AND i.client_id = @__query_Clientid_0
+ORDER BY i.id
+2023-09-05 19:45:34.212 +05:30 1d1e2009-cd71-4a0e-ab36-ad640857af72 INF  Executing OkObjectResult, writing value of type 'Dhanman.MyHome.Application.Contracts.Invoice.InvoiceListResponse'.
+2023-09-05 19:45:34.237 +05:30 1d1e2009-cd71-4a0e-ab36-ad640857af72 INF  Executed action Dhanman.MyHome.Api.Controllers.InvoicesController.GetAllInvoices (Dhanman.MyHome.Api) in 240.8492ms
+2023-09-05 19:45:34.237 +05:30 1d1e2009-cd71-4a0e-ab36-ad640857af72 INF  Executed endpoint 'Dhanman.MyHome.Api.Controllers.InvoicesController.GetAllInvoices (Dhanman.MyHome.Api)'
+2023-09-05 19:45:34.237 +05:30 1d1e2009-cd71-4a0e-ab36-ad640857af72 INF  Request finished HTTP/2 GET https://localhost:7240/api/v1/GetAllInvoices?clientId=3fa85f64-5717-4562-b3fc-2c963f66afa6 - - - 200 - application/json;+charset=utf-8 284.4272ms

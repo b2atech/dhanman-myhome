@@ -1,0 +1,626 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Dhanman.Purchase.Api\\Dhanman.MyHome.Api.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\migrations\\Dhanman.MyHome.Migrations.Core\\Dhanman.MyHome.Migrations.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\migrations\\Dhanman.MyHome.Migrations.Core\\Dhanman.MyHome.Migrations.Core.csproj",
+        "projectName": "Dhanman.MyHome.Migrations.Core",
+        "projectPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\migrations\\Dhanman.MyHome.Migrations.Core\\Dhanman.MyHome.Migrations.Core.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\migrations\\Dhanman.MyHome.Migrations.Core\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Dhanman.MyHome.Migrations.Scripts\\Dhanman.MyHome.Migrations.Scripts.csproj": {
+                "projectPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Dhanman.MyHome.Migrations.Scripts\\Dhanman.MyHome.Migrations.Scripts.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Http.Abstractions": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "dbup-postgresql": {
+              "target": "Package",
+              "version": "[5.0.8, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Application.Contracts\\Dhanman.MyHome.Application.Contracts.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Application.Contracts\\Dhanman.MyHome.Application.Contracts.csproj",
+        "projectName": "Dhanman.MyHome.Application.Contracts",
+        "projectPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Application.Contracts\\Dhanman.MyHome.Application.Contracts.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\DELL\\source\\repos\\Dhanman-myhome\\src\\Core\\Dhanman.MyHome.Application.Contracts\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Application\\Dhanman.MyHome.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Application\\Dhanman.MyHome.Application.csproj",
+        "projectName": "Dhanman.MyHome.Application",
+        "projectPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Application\\Dhanman.MyHome.Application.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Application.Contracts\\Dhanman.MyHome.Application.Contracts.csproj": {
+                "projectPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Application.Contracts\\Dhanman.MyHome.Application.Contracts.csproj"
+              },
+              "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Domain\\Dhanman.MyHome.Domain.csproj": {
+                "projectPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Domain\\Dhanman.MyHome.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[11.6.0, )"
+            },
+            "MediatR": {
+              "target": "Package",
+              "version": "[12.1.1, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[7.0.9, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Domain\\Dhanman.MyHome.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Domain\\Dhanman.MyHome.Domain.csproj",
+        "projectName": "Dhanman.MyHome.Domain",
+        "projectPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Domain\\Dhanman.MyHome.Domain.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\DELL\\source\\repos\\Dhanman-myhome\\src\\Core\\Dhanman.MyHome.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "B2aTech.CrossCuttingConcern": {
+              "target": "Package",
+              "version": "[1.0.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Dhanman.MyHome.Migrations.Scripts\\Dhanman.MyHome.Migrations.Scripts.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Dhanman.MyHome.Migrations.Scripts\\Dhanman.MyHome.Migrations.Scripts.csproj",
+        "projectName": "Dhanman.MyHome.Migrations.Scripts",
+        "projectPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Dhanman.MyHome.Migrations.Scripts\\Dhanman.MyHome.Migrations.Scripts.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\DELL\\source\\repos\\Dhanman-myhome\\src\\Dhanman.MyHome.Migrations.Scripts\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Dhanman.Purchase.Api\\Dhanman.MyHome.Api.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Dhanman.Purchase.Api\\Dhanman.MyHome.Api.csproj",
+        "projectName": "Dhanman.MyHome.Api",
+        "projectPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Dhanman.Purchase.Api\\Dhanman.MyHome.Api.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Dhanman.Purchase.Api\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\migrations\\Dhanman.MyHome.Migrations.Core\\Dhanman.MyHome.Migrations.Core.csproj": {
+                "projectPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\migrations\\Dhanman.MyHome.Migrations.Core\\Dhanman.MyHome.Migrations.Core.csproj"
+              },
+              "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Application.Contracts\\Dhanman.MyHome.Application.Contracts.csproj": {
+                "projectPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Application.Contracts\\Dhanman.MyHome.Application.Contracts.csproj"
+              },
+              "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Infrastructure\\Dhanman.Infrastructure.Authentication\\Dhanman.Infrastructure.Authentication.csproj": {
+                "projectPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Infrastructure\\Dhanman.Infrastructure.Authentication\\Dhanman.Infrastructure.Authentication.csproj"
+              },
+              "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Infrastructure\\Dhanman.MyHome.Persistence\\Dhanman.MyHome.Persistence.csproj": {
+                "projectPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Infrastructure\\Dhanman.MyHome.Persistence\\Dhanman.MyHome.Persistence.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Carter": {
+              "target": "Package",
+              "version": "[7.1.0, )"
+            },
+            "Microsoft.AspNetCore.HeaderPropagation": {
+              "target": "Package",
+              "version": "[7.0.9, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Versioning": {
+              "target": "Package",
+              "version": "[5.1.0, )"
+            },
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[7.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.9, )"
+            },
+            "Serilog": {
+              "target": "Package",
+              "version": "[3.0.1, )"
+            },
+            "Serilog.Enrichers.CorrelationId": {
+              "target": "Package",
+              "version": "[3.0.1, )"
+            },
+            "Serilog.Extensions.Logging": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Serilog.Settings.Configuration": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Serilog.Sinks.Console": {
+              "target": "Package",
+              "version": "[4.1.0, )"
+            },
+            "Serilog.Sinks.File": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Infrastructure\\Dhanman.Infrastructure.Authentication\\Dhanman.Infrastructure.Authentication.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Infrastructure\\Dhanman.Infrastructure.Authentication\\Dhanman.Infrastructure.Authentication.csproj",
+        "projectName": "Dhanman.Infrastructure.Authentication",
+        "projectPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Infrastructure\\Dhanman.Infrastructure.Authentication\\Dhanman.Infrastructure.Authentication.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Infrastructure\\Dhanman.Infrastructure.Authentication\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Application\\Dhanman.MyHome.Application.csproj": {
+                "projectPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Application\\Dhanman.MyHome.Application.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Authentication": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[7.0.9, )"
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Infrastructure\\Dhanman.MyHome.Persistence\\Dhanman.MyHome.Persistence.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Infrastructure\\Dhanman.MyHome.Persistence\\Dhanman.MyHome.Persistence.csproj",
+        "projectName": "Dhanman.MyHome.Persistence",
+        "projectPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Infrastructure\\Dhanman.MyHome.Persistence\\Dhanman.MyHome.Persistence.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Infrastructure\\Dhanman.MyHome.Persistence\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Application\\Dhanman.MyHome.Application.csproj": {
+                "projectPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Application\\Dhanman.MyHome.Application.csproj"
+              },
+              "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Domain\\Dhanman.MyHome.Domain.csproj": {
+                "projectPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Domain\\Dhanman.MyHome.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.0.143, )"
+            },
+            "EFCore.NamingConventions": {
+              "target": "Package",
+              "version": "[7.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.9, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Microsoft.Extensions.Logging.Console": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Microsoft.Extensions.Logging.Debug": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[7.0.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
