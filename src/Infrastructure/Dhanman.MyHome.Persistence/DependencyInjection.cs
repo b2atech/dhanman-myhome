@@ -1,0 +1,52 @@
+﻿using B2aTech.CrossCuttingConcern.Core.Abstractions;
+using Dhanman.MyHome.Application.Abstractions.Data;
+using Dhanman.MyHome.Domain.Abstractions;
+using Dhanman.MyHome.Persistence.Common;
+using Dhanman.MyHome.Persistence.Data;
+using Dhanman.MyHome.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Dhanman.MyHome.Persistence;
+
+public static class DependencyInjection
+{
+    public static IServiceCollection AddPersistence(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        if (configuration != null)
+        {
+            string connectionString = configuration.GetConnectionString(ConnectionString.SettingsKey);
+
+            services.AddSingleton(new ConnectionString(connectionString));
+
+            if (connectionString.Length > 0)
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options
+                        .UseNpgsql(connectionString)
+                        .UseSnakeCaseNamingConvention()
+                        .EnableSensitiveDataLogging());
+            }
+
+            services.AddTransient<IDateTime, MachineDateTime>();
+
+            services.AddScoped<ISqlConnectionFactory, SqlConnectionFactory>();
+
+            services.AddScoped<IDbExecutor, DbExecutor>();
+
+
+            services.AddScoped<IApplicationDbContext>(sp =>
+                sp.GetRequiredService<ApplicationDbContext>());
+
+            services.AddScoped<IUnitOfWork>(sp =>
+                sp.GetRequiredService<ApplicationDbContext>());
+ 
+            services.AddScoped<IUserRepository, UserRepository>();
+ 
+        }
+        return services;
+    }
+}
