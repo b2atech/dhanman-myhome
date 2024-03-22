@@ -1,0 +1,85 @@
+{
+	"info": {
+		"_postman_id": "b4dbe07a-aee5-47dd-bc9a-b3720506621b",
+		"name": "dhanman-sales",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetCustomerById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base-url}}/customers/{{customer-id}}",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"customers",
+						"{{customer-id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateCustomer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userId\": \"86d74436-af0b-4654-9cdd-b68571f47541\",\r\n  \"firstName\": \"Amit\",\r\n  \"lastName\": \"Naik\",\r\n  \"email\": \"amit.naik8103@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base-url}}/customers",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"customers"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base-url",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "customer-id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
