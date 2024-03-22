@@ -73,8 +73,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("user_paid_modules", (string)null);
                 });
 
-
-
             modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Users.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -121,7 +119,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
 
             modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Users.User", b =>
                 {
-                    b.OwnsOne("Dhanman.MyHome.Domain.Entities.Customers.Email", "Email", b1 =>
+                    b.OwnsOne("Dhanman.MyHome.Domain.Entities.Users.User.Email#Dhanman.MyHome.Domain.Entities.Customers.Email", "Email", b1 =>
                         {
                             b1.Property<Guid>("UserId")
                                 .HasColumnType("uuid")
@@ -135,14 +133,14 @@ namespace Dhanman.MyHome.Persistence.Migrations
 
                             b1.HasKey("UserId");
 
-                            b1.ToTable("users");
+                            b1.ToTable("users", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId")
                                 .HasConstraintName("fk_users_users_id");
                         });
 
-                    b.OwnsOne("Dhanman.MyHome.Domain.Entities.Customers.FirstName", "FirstName", b1 =>
+                    b.OwnsOne("Dhanman.MyHome.Domain.Entities.Users.User.FirstName#Dhanman.MyHome.Domain.Entities.Customers.FirstName", "FirstName", b1 =>
                         {
                             b1.Property<Guid>("UserId")
                                 .HasColumnType("uuid")
@@ -156,14 +154,14 @@ namespace Dhanman.MyHome.Persistence.Migrations
 
                             b1.HasKey("UserId");
 
-                            b1.ToTable("users");
+                            b1.ToTable("users", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId")
                                 .HasConstraintName("fk_users_users_id");
                         });
 
-                    b.OwnsOne("Dhanman.MyHome.Domain.Entities.Customers.LastName", "LastName", b1 =>
+                    b.OwnsOne("Dhanman.MyHome.Domain.Entities.Users.User.LastName#Dhanman.MyHome.Domain.Entities.Customers.LastName", "LastName", b1 =>
                         {
                             b1.Property<Guid>("UserId")
                                 .HasColumnType("uuid")
@@ -177,7 +175,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
 
                             b1.HasKey("UserId");
 
-                            b1.ToTable("users");
+                            b1.ToTable("users", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId")
