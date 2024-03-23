@@ -1,4 +1,4 @@
-﻿using Dhanman.Sales.Application.Exceptions;
+﻿using B2aTech.CrossCuttingConcern.Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dhanman.MyHome.Api.Middleware;

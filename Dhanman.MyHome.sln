@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dhanman.MyHome.Persistence"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{625F7E64-D3F3-414B-9050-9EE3C732BF88}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dhanman.MyHome.Api", "src\Dhanman.Purchase.Api\Dhanman.MyHome.Api.csproj", "{0824ACDD-3840-4F12-90AF-A6ED3E2FBD1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dhanman.MyHome.Api", "src\Dhanman.MyHome.Api\Dhanman.MyHome.Api.csproj", "{0824ACDD-3840-4F12-90AF-A6ED3E2FBD1B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "migrations", "migrations", "{10677405-7239-4A45-A664-2066D3556112}"
 EndProject

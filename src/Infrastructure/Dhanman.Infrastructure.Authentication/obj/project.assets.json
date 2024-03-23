@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net7.0": {
-      "B2aTech.CrossCuttingConcern/1.0.5": {
+      "B2aTech.CrossCuttingConcern/1.0.9": {
         "type": "package",
         "compile": {
           "lib/net7.0/B2aTech.CrossCuttingConcern.dll": {}
@@ -946,7 +946,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
-          "B2aTech.CrossCuttingConcern": "1.0.5"
+          "B2aTech.CrossCuttingConcern": "1.0.9"
         },
         "compile": {
           "bin/placeholder/Dhanman.MyHome.Domain.dll": {}
@@ -958,14 +958,14 @@
     }
   },
   "libraries": {
-    "B2aTech.CrossCuttingConcern/1.0.5": {
-      "sha512": "LoG+KRhGr7Fcr6anYv9vUONRTworGOc68eQJVfFftp8MFST5FbvQE2UAqLe1Djis2EIXkMwWdL0ApjwcmIOBDQ==",
+    "B2aTech.CrossCuttingConcern/1.0.9": {
+      "sha512": "iBXj15j+UNAJFkOwdFTSotQHDClLrzKTmJptaEPXLkuoSQNbHE9PE7dhyho3ej0PD6ThVJV7pno6yAGqSwx6hQ==",
       "type": "package",
-      "path": "b2atech.crosscuttingconcern/1.0.5",
+      "path": "b2atech.crosscuttingconcern/1.0.9",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "b2atech.crosscuttingconcern.1.0.5.nupkg.sha512",
+        "b2atech.crosscuttingconcern.1.0.9.nupkg.sha512",
         "b2atech.crosscuttingconcern.nuspec",
         "lib/net7.0/B2aTech.CrossCuttingConcern.dll"
       ]
@@ -2195,7 +2195,7 @@
       "projectName": "Dhanman.Infrastructure.Authentication",
       "projectPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Infrastructure\\Dhanman.Infrastructure.Authentication\\Dhanman.Infrastructure.Authentication.csproj",
       "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\DELL\\source\\repos\\Dhanman-myhome\\src\\Infrastructure\\Dhanman.Infrastructure.Authentication\\obj\\",
+      "outputPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Infrastructure\\Dhanman.Infrastructure.Authentication\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",

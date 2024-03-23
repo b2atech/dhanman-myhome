@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="B2aTech.CrossCuttingConcern" Version="1.0.5" />
+    <PackageReference Include="B2aTech.CrossCuttingConcern" Version="1.0.9" />
     <!--<ProjectReference Include="..\..\..\..\b2a-framework\src\B2aTech.CrossCuttingConcern\B2aTech.CrossCuttingConcern.csproj" />-->
   </ItemGroup>
 

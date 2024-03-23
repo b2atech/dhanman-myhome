@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net7.0": {
-      "B2aTech.CrossCuttingConcern/1.0.5": {
+      "B2aTech.CrossCuttingConcern/1.0.9": {
         "type": "package",
         "compile": {
           "lib/net7.0/B2aTech.CrossCuttingConcern.dll": {}
@@ -14,14 +14,14 @@
     }
   },
   "libraries": {
-    "B2aTech.CrossCuttingConcern/1.0.5": {
-      "sha512": "LoG+KRhGr7Fcr6anYv9vUONRTworGOc68eQJVfFftp8MFST5FbvQE2UAqLe1Djis2EIXkMwWdL0ApjwcmIOBDQ==",
+    "B2aTech.CrossCuttingConcern/1.0.9": {
+      "sha512": "iBXj15j+UNAJFkOwdFTSotQHDClLrzKTmJptaEPXLkuoSQNbHE9PE7dhyho3ej0PD6ThVJV7pno6yAGqSwx6hQ==",
       "type": "package",
-      "path": "b2atech.crosscuttingconcern/1.0.5",
+      "path": "b2atech.crosscuttingconcern/1.0.9",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "b2atech.crosscuttingconcern.1.0.5.nupkg.sha512",
+        "b2atech.crosscuttingconcern.1.0.9.nupkg.sha512",
         "b2atech.crosscuttingconcern.nuspec",
         "lib/net7.0/B2aTech.CrossCuttingConcern.dll"
       ]
@@ -29,7 +29,7 @@
   },
   "projectFileDependencyGroups": {
     "net7.0": [
-      "B2aTech.CrossCuttingConcern >= 1.0.5"
+      "B2aTech.CrossCuttingConcern >= 1.0.9"
     ]
   },
   "packageFolders": {
@@ -38,11 +38,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\DELL\\source\\repos\\Dhanman-myhome\\src\\Core\\Dhanman.MyHome.Domain\\Dhanman.MyHome.Domain.csproj",
+      "projectUniqueName": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Domain\\Dhanman.MyHome.Domain.csproj",
       "projectName": "Dhanman.MyHome.Domain",
-      "projectPath": "C:\\Users\\DELL\\source\\repos\\Dhanman-myhome\\src\\Core\\Dhanman.MyHome.Domain\\Dhanman.MyHome.Domain.csproj",
+      "projectPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Domain\\Dhanman.MyHome.Domain.csproj",
       "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\DELL\\source\\repos\\Dhanman-myhome\\src\\Core\\Dhanman.MyHome.Domain\\obj\\",
+      "outputPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -73,7 +73,7 @@
         "dependencies": {
           "B2aTech.CrossCuttingConcern": {
             "target": "Package",
-            "version": "[1.0.5, )"
+            "version": "[1.0.9, )"
           }
         },
         "imports": [

@@ -1,8 +1,8 @@
 ﻿using Dhanman.MyHome.Application.Abstractions.Messaging;
-using Dhanman.Sales.Application.Exceptions;
+using B2aTech.CrossCuttingConcern.Core.Exceptions;
 using FluentValidation;
 using MediatR;
-using ValidationException = Dhanman.Sales.Application.Exceptions.ValidationException;
+using ValidationException = B2aTech.CrossCuttingConcern.Core.Exceptions.ValidationException;
 
 namespace Dhanman.MyHome.Application.Behaviors;
 

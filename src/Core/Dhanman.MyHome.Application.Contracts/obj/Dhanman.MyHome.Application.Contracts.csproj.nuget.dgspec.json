@@ -11,7 +11,7 @@
         "projectName": "Dhanman.MyHome.Application.Contracts",
         "projectPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Application.Contracts\\Dhanman.MyHome.Application.Contracts.csproj",
         "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\DELL\\source\\repos\\Dhanman-myhome\\src\\Core\\Dhanman.MyHome.Application.Contracts\\obj\\",
+        "outputPath": "C:\\Users\\DELL\\source\\repos\\dhanman-myhome\\src\\Core\\Dhanman.MyHome.Application.Contracts\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
