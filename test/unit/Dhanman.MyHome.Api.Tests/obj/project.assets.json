@@ -5517,20 +5517,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\DELL\\.nuget\\packages\\": {}
+    "C:\\Users\\bhara\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Progress\\ToolboxNuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\DELL\\source\\repos\\Dhanman-myhome\\test\\unit\\Dhanman.MyHome.Api.Tests\\Dhanman.MyHome.Api.Tests.csproj",
+      "projectUniqueName": "C:\\Users\\bhara\\source\\repos\\dhanman-myhome\\test\\unit\\Dhanman.MyHome.Api.Tests\\Dhanman.MyHome.Api.Tests.csproj",
       "projectName": "Dhanman.MyHome.Api.Tests",
-      "projectPath": "C:\\Users\\DELL\\source\\repos\\Dhanman-myhome\\test\\unit\\Dhanman.MyHome.Api.Tests\\Dhanman.MyHome.Api.Tests.csproj",
-      "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\DELL\\source\\repos\\Dhanman-myhome\\test\\unit\\Dhanman.MyHome.Api.Tests\\obj\\",
+      "projectPath": "C:\\Users\\bhara\\source\\repos\\dhanman-myhome\\test\\unit\\Dhanman.MyHome.Api.Tests\\Dhanman.MyHome.Api.Tests.csproj",
+      "packagesPath": "C:\\Users\\bhara\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\bhara\\source\\repos\\dhanman-myhome\\test\\unit\\Dhanman.MyHome.Api.Tests\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Progress\\ToolboxNuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\bhara\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Telerik UI for WPF.config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -5592,7 +5597,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }

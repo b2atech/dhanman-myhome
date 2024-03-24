@@ -8,4 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Dhanman.MyHome.Domain.Tests
-build_property.ProjectDir = C:\Users\DELL\source\repos\dhanman-myhome\test\unit\Dhanman.MyHome.Domain.Tests\
+build_property.ProjectDir = C:\Users\bhara\source\repos\dhanman-myhome\test\unit\Dhanman.MyHome.Domain.Tests\
