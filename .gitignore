@@ -403,3 +403,4 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 /src/Infrastructure/Dhanman.MyHome.Persistence/Migrations/20230805082548_InvoiceDetailTable.Designer.cs
+/.vs/Dhanman.MyHome/DesignTimeBuild/.dtbcache.v2
