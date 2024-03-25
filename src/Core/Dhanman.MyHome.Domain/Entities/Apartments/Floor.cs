@@ -20,9 +20,9 @@ public class Floor : EntityInt, IAuditableEntity, ISoftDeletableEntity
 
     public bool IsDeleted { get; }
 
-    public Guid CreatedBy { get; protected set; }
+    public Guid CreatedBy { get; }
 
-    public Guid? ModifiedBy { get; protected set; }
+    public Guid? ModifiedBy { get; }
     #endregion
 
     #region Constructor
@@ -33,6 +33,7 @@ public class Floor : EntityInt, IAuditableEntity, ISoftDeletableEntity
         BuildingId = buildingId;
         TotalUnits = totalUnits;
         CreatedBy = createdBy;
+        CreatedOnUtc = DateTime.UtcNow;
 
     }
     #endregion

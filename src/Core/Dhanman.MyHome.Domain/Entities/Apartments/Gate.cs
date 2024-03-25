@@ -28,9 +28,9 @@ public class Gate : EntityInt, IAuditableEntity, ISoftDeletableEntity
 
     public bool IsDeleted { get; }
 
-    public Guid CreatedBy { get; protected set; }
+    public Guid CreatedBy { get; }
 
-    public Guid? ModifiedBy { get; protected set; }
+    public Guid? ModifiedBy { get;  }
     #endregion
 
     #region Constructor
@@ -55,6 +55,7 @@ public class Gate : EntityInt, IAuditableEntity, ISoftDeletableEntity
         IsStaffAllowed = isStaffAllowed;
         IsVendorAllowed = isVendorAllowed;
         CreatedBy = createdBy;
+        CreatedOnUtc = DateTime.UtcNow;
     }
     #endregion
 }

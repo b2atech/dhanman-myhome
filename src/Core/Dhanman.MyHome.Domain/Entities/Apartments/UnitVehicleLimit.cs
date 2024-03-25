@@ -22,9 +22,9 @@ public class UnitVehicleLimit : EntityInt, IAuditableEntity, ISoftDeletableEntit
 
     public bool IsDeleted { get; }
 
-    public Guid CreatedBy { get; protected set; }
+    public Guid CreatedBy { get;  }
 
-    public Guid? ModifiedBy { get; protected set; }
+    public Guid? ModifiedBy { get; }
     #endregion
 
     #region Constructor
@@ -37,7 +37,7 @@ public class UnitVehicleLimit : EntityInt, IAuditableEntity, ISoftDeletableEntit
         NoOfCarsAllotted = noOfCarsAllotted;
         NoOfTwoWheelarsAllotted = noOfTwoWheelarsAllotted;
         CreatedBy = createdBy;
-
+        CreatedOnUtc = DateTime.UtcNow;
     }
     #endregion
 }

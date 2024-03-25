@@ -20,7 +20,7 @@ internal sealed class ApartmentConfiguration : IEntityTypeConfiguration<Apartmen
 
         builder.Property(apartments => apartments.Phone).HasColumnName("Phone").IsRequired();
 
-        builder.Property(apartments => apartments.PAN).HasColumnName("pan").IsRequired();
+        builder.Property(apartments => apartments.PAN).HasColumnName("pan");
 
         builder.Property(apartments => apartments.TAN).HasColumnName("tan");
 
