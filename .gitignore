@@ -404,3 +404,4 @@ FodyWeavers.xsd
 *.sln.iml
 /src/Infrastructure/Dhanman.MyHome.Persistence/Migrations/20230805082548_InvoiceDetailTable.Designer.cs
 /.vs/Dhanman.MyHome/DesignTimeBuild/.dtbcache.v2
+/src/Infrastructure/Dhanman.MyHome.Persistence/Migrations/20230730132513_Initial-commit-Application.cs
