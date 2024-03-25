@@ -54,6 +54,7 @@ public class Resident : EntityInt, IAuditableEntity, ISoftDeletableEntity
         ResidentTypeId = residentTypeId;
         OccupancyStatusId = occupancyStatusId;
         CreatedBy = createdBy;
+        CreatedOnUtc = DateTime.UtcNow;
     }
     #endregion
 }

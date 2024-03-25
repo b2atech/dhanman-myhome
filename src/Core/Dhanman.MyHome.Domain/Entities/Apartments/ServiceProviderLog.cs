@@ -26,9 +26,9 @@ public class ServiceProviderLog : EntityInt, IAuditableEntity, ISoftDeletableEnt
 
     public bool IsDeleted { get; }
 
-    public Guid CreatedBy { get; protected set; }
+    public Guid CreatedBy { get;  }
 
-    public Guid? ModifiedBy { get; protected set; }
+    public Guid? ModifiedBy { get;  }
     #endregion
 
     #region Constructor
@@ -43,6 +43,7 @@ public class ServiceProviderLog : EntityInt, IAuditableEntity, ISoftDeletableEnt
         EntryTime = entryTime;
         ExitTime = exitTime;
         CreatedBy = createdBy;
+        CreatedOnUtc = DateTime.UtcNow;
     }
     #endregion
 }

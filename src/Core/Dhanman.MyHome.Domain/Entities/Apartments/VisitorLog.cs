@@ -26,9 +26,9 @@ public class VisitorLog : EntityInt, IAuditableEntity, ISoftDeletableEntity
 
     public bool IsDeleted { get; }
 
-    public Guid CreatedBy { get; protected set; }
+    public Guid CreatedBy { get;  }
 
-    public Guid? ModifiedBy { get; protected set; }
+    public Guid? ModifiedBy { get;  }
     #endregion
 
     #region Constructor
@@ -43,6 +43,7 @@ public class VisitorLog : EntityInt, IAuditableEntity, ISoftDeletableEntity
         EntryTime = entryTime;
         ExitTime = exitTime;
         CreatedBy = createdBy;
+        CreatedOnUtc = DateTime.UtcNow;
     }
     #endregion
 }

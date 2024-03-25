@@ -24,9 +24,9 @@ public class Apartment : Entity, IAuditableEntity, ISoftDeletableEntity
 
     public bool IsDeleted { get; }
 
-    public Guid CreatedBy { get; protected set; }
+    public Guid CreatedBy { get;  }
 
-    public Guid? ModifiedBy { get; protected set; }
+    public Guid? ModifiedBy { get;  }
     #endregion
 
     #region Constructor
@@ -43,6 +43,7 @@ public class Apartment : Entity, IAuditableEntity, ISoftDeletableEntity
         TAN = tan;
         AssociationName = associationName;
         CreatedBy = createdBy;
+        CreatedOnUtc = DateTime.UtcNow;
 
     }
     #endregion
