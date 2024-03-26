@@ -11,7 +11,11 @@ namespace Dhanman.MyHome.Persistence;
 
 public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUnitOfWork
 {
+    #region Properties
     private readonly IDateTime _dateTime;
+    #endregion
+
+    #region Constructors
     public ApplicationDbContext(DbContextOptions options, IDateTime dateTime)
         : base(options)
     {
@@ -19,34 +23,9 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
         AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
         _dateTime = dateTime;
     }
+    #endregion
 
-    public new DbSet<TEntity> Set<TEntity>()
-           where TEntity : Entity =>
-           base.Set<TEntity>();
-
-    public async Task<TEntity?> GetBydIdAsync<TEntity>(Guid id)
-           where TEntity : Entity
-    {
-        if (id == Guid.Empty)
-        {
-            return null;
-        }
-
-        return await Set<TEntity>().FirstOrDefaultAsync(e => e.Id == id);
-    }
-
-    public void Insert<TEntity>(TEntity entity)
-            where TEntity : Entity =>
-            Set<TEntity>().Add(entity);
-
-    public void Update<TEntity>(TEntity entity)
-           where TEntity : Entity =>
-           Set<TEntity>().Update(entity);
-
-    public new void Remove<TEntity>(TEntity entity)
-            where TEntity : Entity =>
-            Set<TEntity>().Remove(entity);
-
+    #region Methodes
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
@@ -113,4 +92,57 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
             UpdateDeletedEntityEntryReferencesToUnchanged(referenceEntry.TargetEntry);
         }
     }
+    #endregion
+
+    #region Guid Based Entities
+    public new DbSet<TEntity> Set<TEntity>()
+           where TEntity : Entity =>
+           base.Set<TEntity>();
+
+    public async Task<TEntity?> GetBydIdAsync<TEntity>(Guid id)
+           where TEntity : Entity
+    {
+        if (id == Guid.Empty)
+        {
+            return null;
+        }
+
+        return await Set<TEntity>().FirstOrDefaultAsync(e => e.Id == id);
+    }
+
+    public void Insert<TEntity>(TEntity entity)
+            where TEntity : Entity =>
+            Set<TEntity>().Add(entity);
+    public void Update<TEntity>(TEntity entity)
+        where TEntity : Entity =>
+        Set<TEntity>().Update(entity);
+
+    public new void Remove<TEntity>(TEntity entity)
+            where TEntity : Entity =>
+            Set<TEntity>().Remove(entity);
+
+    #endregion
+
+    #region Int Based Entities
+    public new DbSet<TEntity> SetInt<TEntity>()
+           where TEntity : EntityInt =>
+           base.Set<TEntity>();
+
+    public async Task<TEntity?> GetBydIdIntAsync<TEntity>(int id)
+           where TEntity : EntityInt
+    {
+        return await SetInt<TEntity>().FirstOrDefaultAsync(e => e.Id == id);
+    }
+
+    public void InsertInt<TEntity>(TEntity entity)
+            where TEntity : EntityInt =>
+            SetInt<TEntity>().Add(entity);
+    public void UpdateInt<TEntity>(TEntity entity)
+        where TEntity : EntityInt =>
+        SetInt<TEntity>().Update(entity);
+
+    public new void RemoveInt<TEntity>(TEntity entity)
+            where TEntity : EntityInt =>
+            SetInt<TEntity>().Remove(entity);
+    #endregion
 }
