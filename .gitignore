@@ -405,3 +405,6 @@ FodyWeavers.xsd
 /src/Infrastructure/Dhanman.MyHome.Persistence/Migrations/20230805082548_InvoiceDetailTable.Designer.cs
 /.vs/Dhanman.MyHome/DesignTimeBuild/.dtbcache.v2
 /src/Infrastructure/Dhanman.MyHome.Persistence/Migrations/20230730132513_Initial-commit-Application.cs
+/.vs/Dhanman.MyHome/v17/.futdcache.v2
+/.vs/ProjectEvaluation/dhanman.myhome.metadata.v7.bin
+/.vs/ProjectEvaluation/dhanman.myhome.projects.v7.bin
