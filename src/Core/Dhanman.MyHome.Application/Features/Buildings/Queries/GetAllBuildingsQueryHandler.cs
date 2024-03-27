@@ -5,7 +5,6 @@ using Dhanman.MyHome.Application.Contracts.Buildings;
 using Dhanman.MyHome.Domain;
 using Dhanman.MyHome.Domain.Entities.Apartments;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace Dhanman.MyHome.Application.Features.Buildings.Queries;
 
