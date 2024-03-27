@@ -1,12 +1,13 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
-using Dhanman.MyHome.Application.Contracts.Apartments;
+using Dhanman.MyHome.Application.Contracts.Buildings;
 using Dhanman.MyHome.Domain;
 using Dhanman.MyHome.Domain.Entities.Apartments;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
-namespace Dhanman.MyHome.Application.Features.Apartments.Queries;
+namespace Dhanman.MyHome.Application.Features.Buildings.Queries;
 
 public class GetAllBuildingsQueryHandler : IQueryHandler<GetAllBuildingsQuery, Result<BuildingListResponse>>
 {
@@ -26,21 +27,19 @@ public class GetAllBuildingsQueryHandler : IQueryHandler<GetAllBuildingsQuery, R
               .Bind(async query =>
               {
                   var buildings = await _dbContext.SetInt<Building>()
-                  .AsNoTracking()
-                  .Where(e => e.ApartmentId == request.ApartmentId)
+                  .AsNoTracking()                  
                   .Select(e => new BuildingResponse(
                           e.Id,
                           e.Name,
                           e.BuildingTypeId,
                           _dbContext.SetInt<BuildingType>()
                               .Where(p => p.Id == e.BuildingTypeId)
-                              .Select(p => p.Name).FirstOrDefault(),
-                          e.ApartmentId,
-                          _dbContext.Set<Apartment>()
-                              .Where(p => p.Id == e.ApartmentId)
-                              .Select(p => p.Name).FirstOrDefault(),
-                          e.TotalUnits,                                                    
-                          e.CreatedBy))
+                              .Select(p => p.Name).FirstOrDefault(),                          
+                          e.TotalUnits,
+                          e.CreatedOnUtc,
+                          e.ModifiedOnUtc,
+                          e.CreatedBy,
+                          e.ModifiedBy))
                   .ToListAsync(cancellationToken);
 
                   var listResponse = new BuildingListResponse(buildings);

@@ -15,7 +15,9 @@ public static class ApiRoutes
     {
         public const string CreateBuilding = apiVersion + "buildings";
 
-        public const string GetBuildings = apiVersion + "buildings/{apartmentId:guid}";
+        public const string GetAllBuildings = apiVersion + "buildings";
+
+        public const string GetAllBuildingNames = apiVersion + "buildingNames";        
 
         public const string GetBuildingById = apiVersion + "building/{apartmentId:guid}";
 

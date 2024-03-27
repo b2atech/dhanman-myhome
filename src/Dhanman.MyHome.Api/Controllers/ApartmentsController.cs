@@ -1,8 +1,8 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
-using Dhanman.MyHome.Application.Contracts.Apartments;
-using Dhanman.MyHome.Application.Features.Apartments.Queries;
+using Dhanman.MyHome.Application.Contracts.Buildings;
+using Dhanman.MyHome.Application.Features.Buildings.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,13 +16,21 @@ public class ApartmentsController : ApiController
 
     #region Buildings     
 
-    [HttpGet(ApiRoutes.Buildings.GetBuildings)]
+    [HttpGet(ApiRoutes.Buildings.GetAllBuildings)]
     [ProducesResponseType(typeof(BuildingListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllBuildings(Guid apartmentId) =>
-    await Result.Success(new GetAllBuildingsQuery(apartmentId))
+    public async Task<IActionResult> GetAllBuildings() =>
+    await Result.Success(new GetAllBuildingsQuery())
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
-     
-    #endregion     
+
+    [HttpGet(ApiRoutes.Buildings.GetAllBuildingNames)]
+    [ProducesResponseType(typeof(BuildingListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllBuildingNames() =>
+    await Result.Success(new GetAllBuildingNamesQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
+    #endregion
 }
