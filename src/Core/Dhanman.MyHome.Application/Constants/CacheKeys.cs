@@ -23,4 +23,15 @@ public static class CacheKeys
         public const string BuildingById = CacheKeyPrefix + "-by-apartmentId-{1}";
     }
     #endregion  
+
+    #region Units
+    public static class Units
+    {
+        public const string CacheKeyPrefix = "units-{0}";
+
+        public const string UnitList = CacheKeyPrefix + "-list-{1}";
+
+        public const string UnitById = CacheKeyPrefix + "-by-apartmentId-{1}";
+    }
+    #endregion  
 }

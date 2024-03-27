@@ -25,4 +25,18 @@ public static class ApiRoutes
 
     }
 
+    public static class Units
+    {
+        public const string CreateUnit = apiVersion + "units";
+
+        public const string GetAllUnits = apiVersion + "units";
+
+        public const string GetAllUnitNames = apiVersion + "unitNames";
+
+        public const string GetUnitById = apiVersion + "unit/{apartmentId:guid}";
+
+        public const string UpdateUnits = apiVersion + "updateUnits";
+
+    }
+
 }
