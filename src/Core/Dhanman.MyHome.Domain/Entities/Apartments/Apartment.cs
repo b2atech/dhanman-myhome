@@ -9,7 +9,7 @@ public class Apartment : Entity, IAuditableEntity, ISoftDeletableEntity
     #region Properties
     public string Name { get; set; }
     public int ApartmentTypeId { get; set; }
-    public int AddressId { get; set; }
+    public Guid AddressId { get; set; }
     public string Phone { get; set; }
     public string PAN { get; set; }
     public string TAN { get; set; }
@@ -32,7 +32,7 @@ public class Apartment : Entity, IAuditableEntity, ISoftDeletableEntity
 
     #region Constructor
     public Apartment(Guid id, string name, int apartmentTypeId,
-        int addressId, string phone, string pAN, string tAN, string associationName,
+        Guid addressId, string phone, string pAN, string tAN, string associationName,
            Guid createdBy)
     {
         Id = id;
