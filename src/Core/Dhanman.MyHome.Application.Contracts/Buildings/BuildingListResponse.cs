@@ -1,4 +1,4 @@
-﻿namespace Dhanman.MyHome.Application.Contracts.Apartments;
+﻿namespace Dhanman.MyHome.Application.Contracts.Buildings;
 
 public sealed class BuildingListResponse
 {
