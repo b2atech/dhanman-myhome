@@ -6,6 +6,7 @@ public sealed class ResidentNameResponse
     public int Id { get; }    
     public string FirstName { get; }
     public string LastName { get; }
+    public string ResidentName { get; }
 
     #endregion
 
@@ -15,6 +16,7 @@ public sealed class ResidentNameResponse
         Id = id;        
         FirstName = firstName;
         LastName = lastName;
+        ResidentName = $"{firstName} {lastName}";
     }
     #endregion
 }
