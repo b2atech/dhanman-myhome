@@ -14,13 +14,13 @@ public class Resident : EntityInt, IAuditableEntity, ISoftDeletableEntity
     public string LastName { get; set; }
     public string Email { get; set; }
     public string ContactNumber { get; set; }
-    public string? PermanentAddressId { get; set; }
+    public Guid PermanentAddressId { get; set; }
     public int RequestStatusId { get; set; }
     //Co-Owner, Multi Tenant, Owner, Owner Family , Tenant, Tenant Family 
-    public string ResidentTypeId { get; set; }
+    public int ResidentTypeId { get; set; }
 
     //Vacant , Residing , Let out to multiple tenants , Let out to one tenant, 
-    public string OccupancyStatusId { get; set; }
+    public int OccupancyStatusId { get; set; }
     #endregion
 
     #region Audit Properties
@@ -38,7 +38,7 @@ public class Resident : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public Resident(int id, Guid apartmentId, int buildingId, int floorId, int unitId, string firstName, string lastName, string email, string contactNumber, string? permanentAddressId, int requestStatusId, string residentTypeId, string occupancyStatusId, Guid createdBy)
+    public Resident(int id, Guid apartmentId, int buildingId, int floorId, int unitId, string firstName, string lastName, string email, string contactNumber, Guid permanentAddressId, int requestStatusId, int residentTypeId, int occupancyStatusId, Guid createdBy)
     {
         Id = id; 
         ApartmentId = apartmentId;

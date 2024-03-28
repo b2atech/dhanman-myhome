@@ -2,17 +2,6 @@
 
 public static class CacheKeys
 {
-    #region Residents
-    public static class Residents
-    {
-        public const string CacheKeyPrefix = "residents-{0}";
-
-        public const string ResidentList = CacheKeyPrefix + "-list-{1}";
-
-        public const string ResidentById = CacheKeyPrefix + "-by-apartmentId-{1}";
-    }
-    #endregion  
-
     #region Buildings
     public static class Buildings
     {
@@ -32,6 +21,17 @@ public static class CacheKeys
         public const string UnitList = CacheKeyPrefix + "-list-{1}";
 
         public const string UnitById = CacheKeyPrefix + "-by-apartmentId-{1}";
+    }
+    #endregion  
+
+    #region Residents
+    public static class Residents
+    {
+        public const string CacheKeyPrefix = "residents-{0}";
+
+        public const string ResidentList = CacheKeyPrefix + "-list-{1}";
+
+        public const string ResidentById = CacheKeyPrefix + "-by-apartmentId-{1}";
     }
     #endregion  
 }
