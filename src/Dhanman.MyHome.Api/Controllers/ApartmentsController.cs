@@ -2,8 +2,10 @@
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Buildings;
-using Dhanman.MyHome.Application.Contracts.Units;
+using Dhanman.MyHome.Application.Contracts.Residents;
+using Dhanman.MyHome.Application.Contracts.Units; 
 using Dhanman.MyHome.Application.Features.Buildings.Queries;
+using Dhanman.MyHome.Application.Features.Residents.Queries;
 using Dhanman.MyHome.Application.Features.Units.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -51,6 +53,26 @@ public class ApartmentsController : ApiController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAllUnitNames() =>
     await Result.Success(new GetAllUnitNamesQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
+    #endregion
+
+    #region Residents     
+
+    [HttpGet(ApiRoutes.Residents.GetAllResidents)]
+    [ProducesResponseType(typeof(ResidentListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllResidents() =>
+    await Result.Success(new GetAllResidentsQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
+    [HttpGet(ApiRoutes.Residents.GetAllResidentNames)]
+    [ProducesResponseType(typeof(ResidentNameListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllResidentNames() =>
+    await Result.Success(new GetAllResidentNamesQuery())
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 

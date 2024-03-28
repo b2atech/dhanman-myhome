@@ -39,4 +39,18 @@ public static class ApiRoutes
 
     }
 
+    public static class Residents
+    {
+        public const string CreateResident = apiVersion + "residents";
+
+        public const string GetAllResidents = apiVersion + "residents";
+
+        public const string GetAllResidentNames = apiVersion + "residentNames";
+
+        public const string GetResidentById = apiVersion + "resident/{apartmentId:guid}";
+
+        public const string UpdateResidents = apiVersion + "updateResidents";
+
+    }
+
 }
