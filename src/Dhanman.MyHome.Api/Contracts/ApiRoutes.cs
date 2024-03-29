@@ -53,4 +53,18 @@ public static class ApiRoutes
 
     }
 
+    public static class Vehicles
+    {
+        public const string CreateVehicle = apiVersion + "vehicles";
+
+        public const string GetAllVehicles = apiVersion + "vehicles";
+
+        public const string GetAllVehicleNames = apiVersion + "vehicleNames";
+
+        public const string GetVehicleById = apiVersion + "vehicle/{id:int}";
+
+        public const string UpdateVehicles = apiVersion + "updateVehicles";
+
+    }
+
 }

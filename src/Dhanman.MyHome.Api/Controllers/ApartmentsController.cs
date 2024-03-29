@@ -3,10 +3,12 @@ using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Buildings;
 using Dhanman.MyHome.Application.Contracts.Residents;
-using Dhanman.MyHome.Application.Contracts.Units; 
+using Dhanman.MyHome.Application.Contracts.Units;
+using Dhanman.MyHome.Application.Contracts.Vehicles;
 using Dhanman.MyHome.Application.Features.Buildings.Queries;
 using Dhanman.MyHome.Application.Features.Residents.Queries;
 using Dhanman.MyHome.Application.Features.Units.Queries;
+using Dhanman.MyHome.Application.Features.Vehicles.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -73,6 +75,26 @@ public class ApartmentsController : ApiController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAllResidentNames() =>
     await Result.Success(new GetAllResidentNamesQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
+    #endregion
+
+    #region Vehicles     
+
+    [HttpGet(ApiRoutes.Vehicles.GetAllVehicles)]
+    [ProducesResponseType(typeof(VehicleListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllVehicles() =>
+    await Result.Success(new GetAllVehiclesQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
+    [HttpGet(ApiRoutes.Vehicles.GetAllVehicleNames)]
+    [ProducesResponseType(typeof(VehicleNameListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllVehicleNames() =>
+    await Result.Success(new GetAllVehicleNamesQuery())
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
