@@ -42,7 +42,7 @@ public async Task<Result<ResidentListResponse>> Handle(GetAllResidentsQuery requ
                               .Select(p => p.Name).FirstOrDefault(),
                       e.OccupancyStatusId,
                            _dbContext.SetInt<UnitStatus>()
-                              .Where(p => p.Id == e.Id)
+                              .Where(p => p.Id == e.OccupancyStatusId)
                               .Select(p => p.Name).FirstOrDefault(),
                       e.CreatedOnUtc,
                       e.ModifiedOnUtc,
