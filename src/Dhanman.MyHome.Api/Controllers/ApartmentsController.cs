@@ -1,10 +1,12 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
+using Dhanman.MyHome.Application.Contracts.Apartments;
 using Dhanman.MyHome.Application.Contracts.Buildings;
 using Dhanman.MyHome.Application.Contracts.Residents;
 using Dhanman.MyHome.Application.Contracts.Units;
 using Dhanman.MyHome.Application.Contracts.Vehicles;
+using Dhanman.MyHome.Application.Features.Apartments.Queries;
 using Dhanman.MyHome.Application.Features.Buildings.Queries;
 using Dhanman.MyHome.Application.Features.Residents.Queries;
 using Dhanman.MyHome.Application.Features.Units.Queries;
@@ -99,4 +101,17 @@ public class ApartmentsController : ApiController
     .Match(Ok, NotFound);
 
     #endregion
+
+    #region Apartments     
+
+    [HttpGet(ApiRoutes.Apartments.GetApartments)]
+    [ProducesResponseType(typeof(ApartmentListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllApartments() =>
+    await Result.Success(new GetAllApartmentsQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
+    #endregion
+
 }
