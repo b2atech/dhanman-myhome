@@ -1,7 +1,7 @@
 ﻿using Dhanman.MyHome.Domain.Entities.Apartments;
 using Dhanman.MyHome.Persistence.Constants;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Dhanman.MyHome.Persistence.Configurations;
 
@@ -10,7 +10,13 @@ internal sealed class ResidentRequestConfiguration : IEntityTypeConfiguration<Re
     public void Configure(EntityTypeBuilder<ResidentRequest> builder)
     {
         builder.ToTable(TableNames.ResidentRequests);
-        builder.HasKey(residentRequests => residentRequests.Id);
+        builder.HasKey(residentRequests => residentRequests.Id);        
+
+        builder.Property(residentRequests => residentRequests.ApartmentId).HasColumnName("apartment_id").IsRequired();
+
+        builder.Property(residentRequests => residentRequests.BuildingId).HasColumnName("building_id").IsRequired();
+
+        builder.Property(residentRequests => residentRequests.FloorId).HasColumnName("floor_id").IsRequired();
 
         builder.Property(residentRequests => residentRequests.UnitId).HasColumnName("unit_id").IsRequired();
 
@@ -23,6 +29,8 @@ internal sealed class ResidentRequestConfiguration : IEntityTypeConfiguration<Re
         builder.Property(residentRequests => residentRequests.ContactNumber).HasColumnName("contact_number").IsRequired();
 
         builder.Property(residentRequests => residentRequests.PermanentAddressId).HasColumnName("permanent_address_id").IsRequired();
+
+        builder.Property(residentRequests => residentRequests.RequestStatusId).HasColumnName("request_status_id").IsRequired();
 
         builder.Property(residentRequests => residentRequests.ResidentTypeId).HasColumnName("resident_type_id").IsRequired();
 
