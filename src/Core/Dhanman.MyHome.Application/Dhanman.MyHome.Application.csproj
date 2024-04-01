@@ -18,4 +18,8 @@
     <ProjectReference Include="..\Dhanman.MyHome.Domain\Dhanman.MyHome.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\ResidentRequests\Queries\" />
+  </ItemGroup>
+
 </Project>

@@ -2,13 +2,17 @@
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Buildings;
+using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.MyHome.Application.Contracts.ResidentRequests;
 using Dhanman.MyHome.Application.Contracts.Residents;
 using Dhanman.MyHome.Application.Contracts.Units;
 using Dhanman.MyHome.Application.Contracts.Vehicles;
 using Dhanman.MyHome.Application.Features.Buildings.Queries;
+using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.CreateResidentRequest;
 using Dhanman.MyHome.Application.Features.Residents.Queries;
 using Dhanman.MyHome.Application.Features.Units.Queries;
 using Dhanman.MyHome.Application.Features.Vehicles.Queries;
+using Dhanman.MyHome.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -77,6 +81,32 @@ public class ApartmentsController : ApiController
     await Result.Success(new GetAllResidentNamesQuery())
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
+
+    #endregion
+
+    #region ResidentRequests     
+
+    [HttpPost(ApiRoutes.ResidentRequests.CreateResidentRequest)]
+    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> CreateResidentRequest([FromBody] CreateResidentRequestRequest? request) =>
+            await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new CreateResidentRequestCommand(
+                value.ApartmentId,
+                value.BuildingId,
+                value.FloorId,
+                value.UnitId,
+                value.FirstName,
+                value.LastName,
+                value.Email,
+                value.ContactNumber,
+                value.PermanentAddressId,
+                value.RequestStatusId,
+                value.ResidentTypeId,
+                value.OccupancyStatusId,
+                value.CreatedBy))
+             .Bind(command => Mediator.Send(command))
+                   .Match(Ok, BadRequest);
 
     #endregion
 
