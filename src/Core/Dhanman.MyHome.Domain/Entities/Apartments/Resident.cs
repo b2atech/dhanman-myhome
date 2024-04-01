@@ -6,16 +6,13 @@ namespace Dhanman.MyHome.Domain.Entities.Apartments;
 public class Resident : EntityInt, IAuditableEntity, ISoftDeletableEntity
 {
     #region Properties
-    public Guid ApartmentId { get; set; }
-    public int BuildingId { get; set; }
-    public int FloorId { get; set; }
     public int UnitId { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
     public string ContactNumber { get; set; }
-    public Guid PermanentAddressId { get; set; }
-    public int RequestStatusId { get; set; }
+    public Guid? PermanentAddressId { get; set; }
+
     //Co-Owner, Multi Tenant, Owner, Owner Family , Tenant, Tenant Family 
     public int ResidentTypeId { get; set; }
 
@@ -32,25 +29,21 @@ public class Resident : EntityInt, IAuditableEntity, ISoftDeletableEntity
 
     public bool IsDeleted { get; }
 
-    public Guid CreatedBy { get; protected set; }
+    public Guid CreatedBy { get; }
 
-    public Guid? ModifiedBy { get; protected set; }
+    public Guid? ModifiedBy { get;  }
     #endregion
 
     #region Constructor
-    public Resident(int id, Guid apartmentId, int buildingId, int floorId, int unitId, string firstName, string lastName, string email, string contactNumber, Guid permanentAddressId, int requestStatusId, int residentTypeId, int occupancyStatusId, Guid createdBy)
+    public Resident(int id, int unitId, string firstName, string lastName, string email, string contactNumber, Guid? permanentAddressId, int residentTypeId, int occupancyStatusId, Guid createdBy)
     {
         Id = id; 
-        ApartmentId = apartmentId;
-        BuildingId = buildingId;
-        FloorId = floorId;
         UnitId = unitId;
         FirstName = firstName;
         LastName = lastName;
         Email = email;
         ContactNumber = contactNumber;
         PermanentAddressId = permanentAddressId;
-        RequestStatusId = requestStatusId;
         ResidentTypeId = residentTypeId;
         OccupancyStatusId = occupancyStatusId;
         CreatedBy = createdBy;

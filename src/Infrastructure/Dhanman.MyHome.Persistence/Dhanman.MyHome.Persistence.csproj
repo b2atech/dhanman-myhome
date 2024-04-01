@@ -25,4 +25,8 @@
     <ProjectReference Include="..\..\Core\Dhanman.MyHome.Domain\Dhanman.MyHome.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\Application\" />
+  </ItemGroup>
+
 </Project>

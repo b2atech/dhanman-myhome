@@ -6,18 +6,21 @@ namespace Dhanman.MyHome.Domain.Entities.Apartments;
 public class ResidentRequest : EntityInt, IAuditableEntity, ISoftDeletableEntity
 {
     #region Properties
+    public Guid ApartmentId { get; set; }
+    public int BuildingId { get; set; }
+    public int FloorId { get; set; }
     public int UnitId { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
     public string ContactNumber { get; set; }
-    public string? PermanentAddressId { get; set; }
-
+    public Guid PermanentAddressId { get; set; }
+    public int RequestStatusId { get; set; }
     //Co-Owner, Multi Tenant, Owner, Owner Family , Tenant, Tenant Family 
-    public string ResidentTypeId { get; set; }
+    public int ResidentTypeId { get; set; }
 
     //Vacant , Residing , Let out to multiple tenants , Let out to one tenant, 
-    public string OccupancyStatusId { get; set; }
+    public int OccupancyStatusId { get; set; }
     #endregion
 
     #region Audit Properties
@@ -29,21 +32,25 @@ public class ResidentRequest : EntityInt, IAuditableEntity, ISoftDeletableEntity
 
     public bool IsDeleted { get; }
 
-    public Guid CreatedBy { get; }
+    public Guid CreatedBy { get; protected set; }
 
-    public Guid? ModifiedBy { get;  }
+    public Guid? ModifiedBy { get; protected set; }
     #endregion
 
     #region Constructor
-    public ResidentRequest(int id, int unitId, string firstName, string lastName, string email, string contactNumber, string? permanentAddressId, string residentTypeId, string occupancyStatusId, Guid createdBy)
+    public ResidentRequest(int id, Guid apartmentId, int buildingId, int floorId, int unitId, string firstName, string lastName, string email, string contactNumber, Guid permanentAddressId, int requestStatusId, int residentTypeId, int occupancyStatusId, Guid createdBy)
     {
         Id = id; 
+        ApartmentId = apartmentId;
+        BuildingId = buildingId;
+        FloorId = floorId;
         UnitId = unitId;
         FirstName = firstName;
         LastName = lastName;
         Email = email;
         ContactNumber = contactNumber;
         PermanentAddressId = permanentAddressId;
+        RequestStatusId = requestStatusId;
         ResidentTypeId = residentTypeId;
         OccupancyStatusId = occupancyStatusId;
         CreatedBy = createdBy;
