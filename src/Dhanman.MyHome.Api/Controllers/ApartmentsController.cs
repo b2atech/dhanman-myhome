@@ -9,6 +9,7 @@ using Dhanman.MyHome.Application.Contracts.Units;
 using Dhanman.MyHome.Application.Contracts.Vehicles;
 using Dhanman.MyHome.Application.Features.Buildings.Queries;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.CreateResidentRequest;
+using Dhanman.MyHome.Application.Features.ResidentRequests.Queries;
 using Dhanman.MyHome.Application.Features.Residents.Queries;
 using Dhanman.MyHome.Application.Features.Units.Queries;
 using Dhanman.MyHome.Application.Features.Vehicles.Queries;
@@ -107,6 +108,14 @@ public class ApartmentsController : ApiController
                 value.CreatedBy))
              .Bind(command => Mediator.Send(command))
                    .Match(Ok, BadRequest);
+
+    [HttpGet(ApiRoutes.ResidentRequests.GetAllResidentRequests)]
+    [ProducesResponseType(typeof(ResidentRequestListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllResidentRequests() =>
+    await Result.Success(new GetAllResidentRequestsQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
 
     #endregion
 

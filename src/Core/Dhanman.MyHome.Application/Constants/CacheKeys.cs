@@ -35,6 +35,16 @@ public static class CacheKeys
     }
     #endregion  
 
+    #region ResidentRequests
+    public static class ResidentRequests
+    {
+        public const string CacheKeyPrefix = "residentRequests-{0}";
+
+        public const string ResidentRequestList = CacheKeyPrefix + "-list-{1}";
+
+        public const string ResidentRequestById = CacheKeyPrefix + "-by-id-{1}";
+    }
+    #endregion  
     #region Vehicles
     public static class Vehicles
     {
