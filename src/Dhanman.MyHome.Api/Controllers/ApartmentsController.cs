@@ -12,6 +12,7 @@ using Dhanman.MyHome.Application.Features.Apartments.Queries;
 using Dhanman.MyHome.Application.Features.Buildings.Queries;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.CreateResidentRequest;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Queries;
+using Dhanman.MyHome.Application.Features.Residents.Commands.CreateResident;
 using Dhanman.MyHome.Application.Features.Residents.Queries;
 using Dhanman.MyHome.Application.Features.Units.Queries;
 using Dhanman.MyHome.Application.Features.Vehicles.Queries;
@@ -67,7 +68,25 @@ public class ApartmentsController : ApiController
 
     #endregion
 
-    #region Residents     
+    #region Residents  
+
+    [HttpPost(ApiRoutes.Residents.CreateResident)]
+    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> CreateResidentRequest([FromBody] CreateResidentRequest? request) =>
+            await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new CreateResidentCommand(                
+                value.UnitId,
+                value.FirstName,
+                value.LastName,
+                value.Email,
+                value.ContactNumber,
+                value.PermanentAddressId,                
+                value.ResidentTypeId,
+                value.OccupancyStatusId,
+                value.CreatedBy))
+             .Bind(command => Mediator.Send(command))
+                   .Match(Ok, BadRequest);
 
     [HttpGet(ApiRoutes.Residents.GetAllResidents)]
     [ProducesResponseType(typeof(ResidentListResponse), StatusCodes.Status200OK)]
