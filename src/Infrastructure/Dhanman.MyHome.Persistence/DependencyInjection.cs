@@ -46,7 +46,7 @@ public static class DependencyInjection
  
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IResidentRequestRepository, ResidentRequestRepository>();
-
+            services.AddTransient<IResidentRepository, ResidentRepository>();
 
         }
         return services;
