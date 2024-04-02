@@ -80,4 +80,16 @@ public static class ApiRoutes
 
     }
 
+    public static class Apartments
+    {
+        public const string CreateApartments = apiVersion + "apartment";
+
+        public const string GetApartments = apiVersion + "apartments";
+
+        public const string GetApartmentById = apiVersion + "apartments/{apartmentId:guid}";
+
+        public const string UpdateApartments = apiVersion + "updateApartments";
+
+    }
+
 }
