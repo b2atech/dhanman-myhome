@@ -30,16 +30,15 @@ internal sealed class UnitOfWorkBehaviour<TRequest, TResponse> : IPipelineBehavi
     //    return response;
     //}
 
-    public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        Task<TResponse> response = next();
-
+        var response = await next();
         if (request.IsQuery())
         {
             return response;
         }
 
-        _unitOfWork.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return response;
     }
