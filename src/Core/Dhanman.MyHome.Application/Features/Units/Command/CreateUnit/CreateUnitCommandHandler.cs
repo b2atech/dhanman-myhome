@@ -68,7 +68,8 @@ public class CreateUnitCommandHandler : ICommandHandler<CreateUnitCommand, Resul
     {
         string pattern = @"\d";
         string input = flat;
-        Match match = Regex.Match(input, pattern);
+        TimeSpan timeout = TimeSpan.FromSeconds(1);
+        Match match = Regex.Match(input, pattern, RegexOptions.None, timeout);
         return int.Parse(match.Value);
     }
 
