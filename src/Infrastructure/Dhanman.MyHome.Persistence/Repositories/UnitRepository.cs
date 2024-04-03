@@ -25,10 +25,10 @@ internal sealed class UnitRepository : IUnitRepository
     public void Update(Unit unit) => _dbContext?.UpdateInt(unit);
     public int GetTotalRecordsCount() => Unit.Count();
 
-    public async Task<bool> IsFlatValidAsync(string unitName)
+    public async Task<bool> IsFlatValidAsync(string name)
     {
         bool isPresent =  await _dbContext.SetInt<Unit>()
-                               .AnyAsync(u => u.Name == unitName);
+                               .AnyAsync(u => u.Name == name);
 
         if (isPresent)
         {

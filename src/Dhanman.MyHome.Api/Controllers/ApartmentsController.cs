@@ -71,7 +71,7 @@ public class ApartmentsController : ApiController
     [HttpPost(ApiRoutes.Units.CreateUnit)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> CreateResidentRequest([FromBody] CreateUnitListRequest? request) =>
+    public async Task<IActionResult> CreateUnitListRequest([FromBody] CreateUnitListRequest? request) =>
             await Result.Create(request, Errors.General.BadRequest)
             .Map(value => new CreateUnitCommand(
                 value.UnitList

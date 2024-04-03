@@ -19,17 +19,29 @@ public class CreateUnitRequest
     #endregion
 
     #region Constructor
-    public CreateUnitRequest(string status, string flat, string flatType, string occupant, string occupancy, string primaryEIntercom, int numberOfMembers, string society, Guid createdBy)
+    public CreateUnitRequest(CreateUnitRequestParams parameters)
     {
-        Status = status;
-        Flat = flat;
-        FlatType = flatType;
-        Occupant = occupant;
-        Occupancy = occupancy;
-        PrimaryEIntercom = primaryEIntercom;
-        NumberOfMembers = numberOfMembers;
-        Society = society;
-        CreatedBy = createdBy;
+        Status = parameters.Status;
+        Flat = parameters.Flat;
+        FlatType = parameters.FlatType;
+        Occupant = parameters.Occupant;
+        Occupancy = parameters.Occupancy;
+        PrimaryEIntercom = parameters.PrimaryEIntercom;
+        NumberOfMembers = parameters.NumberOfMembers;
+        Society = parameters.Society;
+        CreatedBy = parameters.CreatedBy;
     }
     #endregion
+}
+public class CreateUnitRequestParams
+{
+    public string Status { get; set; }
+    public string Flat { get; set; }
+    public string FlatType { get; set; }
+    public string Occupant { get; set; }
+    public string Occupancy { get; set; }
+    public string PrimaryEIntercom { get; set; }
+    public int NumberOfMembers { get; set; }
+    public string Society { get; set; }
+    public Guid CreatedBy { get; set; }
 }
