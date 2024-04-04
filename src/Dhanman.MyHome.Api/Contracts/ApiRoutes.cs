@@ -63,7 +63,9 @@ public static class ApiRoutes
 
         public const string GetResidentRequestById = apiVersion + "ResidentRequest/{id:int}";
 
-        public const string UpdateResidentRequests = apiVersion + "updateResidentRequests";
+        public const string UpdateRequestApproveStatus = apiVersion + "requestApproveStatus";
+
+        public const string UpdateRequestRejectStatus = apiVersion + "requestRejectStatus";
 
     }
     public static class Vehicles

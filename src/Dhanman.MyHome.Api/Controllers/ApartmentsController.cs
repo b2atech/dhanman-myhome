@@ -11,6 +11,8 @@ using Dhanman.MyHome.Application.Contracts.Vehicles;
 using Dhanman.MyHome.Application.Features.Apartments.Queries;
 using Dhanman.MyHome.Application.Features.Buildings.Queries;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.CreateResidentRequest;
+using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.UpdateRequestApproveStatus;
+using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.UpdateRequestRejectStatus;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Queries;
 using Dhanman.MyHome.Application.Features.Residents.Commands.CreateResident;
 using Dhanman.MyHome.Application.Features.Residents.Queries;
@@ -150,6 +152,43 @@ public class ApartmentsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [HttpPut(ApiRoutes.ResidentRequests.UpdateRequestApproveStatus)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateRequestApproveStatus([FromBody] UpdateRequestApproveStatusRequest? request)
+    {
+        var result = await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new UpdateRequestApproveStatusCommand(
+                value.Id))
+            .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
+
+    [HttpPut(ApiRoutes.ResidentRequests.UpdateRequestRejectStatus)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateRequestRejectStatus([FromBody] UpdateRequestRejectStatusRequest? request)
+    {
+        var result = await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new UpdateRequestRejectStatusCommand(
+                value.Id))
+            .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
     #endregion
 
     #region Vehicles     
