@@ -14,6 +14,7 @@ using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.CreateReside
 using Dhanman.MyHome.Application.Features.ResidentRequests.Queries;
 using Dhanman.MyHome.Application.Features.Residents.Commands.CreateResident;
 using Dhanman.MyHome.Application.Features.Residents.Queries;
+using Dhanman.MyHome.Application.Features.Units.Command.CreateUnit;
 using Dhanman.MyHome.Application.Features.Units.Queries;
 using Dhanman.MyHome.Application.Features.Vehicles.Queries;
 using Dhanman.MyHome.Domain;
@@ -66,6 +67,17 @@ public class ApartmentsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+
+    [HttpPost(ApiRoutes.Units.CreateUnit)]
+    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> CreateUnitListRequest([FromBody] CreateUnitListRequest? request) =>
+            await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new CreateUnitCommand(
+                value.UnitList
+               ))
+             .Bind(command => Mediator.Send(command))
+                   .Match(Ok, BadRequest);
     #endregion
 
     #region Residents  

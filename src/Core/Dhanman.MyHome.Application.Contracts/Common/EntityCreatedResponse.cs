@@ -9,6 +9,7 @@ public sealed class EntityCreatedResponse
     public Guid Id { get; }
 
     public int IntId { get; }
+    public List<int> IntIds { get; }
     #endregion
 
     #region Constructor
@@ -19,5 +20,6 @@ public sealed class EntityCreatedResponse
     public EntityCreatedResponse(Guid id) => Id = id;
 
     public EntityCreatedResponse(int id) => IntId = id;
+    public EntityCreatedResponse(List<int> ids) => IntIds = ids;
     #endregion
 }
