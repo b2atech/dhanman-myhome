@@ -48,13 +48,12 @@ public class CreateUnitCommandHandler : ICommandHandler<CreateUnitCommand, Resul
             int unitTypeId = await _unitTypeRepository.GetBydNameAsync(item.FlatType);
             int occupancyTypeId = await _occupancyTypeRepository.GetBydNameAsync(item.Occupancy);
             int occupantTypeId = await _occupantTypeRepository.GetBydNameAsync(item.Occupant);
-            var unit = new Unit(nextunitId, item.Flat, floorId, unitTypeId, occupantTypeId, occupancyTypeId, item.eIntercom, item.PrimaryEIntercom, item.Latitude, item.Longitude, item.CreatedBy);
+            var unit = new Unit(nextunitId, item.Flat, floorId, unitTypeId, occupantTypeId, occupancyTypeId, item.PrimaryEIntercom, item.EIntercom,  item.Latitude, item.Longitude, item.CreatedBy);
 
             unitList.Add(unit);
             nextunitId++;
 
         }
-
 
         _dbContext.SetInt<Unit>().AddRange(unitList);
 
