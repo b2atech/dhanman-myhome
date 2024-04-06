@@ -1,5 +1,6 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
+using Dhanman.MyHome.Application.Constants;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Events;
 using Dhanman.MyHome.Domain.Abstractions;
@@ -33,7 +34,7 @@ public class UpdateRequestRejectStatusCommandHandler : ICommandHandler<UpdateReq
             throw new RequestIdNotFoundException(request.Id);
         }
 
-        updateRequestRejectStatus.RequestStatusId = 3;
+        updateRequestRejectStatus.RequestStatusId = ResidentRequestStatus.REJECTED;
 
         _residentRequestRepository.Update(updateRequestRejectStatus);
 
