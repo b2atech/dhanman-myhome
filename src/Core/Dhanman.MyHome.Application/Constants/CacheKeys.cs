@@ -64,6 +64,34 @@ public static class CacheKeys
         public const string ApartmentList = CacheKeyPrefix + "-list-{1}";
 
         public const string ApartmentById = CacheKeyPrefix + "-by-id-{1}";
+
+        public const string ApartmentNameList = CacheKeyPrefix + "-list-{1}";
+    }
+    #endregion  
+
+    #region Floors
+    public static class Floors
+    {
+        public const string CacheKeyPrefix = "floors-{0}";
+
+        public const string FloorList = CacheKeyPrefix + "-list-{1}";
+
+        public const string FloorNameList = CacheKeyPrefix + "-list-{1}";
+
+        public const string FloorById = CacheKeyPrefix + "-by-id-{1}";
+    }
+    #endregion  
+
+    #region Gates
+    public static class Gates
+    {
+        public const string CacheKeyPrefix = "gates-{0}";
+
+        public const string GateList = CacheKeyPrefix + "-list-{1}";
+
+        public const string GateNameList = CacheKeyPrefix + "-list-{1}";
+
+        public const string GateById = CacheKeyPrefix + "-by-id-{1}";
     }
     #endregion  
 

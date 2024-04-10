@@ -10,6 +10,8 @@ using Dhanman.MyHome.Application.Contracts.Units;
 using Dhanman.MyHome.Application.Contracts.Vehicles;
 using Dhanman.MyHome.Application.Features.Apartments.Queries;
 using Dhanman.MyHome.Application.Features.Buildings.Queries;
+using Dhanman.MyHome.Application.Contracts.Floors;
+using Dhanman.MyHome.Application.Contracts.Gates;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.CreateResidentRequest;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.UpdateRequestApproveStatus;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.UpdateRequestRejectStatus;
@@ -19,9 +21,14 @@ using Dhanman.MyHome.Application.Features.Residents.Queries;
 using Dhanman.MyHome.Application.Features.Units.Command.CreateUnit;
 using Dhanman.MyHome.Application.Features.Units.Queries;
 using Dhanman.MyHome.Application.Features.Vehicles.Queries;
+using Dhanman.MyHome.Application.Features.Floors.Queries;
+using Dhanman.MyHome.Application.Features.Gates.Queries;
+
 using Dhanman.MyHome.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Dhanman.MyHome.Application.Contracts.Floors;
+using Dhanman.MyHome.Application.Contracts.Gates;
 
 namespace Dhanman.MyHome.Api.Controllers;
 
@@ -221,6 +228,56 @@ public class ApartmentsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [HttpGet(ApiRoutes.Apartments.GetApartmentNames)]
+    [ProducesResponseType(typeof(ApartmentNameListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllApartmentNames() =>
+    await Result.Success(new GetAllApartmentNamesQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
     #endregion
+
+    #region Floors
+
+    [HttpGet(ApiRoutes.Floors.GetFloors)]
+    [ProducesResponseType(typeof(FloorListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllFloors(int buildingId) =>
+    await Result.Success(new GetAllFloorsQuery(buildingId))
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
+    [HttpGet(ApiRoutes.Floors.GetFloorNames)]
+    [ProducesResponseType(typeof(FloorNameListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllFloorNames(int buildingId) =>
+    await Result.Success(new GetAllFloorNamesQuery(buildingId))
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
+
+    #endregion
+
+    #region Gates
+
+    [HttpGet(ApiRoutes.Gates.GetGates)]
+    [ProducesResponseType(typeof(GateListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllGates() =>
+    await Result.Success(new GetAllGatesQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
+    [HttpGet(ApiRoutes.Gates.GetGateNames)]
+    [ProducesResponseType(typeof(GateNameListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllGateNames() =>
+    await Result.Success(new GetAllGateNamesQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
+    #endregion
+
 
 }
