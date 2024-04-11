@@ -113,5 +113,16 @@ namespace Dhanman.MyHome.Domain
 
             public static Error InvalidFormat => new Error("PhoneNumber.InvalidFormat", "The phone number format is invalid.");
         }
+
+        #region AddressLine
+        public static class AddressLine
+        {
+            public static Error NullOrEmpty => new Error("AddressLine.NullOrEmpty", "The address line is required.");
+
+            public static Error LongerThanAllowed => new Error(
+                "AddressLine.LongerThanAllowed",
+                "The address line is longer than allowed.");
+        }
+        #endregion
     }
 }

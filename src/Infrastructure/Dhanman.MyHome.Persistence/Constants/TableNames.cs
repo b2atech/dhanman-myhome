@@ -61,5 +61,15 @@ internal static class TableNames
     internal const string VisitorLogs = "visitor_logs";
 
     internal const string VisitorTypes = "visitor_types";
+
+    internal const string Addresses = "addresses";
+
+    internal const string Banks = "banks";
+
+    internal const string Countries = "countries";
+
+    internal const string States = "states";
+
+    internal const string Cities = "cities";
 }
  
