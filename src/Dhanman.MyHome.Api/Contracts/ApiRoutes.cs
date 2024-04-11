@@ -88,10 +88,40 @@ public static class ApiRoutes
 
         public const string GetApartments = apiVersion + "apartments";
 
+        public const string GetApartmentNames = apiVersion + "apartmentNames";
+
         public const string GetApartmentById = apiVersion + "apartments/{apartmentId:guid}";
 
         public const string UpdateApartments = apiVersion + "updateApartments";
 
     }
+
+    public static class Floors
+    {
+        public const string CreateFloor = apiVersion + "floor";
+
+        public const string GetFloors = apiVersion + "floor/{buildingId:int}";
+
+        public const string GetFloorNames = apiVersion + "floorNames/{buildingId:int}";
+
+        public const string GetFloorById = apiVersion + "floor/{buildingId:int}";
+
+        public const string UpdateFloors = apiVersion + "updateFloor";
+
+    }
+    public static class Gates
+    {
+        public const string CreateGate = apiVersion + "gate";
+
+        public const string GetGates = apiVersion + "gates";
+
+        public const string GetGateNames = apiVersion + "gateNames";
+
+        public const string GetGatesById = apiVersion + "gate/{gateId:int}";
+
+        public const string UpdateGates = apiVersion + "updateGate";
+
+    }
+
 
 }
