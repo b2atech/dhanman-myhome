@@ -11,6 +11,9 @@ public class Unit : EntityInt, IAuditableEntity, ISoftDeletableEntity
     
     //Residential, Commercial, Facilities, Security, Business, Parcel, Non Member
     public int UnitTypeId { get; set; }
+    public Guid AccountId { get; set; }
+    public float Area { get; set; }
+    public float BHKType { get; set; }
 
     //Owner, Tenant, Family, Co-owner, Tenant Family, Don't know, Multitenant, Builder, Empty
     public int OccupantTypeId { get; set; }
@@ -18,9 +21,6 @@ public class Unit : EntityInt, IAuditableEntity, ISoftDeletableEntity
     //Rented, Owned, Inactive,
     public int OccupancyTypeId { get; set; }
     public string PhoneExtention{ get; set; }
-    
-   
-
     public string eIntercom { get; set; }
     public string Latitude { get; set; }
     public string Longitude { get; set; }

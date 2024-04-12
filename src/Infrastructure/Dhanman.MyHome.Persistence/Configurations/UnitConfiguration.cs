@@ -18,6 +18,12 @@ internal sealed class UnitConfiguration : IEntityTypeConfiguration<Unit>
 
         builder.Property(units => units.UnitTypeId).HasColumnName("unit_type_id").IsRequired();
 
+        builder.Property(units => units.AccountId).HasColumnName("account_id").IsRequired();
+
+        builder.Property(units => units.Area).HasColumnName("area").IsRequired();
+
+        builder.Property(units => units.BHKType).HasColumnName("bhk_type").IsRequired();
+
         builder.Property(units => units.OccupantTypeId).HasColumnName("occupant_type_id").IsRequired();
 
         builder.Property(units => units.OccupancyTypeId).HasColumnName("occupancy_type_id").IsRequired();
