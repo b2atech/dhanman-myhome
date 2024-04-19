@@ -14,7 +14,7 @@ public class GetAllUnitsQuery : ICacheableQuery<Result<UnitListResponse>>
     #endregion
 
     #region Methodes
-    public string GetCacheKey() => string.Format(CacheKeys.Units.UnitList, "user");
+    public string GetCacheKey() => string.Format(CacheKeys.Units.UnitList, "user", "");
     #endregion 
 
 }

@@ -15,7 +15,7 @@ public class GetAllResidentNamesQuery : ICacheableQuery<Result<ResidentNameListR
     #endregion
 
     #region Methodes
-    public string GetCacheKey() => string.Format(CacheKeys.Residents.ResidentList, "user");
+    public string GetCacheKey() => string.Format(CacheKeys.Residents.ResidentList, "user", "");
     #endregion 
 
 }

@@ -9,7 +9,7 @@ public class GetAllApartmentsQuery : ICacheableQuery<Result<ApartmentListRespons
 {
   
     #region Methodes
-    public string GetCacheKey() => string.Format(CacheKeys.Apartments.ApartmentList, "user");
+    public string GetCacheKey() => string.Format(CacheKeys.Apartments.ApartmentList, "user", "");
     #endregion 
 
 }

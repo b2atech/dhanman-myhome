@@ -8,7 +8,7 @@ namespace Dhanman.MyHome.Application.Features.Gates.Queries;
 public class GetAllGatesQuery : ICacheableQuery<Result<GateListResponse>>
 {
     #region Methodes
-    public string GetCacheKey() => string.Format(CacheKeys.Gates.GateList, "user");
+    public string GetCacheKey() => string.Format(CacheKeys.Gates.GateList, "user", "");
     #endregion 
 
 }
