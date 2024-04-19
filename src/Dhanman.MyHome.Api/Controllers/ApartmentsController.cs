@@ -29,6 +29,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Dhanman.MyHome.Application.Contracts.Floors;
 using Dhanman.MyHome.Application.Contracts.Gates;
+using Dhanman.MyHome.Application.Contracts.OccupancyTypes;
+using Dhanman.MyHome.Application.Features.OccupancyTypes.Queries;
 
 namespace Dhanman.MyHome.Api.Controllers;
 
@@ -279,5 +281,15 @@ public class ApartmentsController : ApiController
 
     #endregion
 
+    #region OccupancyTypes     
+
+    [HttpGet(ApiRoutes.OccupancyTypes.GetAllOccupancyTypes)]
+    [ProducesResponseType(typeof(OccupancyTypeListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllOccupancyTypes() =>
+    await Result.Success(new GetAllOccupancyTypesQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound); 
+    #endregion
 
 }

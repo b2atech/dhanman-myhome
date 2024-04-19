@@ -93,6 +93,16 @@ public static class CacheKeys
 
         public const string GateById = CacheKeyPrefix + "-by-id-{1}";
     }
-    #endregion  
+    #endregion
 
+    #region OccupancyTypes
+    public static class OccupancyTypes
+    {
+        public const string CacheKeyPrefix = "occupancyTypes-{0}";
+
+        public const string OccupancyTypeList = CacheKeyPrefix + "-list-{1}";
+
+        public const string OccupancyTypeById = CacheKeyPrefix + "-by-id-{1}";
+    }
+    #endregion  
 }
