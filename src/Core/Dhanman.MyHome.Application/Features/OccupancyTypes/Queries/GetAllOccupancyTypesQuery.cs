@@ -15,7 +15,7 @@ public class GetAllOccupancyTypesQuery : ICacheableQuery<Result<OccupancyTypeLis
     #endregion
 
     #region Methodes
-    public string GetCacheKey() => string.Format(CacheKeys.OccupancyTypes.OccupancyTypeList, "user");
+    public string GetCacheKey() => string.Format(CacheKeys.OccupancyTypes.OccupancyTypeList, "user", "");
     #endregion 
 
 }
