@@ -123,5 +123,11 @@ public static class ApiRoutes
 
     }
 
+    public static class OccupancyTypes
+    {       
+        public const string GetAllOccupancyTypes = apiVersion + "occupancyTypes";        
+
+    }
+
 
 }
