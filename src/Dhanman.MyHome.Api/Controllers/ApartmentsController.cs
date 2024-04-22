@@ -31,6 +31,8 @@ using Dhanman.MyHome.Application.Contracts.Floors;
 using Dhanman.MyHome.Application.Contracts.Gates;
 using Dhanman.MyHome.Application.Contracts.OccupancyTypes;
 using Dhanman.MyHome.Application.Features.OccupancyTypes.Queries;
+using Dhanman.MyHome.Application.Contracts.Visitors;
+using Dhanman.MyHome.Application.Features.Visitors.Queries;
 
 namespace Dhanman.MyHome.Api.Controllers;
 
@@ -289,7 +291,26 @@ public class ApartmentsController : ApiController
     public async Task<IActionResult> GetAllOccupancyTypes() =>
     await Result.Success(new GetAllOccupancyTypesQuery())
     .Bind(query => Mediator.Send(query))
-    .Match(Ok, NotFound); 
+    .Match(Ok, NotFound);
     #endregion
 
+    #region Visitors   
+     
+    [HttpGet(ApiRoutes.Visitors.GetAllVisitors)]
+    [ProducesResponseType(typeof(VisitorListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllVisitors() =>
+    await Result.Success(new GetAllVisitorsQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
+    [HttpGet(ApiRoutes.Visitors.GetAllVisitorNames)]
+    [ProducesResponseType(typeof(VisitorNameListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllVisitorNames() =>
+    await Result.Success(new GetAllVisitorNamesQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
+    #endregion
 }
