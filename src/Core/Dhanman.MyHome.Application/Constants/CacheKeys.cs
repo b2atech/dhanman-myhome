@@ -45,6 +45,7 @@ public static class CacheKeys
         public const string ResidentRequestById = CacheKeyPrefix + "-by-id-{1}";
     }
     #endregion  
+
     #region Vehicles
     public static class Vehicles
     {
@@ -104,5 +105,17 @@ public static class CacheKeys
 
         public const string OccupancyTypeById = CacheKeyPrefix + "-by-id-{1}";
     }
-    #endregion  
+    #endregion
+
+    #region Visitors
+    public static class Visitors
+    {
+        public const string CacheKeyPrefix = "visitors-{0}";
+
+        public const string VisitorList = CacheKeyPrefix + "-list-{1}";
+
+        public const string VisitorById = CacheKeyPrefix + "-by-id-{1}";
+    }
+    #endregion
+    
 }
