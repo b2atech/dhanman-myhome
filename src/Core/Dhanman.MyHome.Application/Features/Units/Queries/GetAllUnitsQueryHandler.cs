@@ -52,6 +52,8 @@ public class GetAllUnitsQueryHandler : IQueryHandler<GetAllUnitsQuery, Result<Un
                               .Where(p => p.Id == e.Unit.OccupancyTypeId)
                               .Select(p => p.Name).FirstOrDefault(),
                           e.NumberOfMembers,
+                          e.Unit.Area,
+                          e.Unit.BHKType,
                           e.Unit.PhoneExtention,
                           e.Unit.CreatedOnUtc,
                           e.Unit.ModifiedOnUtc,
