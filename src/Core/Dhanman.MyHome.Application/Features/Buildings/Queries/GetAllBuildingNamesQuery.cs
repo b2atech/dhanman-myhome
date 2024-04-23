@@ -18,7 +18,7 @@ public class GetAllBuildingNamesQuery : ICacheableQuery<Result<BuildingNameListR
     #endregion
 
     #region Methodes
-    public string GetCacheKey() => string.Format(CacheKeys.Buildings.BuildingList, "user");
+    public string GetCacheKey() => string.Format(CacheKeys.Buildings.BuildingList, "user", "");
     #endregion 
 
 }

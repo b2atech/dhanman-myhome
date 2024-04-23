@@ -15,7 +15,7 @@ public class GetAllVehicleNamesQuery : ICacheableQuery<Result<VehicleNameListRes
     #endregion
 
     #region Methodes
-    public string GetCacheKey() => string.Format(CacheKeys.Vehicles.VehicleList, "user");
+    public string GetCacheKey() => string.Format(CacheKeys.Vehicles.VehicleList, "user", "");
     #endregion 
 
 }

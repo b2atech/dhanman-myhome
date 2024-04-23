@@ -123,5 +123,24 @@ public static class ApiRoutes
 
     }
 
+    public static class OccupancyTypes
+    {       
+        public const string GetAllOccupancyTypes = apiVersion + "occupancyTypes";        
 
+    }
+
+    public static class Visitors
+    {
+        public const string CreateVisitor = apiVersion + "visitor";
+
+        public const string GetAllVisitors = apiVersion + "visitors";
+
+        public const string GetAllVisitorNames = apiVersion + "visitorNames";
+
+        public const string GetVisitorById = apiVersion + "visitor/{id:int}";
+
+        public const string UpdateVisitors = apiVersion + "updateVisitors";
+
+    }
+    
 }
