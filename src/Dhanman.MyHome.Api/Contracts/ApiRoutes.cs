@@ -37,7 +37,7 @@ public static class ApiRoutes
 
         public const string UpdateUnits = apiVersion + "updateUnits";
        
-        public const string GetAllUnitDetails = apiVersion + "unitDetails/{buildingId:int}/{occupanyTypeId:int}";
+        public const string GetAllUnitDetails = apiVersion + "unitDetail";
 
     }
 

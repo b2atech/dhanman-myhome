@@ -22,14 +22,14 @@ public class GetAllUnitDetailsQueryHandler : IQueryHandler<GetAllUnitDetailsQuer
     public async Task<Result<UnitDetailListResponse>> Handle(GetAllUnitDetailsQuery request, CancellationToken cancellationToken)
     {
         return await Result.Success(request)
-        .Ensure(query => query.BuildingId != null, Errors.General.EntityNotFound)
+        .Ensure(query => query != null, Errors.General.EntityNotFound)
         .Bind(async query =>
         {
             var unitDetails = await _dbContext.SetInt<Unit>()
             .AsNoTracking()
-            .Where(e => e.BuildingId == query.BuildingId && e.OccupancyTypeId == query.OccupancyTypeId)
             .Select(e => new UnitDetailResponse(
                           e.Id,
+                          e.BuildingId,
                           e.Name,         
                           e.FloorId,
                           _dbContext.SetInt<Floor>()

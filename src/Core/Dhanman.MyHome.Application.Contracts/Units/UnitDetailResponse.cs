@@ -4,6 +4,8 @@ public sealed class UnitDetailResponse
 {
     #region Properties 
     public int Id { get; }
+    public int BuildingId { get; set; }
+
     public string Name { get; }   // flat number 
     public int FloorId { get; }
     public string FloorNumber { get; }
@@ -22,9 +24,10 @@ public sealed class UnitDetailResponse
     #endregion
 
     #region Constructor
-    public UnitDetailResponse(int id, string name, int floorId, string floorNumber, int unitTypeId, string unitType, int occupantTypeId, string occupantType, float area, float bHKType, Guid accountId, string phoneExtention, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy)
+    public UnitDetailResponse(int id, int buildingId, string name, int floorId, string floorNumber, int unitTypeId, string unitType, int occupantTypeId, string occupantType, float area, float bHKType, Guid accountId, string phoneExtention, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy)
     {
         Id = id;
+        BuildingId = buildingId;
         Name = name;
         FloorId = floorId;
         FloorNumber = floorNumber;
