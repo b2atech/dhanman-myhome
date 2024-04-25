@@ -21,7 +21,7 @@ public class GetAllUnitDetailsQuery : ICacheableQuery<Result<UnitDetailListRespo
     #endregion
 
     #region Methodes
-    public string GetCacheKey() => string.Format(CacheKeys.Units.UnitList, "user", BuildingId, OccupancyTypeId);
+    public string GetCacheKey() => string.Format(CacheKeys.Units.UnitList, "user", BuildingId);
     #endregion 
 
 }
