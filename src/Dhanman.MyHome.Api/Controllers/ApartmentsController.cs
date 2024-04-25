@@ -4,14 +4,19 @@ using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Apartments;
 using Dhanman.MyHome.Application.Contracts.Buildings;
 using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.MyHome.Application.Contracts.Floors;
+using Dhanman.MyHome.Application.Contracts.Gates;
+using Dhanman.MyHome.Application.Contracts.OccupancyTypes;
 using Dhanman.MyHome.Application.Contracts.ResidentRequests;
 using Dhanman.MyHome.Application.Contracts.Residents;
 using Dhanman.MyHome.Application.Contracts.Units;
 using Dhanman.MyHome.Application.Contracts.Vehicles;
+using Dhanman.MyHome.Application.Contracts.Visitors;
 using Dhanman.MyHome.Application.Features.Apartments.Queries;
 using Dhanman.MyHome.Application.Features.Buildings.Queries;
-using Dhanman.MyHome.Application.Contracts.Floors;
-using Dhanman.MyHome.Application.Contracts.Gates;
+using Dhanman.MyHome.Application.Features.Floors.Queries;
+using Dhanman.MyHome.Application.Features.Gates.Queries;
+using Dhanman.MyHome.Application.Features.OccupancyTypes.Queries;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.CreateResidentRequest;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.UpdateRequestApproveStatus;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.UpdateRequestRejectStatus;
@@ -21,18 +26,10 @@ using Dhanman.MyHome.Application.Features.Residents.Queries;
 using Dhanman.MyHome.Application.Features.Units.Command.CreateUnit;
 using Dhanman.MyHome.Application.Features.Units.Queries;
 using Dhanman.MyHome.Application.Features.Vehicles.Queries;
-using Dhanman.MyHome.Application.Features.Floors.Queries;
-using Dhanman.MyHome.Application.Features.Gates.Queries;
-
+using Dhanman.MyHome.Application.Features.Visitors.Queries;
 using Dhanman.MyHome.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Dhanman.MyHome.Application.Contracts.Floors;
-using Dhanman.MyHome.Application.Contracts.Gates;
-using Dhanman.MyHome.Application.Contracts.OccupancyTypes;
-using Dhanman.MyHome.Application.Features.OccupancyTypes.Queries;
-using Dhanman.MyHome.Application.Contracts.Visitors;
-using Dhanman.MyHome.Application.Features.Visitors.Queries;
 
 namespace Dhanman.MyHome.Api.Controllers;
 
@@ -69,6 +66,14 @@ public class ApartmentsController : ApiController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAllUnits() =>
     await Result.Success(new GetAllUnitsQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
+    [HttpGet(ApiRoutes.Units.GetAllUnitDetails)]
+    [ProducesResponseType(typeof(UnitDetailListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllUnitDetails(int buildingId, int occupanyTypeId) =>
+    await Result.Success(new GetAllUnitDetailsQuery(buildingId, occupanyTypeId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 

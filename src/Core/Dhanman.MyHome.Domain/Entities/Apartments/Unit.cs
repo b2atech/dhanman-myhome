@@ -7,6 +7,7 @@ public class Unit : EntityInt, IAuditableEntity, ISoftDeletableEntity
 {
     #region Properties
     public string Name { get; set; }
+    public int BuildingId { get; set; }
     public int FloorId { get; set; }
     
     //Residential, Commercial, Facilities, Security, Business, Parcel, Non Member
