@@ -14,6 +14,8 @@ internal sealed class UnitConfiguration : IEntityTypeConfiguration<Unit>
 
         builder.Property(units => units.Name).HasColumnName("name").IsRequired();
 
+        builder.Property(units => units.BuildingId).HasColumnName("building_id").IsRequired();
+
         builder.Property(units => units.FloorId).HasColumnName("floor_id").IsRequired();
 
         builder.Property(units => units.UnitTypeId).HasColumnName("unit_type_id").IsRequired();
