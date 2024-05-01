@@ -30,7 +30,8 @@ public class GetAllUnitDetailsQueryHandler : IQueryHandler<GetAllUnitDetailsQuer
             .Where(e => e.BuildingId == query.BuildingId && e.OccupancyTypeId == query.OccupancyTypeId)
             .Select(e => new UnitDetailResponse(
                           e.Id,
-                          e.Name,         
+                          e.Name,   
+                          e.CustomerId,
                           e.FloorId,
                           _dbContext.SetInt<Floor>()
                               .Where(p => p.Id == e.FloorId)
@@ -45,12 +46,7 @@ public class GetAllUnitDetailsQueryHandler : IQueryHandler<GetAllUnitDetailsQuer
                               .Select(p => p.Name).FirstOrDefault(),                                            
                           e.Area,
                           e.BHKType,
-                          e.AccountId,
-                          e.PhoneExtention,
-                          e.CreatedOnUtc,
-                          e.ModifiedOnUtc,
-                          e.CreatedBy,
-                          e.ModifiedBy))
+                          e.AccountId))
                     .ToListAsync(cancellationToken);
 
             var listResponse = new UnitDetailListResponse(unitDetails);
