@@ -5,6 +5,7 @@ public sealed class UnitDetailResponse
     #region Properties 
     public int Id { get; }
     public string Name { get; }   // flat number 
+    public Guid CustomerId { get; }
     public int FloorId { get; }
     public string FloorNumber { get; }
     public int UnitTypeId { get; } // Flat Type
@@ -14,18 +15,14 @@ public sealed class UnitDetailResponse
     public float Area { get; }
     public float BHKType { get; }
     public Guid AccountId { get; }
-    public string PhoneExtention { get; }
-    public DateTime CreatedOnUtc { get; }
-    public DateTime? ModifiedOnUtc { get; }
-    public Guid CreatedBy { get; }
-    public Guid? ModifiedBy { get; }
     #endregion
 
     #region Constructor
-    public UnitDetailResponse(int id, string name, int floorId, string floorNumber, int unitTypeId, string unitType, int occupantTypeId, string occupantType, float area, float bHKType, Guid accountId, string phoneExtention, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy)
+    public UnitDetailResponse(int id, string name, Guid customerId, int floorId, string floorNumber, int unitTypeId, string unitType, int occupantTypeId, string occupantType, float area, float bHKType, Guid accountId)
     {
         Id = id;
         Name = name;
+        CustomerId = customerId;
         FloorId = floorId;
         FloorNumber = floorNumber;
         UnitTypeId = unitTypeId;
@@ -34,12 +31,7 @@ public sealed class UnitDetailResponse
         OccupantType = occupantType;       
         Area = area;
         BHKType = bHKType;
-        AccountId = accountId;
-        PhoneExtention = phoneExtention;
-        CreatedOnUtc = createdOnUtc;
-        ModifiedOnUtc = modifiedOnUtc;
-        CreatedBy = createdBy;
-        ModifiedBy = modifiedBy;
+        AccountId = accountId;        
     }
     #endregion
 }
