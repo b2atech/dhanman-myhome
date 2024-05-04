@@ -7,11 +7,13 @@ public class Unit : EntityInt, IAuditableEntity, ISoftDeletableEntity
 {
     #region Properties
     public string Name { get; set; }
+    public int BuildingId { get; set; }
     public int FloorId { get; set; }
     
     //Residential, Commercial, Facilities, Security, Business, Parcel, Non Member
     public int UnitTypeId { get; set; }
     public Guid AccountId { get; set; }
+    public Guid CustomerId { get; set; }
     public float Area { get; set; }
     public float BHKType { get; set; }
 
