@@ -14,8 +14,8 @@ public class Unit : EntityInt, IAuditableEntity, ISoftDeletableEntity
     public int UnitTypeId { get; set; }
     public Guid AccountId { get; set; }
     public Guid CustomerId { get; set; }
-    public float Area { get; set; }
-    public float BHKType { get; set; }
+    public decimal Area { get; set; }
+    public decimal BHKType { get; set; }
 
     //Owner, Tenant, Family, Co-owner, Tenant Family, Don't know, Multitenant, Builder, Empty
     public int OccupantTypeId { get; set; }
