@@ -17,4 +17,8 @@
     <!--<ProjectReference Include="..\..\..\..\b2a-framework\src\B2aTech.CrossCuttingConcern\B2aTech.CrossCuttingConcern.csproj" />-->
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Dhanman.MyHome.Application.Contracts\Dhanman.MyHome.Application.Contracts.csproj" />
+  </ItemGroup>
+
 </Project>
