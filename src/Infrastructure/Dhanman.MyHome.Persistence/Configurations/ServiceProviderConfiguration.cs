@@ -1,7 +1,7 @@
-﻿using Dhanman.MyHome.Domain.Entities.Apartments;
-using Dhanman.MyHome.Persistence.Constants;
+﻿using Dhanman.MyHome.Persistence.Constants;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using Dhanman.MyHome.Domain.Entities.ServiceProviders;
 
 namespace Dhanman.MyHome.Persistence.Configurations;
 

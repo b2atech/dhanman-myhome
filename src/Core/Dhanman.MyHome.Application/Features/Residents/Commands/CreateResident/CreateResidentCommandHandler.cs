@@ -3,7 +3,7 @@ using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Features.Residents.Events;
 using Dhanman.MyHome.Domain.Abstractions;
-using Dhanman.MyHome.Domain.Entities.Apartments;
+using Dhanman.MyHome.Domain.Entities.Residents;
 using MediatR;
 
 namespace Dhanman.MyHome.Application.Features.Residents.Commands.CreateResident;

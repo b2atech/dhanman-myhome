@@ -3,8 +3,14 @@ using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Units;
 using Dhanman.MyHome.Domain;
-using Dhanman.MyHome.Domain.Entities.Apartments;
+using Dhanman.MyHome.Domain.Entities.Floors;
+using Dhanman.MyHome.Domain.Entities.OccupancyTypes;
+using Dhanman.MyHome.Domain.Entities.OccupantTypes;
+using Dhanman.MyHome.Domain.Entities.Residents;
+using Dhanman.MyHome.Domain.Entities.Units;
+using Dhanman.MyHome.Domain.Entities.UnitTypes;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Dhanman.MyHome.Application.Features.Units.Queries;
 

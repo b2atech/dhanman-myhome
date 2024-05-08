@@ -4,6 +4,7 @@ using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Events;
 using Dhanman.MyHome.Domain.Abstractions;
 using Dhanman.MyHome.Domain.Entities.Apartments;
+using Dhanman.MyHome.Domain.Entities.Residents;
 using Dhanman.MyHome.Domain.Exceptions;
 using MediatR;
 using ResidentRequestStatus = Dhanman.MyHome.Application.Constants.ResidentRequestStatus;

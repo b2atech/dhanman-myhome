@@ -1,10 +1,10 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
-using Dhanman.MyHome.Domain;
 using Microsoft.EntityFrameworkCore;
 using Dhanman.MyHome.Application.Contracts.Gates;
-using Dhanman.MyHome.Domain.Entities.Apartments;
+using Dhanman.MyHome.Domain.Entities.Gates;
+using Dhanman.MyHome.Domain;
 
 namespace Dhanman.MyHome.Application.Features.Gates.Queries;
 

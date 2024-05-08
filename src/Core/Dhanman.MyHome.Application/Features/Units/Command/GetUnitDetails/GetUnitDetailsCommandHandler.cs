@@ -29,7 +29,7 @@ public sealed class GetUnitDetailsCommandHandler : ICommandHandler<GetUnitDetail
     public async Task<Result<UnitDetailListResponse>> Handle(GetUnitDetailsCommand request, CancellationToken cancellationToken)
     {
 
-        var unitDetailsQuery = _dbContext.SetInt<Domain.Entities.Apartments.Unit>().AsNoTracking();
+        var unitDetailsQuery = _dbContext.SetInt<Domain.Entities.Units.Unit>().AsNoTracking();
 
         if(request.BuildingIds != null && request.BuildingIds.Count > 0 && !request.BuildingIds.Contains(-1))
         {
