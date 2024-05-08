@@ -24,6 +24,7 @@ using Dhanman.MyHome.Application.Features.ResidentRequests.Queries;
 using Dhanman.MyHome.Application.Features.Residents.Commands.CreateResident;
 using Dhanman.MyHome.Application.Features.Residents.Queries;
 using Dhanman.MyHome.Application.Features.Units.Command.CreateUnit;
+using Dhanman.MyHome.Application.Features.Units.Command.GetUnitDetails;
 using Dhanman.MyHome.Application.Features.Units.Queries;
 using Dhanman.MyHome.Application.Features.Vehicles.Queries;
 using Dhanman.MyHome.Application.Features.Visitors.Queries;
@@ -69,14 +70,17 @@ public class ApartmentsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
-    [HttpGet(ApiRoutes.Units.GetAllUnitDetails)]
+    [HttpPost(ApiRoutes.Units.GetAllUnitDetails)]
     [ProducesResponseType(typeof(UnitDetailListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllUnitDetails(int buildingId, int occupanyTypeId) =>
-    await Result.Success(new GetAllUnitDetailsQuery(buildingId, occupanyTypeId))
-    .Bind(query => Mediator.Send(query))
-    .Match(Ok, NotFound);
-
+    public async Task<IActionResult> GetLedgerDetails([FromBody] GetUnitDetailRequest? request) =>
+    await Result.Create(request, Errors.General.BadRequest)
+                .Map(value => new GetUnitDetailsCommand(
+                    value.BuidingIds,
+                    value.OccupancyIds
+                  ))
+                .Bind(command => Mediator.Send(command))
+               .Match(Ok, BadRequest);
     [HttpGet(ApiRoutes.Units.GetAllUnitNames)]
     [ProducesResponseType(typeof(UnitNameListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
