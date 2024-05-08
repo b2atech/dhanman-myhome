@@ -1,6 +1,5 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Abstractions;
 using B2aTech.CrossCuttingConcern.Core.Primitives;
-using System;
 
 namespace Dhanman.MyHome.Domain.Entities.Apartments;
 

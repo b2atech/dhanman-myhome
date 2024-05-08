@@ -5,7 +5,6 @@ using Dhanman.MyHome.Application.Contracts.Authentication;
 using Dhanman.MyHome.Application.Features.Authentication.Commands.Login;
 using Dhanman.MyHome.Application.Features.Authentication.Commands.Register;
 using Dhanman.MyHome.Domain;
-using Dhanman.MyHome.Domain.Entities.UnitTypes;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
