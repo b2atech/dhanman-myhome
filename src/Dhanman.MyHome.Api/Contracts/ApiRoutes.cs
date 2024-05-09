@@ -148,6 +148,9 @@ public static class ApiRoutes
 
     public static class Events
     {
+
+        public const string GetAllEvents = apiVersion + "events";
+
         public const string CreateEvents = apiVersion + "events";
 
     }
