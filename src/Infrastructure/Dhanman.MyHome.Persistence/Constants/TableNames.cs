@@ -77,5 +77,7 @@ internal static class TableNames
     internal const string BookingsFacilities = "bookings_facilities";
 
     internal const string EventStatus = "event_status";
+
+    internal const string ServiceProviderSubType = "service_provider_sub_type";
 }
  

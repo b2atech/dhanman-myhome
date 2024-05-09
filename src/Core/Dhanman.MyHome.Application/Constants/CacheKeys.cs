@@ -129,7 +129,7 @@ public static class CacheKeys
     }
     #endregion
 
-    #region Events
+    #region BookingFacilities
     public static class BookingFacilities
     {
         public const string CacheKeyPrefix = " bookingFacilities-{0}";
@@ -137,6 +137,17 @@ public static class CacheKeys
         public const string BookingFacilitiesList = CacheKeyPrefix + "-list-{1}";
 
         public const string BookingFacilitiesById = CacheKeyPrefix + "-by-id-{1}";
+    }
+    #endregion
+
+    #region ServiceProviderSubType
+    public static class ServiceProviderSubType
+    {
+        public const string CacheKeyPrefix = " serviceProviderSubType-{0}";
+
+        public const string ServiceProviderSubTypeList = CacheKeyPrefix + "-list-{1}";
+
+        public const string ServiceProviderSubTypeById = CacheKeyPrefix + "-by-id-{1}";
     }
     #endregion
 
