@@ -1,9 +1,13 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
+using Dhanman.MyHome.Application.Contracts.BookingFacilites;
 using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.MyHome.Application.Contracts.Events;
 using Dhanman.MyHome.Application.Contracts.Residents;
+using Dhanman.MyHome.Application.Features.BookingFacilities.Queries;
 using Dhanman.MyHome.Application.Features.Events.Commands.CreateEvent;
+using Dhanman.MyHome.Application.Features.Events.Queries;
 using Dhanman.MyHome.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -39,8 +43,25 @@ public class EventsController : ApiController
             .Bind(command => Mediator.Send(command))
                   .Match(Ok, BadRequest);
 
-    #endregion
+    [HttpGet(ApiRoutes.Events.GetAllEvents)]
+    [ProducesResponseType(typeof(EventResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllEventts() =>
+    await Result.Success(new GetAllEventsQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
 
+    #endregion
+    #region Bookings
+    [HttpGet(ApiRoutes.BokkingFacilities.GetAllBokkingFacilities)]
+    [ProducesResponseType(typeof(BookingFacilitesResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllBokkingFacilities() =>
+  await Result.Success(new GetAllBookingFacilitesQuery())
+  .Bind(query => Mediator.Send(query))
+  .Match(Ok, NotFound);
+
+    #endregion
 
 
 }

@@ -3,7 +3,7 @@ using B2aTech.CrossCuttingConcern.Core.Primitives;
 
 namespace Dhanman.MyHome.Domain.Entities.BookingFacilites;
 
-public class BookingFacilitie : Entity, IAuditableEntity, ISoftDeletableEntity
+public class BookingFacilitie : EntityInt, IAuditableEntity, ISoftDeletableEntity
 {
     public int Id { get; set; }
     public string Name { get; set; }
