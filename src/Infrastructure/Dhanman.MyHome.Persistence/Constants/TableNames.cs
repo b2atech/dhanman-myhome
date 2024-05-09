@@ -81,5 +81,7 @@ internal static class TableNames
     internal const string VerificationTypes = "verification_types";
 
     internal const string ServiceProviderVerifications = "service_provider_verifications"; 
+
+    internal const string ServiceProviderSubType = "service_provider_sub_type";
 }
  

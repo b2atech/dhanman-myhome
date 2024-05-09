@@ -161,4 +161,11 @@ public static class ApiRoutes
         public const string GetAllBokkingFacilities = apiVersion + "bookingFacilities";
 
     }
+
+    public static class ServiceProviderSubType
+    {
+
+        public const string GetAllServiceProvderSubType = apiVersion + "serviceProviderSubType";
+
+    }
 }

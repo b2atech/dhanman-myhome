@@ -35,7 +35,7 @@ public class UnitsController : ApiController
     public async Task<IActionResult> GetLedgerDetails([FromBody] GetUnitDetailRequest? request) =>
     await Result.Create(request, Errors.General.BadRequest)
                 .Map(value => new GetUnitDetailsCommand(
-                    value.BuidingIds,
+                    value.BuildingIds,
                     value.OccupancyIds
                   ))
                 .Bind(command => Mediator.Send(command))
