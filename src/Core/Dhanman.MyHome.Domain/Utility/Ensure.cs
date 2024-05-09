@@ -1,4 +1,4 @@
-﻿using Dhanman.MyHome.Domain.Entities;
+﻿using Dhanman.MyHome.Domain.Entities.CommonEntities;
 
 namespace Dhanman.MyHome.Domain.Utility;
 

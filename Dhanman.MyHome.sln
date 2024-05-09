@@ -33,15 +33,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dhanman.Infrastructure.Auth
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unit", "unit", "{E54C6CBB-800B-41AC-BA34-532CE6ACD6B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dhanman.MyHome.Api.Tests", "test\unit\Dhanman.MyHome.Api.Tests\Dhanman.MyHome.Api.Tests.csproj", "{9406C597-3FC2-44D6-B8CC-E62CB55AD440}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dhanman.MyHome.Api.Tests", "test\unit\Dhanman.MyHome.Api.Tests\Dhanman.MyHome.Api.Tests.csproj", "{9406C597-3FC2-44D6-B8CC-E62CB55AD440}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dhanman.MyHome.Domain.Tests", "test\unit\Dhanman.MyHome.Domain.Tests\Dhanman.MyHome.Domain.Tests.csproj", "{4CCC7C38-53AF-4593-99A8-534EC2D38B94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dhanman.MyHome.Domain.Tests", "test\unit\Dhanman.MyHome.Domain.Tests\Dhanman.MyHome.Domain.Tests.csproj", "{4CCC7C38-53AF-4593-99A8-534EC2D38B94}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "integration", "integration", "{89240ECA-859A-4915-8E17-564D812572FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dhanman.MyHome.Api.Integration.Tests", "test\integration\Dhanman.MyHome.Integration.Tests\Dhanman.MyHome.Api.Integration.Tests.csproj", "{941ADFF6-BEA4-492D-BC0F-1FB4BB078017}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dhanman.MyHome.Api.Integration.Tests", "test\integration\Dhanman.MyHome.Integration.Tests\Dhanman.MyHome.Api.Integration.Tests.csproj", "{941ADFF6-BEA4-492D-BC0F-1FB4BB078017}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dhanman.MyHome.Database.Integration.Tests", "test\integration\Dhanman.MyHome.Database.Integration.Tests\Dhanman.MyHome.Database.Integration.Tests.csproj", "{B9DF794E-2148-431A-9185-B8569BF48DB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dhanman.MyHome.Database.Integration.Tests", "test\integration\Dhanman.MyHome.Database.Integration.Tests\Dhanman.MyHome.Database.Integration.Tests.csproj", "{B9DF794E-2148-431A-9185-B8569BF48DB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

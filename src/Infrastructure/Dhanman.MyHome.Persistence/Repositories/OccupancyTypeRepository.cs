@@ -1,6 +1,7 @@
 ﻿using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Domain.Abstractions;
-using Dhanman.MyHome.Domain.Entities.Apartments;
+using Dhanman.MyHome.Domain.Entities.OccupancyTypes;
+using Dhanman.MyHome.Domain.Entities.OccupantTypes;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dhanman.MyHome.Persistence.Repositories;

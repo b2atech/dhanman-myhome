@@ -1,8 +1,7 @@
 ﻿using Dhanman.MyHome.Application.Abstractions.Data;
-using Dhanman.MyHome.Application.Contracts.Units;
 using Dhanman.MyHome.Domain.Abstractions;
+using Dhanman.MyHome.Domain.Entities.Units;
 using Microsoft.EntityFrameworkCore;
-using Unit = Dhanman.MyHome.Domain.Entities.Apartments.Unit;
 
 namespace Dhanman.MyHome.Persistence.Repositories;
 

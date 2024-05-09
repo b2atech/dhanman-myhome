@@ -37,7 +37,8 @@ public static class ApiRoutes
 
         public const string UpdateUnits = apiVersion + "updateUnits";
        
-        public const string GetAllUnitDetails = apiVersion + "unitDetails/{buildingId:int}/{occupanyTypeId:int}";
+        public const string GetAllUnitDetails = apiVersion + "unitDetails";
+
 
     }
 
@@ -144,5 +145,20 @@ public static class ApiRoutes
         public const string UpdateVisitors = apiVersion + "updateVisitors";
 
     }
-    
+
+    public static class Events
+    {
+
+        public const string GetAllEvents = apiVersion + "events";
+
+        public const string CreateEvents = apiVersion + "events";
+
+    }
+
+    public static class BokkingFacilities
+    {
+
+        public const string GetAllBokkingFacilities = apiVersion + "bookingFacilities";
+
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Exceptions;
+using Dhanman.MyHome.Domain.Entities.UnitTypes;
 
 namespace Dhanman.MyHome.Domain.Authorization;
 

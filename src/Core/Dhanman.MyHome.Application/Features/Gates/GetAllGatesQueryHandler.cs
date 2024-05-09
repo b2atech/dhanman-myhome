@@ -4,6 +4,9 @@ using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Gates;
 using Dhanman.MyHome.Domain;
 using Dhanman.MyHome.Domain.Entities.Apartments;
+using Dhanman.MyHome.Domain.Entities.Buildings;
+using Dhanman.MyHome.Domain.Entities.Gates;
+using Dhanman.MyHome.Domain.Entities.GateTypes;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dhanman.MyHome.Application.Features.Gates.Queries;
