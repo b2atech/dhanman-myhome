@@ -20,9 +20,11 @@ internal sealed class ServiceProviderConfiguration : IEntityTypeConfiguration<Se
 
         builder.Property(serviceProviders => serviceProviders.VisitingFrom).HasColumnName("visiting_from").IsRequired(); 
         
-        builder.Property(serviceProviders => serviceProviders.ContactNumber).HasColumnName("contact_number").IsRequired();             
+        builder.Property(serviceProviders => serviceProviders.ContactNumber).HasColumnName("contact_number").IsRequired();
 
-        builder.Property(serviceProviders => serviceProviders.AddressId).HasColumnName("address_id").IsRequired();
+        builder.Property(serviceProviders => serviceProviders.PrermanentAddressId).HasColumnName("permanent_address_id").IsRequired();
+
+        builder.Property(serviceProviders => serviceProviders.PresentAddressId).HasColumnName("present_address_id").IsRequired();
 
         builder.Property(serviceProviders => serviceProviders.ServiceProviderTypeId).HasColumnName("service_provider_type_id").IsRequired();
 
@@ -31,6 +33,8 @@ internal sealed class ServiceProviderConfiguration : IEntityTypeConfiguration<Se
         builder.Property(serviceProviders => serviceProviders.IdentityTypeId).HasColumnName("identity_type_id").IsRequired();
 
         builder.Property(serviceProviders => serviceProviders.IdentityNumber).HasColumnName("identity_number").IsRequired();
+
+        builder.Property(serviceProviders => serviceProviders.IdentityImage).HasColumnName("identity_image").HasColumnType("bytea").IsRequired(false);
 
         builder.Property(serviceProviders => serviceProviders.CreatedBy).HasColumnType("uuid");
 
