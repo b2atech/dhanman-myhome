@@ -24,6 +24,8 @@
 
   <ItemGroup>
     <Folder Include="Dhanman\MyHome\Domain\Entities\UnitTypes\" />
+    <Folder Include="Features\BookingFacilities\Commands\" />
+    <Folder Include="Features\BookingFacilities\Events\" />
   </ItemGroup>
 
 </Project>

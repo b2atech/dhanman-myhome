@@ -5,7 +5,7 @@ using Dhanman.MyHome.Application.Contracts.Events;
 
 namespace Dhanman.MyHome.Application.Features.Events.Queries;
 
-public class GetAllEventsQuery:ICacheableQuery<Result<EventListResponse>>
+public class GetAllEventsQuery : ICacheableQuery<Result<EventListResponse>>
 {
     #region Properties     
     #endregion
