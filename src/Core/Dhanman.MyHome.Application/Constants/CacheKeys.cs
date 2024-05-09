@@ -129,4 +129,15 @@ public static class CacheKeys
     }
     #endregion
 
+    #region Events
+    public static class BookingFacilities
+    {
+        public const string CacheKeyPrefix = " bookingFacilities-{0}";
+
+        public const string BookingFacilitiesList = CacheKeyPrefix + "-list-{1}";
+
+        public const string BookingFacilitiesById = CacheKeyPrefix + "-by-id-{1}";
+    }
+    #endregion
+
 }

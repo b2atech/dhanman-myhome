@@ -155,4 +155,10 @@ public static class ApiRoutes
 
     }
 
+    public static class BokkingFacilities
+    {
+
+        public const string GetAllBokkingFacilities = apiVersion + "bookingFacilities";
+
+    }
 }
