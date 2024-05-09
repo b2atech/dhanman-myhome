@@ -75,5 +75,9 @@ internal static class TableNames
     internal const string Events = "events";
 
     internal const string BookingsFacilities = "bookings_facilities";
+
+    internal const string VerificationTypes = "verification_types";
+
+    internal const string ServiceProviderVerifications = "service_provider_verifications"; 
 }
  
