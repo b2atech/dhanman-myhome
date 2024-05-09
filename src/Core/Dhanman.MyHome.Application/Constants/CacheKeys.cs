@@ -117,5 +117,16 @@ public static class CacheKeys
         public const string VisitorById = CacheKeyPrefix + "-by-id-{1}";
     }
     #endregion
-    
+
+    #region Events
+    public static class Events
+    {
+        public const string CacheKeyPrefix = "events-{0}";
+
+        public const string EventList = CacheKeyPrefix + "-list-{1}";
+
+        public const string EventById = CacheKeyPrefix + "-by-id-{1}";
+    }
+    #endregion
+
 }
