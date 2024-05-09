@@ -71,5 +71,9 @@ internal static class TableNames
     internal const string States = "states";
 
     internal const string Cities = "cities";
+
+    internal const string Events = "events";
+
+    internal const string BookingsFacilities = "bookings_facilities";
 }
  
