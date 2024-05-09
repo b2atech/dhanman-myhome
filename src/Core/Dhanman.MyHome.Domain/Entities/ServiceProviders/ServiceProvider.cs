@@ -11,7 +11,8 @@ public class ServiceProvider : EntityInt, IAuditableEntity, ISoftDeletableEntity
     public string? Email { get; set; }
     public string VisitingFrom { get; set; }
     public string ContactNumber { get; set; }
-    public int AddressId { get; set; }
+    public Guid PrermanentAddressId { get; set; }
+    public Guid PresentAddressId { get; set; }
     //Daily Help
     //Tutors
     //Handyman
@@ -23,9 +24,11 @@ public class ServiceProvider : EntityInt, IAuditableEntity, ISoftDeletableEntity
     //Society Maintenance Staff
     //Full Time Helps
     public int ServiceProviderTypeId { get; set; }
+    public int ServiceProviderSubTypeId { get; set; }
     public string? VehicleNumber { get; set; }
     public int IdentityTypeId { get; set; }
     public string IdentityNumber { get; set; }
+    public byte[] IdentityImage { get; set; }
     #endregion
 
     #region Audit Properties
@@ -43,7 +46,7 @@ public class ServiceProvider : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public ServiceProvider(int id, string firstName, string? lastName, string? email, string visitingFrom, string contactNumber, int addressId, int serviceProviderTypeId, string? vehicleNumber, int identityTypeId, string identityNumber, Guid createdBy)
+    public ServiceProvider(int id, string firstName, string? lastName, string? email, string visitingFrom, string contactNumber, Guid prermanentAddressId, Guid presentAddressId, int serviceProviderTypeId, string? vehicleNumber, int identityTypeId, string identityNumber, Guid createdBy)
     {
         Id = id;
         FirstName = firstName;
@@ -51,13 +54,14 @@ public class ServiceProvider : EntityInt, IAuditableEntity, ISoftDeletableEntity
         Email = email;
         VisitingFrom = visitingFrom;
         ContactNumber = contactNumber;
-        AddressId = addressId;
+        PrermanentAddressId = prermanentAddressId;
+        PresentAddressId = presentAddressId;
         ServiceProviderTypeId = serviceProviderTypeId;
         VehicleNumber = vehicleNumber;
         IdentityTypeId = identityTypeId;
         IdentityNumber = identityNumber;
         CreatedBy = createdBy;
         CreatedOnUtc = DateTime.UtcNow;
-    }
+    }    
     #endregion
 }
