@@ -162,6 +162,21 @@ public static class ApiRoutes
 
     }
 
+    public static class ServiceProviders
+    {
+        public const string CreateServiceProvider = apiVersion + "serviceProviders";
+
+        public const string GetAllServiceProviders = apiVersion + "serviceProviders";
+
+        public const string GetAllServiceProviderNames = apiVersion + "serviceProviderNames";
+
+        public const string GetServiceProviderById = apiVersion + "serviceProvider/{id:int}";
+
+        public const string UpdateServiceProviders = apiVersion + "updateServiceProviders";
+
+    }
+    
+
     public static class ServiceProviderSubType
     {
 
