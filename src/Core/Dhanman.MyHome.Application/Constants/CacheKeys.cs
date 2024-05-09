@@ -151,4 +151,15 @@ public static class CacheKeys
     }
     #endregion
 
+    #region ServiceProviders
+    public static class ServiceProviders
+    {
+        public const string CacheKeyPrefix = "serviceProviders-{0}";
+
+        public const string ServiceProviderList = CacheKeyPrefix + "-list-{1}";
+
+        public const string ServiceProviderById = CacheKeyPrefix + "-by-id-{1}";
+    }
+    #endregion    
+
 }
