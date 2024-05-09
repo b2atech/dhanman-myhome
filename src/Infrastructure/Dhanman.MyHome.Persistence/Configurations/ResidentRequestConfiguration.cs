@@ -1,4 +1,4 @@
-﻿using Dhanman.MyHome.Domain.Entities.Apartments;
+﻿using Dhanman.MyHome.Domain.Entities.ResidentRequests;
 using Dhanman.MyHome.Persistence.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

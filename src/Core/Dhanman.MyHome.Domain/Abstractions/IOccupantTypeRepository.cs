@@ -1,4 +1,4 @@
-﻿using Dhanman.MyHome.Domain.Entities.Apartments;
+﻿using Dhanman.MyHome.Domain.Entities.OccupantTypes;
 
 namespace Dhanman.MyHome.Domain.Abstractions;
 

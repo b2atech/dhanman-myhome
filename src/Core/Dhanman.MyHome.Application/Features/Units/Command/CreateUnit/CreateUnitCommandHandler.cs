@@ -7,7 +7,7 @@ using Dhanman.MyHome.Application.Features.Units.Event;
 using Dhanman.MyHome.Domain.Abstractions;
 using MediatR;
 using System.Text.RegularExpressions;
-using Unit = Dhanman.MyHome.Domain.Entities.Apartments.Unit;
+using Unit = Dhanman.MyHome.Domain.Entities.Units.Unit;
 
 namespace Dhanman.MyHome.Application.Features.Units.Command.CreateUnit;
 

@@ -3,7 +3,7 @@ using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Units;
 using Dhanman.MyHome.Domain;
-using Dhanman.MyHome.Domain.Entities.Apartments;
+using Dhanman.MyHome.Domain.Entities.Units;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dhanman.MyHome.Application.Features.Units.Queries;

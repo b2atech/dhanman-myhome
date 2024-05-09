@@ -1,7 +1,9 @@
 ﻿using Dhanman.MyHome.Persistence.Constants;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using Dhanman.MyHome.Domain.Entities.Apartments;
+using Dhanman.MyHome.Domain.Entities.AppartmentTypes;
+using Dhanman.MyHome.Domain.Entities.CommonEntities;
+
 
 namespace Dhanman.MyHome.Persistence.Configurations;
 
@@ -12,7 +14,7 @@ internal class ApartmentTypeConfiguration : IEntityTypeConfiguration<ApartmentTy
         builder.ToTable(TableNames.ApartmentTypes);
         builder.HasKey(apartmentType => apartmentType.Id);
 
-        builder.Property(apartmentType => apartmentType.Name).HasColumnName("name").HasMaxLength(Name.MaxLength).IsRequired();       
+        builder.Property(apartmentType => apartmentType.Name).HasColumnName("name").HasMaxLength(Name.MaxLength).IsRequired();
 
         builder.Property(apartmentType => apartmentType.DeletedOnUtc).HasColumnType("timestamp").IsRequired(false);
 

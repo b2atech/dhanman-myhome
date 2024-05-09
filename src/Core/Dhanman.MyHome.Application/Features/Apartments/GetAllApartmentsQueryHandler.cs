@@ -2,13 +2,10 @@
 using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Apartments;
-using Dhanman.MyHome.Domain;
 using Dhanman.MyHome.Domain.Entities.Apartments;
 using Microsoft.EntityFrameworkCore;
-using static Dhanman.MyHome.Domain.Errors;
-using System.Numerics;
-using System;
-using System.Linq;
+using Dhanman.MyHome.Domain.Entities.AppartmentTypes;
+using Dhanman.MyHome.Domain;
 
 namespace Dhanman.MyHome.Application.Features.Apartments.Queries;
 

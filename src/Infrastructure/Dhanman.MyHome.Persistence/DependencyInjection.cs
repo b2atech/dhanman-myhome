@@ -51,6 +51,7 @@ public static class DependencyInjection
             services.AddTransient<IUnitTypeRepository, UnitTypeRepository>();
             services.AddTransient<IOccupancyTypeRepository, OccupancyTypeRepository>();
             services.AddTransient<IOccupantTypeRepository, OccupantTypeRepository>();
+            services.AddTransient<IEventRepository, EventRepository>();
 
         }
         return services;

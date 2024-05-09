@@ -145,5 +145,11 @@ public static class ApiRoutes
         public const string UpdateVisitors = apiVersion + "updateVisitors";
 
     }
-    
+
+    public static class Events
+    {
+        public const string CreateEvents = apiVersion + "events";
+
+    }
+
 }

@@ -4,6 +4,13 @@ using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.ResidentRequests;
 using Dhanman.MyHome.Domain;
 using Dhanman.MyHome.Domain.Entities.Apartments;
+using Dhanman.MyHome.Domain.Entities.Buildings;
+using Dhanman.MyHome.Domain.Entities.Floors;
+using Dhanman.MyHome.Domain.Entities.ResidentRequests;
+using Dhanman.MyHome.Domain.Entities.ResidentStatuses;
+using Dhanman.MyHome.Domain.Entities.ResidentTypes;
+using Dhanman.MyHome.Domain.Entities.Units;
+using Dhanman.MyHome.Domain.Entities.UnitStatuses;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dhanman.MyHome.Application.Features.ResidentRequests.Queries;

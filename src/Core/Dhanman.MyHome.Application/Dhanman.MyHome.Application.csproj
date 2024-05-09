@@ -22,4 +22,9 @@
     <ProjectReference Include="..\Dhanman.MyHome.Domain\Dhanman.MyHome.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Dhanman\MyHome\Domain\Entities\UnitTypes\" />
+    <Folder Include="Features\Events\Queries\" />
+  </ItemGroup>
+
 </Project>

@@ -1,5 +1,6 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Primitives;
 using B2aTech.CrossCuttingConcern.Core.Result;
+using Dhanman.MyHome.Domain.Entities.UnitTypes;
 using System.Text.RegularExpressions;
 
 namespace Dhanman.MyHome.Domain.Entities.Users;
