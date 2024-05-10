@@ -1,10 +1,13 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
+using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.ServiceProviders;
 using Dhanman.MyHome.Application.Contracts.ServiceProviderSubTypes;
+using Dhanman.MyHome.Application.Features.ServiceProviders.Commands.CreateServiceProvider;
 using Dhanman.MyHome.Application.Features.ServiceProviders.Queries;
 using Dhanman.MyHome.Application.Features.ServiceProviderSubType.Queries;
+using Dhanman.MyHome.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +20,29 @@ public class ServiceProvidersController : ApiController
     }
 
 
-    #region ServiceProviders     
+    #region ServiceProviders    
+
+    [HttpPost(ApiRoutes.ServiceProviders.CreateServiceProvider)]
+    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> CreateServiceProviderRequest([FromBody] CreateServiceProviderRequest? request) =>
+        await Result.Create(request, Errors.General.BadRequest)
+        .Map(value => new CreateServiceProviderCommand(
+             value.FirstName,
+             value.LastName,
+             value.Email,
+             value.VisitingFrom,
+             value.ContactNumber,
+             value.PermanentAddress,
+             value.PresentAddress,
+             value.ServiceProviderTypeId,
+             value.ServiceProviderSubTypeId,
+             value.VehicleNumber,
+             value.IdentityTypeId,
+             value.IdentityNumber,             
+             value.CreatedBy))
+         .Bind(command => Mediator.Send(command))
+               .Match(Ok, BadRequest);
 
     [HttpGet(ApiRoutes.ServiceProviders.GetAllServiceProviders)]
     [ProducesResponseType(typeof(ServiceProviderListResponse), StatusCodes.Status200OK)]

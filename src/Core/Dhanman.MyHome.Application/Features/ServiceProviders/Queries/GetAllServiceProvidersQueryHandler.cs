@@ -2,7 +2,6 @@
 using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.ServiceProviders;
-using Dhanman.MyHome.Application.Contracts.Vehicles;
 using Dhanman.MyHome.Domain;
 using Dhanman.MyHome.Domain.Entities.ServiceProviders;
 using Dhanman.MyHome.Domain.Entities.ServiceProviderSubTypes;
@@ -37,7 +36,7 @@ public class GetAllServiceProvidersQueryHandler : IQueryHandler<GetAllServicePro
                           e.Email,
                           e.VisitingFrom,
                           e.ContactNumber,
-                          e.PrermanentAddressId,
+                          e.PermanentAddressId,
                           e.PresentAddressId,
                           e.ServiceProviderTypeId,
                             _dbContext.SetInt<ServiceProviderType>()
