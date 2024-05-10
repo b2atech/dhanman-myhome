@@ -19,12 +19,13 @@ public class CreateEventCommand : ICommand<Result<EntityCreatedResponse>>
     public DateTime EndDate { get; set; }
     public string Pourpose { get; set; }
     public int StatusId { get; set; }
+    public int BookingFacilitiesId { get; set; }
     #endregion
 
     #region Constructors
     public CreateEventCommand() { }
 
-    public CreateEventCommand( string name, string description, bool isFullDay, string backgroundColor, string textColor, int unitId, DateTime reservationDate, DateTime startDate, DateTime endDate, string pourpose, int statusId)
+    public CreateEventCommand( string name, string description, bool isFullDay, string backgroundColor, string textColor, int unitId, DateTime reservationDate, DateTime startDate, DateTime endDate, string pourpose, int statusId, int bookingFacilitiesId)
     {
         Name = name;
         Description = description;
@@ -37,8 +38,9 @@ public class CreateEventCommand : ICommand<Result<EntityCreatedResponse>>
         EndDate = endDate;
         Pourpose = pourpose;
         StatusId = statusId;
+        BookingFacilitiesId = bookingFacilitiesId;
 
 
-    }
+}
     #endregion
 }

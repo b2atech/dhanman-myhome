@@ -38,7 +38,8 @@ public class EventsController : ApiController
                value.StartDate,
                value.EndDate,
                value.Pourpose,
-               value.StatusId
+               value.StatusId,
+               value.BookingFacilitiesId
                ))
             .Bind(command => Mediator.Send(command))
                   .Match(Ok, BadRequest);

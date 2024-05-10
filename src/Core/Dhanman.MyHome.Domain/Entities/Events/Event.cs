@@ -17,6 +17,7 @@ public class Event : EntityInt, IAuditableEntity, ISoftDeletableEntity
     public DateTime EndDate { get; set; }
     public string Pourpose { get; set; }
     public int StatusId { get; set; }
+    public int BookingFacilitiesId { get; set; }
     public DateTime CreatedOnUtc { get; }
     public DateTime? ModifiedOnUtc { get; set; }
     public DateTime? DeletedOnUtc { get; }
@@ -24,7 +25,7 @@ public class Event : EntityInt, IAuditableEntity, ISoftDeletableEntity
     public Guid CreatedBy { get; protected set; }
     public Guid? ModifiedBy { get; protected set; }
 
-    public Event(int id, string name, string description, bool isFullDay,  string backgroundColor, string textColor, int unitId, DateTime reservationDate, DateTime startDate, DateTime endDate, string pourpose, int statusId)
+    public Event(int id, string name, string description, bool isFullDay,  string backgroundColor, string textColor, int unitId, DateTime reservationDate, DateTime startDate, DateTime endDate, string pourpose, int statusId, int bookingFacilitiesId)
     {
         Id = id;
         Name = name;
@@ -38,6 +39,7 @@ public class Event : EntityInt, IAuditableEntity, ISoftDeletableEntity
         EndDate = endDate;
         Pourpose = pourpose;
         StatusId = statusId;
+        BookingFacilitiesId = bookingFacilitiesId;
 
     }
 

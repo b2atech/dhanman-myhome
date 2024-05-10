@@ -30,7 +30,7 @@ public class CreateEventCommandHandler : ICommandHandler<CreateEventCommand, Res
     {
 
 
-        var residentRequest = new Event(request.Id, request.Name, request.Description,request.IsFullDay,request.BackgroundColor,request.TextColor, request.UnitId, request.ReservationDate, request.StartDate, request.EndDate, request.Pourpose, request.StatusId);
+        var residentRequest = new Event(request.Id, request.Name, request.Description,request.IsFullDay,request.BackgroundColor,request.TextColor, request.UnitId, request.ReservationDate, request.StartDate, request.EndDate, request.Pourpose, request.StatusId, request.BookingFacilitiesId);
 
         _eventRepository.Insert(residentRequest);
 

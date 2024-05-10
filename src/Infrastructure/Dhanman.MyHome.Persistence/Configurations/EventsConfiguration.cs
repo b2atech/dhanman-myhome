@@ -36,6 +36,8 @@ internal sealed class EventsConfiguration : IEntityTypeConfiguration<Event>
 
         builder.Property(floors => floors.StatusId).HasColumnName("status_id").IsRequired();
 
+        builder.Property(floors => floors.BookingFacilitiesId).HasColumnName("booking_facilities_id").IsRequired();
+
         builder.Property(floors => floors.CreatedBy).HasColumnType("uuid");
 
         builder.Property(floors => floors.ModifiedBy).HasColumnType("uuid");
