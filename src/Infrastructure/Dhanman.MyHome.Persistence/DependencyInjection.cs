@@ -53,9 +53,8 @@ public static class DependencyInjection
             services.AddTransient<IOccupantTypeRepository, OccupantTypeRepository>();
             services.AddTransient<IEventRepository, EventRepository>();
             services.AddTransient<IBookingFacilitesRepository, BookingFacilitesRepository>();
-
-
-
+            services.AddTransient<IServiceProviderRepository, ServiceProviderRepository>();
+            services.AddTransient<IAddressRepository, AddressRepository>();
         }
         return services;
     }

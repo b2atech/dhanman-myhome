@@ -11,7 +11,7 @@ public class ServiceProvider : EntityInt, IAuditableEntity, ISoftDeletableEntity
     public string? Email { get; set; }
     public string VisitingFrom { get; set; }
     public string ContactNumber { get; set; }
-    public Guid PrermanentAddressId { get; set; }
+    public Guid PermanentAddressId { get; set; }
     public Guid PresentAddressId { get; set; }
     //Daily Help
     //Tutors
@@ -46,7 +46,7 @@ public class ServiceProvider : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public ServiceProvider(int id, string firstName, string? lastName, string? email, string visitingFrom, string contactNumber, Guid prermanentAddressId, Guid presentAddressId, int serviceProviderTypeId, string? vehicleNumber, int identityTypeId, string identityNumber, Guid createdBy)
+    public ServiceProvider(int id, string firstName, string? lastName, string? email, string visitingFrom, string contactNumber, Guid permanentAddressId, Guid presentAddressId, int serviceProviderTypeId, int serviceProviderSubTypeId, string? vehicleNumber, int identityTypeId, string identityNumber,  Guid createdBy)
     {
         Id = id;
         FirstName = firstName;
@@ -54,12 +54,13 @@ public class ServiceProvider : EntityInt, IAuditableEntity, ISoftDeletableEntity
         Email = email;
         VisitingFrom = visitingFrom;
         ContactNumber = contactNumber;
-        PrermanentAddressId = prermanentAddressId;
+        PermanentAddressId = permanentAddressId;
         PresentAddressId = presentAddressId;
         ServiceProviderTypeId = serviceProviderTypeId;
+        ServiceProviderSubTypeId = serviceProviderSubTypeId;
         VehicleNumber = vehicleNumber;
         IdentityTypeId = identityTypeId;
-        IdentityNumber = identityNumber;
+        IdentityNumber = identityNumber;      
         CreatedBy = createdBy;
         CreatedOnUtc = DateTime.UtcNow;
     }    
