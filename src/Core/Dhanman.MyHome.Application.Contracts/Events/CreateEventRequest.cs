@@ -15,6 +15,7 @@ public class CreateEventRequest
     public DateTime EndDate { get; set; }
     public string Pourpose { get; set; }
     public int StatusId { get; set; }
+    public int BookingFacilitiesId { get; set; }
 
     #endregion
 
