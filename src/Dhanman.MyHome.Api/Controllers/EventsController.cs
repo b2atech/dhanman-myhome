@@ -28,15 +28,16 @@ public class EventsController : ApiController
     public async Task<IActionResult> CreateEvents([FromBody] CreateEventRequest? request) =>
            await Result.Create(request, Errors.General.BadRequest)
            .Map(value => new CreateEventCommand(
-               value.Name,
+               Guid.NewGuid(),
+               value.Title,
                value.Description,
-               value.IsFullDay,
+               value.AllDay,
                value.BackgroundColor,
                value.TextColor,
-               value.UnitId,
+               value.ReserverdByUnitId,
                value.ReservationDate,
-               value.StartDate,
-               value.EndDate,
+               value.Start,
+               value.End,
                value.Pourpose,
                value.StatusId,
                value.BookingFacilitiesId

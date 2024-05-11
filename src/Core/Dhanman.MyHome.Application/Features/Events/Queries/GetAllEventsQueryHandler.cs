@@ -25,21 +25,22 @@ public class GetAllEventsQueryHandler : IQueryHandler<GetAllEventsQuery, Result<
               .Ensure(query => query != null, Errors.General.EntityNotFound)
               .Bind(async query =>
               {
-                  var residents = await _dbContext.SetInt<Event>()
+                  var residents = await _dbContext.Set<Event>()
                   .AsNoTracking()
                   .Select(e => new EventResponse(
                           e.Id,
-                          e.Name,
+                          e.Title,
                           e.Description,
-                          e.IsFullDay,
-                          e.BackgroundColor,
+                          e.AllDay,
+                          e.Color,
                           e.TextColor,
-                          e.UnitId,
+                          e.ReserverdByUnitId,
                           e.ReservationDate,
-                          e.StartDate,
-                          e.EndDate,
+                          e.Start,
+                          e.End,
                           e.Pourpose,
-                          e.StatusId
+                          e.StatusId,
+                          e.BookingFacilitiesId
                           ))
                   .ToListAsync(cancellationToken);
 

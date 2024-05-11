@@ -1,6 +1,4 @@
-﻿using Dhanman.MyHome.Application.Contracts.Residents;
-
-namespace Dhanman.MyHome.Application.Contracts.Events;
+﻿namespace Dhanman.MyHome.Application.Contracts.Events;
 
 public sealed class EventListResponse
 {

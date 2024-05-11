@@ -590,21 +590,23 @@ namespace Dhanman.MyHome.Persistence.Migrations
 
             modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Events.Event", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("BackgroundColor")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("background_color");
+                    b.Property<bool>("AllDay")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_full_day");
 
                     b.Property<int>("BookingFacilitiesId")
                         .HasColumnType("integer")
                         .HasColumnName("booking_facilities_id");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("color");
 
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("uuid")
@@ -623,19 +625,16 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("text")
                         .HasColumnName("description");
 
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("end_date");
+                    b.Property<string>("End")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("end");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
                         .HasDefaultValue(false)
                         .HasColumnName("is_deleted");
-
-                    b.Property<bool>("IsFullDay")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_full_day");
 
                     b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uuid")
@@ -644,11 +643,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.Property<DateTime?>("ModifiedOnUtc")
                         .HasColumnType("timestamp")
                         .HasColumnName("modified_on_utc");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
 
                     b.Property<string>("Pourpose")
                         .IsRequired()
@@ -659,9 +653,14 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("reservation_date");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("start_date");
+                    b.Property<int>("ReserverdByUnitId")
+                        .HasColumnType("integer")
+                        .HasColumnName("reserved_by_unit_id");
+
+                    b.Property<string>("Start")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("start");
 
                     b.Property<int>("StatusId")
                         .HasColumnType("integer")
@@ -672,9 +671,10 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("text")
                         .HasColumnName("text_color");
 
-                    b.Property<int>("UnitId")
-                        .HasColumnType("integer")
-                        .HasColumnName("unit_id");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("title");
 
                     b.HasKey("Id")
                         .HasName("pk_events");

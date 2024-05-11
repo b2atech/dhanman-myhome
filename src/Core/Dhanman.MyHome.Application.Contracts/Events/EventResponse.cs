@@ -2,18 +2,19 @@
 
 public class EventResponse
 {
-    public int Id { get; }
-    public string Name { get; }
+    public Guid Id { get; }
+    public string Title { get; }
     public string Description { get; }
-    public bool IsFullDay { get; }
-    public string BackgroundColor { get; }
+    public bool AllDay { get; }
+    public string Color { get; }
     public string TextColor { get; }
-    public int UnitId { get; }
+    public int ReservationByUnitId { get; }
     public DateTime ReservationDate { get; }
-    public DateTime StartDate { get; }
-    public DateTime EndDate { get; }
+    public string Start { get; }
+    public string End { get; }
     public string Pourpose { get; }
     public int StatusId { get; }
+    public int BookingFacilitiesId { get; set; }
     public DateTime CreatedOnUtc { get; }
     public DateTime? ModifiedOnUtc { get; }
     public DateTime? DeletedOnUtc { get; }
@@ -21,20 +22,20 @@ public class EventResponse
     public Guid CreatedBy { get; }
     public Guid? ModifiedBy { get; }
 
-    public EventResponse(int id, string name, string description, bool isFullDay, string backgroundColor, string textColor, int unitId, DateTime reservationDate, DateTime startDate, DateTime endDate, string pourpose, int statusId)
+    public EventResponse(Guid id, string title, string description, bool allDay, string color, string textColor, int unitId, DateTime reservationDate, string start, string end, string pourpose, int statusId, int bookingFacilitiesId)
     {
         Id = id;
-        Name = name;
+        Title = title;
         Description = description;
-        IsFullDay = isFullDay;
-        BackgroundColor = backgroundColor;
+        AllDay = allDay;
+        Color = color;
         TextColor = textColor;
-        UnitId = unitId;
+        ReservationByUnitId = unitId;
         ReservationDate = reservationDate;
-        StartDate = startDate;
-        EndDate = endDate;
+        Start = start;
+        End = end;
         Pourpose = pourpose;
         StatusId = statusId;
-
+        BookingFacilitiesId = bookingFacilitiesId;
     }
 }
