@@ -3,18 +3,18 @@ using B2aTech.CrossCuttingConcern.Core.Primitives;
 
 namespace Dhanman.MyHome.Domain.Entities.Events;
 
-public class Event : EntityInt, IAuditableEntity, ISoftDeletableEntity
+public class Event : Entity, IAuditableEntity, ISoftDeletableEntity
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
+    public Guid Id { get; set; }
+    public string Title { get; set; }
     public string Description { get; set; }
-    public bool IsFullDay { get; set; }
-    public string BackgroundColor { get; set; }
+    public bool AllDay { get; set; }
+    public string Color { get; set; }
     public string TextColor { get; set; }
-    public int UnitId { get; set; }
+    public int ReserverdByUnitId { get; set; }
     public DateTime ReservationDate { get; set; }
-    public DateTime StartDate { get; set; }
-    public DateTime EndDate { get; set; }
+    public string Start { get; set; }
+    public string End { get; set; }
     public string Pourpose { get; set; }
     public int StatusId { get; set; }
     public int BookingFacilitiesId { get; set; }
@@ -25,18 +25,18 @@ public class Event : EntityInt, IAuditableEntity, ISoftDeletableEntity
     public Guid CreatedBy { get; protected set; }
     public Guid? ModifiedBy { get; protected set; }
 
-    public Event(int id, string name, string description, bool isFullDay,  string backgroundColor, string textColor, int unitId, DateTime reservationDate, DateTime startDate, DateTime endDate, string pourpose, int statusId, int bookingFacilitiesId)
+    public Event(Guid id, string title, string description, bool allDay, string color, string textColor, int reserverdByUnitId, DateTime reservationDate, string start, string end, string pourpose, int statusId, int bookingFacilitiesId)
     {
         Id = id;
-        Name = name;
+        Title = title;
         Description = description;
-        IsFullDay = isFullDay;
-        BackgroundColor = backgroundColor;
+        AllDay = allDay;
+        Color = color;
         TextColor = textColor;
-        UnitId = unitId;
+        ReserverdByUnitId = reserverdByUnitId;
         ReservationDate = reservationDate;
-        StartDate = startDate;
-        EndDate = endDate;
+        Start = start;
+        End = end;
         Pourpose = pourpose;
         StatusId = statusId;
         BookingFacilitiesId = bookingFacilitiesId;

@@ -7,10 +7,10 @@ public class CreateEventCommandValidator : AbstractValidator<CreateEventCommand>
 {
     public CreateEventCommandValidator(IEventRepository eventRepository)
     {
-        RuleFor(c => c.Name).MustAsync(async (name, _) =>
+        RuleFor(c => c.Title).MustAsync(async (title, _) =>
         {
-            return !string.IsNullOrEmpty(name);
-        }).WithMessage("The Name is required");
+            return !string.IsNullOrEmpty(title);
+        }).WithMessage("The title is required");
 
     }
 }
