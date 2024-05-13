@@ -5,12 +5,12 @@ namespace Dhanman.MyHome.Domain.Entities.ServiceProviderSubTypes;
 
 public class ServiveProviderSubType : EntityInt, IAuditableEntity, ISoftDeletableEntity
 {
-   
+
     #region Properties
 
     public int Id { get; set; }
-
-    public string Name { get; set; }
+    public int ServiceProviderTypeId { get; }
+    public string Name { get; }
     #endregion
 
     #region Audit Properties
@@ -29,11 +29,11 @@ public class ServiveProviderSubType : EntityInt, IAuditableEntity, ISoftDeletabl
     #endregion
 
     #region Constructor
-    public ServiveProviderSubType(int id, string name)
+    public ServiveProviderSubType(int id, int serviceProviderTypeId, string name)
     {
         Id = id;
+        ServiceProviderTypeId = serviceProviderTypeId;
         Name = name;
-       
     }
 
     #endregion
