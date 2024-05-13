@@ -160,6 +160,16 @@ public static class CacheKeys
 
         public const string ServiceProviderById = CacheKeyPrefix + "-by-id-{1}";
     }
-    #endregion    
+    #endregion
 
+    #region ServiceProviderSubType
+    public static class ServiceProviderType
+    {
+        public const string CacheKeyPrefix = " serviceProviderType-{0}";
+
+        public const string ServiceProviderTypeList = CacheKeyPrefix + "-list-{1}";
+
+        public const string ServiceProviderTypeById = CacheKeyPrefix + "-by-id-{1}";
+    }
+    #endregion
 }

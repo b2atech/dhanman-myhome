@@ -193,5 +193,12 @@ public static class ApiRoutes
 
     }
 
+    public static class ServiceProviderType
+    {
+
+        public const string GetAllServiceProvderType = apiVersion + "serviceProviderType";
+
+    }
+
 }
 
