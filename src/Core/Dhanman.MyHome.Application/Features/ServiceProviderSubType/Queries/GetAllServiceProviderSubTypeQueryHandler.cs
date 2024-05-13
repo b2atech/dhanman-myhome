@@ -29,6 +29,7 @@ internal class GetAllServiceProviderSubTypeQueryHandler : IQueryHandler<GetAllSe
                   .AsNoTracking()
                   .Select(e => new ServiceProivderSubTypeResponse(
                           e.Id,
+                          e.ServiceProviderTypeId,
                           e.Name
                           ))
                   .ToListAsync(cancellationToken);

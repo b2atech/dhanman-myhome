@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dhanman.MyHome.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class ServiceProviderSubType : Migration
+    public partial class serviceProviderSubType : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,7 +16,8 @@ namespace Dhanman.MyHome.Persistence.Migrations
                 name: "service_provider_sub_type",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
+                    id = table.Column<int>(type: "integer", nullable: false),
+                    service_provider_type_id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     deleted_on_utc = table.Column<DateTime>(type: "timestamp", nullable: true),
@@ -26,7 +27,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_service_provider_sub_type", x => x.id);
+                    table.PrimaryKey("pk_id", x => x.id);
                 });
         }
 
