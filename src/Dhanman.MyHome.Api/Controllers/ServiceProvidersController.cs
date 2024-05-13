@@ -4,10 +4,12 @@ using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.ServiceProviders;
 using Dhanman.MyHome.Application.Contracts.ServiceProviderSubTypes;
+using Dhanman.MyHome.Application.Contracts.ServiceProviderTypes;
 using Dhanman.MyHome.Application.Contracts.UnitServiceProviders;
 using Dhanman.MyHome.Application.Features.ServiceProviders.Commands.CreateServiceProvider;
 using Dhanman.MyHome.Application.Features.ServiceProviders.Queries;
 using Dhanman.MyHome.Application.Features.ServiceProviderSubType.Queries;
+using Dhanman.MyHome.Application.Features.ServiceProviderTypes.Queries;
 using Dhanman.MyHome.Application.Features.UnitServiceProviders.Commands.CreateUnitServiceProvider;
 using Dhanman.MyHome.Domain;
 using MediatR;
@@ -70,7 +72,7 @@ public class ServiceProvidersController : ApiController
     [HttpGet(ApiRoutes.ServiceProviderSubType.GetAllServiceProvderSubType)]
     [ProducesResponseType(typeof(ServiceProivderSubTypeResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllUnits() =>
+    public async Task<IActionResult> GetAllServiceProvderSubType() =>
     await Result.Success(new GetAllServiceProviderSubTypeQuery())
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
@@ -93,7 +95,20 @@ public class ServiceProvidersController : ApiController
          .Bind(command => Mediator.Send(command))
                .Match(Ok, BadRequest);
 
-   
+
+
+    #endregion
+
+    #region ServiceProviderType     
+
+    [HttpGet(ApiRoutes.ServiceProviderType.GetAllServiceProvderType)]
+    [ProducesResponseType(typeof(ServiceProivderTypeResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllServiceProvderType() =>
+    await Result.Success(new GetAllServiceProviderTypeQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
 
     #endregion
 }
