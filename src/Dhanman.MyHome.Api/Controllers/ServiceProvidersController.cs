@@ -4,9 +4,11 @@ using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.ServiceProviders;
 using Dhanman.MyHome.Application.Contracts.ServiceProviderSubTypes;
+using Dhanman.MyHome.Application.Contracts.UnitServiceProviders;
 using Dhanman.MyHome.Application.Features.ServiceProviders.Commands.CreateServiceProvider;
 using Dhanman.MyHome.Application.Features.ServiceProviders.Queries;
 using Dhanman.MyHome.Application.Features.ServiceProviderSubType.Queries;
+using Dhanman.MyHome.Application.Features.UnitServiceProviders.Commands.CreateUnitServiceProvider;
 using Dhanman.MyHome.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -73,6 +75,25 @@ public class ServiceProvidersController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+
+    #endregion
+
+    #region ServiceProviders    
+
+    [HttpPost(ApiRoutes.UnitServiceProviders.CreateUnitServiceProvider)]
+    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> CreateUnitServiceProvider([FromBody] CreateUnitServiceProviderRequest? request) =>
+        await Result.Create(request, Errors.General.BadRequest)
+        .Map(value => new CreateUnitServiceProviderCommand(
+            value.UnitId,
+            value.ServiceProviderId,
+            value.Start,
+            value.End))
+         .Bind(command => Mediator.Send(command))
+               .Match(Ok, BadRequest);
+
+   
 
     #endregion
 }
