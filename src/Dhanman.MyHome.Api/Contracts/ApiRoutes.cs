@@ -183,4 +183,15 @@ public static class ApiRoutes
         public const string GetAllServiceProvderSubType = apiVersion + "serviceProviderSubType";
 
     }
+    public static class UnitServiceProviders
+    {
+        public const string CreateUnitServiceProvider = apiVersion + "unitServiceProvider";
+
+        public const string GetAllUnitServiceProviders = apiVersion + "unitServiceProviders";
+
+       
+
+    }
+
 }
+
