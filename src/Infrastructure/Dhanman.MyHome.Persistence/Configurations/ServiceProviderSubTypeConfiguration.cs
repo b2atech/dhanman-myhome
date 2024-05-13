@@ -10,7 +10,7 @@ internal sealed class ServiceProviderSubTypeConfiguration : IEntityTypeConfigura
 {
     public void Configure(EntityTypeBuilder<ServiveProviderSubType> builder)
     {
-        builder.ToTable(TableNames.ServiceProviderSubType);
+        builder.ToTable(TableNames.ServiceProviderSubTypes);
         builder.HasKey(serviceProviderSubType => serviceProviderSubType.Id);
 
         builder.HasKey(serviceProviderSubType => serviceProviderSubType.ServiceProviderTypeId);
