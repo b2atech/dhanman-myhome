@@ -27,6 +27,7 @@ public class GetAllEventsQueryHandler : IQueryHandler<GetAllEventsQuery, Result<
               {
                   var residents = await _dbContext.Set<Event>()
                   .AsNoTracking()
+                  .Where(e => e.BookingFacilitiesId == query.BookingFacilitiesId && e.CompanyId == query.CompanyId)
                   .Select(e => new EventResponse(
                           e.Id,
                           e.Title,

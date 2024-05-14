@@ -48,12 +48,13 @@ public class EventsController : ApiController
     [HttpGet(ApiRoutes.Events.GetAllEvents)]
     [ProducesResponseType(typeof(EventResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllEventts() =>
-    await Result.Success(new GetAllEventsQuery())
+    public async Task<IActionResult> GetAllEventts(Guid companyId, int bookingFacilitiesId) =>
+    await Result.Success(new GetAllEventsQuery(companyId, bookingFacilitiesId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
     #endregion
+
     #region Bookings
     [HttpGet(ApiRoutes.BokkingFacilities.GetAllBokkingFacilities)]
     [ProducesResponseType(typeof(BookingFacilitesResponse), StatusCodes.Status200OK)]
