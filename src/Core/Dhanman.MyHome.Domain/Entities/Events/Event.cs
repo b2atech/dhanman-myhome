@@ -18,6 +18,7 @@ public class Event : Entity, IAuditableEntity, ISoftDeletableEntity
     public string Pourpose { get; set; }
     public int StatusId { get; set; }
     public int BookingFacilitiesId { get; set; }
+    public Guid CompanyId { get; set; }
     public DateTime CreatedOnUtc { get; }
     public DateTime? ModifiedOnUtc { get; set; }
     public DateTime? DeletedOnUtc { get; }

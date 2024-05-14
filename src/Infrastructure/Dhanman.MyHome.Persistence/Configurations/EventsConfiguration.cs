@@ -38,6 +38,8 @@ internal sealed class EventsConfiguration : IEntityTypeConfiguration<Event>
 
         builder.Property(events => events.BookingFacilitiesId).HasColumnName("booking_facilities_id").IsRequired();
 
+        builder.Property(events => events.CompanyId).HasColumnName("company_id");
+
         builder.Property(events => events.CreatedBy).HasColumnType("uuid");
 
         builder.Property(events => events.ModifiedBy).HasColumnType("uuid");
