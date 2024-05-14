@@ -45,7 +45,7 @@ public class ServiceProvidersController : ApiController
              value.IdentityTypeId,
              value.IdentityNumber,
              value.ValidityDate,
-             value.PoliceverificationStatus,
+             value.PoliceVerificationStatus,
              value.IsHireable,
              value.IsVisible,
              value.IsFrequentVisitor,

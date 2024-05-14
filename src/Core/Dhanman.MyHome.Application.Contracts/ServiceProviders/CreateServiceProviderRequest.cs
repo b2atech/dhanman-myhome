@@ -16,7 +16,7 @@ public class CreateServiceProviderRequest
     public int IdentityTypeId { get; set; }
     public string IdentityNumber { get; set; }
     public DateTime ValidityDate { get; set; }
-    public bool PoliceverificationStatus { get; set; }
+    public bool PoliceVerificationStatus { get; set; }
     public bool IsHireable { get; set; }
     public bool IsVisible { get; set; }
     public bool IsFrequentVisitor { get; set; }

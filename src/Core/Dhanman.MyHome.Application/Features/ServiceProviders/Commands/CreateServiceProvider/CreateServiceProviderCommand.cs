@@ -22,7 +22,7 @@ public class CreateServiceProviderCommand : ICommand<Result<EntityCreatedRespons
     public int IdentityTypeId { get; set; }
     public string IdentityNumber { get; set; }
     public DateTime ValidityDate { get; set; }
-    public bool PoliceverificationStatus { get; set; }
+    public bool PoliceVerificationStatus { get; set; }
     public bool IsHireable { get; set; }
     public bool IsVisible { get; set; }
     public bool IsFrequentVisitor { get; set; }
@@ -46,7 +46,7 @@ public class CreateServiceProviderCommand : ICommand<Result<EntityCreatedRespons
         IdentityTypeId = identityTypeId;
         IdentityNumber = identityNumber;  
         ValidityDate = validityDate;
-        PoliceverificationStatus = policeverificationStatus;
+        PoliceVerificationStatus = policeverificationStatus;
         IsHireable = isHireable;
         IsVisible = isVisible;
         IsFrequentVisitor = isFrequentVisitor;
