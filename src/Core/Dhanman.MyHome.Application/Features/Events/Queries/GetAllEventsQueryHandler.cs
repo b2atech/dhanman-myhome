@@ -40,9 +40,7 @@ public class GetAllEventsQueryHandler : IQueryHandler<GetAllEventsQuery, Result<
                           e.Start,
                           e.End,
                           e.Pourpose,
-                          e.StatusId,
-                          e.BookingFacilitiesId
-                          ))
+                          e.StatusId))
                   .ToListAsync(cancellationToken);
 
                   var listResponse = new EventListResponse(residents);
