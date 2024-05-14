@@ -38,7 +38,7 @@ public class CreateServiceProviderCommandHandler : ICommandHandler<CreateService
         var presentAddress = GetAddress(request.PresentAddress);
         _addressRepository.Insert(presentAddress);
 
-        var serviceProvider = new ServiceProvider(nextServiceProviderId, request.FirstName, request.LastName, request.Email, request.VisitingFrom, request.ContactNumber, permanentAddress.Id, presentAddress.Id, request.ServiceProviderTypeId, request.ServiceProviderSubTypeId, request.VehicleNumber, request.IdentityTypeId, request.IdentityNumber,  request.CreatedBy); 
+        var serviceProvider = new ServiceProvider(nextServiceProviderId, request.FirstName, request.LastName, request.Email, request.VisitingFrom, request.ContactNumber, permanentAddress.Id, presentAddress.Id, request.ServiceProviderTypeId, request.ServiceProviderSubTypeId, request.VehicleNumber, request.IdentityTypeId, request.IdentityNumber, request.ValidityDate, request.PoliceverificationStatus, request.IsHireable, request.IsVisible, request.IsFrequentVisitor, request.CreatedBy);
 
         _serviceProviderRepository.Insert(serviceProvider);
 

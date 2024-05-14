@@ -43,7 +43,12 @@ public class ServiceProvidersController : ApiController
              value.ServiceProviderSubTypeId,
              value.VehicleNumber,
              value.IdentityTypeId,
-             value.IdentityNumber,             
+             value.IdentityNumber,
+             value.ValidityDate,
+             value.PoliceverificationStatus,
+             value.IsHireable,
+             value.IsVisible,
+             value.IsFrequentVisitor,
              value.CreatedBy))
          .Bind(command => Mediator.Send(command))
                .Match(Ok, BadRequest);

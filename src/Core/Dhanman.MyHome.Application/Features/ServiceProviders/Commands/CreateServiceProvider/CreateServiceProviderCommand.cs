@@ -20,13 +20,18 @@ public class CreateServiceProviderCommand : ICommand<Result<EntityCreatedRespons
     public int ServiceProviderSubTypeId { get; set; }
     public string? VehicleNumber { get; set; }
     public int IdentityTypeId { get; set; }
-    public string IdentityNumber { get; set; }   
+    public string IdentityNumber { get; set; }
+    public DateTime ValidityDate { get; set; }
+    public bool PoliceverificationStatus { get; set; }
+    public bool IsHireable { get; set; }
+    public bool IsVisible { get; set; }
+    public bool IsFrequentVisitor { get; set; }
     public DateTime CreatedOnUtc { get; }
     public Guid CreatedBy { get; set; }
     #endregion
 
     #region Constructors
-    public CreateServiceProviderCommand(string firstName, string? lastName, string? email, string visitingFrom, string contactNumber, Address permanentAddress, Address presentAddress, int serviceProviderTypeId, int serviceProviderSubTypeId, string? vehicleNumber, int identityTypeId, string identityNumber,  Guid createdBy)
+    public CreateServiceProviderCommand(string firstName, string? lastName, string? email, string visitingFrom, string contactNumber, Address permanentAddress, Address presentAddress, int serviceProviderTypeId, int serviceProviderSubTypeId, string? vehicleNumber, int identityTypeId, string identityNumber, DateTime validityDate, bool policeverificationStatus, bool isHireable, bool isVisible, bool isFrequentVisitor,  Guid createdBy)
     {
         FirstName = firstName;
         LastName = lastName;
@@ -39,7 +44,12 @@ public class CreateServiceProviderCommand : ICommand<Result<EntityCreatedRespons
         ServiceProviderSubTypeId = serviceProviderSubTypeId;
         VehicleNumber = vehicleNumber;
         IdentityTypeId = identityTypeId;
-        IdentityNumber = identityNumber;        
+        IdentityNumber = identityNumber;  
+        ValidityDate = validityDate;
+        PoliceverificationStatus = policeverificationStatus;
+        IsHireable = isHireable;
+        IsVisible = isVisible;
+        IsFrequentVisitor = isFrequentVisitor;
         CreatedBy = createdBy;
         CreatedOnUtc = DateTime.Now;
     }
