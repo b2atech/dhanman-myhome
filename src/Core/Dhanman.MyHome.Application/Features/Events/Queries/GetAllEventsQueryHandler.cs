@@ -27,6 +27,7 @@ public class GetAllEventsQueryHandler : IQueryHandler<GetAllEventsQuery, Result<
               {
                   var residents = await _dbContext.Set<Event>()
                   .AsNoTracking()
+                  .Where(e => e.BookingFacilitiesId == query.BookingFacilitiesId && e.CompanyId == query.CompanyId)
                   .Select(e => new EventResponse(
                           e.Id,
                           e.Title,
@@ -39,9 +40,7 @@ public class GetAllEventsQueryHandler : IQueryHandler<GetAllEventsQuery, Result<
                           e.Start,
                           e.End,
                           e.Pourpose,
-                          e.StatusId,
-                          e.BookingFacilitiesId
-                          ))
+                          e.StatusId))
                   .ToListAsync(cancellationToken);
 
                   var listResponse = new EventListResponse(residents);

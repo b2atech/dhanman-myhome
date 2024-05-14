@@ -14,7 +14,6 @@ public class EventResponse
     public string End { get; }
     public string Pourpose { get; }
     public int StatusId { get; }
-    public int BookingFacilitiesId { get; set; }
     public DateTime CreatedOnUtc { get; }
     public DateTime? ModifiedOnUtc { get; }
     public DateTime? DeletedOnUtc { get; }
@@ -22,7 +21,7 @@ public class EventResponse
     public Guid CreatedBy { get; }
     public Guid? ModifiedBy { get; }
 
-    public EventResponse(Guid id, string title, string description, bool allDay, string color, string textColor, int unitId, DateTime reservationDate, string start, string end, string pourpose, int statusId, int bookingFacilitiesId)
+    public EventResponse(Guid id, string title, string description, bool allDay, string color, string textColor, int unitId, DateTime reservationDate, string start, string end, string pourpose, int statusId)
     {
         Id = id;
         Title = title;
@@ -35,7 +34,6 @@ public class EventResponse
         Start = start;
         End = end;
         Pourpose = pourpose;
-        StatusId = statusId;
-        BookingFacilitiesId = bookingFacilitiesId;
+        StatusId = statusId;        
     }
 }
