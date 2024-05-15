@@ -17,7 +17,7 @@ public static class ApiRoutes
 
         public const string GetAllBuildings = apiVersion + "buildings";
 
-        public const string GetAllBuildingNames = apiVersion + "buildingNames";        
+        public const string GetAllBuildingNames = apiVersion + "buildingNames/{apartmentId:guid}";        
 
         public const string GetBuildingById = apiVersion + "building/{id:int}";
 
@@ -31,7 +31,7 @@ public static class ApiRoutes
 
         public const string GetAllUnits = apiVersion + "units";
 
-        public const string GetAllUnitNames = apiVersion + "unitNames";
+        public const string GetAllUnitNames = apiVersion + "unitNames/{floorId:int}";
 
         public const string GetUnitById = apiVersion + "unit/{id:int}";
 
@@ -149,7 +149,7 @@ public static class ApiRoutes
     public static class Events
     {
 
-        public const string GetAllEvents = apiVersion + "events";
+        public const string GetAllEvents = apiVersion + "events/{companyId:guid}/{bookingFacilitiesId:int}";
 
         public const string CreateEvents = apiVersion + "events";
 

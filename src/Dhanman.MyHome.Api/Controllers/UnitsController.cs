@@ -40,11 +40,12 @@ public class UnitsController : ApiController
                   ))
                 .Bind(command => Mediator.Send(command))
                .Match(Ok, BadRequest);
+
     [HttpGet(ApiRoutes.Units.GetAllUnitNames)]
     [ProducesResponseType(typeof(UnitNameListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllUnitNames() =>
-    await Result.Success(new GetAllUnitNamesQuery())
+    public async Task<IActionResult> GetAllUnitNames(int floorId) =>
+    await Result.Success(new GetAllUnitNamesQuery(floorId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 

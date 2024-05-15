@@ -28,8 +28,8 @@ public class BuildingsController : ApiController
     [HttpGet(ApiRoutes.Buildings.GetAllBuildingNames)]
     [ProducesResponseType(typeof(BuildingNameListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllBuildingNames() =>
-    await Result.Success(new GetAllBuildingNamesQuery())
+    public async Task<IActionResult> GetAllBuildingNames(Guid apartmentId) =>
+    await Result.Success(new GetAllBuildingNamesQuery(apartmentId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
