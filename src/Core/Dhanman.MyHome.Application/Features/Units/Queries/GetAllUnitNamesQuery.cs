@@ -7,11 +7,15 @@ namespace Dhanman.MyHome.Application.Features.Units.Queries;
 
 public class GetAllUnitNamesQuery : ICacheableQuery<Result<UnitNameListResponse>>
 {
-    #region Properties     
+    #region Properties  
+    public int FloorId { get; set; }
     #endregion
 
     #region Constructors
-    public GetAllUnitNamesQuery() { }
+    public GetAllUnitNamesQuery(int floorId) 
+    {
+        FloorId = floorId;
+    }
     #endregion
 
     #region Methodes
