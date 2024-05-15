@@ -5,6 +5,7 @@ public class Address
     public Guid CountryId { get; set; }
     public Guid StateId { get; set; }
     public Guid CityId { get; set; }
+    public string CityName { get; set; }
     public string AddressLine1 { get; set; }
     public string AddressLine2 { get; set; }
     public string ZipCode { get; set; }
