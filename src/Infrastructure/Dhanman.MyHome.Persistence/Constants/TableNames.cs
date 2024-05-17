@@ -85,5 +85,8 @@ internal static class TableNames
     internal const string ServiceProviderSubTypes = "service_provider_sub_types";
 
     internal const string UnitServiceProviders = "unit_service_providers";
+
+    internal const string Complaints = "complaint";
+
 }
- 
+
