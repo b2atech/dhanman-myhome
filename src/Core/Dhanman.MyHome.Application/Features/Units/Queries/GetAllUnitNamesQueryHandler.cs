@@ -27,6 +27,7 @@ public class GetAllUnitNamesQueryHandler : IQueryHandler<GetAllUnitNamesQuery, R
               {
                   var units = await _dbContext.SetInt<Unit>()
                   .AsNoTracking()
+                  .Where(e => e.BuildingId == query.BuildingId && e.FloorId == query.FloorId)
                   .Select(e => new UnitNameResponse(
                           e.Id,
                           e.Name))
