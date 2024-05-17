@@ -55,8 +55,8 @@ public class ApartmentsController : ApiController
     [HttpGet(ApiRoutes.Floors.GetFloorNames)]
     [ProducesResponseType(typeof(FloorNameListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllFloorNames(int buildingId) =>
-    await Result.Success(new GetAllFloorNamesQuery(buildingId))
+    public async Task<IActionResult> GetAllFloorNames(Guid apartmentId, int buildingId) =>
+    await Result.Success(new GetAllFloorNamesQuery(apartmentId, buildingId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 

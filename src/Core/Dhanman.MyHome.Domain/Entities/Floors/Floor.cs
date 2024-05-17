@@ -7,6 +7,7 @@ public class Floor : EntityInt, IAuditableEntity, ISoftDeletableEntity
 {
     #region Properties
     public string Name { get; set; }
+    public Guid ApartmentId { get; set; }
     public int BuildingId { get; set; }
     public int TotalUnits { get; set; }
     #endregion

@@ -14,6 +14,8 @@ internal sealed class FloorConfiguration : IEntityTypeConfiguration<Floor>
 
         builder.Property(floors => floors.Name).HasColumnName("name").IsRequired();
 
+        builder.Property(floors => floors.ApartmentId).HasColumnName("apartment_id");
+
         builder.Property(floors => floors.BuildingId).HasColumnName("building_id").IsRequired();
 
         builder.Property(floors => floors.TotalUnits).HasColumnName("total_units").IsRequired();
