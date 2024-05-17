@@ -44,8 +44,8 @@ public class UnitsController : ApiController
     [HttpGet(ApiRoutes.Units.GetAllUnitNames)]
     [ProducesResponseType(typeof(UnitNameListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllUnitNames(int buildingId, int floorId) =>
-    await Result.Success(new GetAllUnitNamesQuery(buildingId, floorId))
+    public async Task<IActionResult> GetAllUnitNames(Guid apartmentId, int buildingId, int floorId) =>
+    await Result.Success(new GetAllUnitNamesQuery(apartmentId, buildingId, floorId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 

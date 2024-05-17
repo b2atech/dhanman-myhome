@@ -33,7 +33,7 @@ public static class ApiRoutes
 
         public const string GetAllUnits = apiVersion + "units";
 
-        public const string GetAllUnitNames = apiVersion + "unitNames/{buildingId:int}/{floorId:int}";
+        public const string GetAllUnitNames = apiVersion + "unitNames/{apartmentId:guid}/{buildingId:int}/{floorId:int}";
 
         public const string GetUnitById = apiVersion + "unit/{id:int}";
 
