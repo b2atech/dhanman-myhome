@@ -77,8 +77,7 @@ public class ResidentsController : ApiController
                 value.LastName,
                 value.Email,
                 value.ContactNumber,
-                value.PermanentAddressId,
-                value.RequestStatusId,
+                value.PermanentAddress,             
                 value.ResidentTypeId,
                 value.OccupancyStatusId,
                 value.CreatedBy))
