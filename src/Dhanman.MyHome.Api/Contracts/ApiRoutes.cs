@@ -202,5 +202,11 @@ public static class ApiRoutes
 
     }
 
+    public static class Complaints
+    {
+        public const string CreateComplaint = apiVersion + "createComplaints";
+    }
+
+
 }
 
