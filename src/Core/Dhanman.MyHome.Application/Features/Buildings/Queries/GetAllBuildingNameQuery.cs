@@ -5,15 +5,16 @@ using Dhanman.MyHome.Application.Contracts.Buildings;
 
 namespace Dhanman.MyHome.Application.Features.Buildings.Queries;
 
-public class GetAllBuildingNamesQuery : ICacheableQuery<Result<BuildingNameListResponse>>
+public class GetAllBuildingNameQuery : ICacheableQuery<Result<BuildingNameListResponse>>
 {
-    #region Properties         
+    #region Properties     
+    public Guid ApartmentId { get; set; }
     #endregion
 
     #region Constructors
-    public GetAllBuildingNamesQuery()
+    public GetAllBuildingNameQuery(Guid apartmentId)
     {
-  
+        ApartmentId = apartmentId;
     }
     #endregion
 
