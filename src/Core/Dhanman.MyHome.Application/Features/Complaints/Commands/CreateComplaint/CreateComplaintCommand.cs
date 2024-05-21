@@ -24,10 +24,12 @@ public class CreateComplaintCommand : ICommand<Result<EntityCreatedResponse>>
     #region Constructor
     public CreateComplaintCommand() { }
 
-    public CreateComplaintCommand(Guid id, string subject, DateTime prefferedTime, int categoryId, int subCategoryId, int priorityId, int departmentId, DateTime occuredDate, DateTime prefferedDate, bool isUrgent)
+    public CreateComplaintCommand(Guid id, string subject,string description,string docLink, DateTime prefferedTime, int categoryId, int subCategoryId, int priorityId, int departmentId, DateTime occuredDate, DateTime prefferedDate, bool isUrgent)
     {
         Id = id;
         Subject = subject;
+        Description = description;
+        DocLink = docLink;
         PrefferedTime = prefferedTime;
         CategoryId = categoryId;
         SubCategoryId = subCategoryId;
