@@ -3,7 +3,6 @@ using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.Complaints;
-using Dhanman.MyHome.Application.Features.Complaints.Commands.CreateComplaint;
 using Dhanman.MyHome.Application.Features.Events.Commands.CreateComplaint;
 using Dhanman.MyHome.Domain;
 using MediatR;
@@ -26,6 +25,8 @@ public class ComplaintsController : ApiController
             .Map(value => new CreateComplaintCommand(
                 Guid.NewGuid(),
                 value.Subject,
+                value.Description,
+                value.DocLink,
                 value.PrefferedTime,
                 value.CategoryId,
                 value.SubCategoryId,
