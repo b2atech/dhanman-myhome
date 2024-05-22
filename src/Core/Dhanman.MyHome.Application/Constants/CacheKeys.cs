@@ -172,4 +172,25 @@ public static class CacheKeys
         public const string ServiceProviderTypeById = CacheKeyPrefix + "-by-id-{1}";
     }
     #endregion
+
+    #region Category
+    public static class Category
+    {
+        public const string CacheKeyPrefix = " category-{0}";
+
+        public const string CategoryList = CacheKeyPrefix + "-list-{1}";
+
+    }
+    #endregion
+
+
+    #region SubCategory
+    public static class SubCategory
+    {
+        public const string CacheKeyPrefix = " subCategory-{0}";
+
+        public const string SubCategoryList = CacheKeyPrefix + "-list-{1}";
+
+    }
+    #endregion
 }

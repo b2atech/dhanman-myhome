@@ -88,5 +88,9 @@ internal static class TableNames
 
     internal const string Complaints = "complaint";
 
+    internal const string Categories = "categories";
+
+    internal const string SubCategories = "sub_categories";
+
 }
 
