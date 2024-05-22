@@ -214,5 +214,10 @@ public static class ApiRoutes
     {
         public const string GetAllSubCategory = apiVersion + "subCategory";
     }
+
+    public static class AssignUnits
+    {
+        public const string GetAllAssignUnits = apiVersion + "assignUnits";
+    }
 }
 

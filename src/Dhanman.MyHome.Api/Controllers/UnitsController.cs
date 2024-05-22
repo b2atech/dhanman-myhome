@@ -32,7 +32,7 @@ public class UnitsController : ApiController
     [HttpPost(ApiRoutes.Units.GetAllUnitDetails)]
     [ProducesResponseType(typeof(UnitDetailListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetLedgerDetails([FromBody] GetUnitDetailRequest? request) =>
+    public async Task<IActionResult> GetAllUnitDetails([FromBody] GetUnitDetailRequest? request) =>
     await Result.Create(request, Errors.General.BadRequest)
                 .Map(value => new GetUnitDetailsCommand(
                     value.BuildingIds,
