@@ -26,6 +26,8 @@
     <Folder Include="Dhanman\MyHome\Domain\Entities\UnitTypes\" />
     <Folder Include="Features\BookingFacilities\Commands\" />
     <Folder Include="Features\BookingFacilities\Events\" />
+    <Folder Include="Features\Categories\Commands\" />
+    <Folder Include="Features\Categories\Events\" />
     <Folder Include="Features\ServiceProviderSubType\Commands\" />
     <Folder Include="Features\ServiceProviderSubType\Events\" />
     <Folder Include="Features\UnitServiceProviders\Queries\" />

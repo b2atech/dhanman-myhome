@@ -206,7 +206,18 @@ public static class ApiRoutes
     {
         public const string CreateComplaint = apiVersion + "createComplaints";
     }
+    public static class Category
+    {
+        public const string GetAllCategory = apiVersion + "category";
+    }
+    public static class SubCategory
+    {
+        public const string GetAllSubCategory = apiVersion + "subCategory";
+    }
 
-
+    public static class AssignUnits
+    {
+        public const string GetAllAssignUnits = apiVersion + "assignUnits";
+    }
 }
 
