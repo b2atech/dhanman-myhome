@@ -16,8 +16,7 @@ public class CreateResidentRequestRequest
     public Address PermanentAddress { get; set; }
     public int ResidentTypeId { get; set; }
     public int OccupancyStatusId { get; set; }
-    public DateTime CreatedOnUtc { get; }
-    public Guid CreatedBy { get; set; }
+    public DateTime CreatedOnUtc { get; } 
 
     #endregion
 

@@ -79,8 +79,7 @@ public class ResidentsController : ApiController
                 value.ContactNumber,
                 value.PermanentAddress,             
                 value.ResidentTypeId,
-                value.OccupancyStatusId,
-                value.CreatedBy))
+                value.OccupancyStatusId))
              .Bind(command => Mediator.Send(command))
                    .Match(Ok, BadRequest);
 

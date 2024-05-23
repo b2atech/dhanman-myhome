@@ -20,15 +20,10 @@ public class CreateResidentRequestCommand : ICommand<Result<EntityCreatedRespons
     public Address PermanentAddress { get; set; }
     public int ResidentTypeId { get; set; }    
     public int OccupancyStatusId { get; set; }
-    public DateTime CreatedOnUtc { get; }   
-    public Guid CreatedBy { get;  set; }
-
-
-
     #endregion
 
     #region Constructors
-    public CreateResidentRequestCommand(Guid apartmentId, int buildingId, int floorId, int unitId, string firstName, string lastName, string email, string contactNumber, Address permanentAddress,  int residentTypeId, int occupancyStatusId, Guid createdBy)
+    public CreateResidentRequestCommand(Guid apartmentId, int buildingId, int floorId, int unitId, string firstName, string lastName, string email, string contactNumber, Address permanentAddress,  int residentTypeId, int occupancyStatusId)
     {        
         ApartmentId = apartmentId;
         BuildingId = buildingId;
@@ -40,8 +35,8 @@ public class CreateResidentRequestCommand : ICommand<Result<EntityCreatedRespons
         ContactNumber = contactNumber;
         PermanentAddress = permanentAddress;    
         ResidentTypeId = residentTypeId;
-        OccupancyStatusId = occupancyStatusId;        
-        CreatedBy = createdBy;
+        OccupancyStatusId = occupancyStatusId;     
+       
     }
 
 

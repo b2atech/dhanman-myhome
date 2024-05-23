@@ -38,7 +38,7 @@ public class ResidentRequest : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public ResidentRequest(int id, Guid apartmentId, int buildingId, int floorId, int unitId, string firstName, string lastName, string email, string contactNumber, Guid permanentAddressId, int requestStatusId, int residentTypeId, int occupancyStatusId, Guid createdBy)
+    public ResidentRequest(int id, Guid apartmentId, int buildingId, int floorId, int unitId, string firstName, string lastName, string email, string contactNumber, Guid permanentAddressId, int requestStatusId, int residentTypeId, int occupancyStatusId)
     {
         Id = id;
         ApartmentId = apartmentId;
@@ -52,8 +52,7 @@ public class ResidentRequest : EntityInt, IAuditableEntity, ISoftDeletableEntity
         PermanentAddressId = permanentAddressId;
         RequestStatusId = requestStatusId;
         ResidentTypeId = residentTypeId;
-        OccupancyStatusId = occupancyStatusId;
-        CreatedBy = createdBy;
+        OccupancyStatusId = occupancyStatusId;       
         CreatedOnUtc = DateTime.UtcNow;
     }
     #endregion
