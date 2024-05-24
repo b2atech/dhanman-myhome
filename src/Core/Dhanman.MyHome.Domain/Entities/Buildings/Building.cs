@@ -26,16 +26,13 @@ public class Building : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public Building(int id, string name, int buildingTypeId, Guid apartmentId, int totalUnits, Guid createdBy)
+    public Building(int id, string name, int buildingTypeId, Guid apartmentId, int totalUnits)
     {
         Id = id;
+        ApartmentId = apartmentId;
         Name = name;
         BuildingTypeId = buildingTypeId;
-        ApartmentId = apartmentId;
         TotalUnits = totalUnits;
-        CreatedBy = createdBy;
-        CreatedOnUtc = DateTime.UtcNow;
-
     }
     #endregion
 }
