@@ -129,7 +129,7 @@ public static class CacheKeys
     }
     #endregion
 
-    #region Events
+    #region BookingFacilities
     public static class BookingFacilities
     {
         public const string CacheKeyPrefix = " bookingFacilities-{0}";
@@ -140,4 +140,57 @@ public static class CacheKeys
     }
     #endregion
 
+    #region ServiceProviderSubType
+    public static class ServiceProviderSubType
+    {
+        public const string CacheKeyPrefix = " serviceProviderSubType-{0}";
+
+        public const string ServiceProviderSubTypeList = CacheKeyPrefix + "-list-{1}";
+
+        public const string ServiceProviderSubTypeById = CacheKeyPrefix + "-by-id-{1}";
+    }
+    #endregion
+
+    #region ServiceProviders
+    public static class ServiceProviders
+    {
+        public const string CacheKeyPrefix = "serviceProviders-{0}";
+
+        public const string ServiceProviderList = CacheKeyPrefix + "-list-{1}";
+
+        public const string ServiceProviderById = CacheKeyPrefix + "-by-id-{1}";
+    }
+    #endregion
+
+    #region ServiceProviderSubType
+    public static class ServiceProviderType
+    {
+        public const string CacheKeyPrefix = " serviceProviderType-{0}";
+
+        public const string ServiceProviderTypeList = CacheKeyPrefix + "-list-{1}";
+
+        public const string ServiceProviderTypeById = CacheKeyPrefix + "-by-id-{1}";
+    }
+    #endregion
+
+    #region Category
+    public static class Category
+    {
+        public const string CacheKeyPrefix = " category-{0}";
+
+        public const string CategoryList = CacheKeyPrefix + "-list-{1}";
+
+    }
+    #endregion
+
+
+    #region SubCategory
+    public static class SubCategory
+    {
+        public const string CacheKeyPrefix = " subCategory-{0}";
+
+        public const string SubCategoryList = CacheKeyPrefix + "-list-{1}";
+
+    }
+    #endregion
 }

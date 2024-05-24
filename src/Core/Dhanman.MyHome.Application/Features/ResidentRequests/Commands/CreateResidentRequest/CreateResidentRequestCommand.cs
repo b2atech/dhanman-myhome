@@ -1,6 +1,7 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.MyHome.Application.Contracts.ServiceProviders;
 
 namespace Dhanman.MyHome.Application.Features.ResidentRequests.Commands.CreateResidentRequest;
 
@@ -16,19 +17,13 @@ public class CreateResidentRequestCommand : ICommand<Result<EntityCreatedRespons
     public string LastName { get; set; }
     public string Email { get; set; }
     public string ContactNumber { get; set; }
-    public Guid PermanentAddressId { get; set; }
-    public int RequestStatusId { get; set; }  
+    public Address PermanentAddress { get; set; }
     public int ResidentTypeId { get; set; }    
     public int OccupancyStatusId { get; set; }
-    public DateTime CreatedOnUtc { get; }   
-    public Guid CreatedBy { get;  set; }
-
-
-
     #endregion
 
     #region Constructors
-    public CreateResidentRequestCommand(Guid apartmentId, int buildingId, int floorId, int unitId, string firstName, string lastName, string email, string contactNumber, Guid permanentAddressId, int requestStatusId, int residentTypeId, int occupancyStatusId, Guid createdBy)
+    public CreateResidentRequestCommand(Guid apartmentId, int buildingId, int floorId, int unitId, string firstName, string lastName, string email, string contactNumber, Address permanentAddress,  int residentTypeId, int occupancyStatusId)
     {        
         ApartmentId = apartmentId;
         BuildingId = buildingId;
@@ -38,11 +33,10 @@ public class CreateResidentRequestCommand : ICommand<Result<EntityCreatedRespons
         LastName = lastName;
         Email = email;
         ContactNumber = contactNumber;
-        PermanentAddressId = permanentAddressId;
-        RequestStatusId = requestStatusId;
+        PermanentAddress = permanentAddress;    
         ResidentTypeId = residentTypeId;
-        OccupancyStatusId = occupancyStatusId;        
-        CreatedBy = createdBy;
+        OccupancyStatusId = occupancyStatusId;     
+       
     }
 
 

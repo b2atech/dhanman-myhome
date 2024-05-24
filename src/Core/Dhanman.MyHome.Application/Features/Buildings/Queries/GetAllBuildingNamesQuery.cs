@@ -7,13 +7,13 @@ namespace Dhanman.MyHome.Application.Features.Buildings.Queries;
 
 public class GetAllBuildingNamesQuery : ICacheableQuery<Result<BuildingNameListResponse>>
 {
-    #region Properties     
+    #region Properties         
     #endregion
 
     #region Constructors
     public GetAllBuildingNamesQuery()
     {
-
+  
     }
     #endregion
 

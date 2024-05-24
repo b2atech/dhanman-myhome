@@ -27,7 +27,7 @@ public class GetAllFloorNamesQueryHandler : IQueryHandler<GetAllFloorNamesQuery,
               {
                   var floors = await _dbContext.SetInt<Floor>()
                   .AsNoTracking()
-                  .Where(e => e.BuildingId == request.BuildingId)
+                  .Where(e => e.ApartmentId == request.ApartmentId && e.BuildingId == request.BuildingId)
                   .Select(e => new FloorNameResponse(
                           e.Id,
                           e.Name))

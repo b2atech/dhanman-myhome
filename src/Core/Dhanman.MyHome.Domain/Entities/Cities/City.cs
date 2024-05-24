@@ -20,13 +20,12 @@ public class City : Entity, IAuditableEntity, ISoftDeletableEntity
 
     #region Constructors
     public City() { }
-    public City(Guid id, Guid stateId, string zipCode, string name, Guid createdBy)
+    public City(Guid id, Guid stateId, string zipCode, string name)
     {
         Id = id;
         Name = name;
         StateId = stateId;
         ZipCode = zipCode;
-        CreatedBy = createdBy;
     }
     #endregion
 }

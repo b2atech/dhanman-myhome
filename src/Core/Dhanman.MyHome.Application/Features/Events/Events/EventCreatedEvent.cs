@@ -2,15 +2,15 @@
 
 namespace Dhanman.MyHome.Application.Features.Events.Events;
 
-public sealed class EventCreatedEvent: IEvent
+public sealed class EventCreatedEvent : IEvent
 {
     #region Properties
-    public int EventId { get; }
+    public Guid EventId { get; }
 
     #endregion
 
     #region Constructors
-    public EventCreatedEvent(int eventId) => EventId = eventId;
+    public EventCreatedEvent(Guid eventId) => EventId = eventId;
 
     #endregion
 }

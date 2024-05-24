@@ -27,6 +27,7 @@ public class GetAllBuildingNamesQueryHandler : IQueryHandler<GetAllBuildingNames
               {
                   var buildings = await _dbContext.SetInt<Building>()
                   .AsNoTracking()
+                  .OrderBy(e => e.Id)
                   .Select(e => new BuildingNameResponse(
                           e.Id,
                           e.Name))

@@ -2,13 +2,14 @@
 
 public sealed class GetUnitDetailRequest
 {
-    public List<int> BuidingIds { get; set; }
+    public List<int> BuildingIds { get; set; }
     public List<int> OccupancyIds { get; set; }
 
-    public GetUnitDetailRequest(List<int> buidingIds, List<int> occupancyIds)
+    public GetUnitDetailRequest(List<int> buildingIds, List<int> occupancyIds)
     {
-       BuidingIds = buidingIds;
+       BuildingIds = buildingIds;
        OccupancyIds = occupancyIds;
     }
  
 }
+

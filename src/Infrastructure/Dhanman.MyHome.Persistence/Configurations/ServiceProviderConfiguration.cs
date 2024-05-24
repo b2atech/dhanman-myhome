@@ -1,7 +1,7 @@
-﻿using Dhanman.MyHome.Persistence.Constants;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Dhanman.MyHome.Domain.Entities.ServiceProviders;
+using Dhanman.MyHome.Persistence.Constants;
 using Microsoft.EntityFrameworkCore;
-using Dhanman.MyHome.Domain.Entities.ServiceProviders;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Dhanman.MyHome.Persistence.Configurations;
 
@@ -22,7 +22,7 @@ internal sealed class ServiceProviderConfiguration : IEntityTypeConfiguration<Se
         
         builder.Property(serviceProviders => serviceProviders.ContactNumber).HasColumnName("contact_number").IsRequired();
 
-        builder.Property(serviceProviders => serviceProviders.PrermanentAddressId).HasColumnName("permanent_address_id").IsRequired();
+        builder.Property(serviceProviders => serviceProviders.PermanentAddressId).HasColumnName("permanent_address_id").IsRequired();
 
         builder.Property(serviceProviders => serviceProviders.PresentAddressId).HasColumnName("present_address_id").IsRequired();
 

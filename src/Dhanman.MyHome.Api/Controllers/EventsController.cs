@@ -28,17 +28,19 @@ public class EventsController : ApiController
     public async Task<IActionResult> CreateEvents([FromBody] CreateEventRequest? request) =>
            await Result.Create(request, Errors.General.BadRequest)
            .Map(value => new CreateEventCommand(
-               value.Name,
+               Guid.NewGuid(),
+               value.Title,
                value.Description,
-               value.IsFullDay,
+               value.AllDay,
                value.BackgroundColor,
                value.TextColor,
-               value.UnitId,
+               value.ReserverdByUnitId,
                value.ReservationDate,
-               value.StartDate,
-               value.EndDate,
+               value.Start,
+               value.End,
                value.Pourpose,
-               value.StatusId
+               value.StatusId,
+               value.BookingFacilitiesId
                ))
             .Bind(command => Mediator.Send(command))
                   .Match(Ok, BadRequest);
@@ -46,12 +48,13 @@ public class EventsController : ApiController
     [HttpGet(ApiRoutes.Events.GetAllEvents)]
     [ProducesResponseType(typeof(EventResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllEventts() =>
-    await Result.Success(new GetAllEventsQuery())
+    public async Task<IActionResult> GetAllEventts(Guid companyId, int bookingFacilitiesId) =>
+    await Result.Success(new GetAllEventsQuery(companyId, bookingFacilitiesId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
     #endregion
+
     #region Bookings
     [HttpGet(ApiRoutes.BokkingFacilities.GetAllBokkingFacilities)]
     [ProducesResponseType(typeof(BookingFacilitesResponse), StatusCodes.Status200OK)]

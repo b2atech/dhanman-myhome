@@ -8,12 +8,14 @@ namespace Dhanman.MyHome.Application.Features.Floors.Queries;
 public class GetAllFloorNamesQuery : ICacheableQuery<Result<FloorNameListResponse>>
 {
     #region Properties
+    public Guid ApartmentId { get; set; }
     public int BuildingId { get; set; }
     #endregion
 
     #region Constructors
-    public GetAllFloorNamesQuery(int buildingId)
+    public GetAllFloorNamesQuery(Guid apartmentId, int buildingId)
     {
+        ApartmentId = apartmentId;
         BuildingId = buildingId;
     }
     #endregion

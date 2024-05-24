@@ -38,6 +38,6 @@ public interface IApplicationDbContext
 
     void UpdateInt<TEntity>(TEntity entity)
        where TEntity : EntityInt;
-    #endregion    
+    #endregion
 }
 

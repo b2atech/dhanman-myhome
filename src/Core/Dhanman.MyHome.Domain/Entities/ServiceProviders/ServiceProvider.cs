@@ -1,5 +1,6 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Abstractions;
 using B2aTech.CrossCuttingConcern.Core.Primitives;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Dhanman.MyHome.Domain.Entities.ServiceProviders;
 
@@ -11,7 +12,7 @@ public class ServiceProvider : EntityInt, IAuditableEntity, ISoftDeletableEntity
     public string? Email { get; set; }
     public string VisitingFrom { get; set; }
     public string ContactNumber { get; set; }
-    public Guid PrermanentAddressId { get; set; }
+    public Guid PermanentAddressId { get; set; }
     public Guid PresentAddressId { get; set; }
     //Daily Help
     //Tutors
@@ -29,6 +30,12 @@ public class ServiceProvider : EntityInt, IAuditableEntity, ISoftDeletableEntity
     public int IdentityTypeId { get; set; }
     public string IdentityNumber { get; set; }
     public byte[] IdentityImage { get; set; }
+    public DateTime ValidityDate { get; set; }
+    public bool PoliceverificationStatus { get; set; }
+    public bool IsHireable { get; set; }
+    public bool IsVisible { get; set; }
+    public bool IsFrequentVisitor { get; set; }
+
     #endregion
 
     #region Audit Properties
@@ -46,7 +53,7 @@ public class ServiceProvider : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public ServiceProvider(int id, string firstName, string? lastName, string? email, string visitingFrom, string contactNumber, Guid prermanentAddressId, Guid presentAddressId, int serviceProviderTypeId, string? vehicleNumber, int identityTypeId, string identityNumber, Guid createdBy)
+    public ServiceProvider(int id, string firstName, string? lastName, string? email, string visitingFrom, string contactNumber, Guid permanentAddressId, Guid presentAddressId, int serviceProviderTypeId, int serviceProviderSubTypeId, string? vehicleNumber, int identityTypeId, string identityNumber, DateTime validityDate, bool policeverificationStatus, bool isHireable, bool isVisible, bool isFrequentVisitor, Guid createdBy)
     {
         Id = id;
         FirstName = firstName;
@@ -54,14 +61,20 @@ public class ServiceProvider : EntityInt, IAuditableEntity, ISoftDeletableEntity
         Email = email;
         VisitingFrom = visitingFrom;
         ContactNumber = contactNumber;
-        PrermanentAddressId = prermanentAddressId;
+        PermanentAddressId = permanentAddressId;
         PresentAddressId = presentAddressId;
         ServiceProviderTypeId = serviceProviderTypeId;
+        ServiceProviderSubTypeId = serviceProviderSubTypeId;
         VehicleNumber = vehicleNumber;
         IdentityTypeId = identityTypeId;
         IdentityNumber = identityNumber;
+        ValidityDate = validityDate;
+        PoliceverificationStatus = policeverificationStatus;
+        IsHireable = isHireable;
+        IsVisible = isVisible;
+        IsFrequentVisitor = isFrequentVisitor;
         CreatedBy = createdBy;
         CreatedOnUtc = DateTime.UtcNow;
-    }    
+    }
     #endregion
 }

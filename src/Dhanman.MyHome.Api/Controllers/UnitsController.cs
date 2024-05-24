@@ -32,19 +32,20 @@ public class UnitsController : ApiController
     [HttpPost(ApiRoutes.Units.GetAllUnitDetails)]
     [ProducesResponseType(typeof(UnitDetailListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetLedgerDetails([FromBody] GetUnitDetailRequest? request) =>
+    public async Task<IActionResult> GetAllUnitDetails([FromBody] GetUnitDetailRequest? request) =>
     await Result.Create(request, Errors.General.BadRequest)
                 .Map(value => new GetUnitDetailsCommand(
-                    value.BuidingIds,
+                    value.BuildingIds,
                     value.OccupancyIds
                   ))
                 .Bind(command => Mediator.Send(command))
                .Match(Ok, BadRequest);
+
     [HttpGet(ApiRoutes.Units.GetAllUnitNames)]
     [ProducesResponseType(typeof(UnitNameListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllUnitNames() =>
-    await Result.Success(new GetAllUnitNamesQuery())
+    public async Task<IActionResult> GetAllUnitNames(Guid apartmentId, int buildingId, int floorId) =>
+    await Result.Success(new GetAllUnitNamesQuery(apartmentId, buildingId, floorId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 

@@ -1,7 +1,7 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Common;
-using Dhanman.MyHome.Application.Features.ResidentRequests.Events;
+using Dhanman.MyHome.Application.Features.Events.Events;
 using Dhanman.MyHome.Domain.Abstractions;
 using Dhanman.MyHome.Domain.Entities.Events;
 using MediatR;
@@ -30,13 +30,13 @@ public class CreateEventCommandHandler : ICommandHandler<CreateEventCommand, Res
     {
 
 
-        var residentRequest = new Event(request.Id, request.Name, request.Description,request.IsFullDay,request.BackgroundColor,request.TextColor, request.UnitId, request.ReservationDate, request.StartDate, request.EndDate, request.Pourpose, request.StatusId);
+        var eventRequest = new Event(request.Id, request.Title, request.Description,request.AllDay,request.Color,request.TextColor, request.ReservationByUnitId, request.ReservationDate, request.Start, request.End, request.Pourpose, request.StatusId, request.BookingFacilitiesId);
 
-        _eventRepository.Insert(residentRequest);
+        _eventRepository.Insert(eventRequest);
 
-        await _mediator.Publish(new ResidentRequestCreatedEvent(residentRequest.Id), cancellationToken);
+        await _mediator.Publish(new EventCreatedEvent(eventRequest.Id), cancellationToken);
 
-        return Result.Success(new EntityCreatedResponse(residentRequest.Id));
+        return Result.Success(new EntityCreatedResponse(eventRequest.Id));
 
 
 

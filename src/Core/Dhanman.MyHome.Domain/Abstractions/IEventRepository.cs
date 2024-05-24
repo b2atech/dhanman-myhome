@@ -7,7 +7,7 @@ public interface IEventRepository
 {
     #region Methodes
 
-    Task<Event?> GetBydIdIntAsync(int id);
+    Task<Event?> GetBydIdAsync(Guid id);
 
     void Insert(Event events);
 

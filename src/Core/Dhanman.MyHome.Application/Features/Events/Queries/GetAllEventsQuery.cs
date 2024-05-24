@@ -7,11 +7,17 @@ namespace Dhanman.MyHome.Application.Features.Events.Queries;
 
 public class GetAllEventsQuery : ICacheableQuery<Result<EventListResponse>>
 {
-    #region Properties     
+    #region Properties 
+    public int BookingFacilitiesId { get; set; }
+    public Guid CompanyId { get; set; }    
     #endregion
 
     #region Constructors
-    public GetAllEventsQuery() { }
+    public GetAllEventsQuery(Guid companyId, int bookingFacilitiesId)
+    {        
+        CompanyId = companyId;
+        BookingFacilitiesId = bookingFacilitiesId;
+    }
     #endregion
 
     #region Methodes

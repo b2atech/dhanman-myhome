@@ -19,9 +19,9 @@ internal sealed class EventRepository: IEventRepository
 
     #region Methods
 
-    public Task<Event?> GetBydIdIntAsync(int id) => _dbContext.GetBydIdIntAsync<Event>(id);
+    public Task<Event?> GetBydIdAsync(Guid id) => _dbContext.GetBydIdAsync<Event>(id);
 
-    public void Insert(Event events) => _dbContext.InsertInt(events);
+    public void Insert(Event events) => _dbContext.Insert(events);
 
     #endregion
 

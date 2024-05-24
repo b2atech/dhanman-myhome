@@ -31,35 +31,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
                 {
                     table.PrimaryKey("pk_bookings_facilities", x => x.id);
                 });
-
-            migrationBuilder.CreateTable(
-                name: "events",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<string>(type: "text", nullable: false),
-                    description = table.Column<string>(type: "text", nullable: false),
-                    is_full_day = table.Column<bool>(type: "boolean", nullable: false),
-                    background_color = table.Column<string>(type: "text", nullable: false),
-                    text_color = table.Column<string>(type: "text", nullable: false),
-                    unit_id = table.Column<int>(type: "integer", nullable: false),
-                    reservation_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    start_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    end_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    purpose = table.Column<string>(type: "text", nullable: false),
-                    status_id = table.Column<int>(type: "integer", nullable: false),
-                    created_on_utc = table.Column<DateTime>(type: "timestamp", nullable: false),
-                    modified_on_utc = table.Column<DateTime>(type: "timestamp", nullable: true),
-                    deleted_on_utc = table.Column<DateTime>(type: "timestamp", nullable: true),
-                    is_deleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
-                    created_by = table.Column<Guid>(type: "uuid", nullable: false),
-                    modified_by = table.Column<Guid>(type: "uuid", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_events", x => x.id);
-                });
         }
 
         /// <inheritdoc />
@@ -67,9 +38,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
         {
             migrationBuilder.DropTable(
                 name: "bookings_facilities");
-
-            migrationBuilder.DropTable(
-                name: "events");
         }
     }
 }
