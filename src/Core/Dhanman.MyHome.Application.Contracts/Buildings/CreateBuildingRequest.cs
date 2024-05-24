@@ -8,10 +8,6 @@ public class CreateBuildingRequest
     public string Name { get; set; }
     public int BuildingTypeId { get; set; }
     public int TotalUnits { get; set; }
-    public DateTime CreatedOnUtc { get; set; }
-    public DateTime? ModifiedOnUtc { get; set; }
-    public Guid CreatedBy { get; set; }
-    public Guid? ModifiedBy { get; set; }
     #endregion
 
 
