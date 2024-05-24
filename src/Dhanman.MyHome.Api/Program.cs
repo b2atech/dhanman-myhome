@@ -78,7 +78,7 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 app.UseHttpsRedirection();
 app.UseRouting();
 
-app.UseRateLimiter();
+//app.UseRateLimiter();
 
 
 app.UseCors(DhanManSpecificOrigins);
