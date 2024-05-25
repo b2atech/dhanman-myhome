@@ -219,5 +219,12 @@ public static class ApiRoutes
     {
         public const string GetAllAssignUnits = apiVersion + "assignUnits";
     }
+
+    public static class BuildingsTypes
+    {
+
+        public const string GetAllBuildingTypes = apiVersion + "buildingTypes";
+
+    }
 }
 
