@@ -4,6 +4,7 @@ using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Buildings;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Features.Buildings.Commands.CreateBuildings;
+using Dhanman.MyHome.Application.Features.Buildings.Commands.DeleteBuilding;
 using Dhanman.MyHome.Application.Features.Buildings.Queries;
 using Dhanman.MyHome.Domain;
 using MediatR;
@@ -58,6 +59,23 @@ public class BuildingsController : ApiController
           ))
           .Bind(command => Mediator.Send(command))
           .Match(Ok, BadRequest);
+
+    [HttpDelete(ApiRoutes.Buildings.DeleteBuildingById)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteBuildingById(int id)
+    {
+        var result = await Result.Success(new DeleteBuildingCommand(id))
+                    .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
 
     #endregion
 

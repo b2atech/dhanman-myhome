@@ -25,6 +25,8 @@ public static class ApiRoutes
 
         public const string UpdateBuildings = apiVersion + "updateBuilding";
 
+        public const string DeleteBuildingById = apiVersion + "building/{id:int}";
+
     }
 
     public static class Units

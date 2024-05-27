@@ -6,8 +6,6 @@ public class BuildingCreatedEvent : IEvent
 {
     public int BuildingId { get; set; }
 
-    public BuildingCreatedEvent(int buildingId)
-    {
-        BuildingId = buildingId;
-    }
+    public BuildingCreatedEvent(int buildingId) => BuildingId = buildingId;
+    
 }
