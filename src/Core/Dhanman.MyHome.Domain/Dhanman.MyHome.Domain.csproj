@@ -6,11 +6,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Entities\Apartments\Gate.cs~RFc100b8d.TMP\**" />
-    <EmbeddedResource Remove="Entities\Apartments\Gate.cs~RFc100b8d.TMP\**" />
-    <None Remove="Entities\Apartments\Gate.cs~RFc100b8d.TMP\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="B2aTech.CrossCuttingConcern" Version="1.1.3" />
