@@ -14,6 +14,7 @@ public class CreateBuildingRequest
     #region Constructor
     public CreateBuildingRequest()
     {
+
     }
     #endregion
 }

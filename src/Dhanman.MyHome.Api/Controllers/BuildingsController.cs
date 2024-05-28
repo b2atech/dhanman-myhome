@@ -3,10 +3,14 @@ using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Buildings;
 using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.MyHome.Application.Contracts.Floors;
+using Dhanman.MyHome.Application.Contracts.Gates;
 using Dhanman.MyHome.Application.Features.Buildings.Commands.CreateBuildings;
 using Dhanman.MyHome.Application.Features.Buildings.Commands.DeleteBuilding;
 using Dhanman.MyHome.Application.Features.Buildings.Commands.UpdateBuilding;
 using Dhanman.MyHome.Application.Features.Buildings.Queries;
+using Dhanman.MyHome.Application.Features.Floors.Commands.CreateFloor;
+using Dhanman.MyHome.Application.Features.Gates.Commands.CreateGate;
 using Dhanman.MyHome.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -104,6 +108,5 @@ public class BuildingsController : ApiController
     }
 
     #endregion
-
 
 }

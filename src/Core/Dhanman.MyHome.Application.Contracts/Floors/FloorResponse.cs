@@ -6,6 +6,7 @@ public sealed class FloorResponse
 
     public int Id { get; }
     public string Name { get; }
+    public Guid ApartmentId { get; }
     public int BuildingId { get; }
     public int BuildingName { get; }
     public int TotalUnits { get; }
@@ -17,18 +18,17 @@ public sealed class FloorResponse
     #endregion
 
     #region Constructor
-    public FloorResponse(int id, string name, int buildingId, string buildingName, int totalUnits, Guid createdBy, DateTime createdOnUtc, Guid? modifiedBy, DateTime? modifiedOnUtc)
+    public FloorResponse(int id, string name,Guid apartmentId, int buildingId, string buildingName, int totalUnits, Guid createdBy, DateTime createdOnUtc, Guid? modifiedBy, DateTime? modifiedOnUtc)
     {
         Id = id;
         Name = name;
+        ApartmentId = apartmentId;
         BuildingId = buildingId;
         TotalUnits = totalUnits;
         CreatedBy = createdBy;
         CreatedOnUtc = createdOnUtc;
         ModifiedBy = modifiedBy;
         ModifiedOnUtc = modifiedOnUtc;
-
-
     }
     #endregion
 }

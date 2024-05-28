@@ -7,6 +7,15 @@ namespace Dhanman.MyHome.Application.Features.Gates.Queries;
 
 public class GetAllGateNamesQuery : ICacheableQuery<Result<GateNameListResponse>>
 {
+    #region Properties
+    public Guid ApartmentId { get; set; }
+    #endregion
+    #region Constructors
+    public GetAllGateNamesQuery(Guid apartmentId)
+    {
+        ApartmentId = apartmentId;
+    }
+    #endregion
     #region Methodes
     public string GetCacheKey() => string.Format(CacheKeys.Gates.GateNameList, "user", "");
     #endregion 

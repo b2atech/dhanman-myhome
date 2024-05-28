@@ -107,7 +107,7 @@ public static class ApiRoutes
     {
         public const string CreateFloor = apiVersion + "floor";
 
-        public const string GetFloors = apiVersion + "floor/{buildingId:int}";
+        public const string GetFloors = apiVersion + "floor/{apartmentId:guid}/{buildingId:int}";
 
         public const string GetFloorNames = apiVersion + "floorNames/{apartmentId:guid}/{buildingId:int}";
 
@@ -120,9 +120,9 @@ public static class ApiRoutes
     {
         public const string CreateGate = apiVersion + "gate";
 
-        public const string GetGates = apiVersion + "gates";
+        public const string GetGates = apiVersion + "gates/{apartmentId:guid}";
 
-        public const string GetGateNames = apiVersion + "gateNames";
+        public const string GetGateNames = apiVersion + "gateNames/{apartmentId:guid}";
 
         public const string GetGatesById = apiVersion + "gate/{gateId:int}";
 
