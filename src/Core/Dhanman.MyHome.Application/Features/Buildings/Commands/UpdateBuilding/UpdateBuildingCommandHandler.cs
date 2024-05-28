@@ -34,7 +34,8 @@ public class UpdateBuildingCommandHandler : ICommandHandler<UpdateBuildingComman
         }
 
         building.Name = request.Name ?? building.Name;
-        building.BuildingTypeId = request.BuildingTypeId > 0 ? request.BuildingTypeId: building.BuildingTypeId  ;
+        building.ApartmentId = request.ApartmentId != Guid.Empty ? request.ApartmentId : building.ApartmentId; 
+        building.BuildingTypeId = request.BuildingTypeId > 0 ? request.BuildingTypeId: building.BuildingTypeId;
         building.TotalUnits = request.TotalUnits > 0 ? request.TotalUnits : building.TotalUnits;
 
         _buildingRepository.Update(building);
