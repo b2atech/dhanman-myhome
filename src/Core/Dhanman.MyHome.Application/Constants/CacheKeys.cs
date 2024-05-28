@@ -193,6 +193,28 @@ public static class CacheKeys
     }
     #endregion
 
+    #region OccupantTypes
+    public static class OccupantTypes
+    {
+        public const string CacheKeyPrefix = "occupantTypes-{0}";
+
+        public const string OccupantTypeList = CacheKeyPrefix + "-list-{1}";
+
+        public const string OccupantTypeById = CacheKeyPrefix + "-by-id-{1}";
+    }
+    #endregion
+
+    #region UnitTypes
+    public static class UnitTypes
+    {
+        public const string CacheKeyPrefix = "unitTypes-{0}";
+
+        public const string UnitTypeList = CacheKeyPrefix + "-list-{1}";
+
+        public const string UnitTypeById = CacheKeyPrefix + "-by-id-{1}";
+    }
+    #endregion
+
     #region BuildingTypes
     public static class BuildingTypes
     {

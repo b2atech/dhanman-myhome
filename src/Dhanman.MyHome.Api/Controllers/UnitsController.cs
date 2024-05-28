@@ -3,9 +3,11 @@ using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.Units;
+using Dhanman.MyHome.Application.Contracts.UnitTypes;
 using Dhanman.MyHome.Application.Features.Units.Command.CreateUnit;
 using Dhanman.MyHome.Application.Features.Units.Command.GetUnitDetails;
 using Dhanman.MyHome.Application.Features.Units.Queries;
+using Dhanman.MyHome.Application.Features.UnitTypes;
 using Dhanman.MyHome.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -62,5 +64,16 @@ public class UnitsController : ApiController
                    .Match(Ok, BadRequest);
     #endregion
 
+    #region UnitTypes
 
+    [HttpGet(ApiRoutes.UnitTypes.GetAllUnitTypes)]
+    [ProducesResponseType(typeof(UnitTypeListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+    public async Task<IActionResult> GetAllUnitTypes() =>
+     await Result.Success(new GetAllUnitTypesQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
+    #endregion
 }
