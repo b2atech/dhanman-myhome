@@ -11,12 +11,6 @@ public class CreateBuildingCommand : ICommand<Result<EntityCreatedResponse>>
     public string Name { get; set; }
     public int BuildingTypeId { get; set; }
     public int TotalUnits { get; set; }
-    public bool IsUsedForIn { get; set; }
-    public bool IsUsedForOut { get; set; }
-    public bool IsAllUsersAllowed { get; set; }
-    public bool IsResidentsAllowed { get; set; }
-    public bool IsStaffAllowed { get; set; }
-    public bool IsVendorAllowed { get; set; }
     #endregion
 
     #region Constructors
@@ -27,12 +21,6 @@ public class CreateBuildingCommand : ICommand<Result<EntityCreatedResponse>>
         BuildingTypeId = buildingTypeId;
         ApartmentId = apartmentId;
         TotalUnits = totalUnits;
-        IsUsedForIn = true;
-        IsUsedForOut = true;
-        IsAllUsersAllowed = true;
-        IsResidentsAllowed = true;
-        IsStaffAllowed = true;
-        IsVendorAllowed = true;
     }
     #endregion
 }
