@@ -23,7 +23,9 @@ public static class ApiRoutes
 
         public const string GetBuildingById = apiVersion + "building/{id:int}";
 
-        public const string UpdateBuildings = apiVersion + "updateBuilding";
+        public const string UpdateBuilding = apiVersion + "updateBuilding";
+
+        public const string DeleteBuildingById = apiVersion + "building/{id:int}";
 
     }
 
@@ -228,6 +230,13 @@ public static class ApiRoutes
     public static class UnitTypes
     {
         public const string GetAllUnitTypes = apiVersion + "unitTypes";
+    }
+
+    public static class BuildingsTypes
+    {
+
+        public const string GetAllBuildingTypes = apiVersion + "buildingTypes";
+
     }
 }
 

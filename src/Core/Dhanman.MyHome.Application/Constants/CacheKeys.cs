@@ -183,7 +183,6 @@ public static class CacheKeys
     }
     #endregion
 
-
     #region SubCategory
     public static class SubCategory
     {
@@ -213,6 +212,16 @@ public static class CacheKeys
         public const string UnitTypeList = CacheKeyPrefix + "-list-{1}";
 
         public const string UnitTypeById = CacheKeyPrefix + "-by-id-{1}";
+    }
+    #endregion
+
+    #region BuildingTypes
+    public static class BuildingTypes
+    {
+        public const string CacheKeyPrefix = " buildingTypes-{0}";
+
+        public const string BuildingTypesList = CacheKeyPrefix + "-list-{1}";
+
     }
     #endregion
 }

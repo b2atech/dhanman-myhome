@@ -12,17 +12,17 @@ public class Building : EntityInt, IAuditableEntity, ISoftDeletableEntity
     public int TotalUnits { get; set; }
     #endregion
     #region Audit Properties
-    public DateTime CreatedOnUtc { get; }
+    public DateTime CreatedOnUtc { get; set; }
 
-    public DateTime? ModifiedOnUtc { get; }
+    public DateTime? ModifiedOnUtc { get; set; }
 
-    public DateTime? DeletedOnUtc { get; }
+    public DateTime? DeletedOnUtc { get; set; }
 
-    public bool IsDeleted { get; }
+    public bool IsDeleted { get; set; }
 
-    public Guid CreatedBy { get; }
+    public Guid CreatedBy { get; set; }
 
-    public Guid? ModifiedBy { get; }
+    public Guid? ModifiedBy { get; set; }
     #endregion
 
     #region Constructor

@@ -2,12 +2,14 @@
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Apartments;
+using Dhanman.MyHome.Application.Contracts.BuildingTypes;
 using Dhanman.MyHome.Application.Contracts.Floors;
 using Dhanman.MyHome.Application.Contracts.Gates;
 using Dhanman.MyHome.Application.Contracts.OccupancyTypes;
 using Dhanman.MyHome.Application.Contracts.OccupantTypes;
 using Dhanman.MyHome.Application.Contracts.Visitors;
 using Dhanman.MyHome.Application.Features.Apartments.Queries;
+using Dhanman.MyHome.Application.Features.BuildingTypes.Queries;
 using Dhanman.MyHome.Application.Features.Floors.Queries;
 using Dhanman.MyHome.Application.Features.Gates.Queries;
 using Dhanman.MyHome.Application.Features.OccupancyTypes.Queries;
@@ -129,4 +131,16 @@ public class ApartmentsController : ApiController
 
     #endregion
 
+
+    #region BuildingType
+
+    [HttpGet(ApiRoutes.BuildingsTypes.GetAllBuildingTypes)]
+    [ProducesResponseType(typeof(BuildingTypeListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllBuildingTypes() =>
+    await Result.Success(new GetAllBuildingTypesQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
+    #endregion
 }
