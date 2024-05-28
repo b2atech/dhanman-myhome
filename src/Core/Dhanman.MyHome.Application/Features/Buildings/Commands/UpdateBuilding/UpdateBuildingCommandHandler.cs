@@ -8,7 +8,7 @@ using MediatR;
 
 namespace Dhanman.MyHome.Application.Features.Buildings.Commands.UpdateBuilding;
 
-public class UpdateBuildingCommandHandler : ICommandHandler<UpdateBuildingCommand, Result<EntityUpdatedResponse>> 
+public class UpdateBuildingCommandHandler : ICommandHandler<UpdateBuildingCommand, Result<EntityUpdatedResponse>>
 {
     #region Properties
     private readonly IBuildingRepository _buildingRepository;
@@ -28,13 +28,14 @@ public class UpdateBuildingCommandHandler : ICommandHandler<UpdateBuildingComman
     {
         var building = await _buildingRepository.GetByIntIdAsync(request.BuildingId);
 
-      if(building == null)
+        if (building == null)
         {
             throw new BuildingNotFoundException(request.BuildingId);
         }
-        building.Name =  request.Name ?? building.Name;
-        building.BuildingTypeId = request.BuildingTypeId != null ? request.BuildingTypeId : building.BuildingTypeId;
-        building.TotalUnits = request.TotalUnits != null ? request.TotalUnits : building.TotalUnits;
+
+        building.Name = request.Name ?? building.Name;
+        building.BuildingTypeId = request.BuildingTypeId > 0 ? request.BuildingTypeId: building.BuildingTypeId  ;
+        building.TotalUnits = request.TotalUnits > 0 ? request.TotalUnits : building.TotalUnits;
 
         _buildingRepository.Update(building);
 
