@@ -28,10 +28,11 @@ public class GetAllFloorsQueryHandler : IQueryHandler<GetAllFloorsQuery, Result<
               {
                   var floors = await _dbContext.SetInt<Floor>()
                   .AsNoTracking()
-                  .Where(e => e.BuildingId == request.BuildingId)
+                  .Where(e => e.ApartmentId == request.ApartmentId && e.BuildingId == request.BuildingId)
                   .Select(e => new FloorResponse(
                           e.Id,
                           e.Name,
+                          e.ApartmentId,
                           e.BuildingId,
                           _dbContext.SetInt<Building>()
                           .Where(building => building.Id == e.BuildingId)

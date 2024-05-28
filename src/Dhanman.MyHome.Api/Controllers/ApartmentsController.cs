@@ -3,6 +3,7 @@ using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Apartments;
 using Dhanman.MyHome.Application.Contracts.BuildingTypes;
+using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.Floors;
 using Dhanman.MyHome.Application.Contracts.Gates;
 using Dhanman.MyHome.Application.Contracts.OccupancyTypes;
@@ -10,11 +11,14 @@ using Dhanman.MyHome.Application.Contracts.OccupantTypes;
 using Dhanman.MyHome.Application.Contracts.Visitors;
 using Dhanman.MyHome.Application.Features.Apartments.Queries;
 using Dhanman.MyHome.Application.Features.BuildingTypes.Queries;
+using Dhanman.MyHome.Application.Features.Floors.Commands.CreateFloor;
 using Dhanman.MyHome.Application.Features.Floors.Queries;
+using Dhanman.MyHome.Application.Features.Gates.Commands.CreateGate;
 using Dhanman.MyHome.Application.Features.Gates.Queries;
 using Dhanman.MyHome.Application.Features.OccupancyTypes.Queries;
 using Dhanman.MyHome.Application.Features.OccupantTypes.Queries;
 using Dhanman.MyHome.Application.Features.Visitors.Queries;
+using Dhanman.MyHome.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -51,8 +55,8 @@ public class ApartmentsController : ApiController
     [HttpGet(ApiRoutes.Floors.GetFloors)]
     [ProducesResponseType(typeof(FloorListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllFloors(int buildingId) =>
-    await Result.Success(new GetAllFloorsQuery(buildingId))
+    public async Task<IActionResult> GetAllFloors(Guid apartmentId,int buildingId) =>
+    await Result.Success(new GetAllFloorsQuery(apartmentId,buildingId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
@@ -64,6 +68,19 @@ public class ApartmentsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [HttpPost(ApiRoutes.Floors.CreateFloor)]
+    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> CreateFloor([FromBody] CreateFloorRequest? request) =>
+     await Result.Create(request, Errors.General.BadRequest)
+         .Map(value => new CreateFloorCommand(
+             value.Name,
+             value.ApartmentId,
+             value.BuildingId,
+             value.TotalUnits
+         ))
+         .Bind(command => Mediator.Send(command))
+         .Match(Ok, BadRequest);
 
     #endregion
 
@@ -85,6 +102,25 @@ public class ApartmentsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [HttpPost(ApiRoutes.Gates.CreateGate)]
+    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> CreateGate([FromBody] CreateGateRequest? request) =>
+     await Result.Create(request, Errors.General.BadRequest)
+         .Map(value => new CreateGateCommand(
+             value.Name,
+             value.ApartmentId,
+             value.BuildingId,
+             value.GateTypeId,
+             value.IsUsedForIn,
+             value.IsUsedForOut,
+             value.IsAllUsersAllowed,
+             value.IsResidentsAllowed,
+             value.IsStaffAllowed,
+             value.IsVendorAllowed
+         ))
+         .Bind(command => Mediator.Send(command))
+         .Match(Ok, BadRequest);
     #endregion
 
     #region OccupancyTypes     
@@ -130,7 +166,6 @@ public class ApartmentsController : ApiController
     .Match(Ok, NotFound);
 
     #endregion
-
 
     #region BuildingType
 

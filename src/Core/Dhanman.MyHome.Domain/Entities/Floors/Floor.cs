@@ -27,14 +27,13 @@ public class Floor : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public Floor(int id, string name, int buildingId, int totalUnits, Guid createdBy)
+    public Floor(int id, string name, Guid apartmentId, int buildingId, int totalUnits)
     {
         Id = id;
         Name = name;
+        ApartmentId = apartmentId;
         BuildingId = buildingId;
         TotalUnits = totalUnits;
-        CreatedBy = createdBy;
-        CreatedOnUtc = DateTime.UtcNow;
 
     }
     #endregion
