@@ -89,16 +89,16 @@ public class ApartmentsController : ApiController
     [HttpGet(ApiRoutes.Gates.GetGates)]
     [ProducesResponseType(typeof(GateListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllGates() =>
-    await Result.Success(new GetAllGatesQuery())
+    public async Task<IActionResult> GetAllGates(Guid apartmentId) =>
+    await Result.Success(new GetAllGatesQuery(apartmentId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
     [HttpGet(ApiRoutes.Gates.GetGateNames)]
     [ProducesResponseType(typeof(GateNameListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllGateNames() =>
-    await Result.Success(new GetAllGateNamesQuery())
+    public async Task<IActionResult> GetAllGateNames(Guid apartmentId) =>
+    await Result.Success(new GetAllGateNamesQuery(apartmentId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 

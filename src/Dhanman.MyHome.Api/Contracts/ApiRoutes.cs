@@ -120,9 +120,9 @@ public static class ApiRoutes
     {
         public const string CreateGate = apiVersion + "gate";
 
-        public const string GetGates = apiVersion + "gates";
+        public const string GetGates = apiVersion + "gates/{apartmentId:guid}";
 
-        public const string GetGateNames = apiVersion + "gateNames";
+        public const string GetGateNames = apiVersion + "gateNames/{apartmentId:guid}";
 
         public const string GetGatesById = apiVersion + "gate/{gateId:int}";
 

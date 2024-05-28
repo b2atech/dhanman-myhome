@@ -30,6 +30,7 @@ public class GetAllGatesQueryHandler : IQueryHandler<GetAllGatesQuery, Result<Ga
               {
                   var gates = await _dbContext.SetInt<Gate>()
                   .AsNoTracking()
+                   .Where(e => e.ApartmentId == request.ApartmentId)
                   .Select(e => new GateResponse(
                           e.Id,
                           e.Name,
