@@ -3,6 +3,7 @@ using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Features.Buildings.Events;
 using Dhanman.MyHome.Domain.Abstractions;
+using Dhanman.MyHome.Domain.Entities.Buildings;
 using Dhanman.MyHome.Domain.Exceptions;
 using MediatR;
 
@@ -34,9 +35,8 @@ public class UpdateFloorCommandHandler : ICommandHandler<UpdateFloorCommand, Res
         }
 
         floor.Name = request.Name ?? floor.Name;
-        floor.BuildingId = request.BuildingId != null ? request.BuildingId : floor.BuildingId;
-        floor.TotalUnits = request.TotalUnits != null ? request.TotalUnits : floor.TotalUnits;
-
+        floor.BuildingId = request.BuildingId > 0 ? request.BuildingId : floor.BuildingId;
+        floor.TotalUnits = request.TotalUnits > 0 ? request.TotalUnits : floor.TotalUnits;
         _floorRepository.Update(floor);
 
         await _mediator.Publish(new BuildingUpdatedEvent(floor.Id), cancellationToken);
