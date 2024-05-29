@@ -16,7 +16,7 @@ public sealed class UnitResponse
     public int NumberOfMembers { get; }
     public decimal Area { get;  }
     public decimal BHKType { get; }
-    public string PhoneExtention { get; }
+    public int PhoneExtention { get; }
     public DateTime CreatedOnUtc { get; }
     public DateTime? ModifiedOnUtc { get; }
     public Guid CreatedBy { get; }
@@ -24,7 +24,7 @@ public sealed class UnitResponse
     #endregion
 
     #region Constructor
-    public UnitResponse(int id, string name, int floorId, string floorNumber, int unitTypeId, string unitType, int occupantTypeId, string occupantType, int occupancyTypeId, string occupancyType, int numberOfMembers, decimal area, decimal bHKType, string phoneExtention, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy)
+    public UnitResponse(int id, string name, int floorId, string floorNumber, int unitTypeId, string unitType, int occupantTypeId, string occupantType, int occupancyTypeId, string occupancyType, int numberOfMembers, decimal area, decimal bHKType, int phoneExtention, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy)
     {
         Id = id;
         Name = name;

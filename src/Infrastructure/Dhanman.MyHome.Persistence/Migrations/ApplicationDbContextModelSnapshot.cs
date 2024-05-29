@@ -17,7 +17,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.9")
+                .HasAnnotation("ProductVersion", "8.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -1978,6 +1978,10 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("timestamp")
                         .HasColumnName("deleted_on_utc");
 
+                    b.Property<int>("EIntercom")
+                        .HasColumnType("integer")
+                        .HasColumnName("e_intercom");
+
                     b.Property<int>("FloorId")
                         .HasColumnType("integer")
                         .HasColumnName("floor_id");
@@ -2019,19 +2023,13 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("occupant_type_id");
 
-                    b.Property<string>("PhoneExtention")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("PhoneExtention")
+                        .HasColumnType("integer")
                         .HasColumnName("phone_extention");
 
                     b.Property<int>("UnitTypeId")
                         .HasColumnType("integer")
                         .HasColumnName("unit_type_id");
-
-                    b.Property<string>("eIntercom")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("e_intercom");
 
                     b.HasKey("Id")
                         .HasName("pk_units");
