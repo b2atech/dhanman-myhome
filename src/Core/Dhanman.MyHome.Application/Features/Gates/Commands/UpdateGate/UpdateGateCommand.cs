@@ -1,11 +1,13 @@
-﻿using B2aTech.CrossCuttingConcern.Core.Abstractions;
-using B2aTech.CrossCuttingConcern.Core.Primitives;
+﻿using B2aTech.CrossCuttingConcern.Core.Result;
+using Dhanman.MyHome.Application.Abstractions.Messaging;
+using Dhanman.MyHome.Application.Contracts.Common;
 
-namespace Dhanman.MyHome.Domain.Entities.Gates;
+namespace Dhanman.MyHome.Application.Features.Gates.Commands.UpdateGate;
 
-public class Gate : EntityInt, IAuditableEntity, ISoftDeletableEntity
+public class UpdateGateCommand : ICommand<Result<EntityUpdatedResponse>>
 {
     #region Properties
+    public int GateId { get; set; }
     public string Name { get; set; }
     public Guid ApartmentId { get; set; }
     public int? BuildingId { get; set; }
@@ -16,33 +18,12 @@ public class Gate : EntityInt, IAuditableEntity, ISoftDeletableEntity
     public bool IsResidentsAllowed { get; set; }
     public bool IsStaffAllowed { get; set; }
     public bool IsVendorAllowed { get; set; }
-
     #endregion
 
-    #region Audit Properties
-    public DateTime CreatedOnUtc { get; }
-
-    public DateTime? ModifiedOnUtc { get; }
-
-    public DateTime? DeletedOnUtc { get; }
-
-    public bool IsDeleted { get; set; }
-
-    public Guid CreatedBy { get; }
-
-    public Guid? ModifiedBy { get; }
-    #endregion
-
-    #region Constructor
-    public Gate(int id, string name, Guid apartmentId, int? buildingId, int gateTypeId,
-        bool isUsedForIn,
-        bool isUsedForOut,
-        bool isAllUsersAllowed,
-        bool isResidentsAllowed,
-        bool isStaffAllowed,
-        bool isVendorAllowed)
+    #region Constructors
+    public UpdateGateCommand(int id, string name, Guid apartmentId, int? buildingId, int gateTypeId, bool isUsedForIn, bool isUsedForOut, bool isAllUsersAllowed, bool isResidentsAllowed, bool isStaffAllowed, bool isVendorAllowed)
     {
-        Id = id;
+        GateId = id;
         Name = name;
         ApartmentId = apartmentId;
         BuildingId = buildingId;
@@ -53,7 +34,6 @@ public class Gate : EntityInt, IAuditableEntity, ISoftDeletableEntity
         IsResidentsAllowed = isResidentsAllowed;
         IsStaffAllowed = isStaffAllowed;
         IsVendorAllowed = isVendorAllowed;
-        CreatedOnUtc = DateTime.UtcNow;
     }
     #endregion
 }

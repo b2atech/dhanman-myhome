@@ -128,6 +128,8 @@ public static class ApiRoutes
 
         public const string UpdateGates = apiVersion + "updateGate";
 
+        public const string DeleteGateById = apiVersion + "gate/{id:int}";
+
     }
 
     public static class OccupancyTypes

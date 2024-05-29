@@ -14,6 +14,8 @@ using Dhanman.MyHome.Application.Features.BuildingTypes.Queries;
 using Dhanman.MyHome.Application.Features.Floors.Commands.CreateFloor;
 using Dhanman.MyHome.Application.Features.Floors.Queries;
 using Dhanman.MyHome.Application.Features.Gates.Commands.CreateGate;
+using Dhanman.MyHome.Application.Features.Gates.Commands.DeleteGate;
+using Dhanman.MyHome.Application.Features.Gates.Commands.UpdateGate;
 using Dhanman.MyHome.Application.Features.Gates.Queries;
 using Dhanman.MyHome.Application.Features.OccupancyTypes.Queries;
 using Dhanman.MyHome.Application.Features.OccupantTypes.Queries;
@@ -121,6 +123,52 @@ public class ApartmentsController : ApiController
          ))
          .Bind(command => Mediator.Send(command))
          .Match(Ok, BadRequest);
+    [HttpPut(ApiRoutes.Gates.UpdateGates)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateGates([FromBody] UpdateGateRequest? request)
+    {
+        var result = await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new UpdateGateCommand(
+                value.GateId,
+                value.Name,
+                value.ApartmentId,
+                value.BuildingId,
+                value.GateTypeId,
+                value.IsUsedForIn,
+                value.IsUsedForOut,
+                value.IsAllUsersAllowed,
+                value.IsResidentsAllowed,
+                value.IsStaffAllowed,
+                value.IsVendorAllowed
+                ))
+            .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
+
+    [HttpDelete(ApiRoutes.Gates.DeleteGateById)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteGateById(int id)
+    {
+        var result = await Result.Success(new DeleteGateCommand(id))
+                    .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
     #endregion
 
     #region OccupancyTypes     
