@@ -1,4 +1,6 @@
-﻿namespace Dhanman.MyHome.Application.Contracts.Residents;
+﻿using Dhanman.MyHome.Application.Contracts.ServiceProviders;
+
+namespace Dhanman.MyHome.Application.Contracts.Residents;
 
 public class CreateResidentRequest
 {
@@ -7,12 +9,10 @@ public class CreateResidentRequest
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
-    public string ContactNumber { get; set; }
-    public Guid PermanentAddressId { get; set; }
+    public string ContactNumber { get; set; }  
+    public Address PermanentAddress { get; set; }
     public int ResidentTypeId { get; set; }
     public int OccupancyStatusId { get; set; }
-    public DateTime CreatedOnUtc { get; }
-    public Guid CreatedBy { get; set; }
 
     #endregion
 
