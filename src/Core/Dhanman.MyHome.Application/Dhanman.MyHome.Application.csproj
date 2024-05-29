@@ -28,8 +28,6 @@
     <Folder Include="Features\BookingFacilities\Events\" />
     <Folder Include="Features\Categories\Commands\" />
     <Folder Include="Features\Categories\Events\" />
-    <Folder Include="Features\Gates\Commands\DeleteGate\" />
-    <Folder Include="Features\Gates\Commands\UpdateGate\" />
     <Folder Include="Features\ServiceProviderSubType\Commands\" />
     <Folder Include="Features\ServiceProviderSubType\Events\" />
     <Folder Include="Features\UnitServiceProviders\Queries\" />

@@ -9,19 +9,14 @@ public class GetAllFloorsQuery : ICacheableQuery<Result<FloorListResponse>>
 {
     #region Properties
     public Guid ApartmentId { get; set; }
-    public int BuildingId { get; set; }
     #endregion
 
     #region Constructors
-    public GetAllFloorsQuery(Guid apartmentId,int buildingId)
-    {
-        ApartmentId = apartmentId;
-        BuildingId = buildingId;
-    }
+    public GetAllFloorsQuery(Guid apartmentId)=> ApartmentId = apartmentId;
     #endregion
 
     #region Methodes
-    public string GetCacheKey() => string.Format(CacheKeys.Floors.FloorList, "user", BuildingId);
+    public string GetCacheKey() => string.Format(CacheKeys.Floors.FloorList, "user", ApartmentId);
     #endregion 
 
 }

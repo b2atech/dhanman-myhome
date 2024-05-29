@@ -111,13 +111,15 @@ public static class ApiRoutes
     {
         public const string CreateFloor = apiVersion + "floor";
 
-        public const string GetFloors = apiVersion + "floor/{apartmentId:guid}/{buildingId:int}";
+        public const string GetFloors = apiVersion + "floor/{apartmentId:guid}";
 
         public const string GetFloorNames = apiVersion + "floorNames/{apartmentId:guid}/{buildingId:int}";
 
         public const string GetFloorById = apiVersion + "floor/{buildingId:int}";
 
-        public const string UpdateFloors = apiVersion + "updateFloor";
+        public const string UpdateFloor = apiVersion + "updateFloor";
+
+        public const string DeleteFloorById = apiVersion + "deleteFloor/{floorId:int}";
 
     }
     public static class Gates

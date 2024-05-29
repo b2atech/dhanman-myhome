@@ -21,7 +21,7 @@ public class GetAllFloorNamesQuery : ICacheableQuery<Result<FloorNameListRespons
     #endregion
 
     #region Methodes
-    public string GetCacheKey() => string.Format(CacheKeys.Floors.FloorNameList, "user", BuildingId);
+    public string GetCacheKey() => string.Format(CacheKeys.Floors.FloorNameList, "user", ApartmentId);
     #endregion 
 
 }
