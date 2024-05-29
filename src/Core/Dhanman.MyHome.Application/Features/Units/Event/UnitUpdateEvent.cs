@@ -5,7 +5,7 @@ namespace Dhanman.MyHome.Application.Features.Units.Event
     public sealed class UnitUpdateEvent : IEvent
     {
         #region Properties
-        public int UnitId;
+        public int UnitId { get; set; }
 
         #endregion
 

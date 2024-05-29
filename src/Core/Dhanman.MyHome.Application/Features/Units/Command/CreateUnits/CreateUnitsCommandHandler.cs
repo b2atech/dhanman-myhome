@@ -50,7 +50,7 @@ namespace Dhanman.MyHome.Application.Features.Units.Command.CreateUnits
                 nextunitId++;
 
             }
-            _dbContext.SetInt<Unit>().AddRange(unitList);
+            await _dbContext.SetInt<Unit>().AddRangeAsync(unitList);
             var unitIds = unitList.Select(u => u.Id).ToList();
             await _mediator.Publish(new UnitCreatedEvent(unitIds), cancellationToken);
 

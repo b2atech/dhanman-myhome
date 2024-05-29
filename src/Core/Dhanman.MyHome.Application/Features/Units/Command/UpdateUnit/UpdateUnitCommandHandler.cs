@@ -34,16 +34,15 @@ namespace Dhanman.MyHome.Application.Features.Units.Command.UpdateUnit
                 throw new InvoiceNotFoundException(request.UnitId);
             }
                 updateUnits.Name = request.Name != null ? request.Name : updateUnits.Name;
-                updateUnits.BuildingId = request.BuildingId != null ? request.BuildingId : updateUnits.BuildingId;
-                updateUnits.FloorId = request.FloorId != null ? request.FloorId : updateUnits.FloorId;
-                updateUnits.UnitTypeId = request.UnitTypeId != null ? request.UnitTypeId : updateUnits.UnitTypeId;
-                updateUnits.OccupantTypeId = request.OccupantId != null ? request.OccupantId : updateUnits.OccupantTypeId;
-                updateUnits.OccupancyTypeId = request.OccupancyId != null ? request.OccupancyId : updateUnits.OccupancyTypeId;
-                updateUnits.Area = request.Area != null ? request.Area : updateUnits.Area;
-                updateUnits.BHKType = request.Bhk != null ? request.Bhk : updateUnits.BHKType;
-                updateUnits.EIntercom = request.EIntercom != null ? request.EIntercom : updateUnits.EIntercom;
-                updateUnits.PhoneExtention = request.PhoneExtension != null ? request.PhoneExtension : updateUnits.PhoneExtention;
-                updateUnits.ModifiedOnUtc = DateTime.UtcNow;
+                updateUnits.BuildingId = request.BuildingId > 0 ? request.BuildingId : updateUnits.BuildingId;
+                updateUnits.FloorId = request.FloorId > 0 ? request.FloorId : updateUnits.FloorId;
+                updateUnits.UnitTypeId = request.UnitTypeId > 0 ? request.UnitTypeId : updateUnits.UnitTypeId;
+                updateUnits.OccupantTypeId = request.OccupantId > 0 ? request.OccupantId : updateUnits.OccupantTypeId;
+                updateUnits.OccupancyTypeId = request.OccupancyId > 0 ? request.OccupancyId : updateUnits.OccupancyTypeId;
+                updateUnits.Area = request.Area > 0 ? request.Area : updateUnits.Area;
+                updateUnits.BHKType = request.Bhk > 0 ? request.Bhk : updateUnits.BHKType;
+                updateUnits.EIntercom = request.EIntercom > 0 ? request.EIntercom : updateUnits.EIntercom;
+                updateUnits.PhoneExtention = request.PhoneExtension > 0 ? request.PhoneExtension : updateUnits.PhoneExtention;
 
             _unitRepository.Update(updateUnits);
 

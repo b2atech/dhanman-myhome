@@ -15,7 +15,8 @@ namespace Dhanman.MyHome.Persistence.Migrations
         }
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            
+            //Method not Implemented yet.
+            //Method not Implemented yet.
         }
     }
 }
