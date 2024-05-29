@@ -107,7 +107,7 @@ public static class ApiRoutes
     {
         public const string CreateFloor = apiVersion + "floor";
 
-        public const string GetFloors = apiVersion + "floor/{apartmentId:guid}/{buildingId:int}";
+        public const string GetFloors = apiVersion + "floor/{apartmentId:guid}";
 
         public const string GetFloorNames = apiVersion + "floorNames/{apartmentId:guid}/{buildingId:int}";
 

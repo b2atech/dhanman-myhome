@@ -57,16 +57,16 @@ public class ApartmentsController : ApiController
     [HttpGet(ApiRoutes.Floors.GetFloors)]
     [ProducesResponseType(typeof(FloorListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllFloors(Guid apartmentId,int buildingId) =>
-    await Result.Success(new GetAllFloorsQuery(apartmentId,buildingId))
+    public async Task<IActionResult> GetAllFloors(Guid apartmentId) =>
+    await Result.Success(new GetAllFloorsQuery(apartmentId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
     [HttpGet(ApiRoutes.Floors.GetFloorNames)]
     [ProducesResponseType(typeof(FloorNameListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllFloorNames(Guid apartmentId, int buildingId) =>
-    await Result.Success(new GetAllFloorNamesQuery(apartmentId, buildingId))
+    public async Task<IActionResult> GetAllFloorNames(Guid apartmentId,int buildingId) =>
+    await Result.Success(new GetAllFloorNamesQuery(apartmentId,buildingId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
@@ -164,6 +164,7 @@ public class ApartmentsController : ApiController
          ))
          .Bind(command => Mediator.Send(command))
          .Match(Ok, BadRequest);
+   
     #endregion
 
     #region OccupancyTypes     

@@ -8,7 +8,7 @@ public sealed class FloorResponse
     public string Name { get; }
     public Guid ApartmentId { get; }
     public int BuildingId { get; }
-    public int BuildingName { get; }
+    public string BuildingName { get; }
     public int TotalUnits { get; }
     public Guid CreatedBy { get; }
     public DateTime CreatedOnUtc { get; }
@@ -24,6 +24,7 @@ public sealed class FloorResponse
         Name = name;
         ApartmentId = apartmentId;
         BuildingId = buildingId;
+        BuildingName = buildingName;
         TotalUnits = totalUnits;
         CreatedBy = createdBy;
         CreatedOnUtc = createdOnUtc;
