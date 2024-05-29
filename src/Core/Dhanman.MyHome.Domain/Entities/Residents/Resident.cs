@@ -35,7 +35,7 @@ public class Resident : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public Resident(int id, int unitId, string firstName, string lastName, string email, string contactNumber, Guid? permanentAddressId, int residentTypeId, int occupancyStatusId, Guid createdBy)
+    public Resident(int id, int unitId, string firstName, string lastName, string email, string contactNumber, Guid? permanentAddressId, int residentTypeId, int occupancyStatusId)
     {
         Id = id;
         UnitId = unitId;
@@ -45,8 +45,7 @@ public class Resident : EntityInt, IAuditableEntity, ISoftDeletableEntity
         ContactNumber = contactNumber;
         PermanentAddressId = permanentAddressId;
         ResidentTypeId = residentTypeId;
-        OccupancyStatusId = occupancyStatusId;
-        CreatedBy = createdBy;
+        OccupancyStatusId = occupancyStatusId;       
         CreatedOnUtc = DateTime.UtcNow;
     }
     #endregion
