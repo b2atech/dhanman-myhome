@@ -36,7 +36,7 @@ internal sealed class UnitConfiguration : IEntityTypeConfiguration<Unit>
 
         builder.Property(units => units.PhoneExtention).HasColumnName("phone_extention").IsRequired();
 
-        builder.Property(units => units.eIntercom).HasColumnName("e_intercom").IsRequired();
+        builder.Property(units => units.EIntercom).HasColumnName("e_intercom").IsRequired();
 
         builder.Property(units => units.Latitude).HasColumnName("latitude").IsRequired();
 

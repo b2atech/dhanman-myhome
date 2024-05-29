@@ -8,8 +8,8 @@ public class CreateUnitRequest
     public string FlatType { get; set; }
     public string Occupant { get; set; }
     public string Occupancy { get; set; }
-    public string PrimaryEIntercom { get; set; }
-    public string EIntercom { get; set; }
+    public int PhoneExtention { get; set; }
+    public int EIntercom { get; set; }
     public string Latitude { get; set; }
     public string Longitude { get; set; }
     public int NumberOfMembers { get; set; }
@@ -19,14 +19,14 @@ public class CreateUnitRequest
     #endregion
 
     #region Constructor
-    public CreateUnitRequest(string status, string flat, string flatType, string occupant, string occupancy, string primaryEIntercom, string eIntercom, string latitude, string longitude, int numberOfMembers, string society, Guid createdBy)
+    public CreateUnitRequest(string status, string flat, string flatType, string occupant, string occupancy, int phoneExtention, int eIntercom, string latitude, string longitude, int numberOfMembers, string society, Guid createdBy)
     {
         Status = status;
         Flat = flat;
         FlatType = flatType;
         Occupant = occupant;
         Occupancy = occupancy;
-        PrimaryEIntercom = primaryEIntercom;
+        PhoneExtention = phoneExtention;
         EIntercom = eIntercom;
         Latitude = latitude;
         Longitude = longitude;

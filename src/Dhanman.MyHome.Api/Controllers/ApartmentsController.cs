@@ -131,7 +131,6 @@ public class ApartmentsController : ApiController
 
     #endregion
 
-
     #region BuildingType
 
     [HttpGet(ApiRoutes.BuildingsTypes.GetAllBuildingTypes)]

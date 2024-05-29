@@ -5,7 +5,10 @@ using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.Units;
 using Dhanman.MyHome.Application.Contracts.UnitTypes;
 using Dhanman.MyHome.Application.Features.Units.Command.CreateUnit;
+using Dhanman.MyHome.Application.Features.Units.Command.CreateUnits;
+using Dhanman.MyHome.Application.Features.Units.Command.DeleteUnit;
 using Dhanman.MyHome.Application.Features.Units.Command.GetUnitDetails;
+using Dhanman.MyHome.Application.Features.Units.Command.UpdateUnit;
 using Dhanman.MyHome.Application.Features.Units.Queries;
 using Dhanman.MyHome.Application.Features.UnitTypes;
 using Dhanman.MyHome.Domain;
@@ -62,6 +65,71 @@ public class UnitsController : ApiController
                ))
              .Bind(command => Mediator.Send(command))
                    .Match(Ok, BadRequest);
+
+    //Create Unit by manual --->
+
+    [HttpPost(ApiRoutes.Units.CreateUnits)]
+    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> CreateUnitsListRequest([FromBody] CreateUnitsListRequest? request) =>
+            await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new CreateUnitsCommand(
+                value.UnitsList
+               ))
+             .Bind(command => Mediator.Send(command))
+                   .Match(Ok, BadRequest);
+
+    //Update Unit --->
+
+    [HttpPut(ApiRoutes.Units.UpdateUnits)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateInvoice([FromBody] UpdateUnitRequest? request)
+    {
+        var result = await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new UpdateUnitCommand(
+                value.UnitId,
+                value.Name,
+                value.BuildingId,
+                value.FloorId,
+                value.UnitTypeId,
+                value.OccupantId,
+                value.OccupancyId,
+                value.Area,
+                value.Bhk,
+                value.EIntercom,
+                value.PhoneExtension,
+                value.CreatedBy
+              ))
+            .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
+
+    //Delete
+    [HttpDelete(ApiRoutes.Units.DeleteUnit)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteUnit(int id)
+    {
+        var result = await Result.Success(new DeleteUnitCommand(id))
+                    .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
+
     #endregion
 
     #region UnitTypes
@@ -76,4 +144,5 @@ public class UnitsController : ApiController
     .Match(Ok, NotFound);
 
     #endregion
+
 }

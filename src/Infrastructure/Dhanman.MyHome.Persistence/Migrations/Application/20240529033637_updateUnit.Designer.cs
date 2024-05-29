@@ -12,15 +12,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dhanman.MyHome.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240411122312_unit")]
-    partial class unit
+    [Migration("20240529033637_updateUnit")]
+    partial class updateUnit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.9")
+                .HasAnnotation("ProductVersion", "8.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -272,7 +272,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("apartments", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.ApartmentType", b =>
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.AppartmentTypes.ApartmentType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -293,8 +293,8 @@ namespace Dhanman.MyHome.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -303,7 +303,88 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("apartment_types", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.Building", b =>
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.BookingFacilites.BookingFacilitie", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BuildingId")
+                        .HasColumnType("integer")
+                        .HasColumnName("building_id");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("created_on_utc");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("deleted_on_utc");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_deleted");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("modified_by");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("modified_on_utc");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_bookings_facilities");
+
+                    b.ToTable("bookings_facilities", (string)null);
+                });
+
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.BuildingTypes.BuildingType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("deleted_on_utc");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_deleted");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_building_types");
+
+                    b.ToTable("building_types", (string)null);
+                });
+
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Buildings.Building", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -361,7 +442,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("buildings", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.BuildingType", b =>
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Categories.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -369,6 +450,14 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("created_on_utc");
 
                     b.Property<DateTime?>("DeletedOnUtc")
                         .HasColumnType("timestamp")
@@ -380,19 +469,212 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasDefaultValue(false)
                         .HasColumnName("is_deleted");
 
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("modified_by");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("modified_on_utc");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasColumnType("text")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
-                        .HasName("pk_building_types");
+                        .HasName("pk_categories");
 
-                    b.ToTable("building_types", (string)null);
+                    b.ToTable("categories", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.Floor", b =>
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Cities.City", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("created_on_utc");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("deleted_on_utc");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_deleted");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("modified_by");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("modified_on_utc");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<Guid>("StateId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("state_id");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("zip_code");
+
+                    b.HasKey("Id")
+                        .HasName("pk_cities");
+
+                    b.ToTable("cities", (string)null);
+                });
+
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Complaints.Complaint", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("integer")
+                        .HasColumnName("category_id");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("created_on_utc");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("deleted_on_utc");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("integer")
+                        .HasColumnName("department_id");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<string>("DocLink")
+                        .HasColumnType("text")
+                        .HasColumnName("doc_link");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_deleted");
+
+                    b.Property<bool>("IsUrgent")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_urgent");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("modified_by");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("modified_on_utc");
+
+                    b.Property<DateTime>("OccuredDate")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("occured_date");
+
+                    b.Property<DateTime>("PrefferedDate")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("preffered_date");
+
+                    b.Property<DateTime>("PrefferedTime")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("preffered_time");
+
+                    b.Property<int>("PriorityId")
+                        .HasColumnType("integer")
+                        .HasColumnName("priority_id");
+
+                    b.Property<int>("SubCategoryId")
+                        .HasColumnType("integer")
+                        .HasColumnName("sub_category_id");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("subject");
+
+                    b.HasKey("Id")
+                        .HasName("pk_complaint");
+
+                    b.ToTable("complaint", (string)null);
+                });
+
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Countries.Country", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("created_on_utc");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("deleted_on_utc");
+
+                    b.Property<string>("ISOAlphaCode")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("iso_alpha_code");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_deleted");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("modified_by");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("modified_on_utc");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_countries");
+
+                    b.ToTable("countries", (string)null);
+                });
+
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.EventStatuses.EventStatus", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -400,6 +682,155 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("created_on_utc");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("deleted_on_utc");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_deleted");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("modified_by");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("modified_on_utc");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_event_status");
+
+                    b.ToTable("event_status", (string)null);
+                });
+
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Events.Event", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<bool>("AllDay")
+                        .HasColumnType("boolean")
+                        .HasColumnName("all_day");
+
+                    b.Property<int>("BookingFacilitiesId")
+                        .HasColumnType("integer")
+                        .HasColumnName("booking_facilities_id");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("color");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("company_id");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("created_on_utc");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("deleted_on_utc");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<string>("End")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("end");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_deleted");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("modified_by");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("modified_on_utc");
+
+                    b.Property<string>("Pourpose")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("purpose");
+
+                    b.Property<DateTime>("ReservationDate")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("reservation_date");
+
+                    b.Property<int>("ReserverdByUnitId")
+                        .HasColumnType("integer")
+                        .HasColumnName("reserved_by_unit_id");
+
+                    b.Property<string>("Start")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("start");
+
+                    b.Property<int>("StatusId")
+                        .HasColumnType("integer")
+                        .HasColumnName("status_id");
+
+                    b.Property<string>("TextColor")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("text_color");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("title");
+
+                    b.HasKey("Id")
+                        .HasName("pk_events");
+
+                    b.ToTable("events", (string)null);
+                });
+
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Floors.Floor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("ApartmentId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("apartment_id");
 
                     b.Property<int>("BuildingId")
                         .HasColumnType("integer")
@@ -446,7 +877,38 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("floors", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.Gate", b =>
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.GateTypes.GateType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("deleted_on_utc");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_deleted");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_gate_types");
+
+                    b.ToTable("gate_types", (string)null);
+                });
+
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Gates.Gate", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -541,7 +1003,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("gates", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.GateType", b =>
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.IdentityTypes.IdentityType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -562,39 +1024,8 @@ namespace Dhanman.MyHome.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("name");
-
-                    b.HasKey("Id")
-                        .HasName("pk_gate_types");
-
-                    b.ToTable("gate_types", (string)null);
-                });
-
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.IdentityType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("DeletedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("deleted_on_utc");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("is_deleted");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -603,7 +1034,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("identity_types", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.OccupancyType", b =>
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.OccupancyTypes.OccupancyType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -624,8 +1055,8 @@ namespace Dhanman.MyHome.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -634,7 +1065,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("occupancy_types", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.OccupantType", b =>
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.OccupantTypes.OccupantType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -655,8 +1086,8 @@ namespace Dhanman.MyHome.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -665,85 +1096,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("occupant_types", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.Resident", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ContactNumber")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("contact_number");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uuid")
-                        .HasColumnName("created_by");
-
-                    b.Property<DateTime>("CreatedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("created_on_utc");
-
-                    b.Property<DateTime?>("DeletedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("deleted_on_utc");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("email");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("first_name");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("is_deleted");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("last_name");
-
-                    b.Property<Guid?>("ModifiedBy")
-                        .HasColumnType("uuid")
-                        .HasColumnName("modified_by");
-
-                    b.Property<DateTime?>("ModifiedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("modified_on_utc");
-
-                    b.Property<int>("OccupancyStatusId")
-                        .HasColumnType("integer")
-                        .HasColumnName("occupancy_status_id");
-
-                    b.Property<Guid?>("PermanentAddressId")
-                        .IsRequired()
-                        .HasColumnType("uuid")
-                        .HasColumnName("permanent_address_id");
-
-                    b.Property<int>("ResidentTypeId")
-                        .HasColumnType("integer")
-                        .HasColumnName("resident_type_id");
-
-                    b.Property<int>("UnitId")
-                        .HasColumnType("integer")
-                        .HasColumnName("unit_id");
-
-                    b.HasKey("Id")
-                        .HasName("pk_residents");
-
-                    b.ToTable("residents", (string)null);
-                });
-
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.ResidentRequest", b =>
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.ResidentRequests.ResidentRequest", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -836,7 +1189,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("resident_requests", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.ResidentRequestStatus", b =>
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.ResidentStatuses.ResidentRequestStatus", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -857,8 +1210,8 @@ namespace Dhanman.MyHome.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -867,7 +1220,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("resident_request_statuses", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.ResidentType", b =>
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.ResidentTypes.ResidentType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -888,8 +1241,8 @@ namespace Dhanman.MyHome.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -898,7 +1251,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("resident_types", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.ServiceProvider", b =>
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Residents.Resident", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -906,10 +1259,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AddressId")
-                        .HasColumnType("integer")
-                        .HasColumnName("address_id");
 
                     b.Property<string>("ContactNumber")
                         .IsRequired()
@@ -938,15 +1287,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("text")
                         .HasColumnName("first_name");
 
-                    b.Property<string>("IdentityNumber")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("identity_number");
-
-                    b.Property<int>("IdentityTypeId")
-                        .HasColumnType("integer")
-                        .HasColumnName("identity_type_id");
-
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
@@ -966,27 +1306,30 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("timestamp")
                         .HasColumnName("modified_on_utc");
 
-                    b.Property<int>("ServiceProviderTypeId")
+                    b.Property<int>("OccupancyStatusId")
                         .HasColumnType("integer")
-                        .HasColumnName("service_provider_type_id");
+                        .HasColumnName("occupancy_status_id");
 
-                    b.Property<string>("VehicleNumber")
+                    b.Property<Guid?>("PermanentAddressId")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("vehicle_number");
+                        .HasColumnType("uuid")
+                        .HasColumnName("permanent_address_id");
 
-                    b.Property<string>("VisitingFrom")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("visiting_from");
+                    b.Property<int>("ResidentTypeId")
+                        .HasColumnType("integer")
+                        .HasColumnName("resident_type_id");
+
+                    b.Property<int>("UnitId")
+                        .HasColumnType("integer")
+                        .HasColumnName("unit_id");
 
                     b.HasKey("Id")
-                        .HasName("pk_service_providers");
+                        .HasName("pk_residents");
 
-                    b.ToTable("service_providers", (string)null);
+                    b.ToTable("residents", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.ServiceProviderLog", b =>
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.ServiceProviderLogs.ServiceProviderLog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1058,7 +1401,50 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("service_provider_logs", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.ServiceProviderType", b =>
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.ServiceProviderSubTypes.ServiveProviderSubType", b =>
+                {
+                    b.Property<int>("ServiceProviderTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("service_provider_type_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ServiceProviderTypeId"));
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("deleted_on_utc");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_deleted");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("modified_by");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("name");
+
+                    b.HasKey("ServiceProviderTypeId")
+                        .HasName("pk_service_provider_sub_types");
+
+                    b.ToTable("service_provider_sub_types", (string)null);
+                });
+
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.ServiceProviderTypes.ServiceProviderType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1079,8 +1465,8 @@ namespace Dhanman.MyHome.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -1089,7 +1475,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("service_provider_types", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.Unit", b =>
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.ServiceProviderVerifications.ServiceProviderVerification", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1098,17 +1484,10 @@ namespace Dhanman.MyHome.Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid>("AccountId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("account_id");
-
-                    b.Property<float>("Area")
-                        .HasColumnType("real")
-                        .HasColumnName("area");
-
-                    b.Property<float>("BHKType")
-                        .HasColumnType("real")
-                        .HasColumnName("bhk_type");
+                    b.Property<string>("Comments")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("comments");
 
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("uuid")
@@ -1122,25 +1501,15 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("timestamp")
                         .HasColumnName("deleted_on_utc");
 
-                    b.Property<int>("FloorId")
-                        .HasColumnType("integer")
-                        .HasColumnName("floor_id");
-
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
                         .HasDefaultValue(false)
                         .HasColumnName("is_deleted");
 
-                    b.Property<string>("Latitude")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("latitude");
-
-                    b.Property<string>("Longitude")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("longitude");
+                    b.Property<bool>("IsVerified")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_verified");
 
                     b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uuid")
@@ -1155,25 +1524,296 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
-                    b.Property<int>("OccupancyTypeId")
+                    b.Property<int>("ServiceProviderId")
                         .HasColumnType("integer")
-                        .HasColumnName("occupancy_type_id");
+                        .HasColumnName("service_Provider_id");
 
-                    b.Property<int>("OccupantTypeId")
+                    b.Property<int>("VerificationTypeId")
                         .HasColumnType("integer")
-                        .HasColumnName("occupant_type_id");
-
-                    b.Property<int>("UnitTypeId")
-                        .HasColumnType("integer")
-                        .HasColumnName("unit_type_id");
+                        .HasColumnName("verification_type_id");
 
                     b.HasKey("Id")
-                        .HasName("pk_units");
+                        .HasName("pk_service_provider_verifications");
 
-                    b.ToTable("units", (string)null);
+                    b.ToTable("service_provider_verifications", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.UnitStatus", b =>
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.ServiceProviders.ServiceProvider", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ContactNumber")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("contact_number");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("created_on_utc");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("deleted_on_utc");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("email");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("first_name");
+
+                    b.Property<byte[]>("IdentityImage")
+                        .HasColumnType("bytea")
+                        .HasColumnName("identity_image");
+
+                    b.Property<string>("IdentityNumber")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("identity_number");
+
+                    b.Property<int>("IdentityTypeId")
+                        .HasColumnType("integer")
+                        .HasColumnName("identity_type_id");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_deleted");
+
+                    b.Property<bool>("IsFrequentVisitor")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_frequent_visitor");
+
+                    b.Property<bool>("IsHireable")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_hireable");
+
+                    b.Property<bool>("IsVisible")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_visible");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("last_name");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("modified_by");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("modified_on_utc");
+
+                    b.Property<Guid>("PermanentAddressId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("permanent_address_id");
+
+                    b.Property<bool>("PoliceverificationStatus")
+                        .HasColumnType("boolean")
+                        .HasColumnName("policeverification_status");
+
+                    b.Property<Guid>("PresentAddressId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("present_address_id");
+
+                    b.Property<int>("ServiceProviderSubTypeId")
+                        .HasColumnType("integer")
+                        .HasColumnName("service_provider_sub_type_id");
+
+                    b.Property<int>("ServiceProviderTypeId")
+                        .HasColumnType("integer")
+                        .HasColumnName("service_provider_type_id");
+
+                    b.Property<DateTime>("ValidityDate")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("validity_date");
+
+                    b.Property<string>("VehicleNumber")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("vehicle_number");
+
+                    b.Property<string>("VisitingFrom")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("visiting_from");
+
+                    b.HasKey("Id")
+                        .HasName("pk_service_providers");
+
+                    b.ToTable("service_providers", (string)null);
+                });
+
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.States.State", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("CountryId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("country_id");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("created_on_utc");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("deleted_on_utc");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_deleted");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("modified_by");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("modified_on_utc");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_states");
+
+                    b.ToTable("states", (string)null);
+                });
+
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.SubCategories.SubCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("integer")
+                        .HasColumnName("category_id");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("created_on_utc");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("deleted_on_utc");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_deleted");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("modified_by");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("modified_on_utc");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_sub_categories");
+
+                    b.ToTable("sub_categories", (string)null);
+                });
+
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.UnitServiceProviders.UnitServiceProvider", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("created_on_utc");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("deleted_on_utc");
+
+                    b.Property<DateTime>("End")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("end");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_deleted");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("modified_by");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("modified_on_utc");
+
+                    b.Property<int>("ServiceProviderId")
+                        .HasColumnType("integer")
+                        .HasColumnName("service_provider_id");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("start");
+
+                    b.Property<int>("UnitId")
+                        .HasColumnType("integer")
+                        .HasColumnName("unit_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_unit_service_providers");
+
+                    b.ToTable("unit_service_providers", (string)null);
+                });
+
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.UnitStatuses.UnitStatus", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1194,8 +1834,8 @@ namespace Dhanman.MyHome.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -1204,7 +1844,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("unit_statuses", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.UnitType", b =>
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.UnitTypes.UnitType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1225,8 +1865,8 @@ namespace Dhanman.MyHome.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -1235,7 +1875,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("unit_types", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.UnitVehicleLimit", b =>
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.UnitVehicleLimits.UnitVehicleLimit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1296,7 +1936,155 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("unit_vehicle_limits", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.Vehicle", b =>
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Units.Unit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("account_id");
+
+                    b.Property<Guid>("ApartmentId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("apartment_id");
+
+                    b.Property<decimal>("Area")
+                        .HasColumnType("numeric")
+                        .HasColumnName("area");
+
+                    b.Property<decimal>("BHKType")
+                        .HasColumnType("numeric")
+                        .HasColumnName("bhk_type");
+
+                    b.Property<int>("BuildingId")
+                        .HasColumnType("integer")
+                        .HasColumnName("building_id");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("created_on_utc");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("customer_id");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("deleted_on_utc");
+
+                    b.Property<int>("EIntercom")
+                        .HasColumnType("integer")
+                        .HasColumnName("e_intercom");
+
+                    b.Property<int>("FloorId")
+                        .HasColumnType("integer")
+                        .HasColumnName("floor_id");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_deleted");
+
+                    b.Property<string>("Latitude")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("latitude");
+
+                    b.Property<string>("Longitude")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("longitude");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("modified_by");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("modified_on_utc");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<int>("OccupancyTypeId")
+                        .HasColumnType("integer")
+                        .HasColumnName("occupancy_type_id");
+
+                    b.Property<int>("OccupantTypeId")
+                        .HasColumnType("integer")
+                        .HasColumnName("occupant_type_id");
+
+                    b.Property<int>("PhoneExtention")
+                        .HasColumnType("integer")
+                        .HasColumnName("phone_extention");
+
+                    b.Property<int>("UnitTypeId")
+                        .HasColumnType("integer")
+                        .HasColumnName("unit_type_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_units");
+
+                    b.ToTable("units", (string)null);
+                });
+
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Users.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("created_on_utc");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("deleted_on_utc");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_deleted");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("modified_by");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("modified_on_utc");
+
+                    b.Property<string>("_passwordHash")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("password_hash");
+
+                    b.HasKey("Id")
+                        .HasName("pk_users");
+
+                    b.ToTable("users", (string)null);
+                });
+
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Vehicals.Vehicle", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1358,7 +2146,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("vehicles", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.VehicleType", b =>
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.VehicleTypes.VehicleType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1379,8 +2167,8 @@ namespace Dhanman.MyHome.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -1389,7 +2177,141 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("vehicle_types", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.Visitor", b =>
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.VerificationTypes.VerificationType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("deleted_on_utc");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_deleted");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_verification_types");
+
+                    b.ToTable("verification_types", (string)null);
+                });
+
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.VisitorLogs.VisitorLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("created_on_utc");
+
+                    b.Property<int>("CurrentStatusId")
+                        .HasColumnType("integer")
+                        .HasColumnName("current_status_id");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("deleted_on_utc");
+
+                    b.Property<DateTime>("EntryTime")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("entry_time");
+
+                    b.Property<DateTime?>("ExitTime")
+                        .IsRequired()
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("exit_time");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_deleted");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("modified_by");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("modified_on_utc");
+
+                    b.Property<int?>("VisitPurposeId")
+                        .IsRequired()
+                        .HasColumnType("integer")
+                        .HasColumnName("visit_purpose_id");
+
+                    b.Property<string>("VisitingFrom")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("visiting_from");
+
+                    b.Property<int>("VisitingUnitId")
+                        .HasColumnType("integer")
+                        .HasColumnName("visiting_unit_id");
+
+                    b.Property<int>("VisitorId")
+                        .HasColumnType("integer")
+                        .HasColumnName("visitor_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_visitor_logs");
+
+                    b.ToTable("visitor_logs", (string)null);
+                });
+
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.VisitorTypes.VisitorType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("deleted_on_utc");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_deleted");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_visitor_types");
+
+                    b.ToTable("visitor_types", (string)null);
+                });
+
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Visitors.Visitor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1471,303 +2393,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasName("pk_visitors");
 
                     b.ToTable("visitors", (string)null);
-                });
-
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.VisitorLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uuid")
-                        .HasColumnName("created_by");
-
-                    b.Property<DateTime>("CreatedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("created_on_utc");
-
-                    b.Property<int>("CurrentStatusId")
-                        .HasColumnType("integer")
-                        .HasColumnName("current_status_id");
-
-                    b.Property<DateTime?>("DeletedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("deleted_on_utc");
-
-                    b.Property<DateTime>("EntryTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("entry_time");
-
-                    b.Property<DateTime?>("ExitTime")
-                        .IsRequired()
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("exit_time");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("is_deleted");
-
-                    b.Property<Guid?>("ModifiedBy")
-                        .HasColumnType("uuid")
-                        .HasColumnName("modified_by");
-
-                    b.Property<DateTime?>("ModifiedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("modified_on_utc");
-
-                    b.Property<int?>("VisitPurposeId")
-                        .IsRequired()
-                        .HasColumnType("integer")
-                        .HasColumnName("visit_purpose_id");
-
-                    b.Property<string>("VisitingFrom")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("visiting_from");
-
-                    b.Property<int>("VisitingUnitId")
-                        .HasColumnType("integer")
-                        .HasColumnName("visiting_unit_id");
-
-                    b.Property<int>("VisitorId")
-                        .HasColumnType("integer")
-                        .HasColumnName("visitor_id");
-
-                    b.HasKey("Id")
-                        .HasName("pk_visitor_logs");
-
-                    b.ToTable("visitor_logs", (string)null);
-                });
-
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Apartments.VisitorType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("DeletedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("deleted_on_utc");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("is_deleted");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("name");
-
-                    b.HasKey("Id")
-                        .HasName("pk_visitor_types");
-
-                    b.ToTable("visitor_types", (string)null);
-                });
-
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Cities.City", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uuid")
-                        .HasColumnName("created_by");
-
-                    b.Property<DateTime>("CreatedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("created_on_utc");
-
-                    b.Property<DateTime?>("DeletedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("deleted_on_utc");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("is_deleted");
-
-                    b.Property<Guid?>("ModifiedBy")
-                        .HasColumnType("uuid")
-                        .HasColumnName("modified_by");
-
-                    b.Property<DateTime?>("ModifiedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("modified_on_utc");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.Property<Guid>("StateId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("state_id");
-
-                    b.Property<string>("ZipCode")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("zip_code");
-
-                    b.HasKey("Id")
-                        .HasName("pk_cities");
-
-                    b.ToTable("cities", (string)null);
-                });
-
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Countries.Country", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uuid")
-                        .HasColumnName("created_by");
-
-                    b.Property<DateTime>("CreatedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("created_on_utc");
-
-                    b.Property<DateTime?>("DeletedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("deleted_on_utc");
-
-                    b.Property<string>("ISOAlphaCode")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("iso_alpha_code");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("is_deleted");
-
-                    b.Property<Guid?>("ModifiedBy")
-                        .HasColumnType("uuid")
-                        .HasColumnName("modified_by");
-
-                    b.Property<DateTime?>("ModifiedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("modified_on_utc");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.HasKey("Id")
-                        .HasName("pk_countries");
-
-                    b.ToTable("countries", (string)null);
-                });
-
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.States.State", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<Guid>("CountryId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("country_id");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uuid")
-                        .HasColumnName("created_by");
-
-                    b.Property<DateTime>("CreatedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("created_on_utc");
-
-                    b.Property<DateTime?>("DeletedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("deleted_on_utc");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("is_deleted");
-
-                    b.Property<Guid?>("ModifiedBy")
-                        .HasColumnType("uuid")
-                        .HasColumnName("modified_by");
-
-                    b.Property<DateTime?>("ModifiedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("modified_on_utc");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.HasKey("Id")
-                        .HasName("pk_states");
-
-                    b.ToTable("states", (string)null);
-                });
-
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Users.User", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uuid")
-                        .HasColumnName("created_by");
-
-                    b.Property<DateTime>("CreatedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("created_on_utc");
-
-                    b.Property<DateTime?>("DeletedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("deleted_on_utc");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("is_deleted");
-
-                    b.Property<Guid?>("ModifiedBy")
-                        .HasColumnType("uuid")
-                        .HasColumnName("modified_by");
-
-                    b.Property<DateTime?>("ModifiedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("modified_on_utc");
-
-                    b.Property<string>("_passwordHash")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("password_hash");
-
-                    b.HasKey("Id")
-                        .HasName("pk_users");
-
-                    b.ToTable("users", (string)null);
                 });
 
             modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Users.User", b =>
