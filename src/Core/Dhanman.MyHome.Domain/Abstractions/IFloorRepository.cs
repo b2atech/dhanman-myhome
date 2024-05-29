@@ -6,7 +6,7 @@ public interface IFloorRepository
 {
     #region Methods
     Task<Floor?> GetByIntIdAsync(int id);
-    void Insert(Floor floor);   
+    void Insert(Floor floor);
     void Update(Floor floor);
     void Delete(Floor floor);
     Task<int> GetLastFloorIdAsync();

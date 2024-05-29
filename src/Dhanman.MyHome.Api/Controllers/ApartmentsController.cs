@@ -12,6 +12,8 @@ using Dhanman.MyHome.Application.Contracts.Visitors;
 using Dhanman.MyHome.Application.Features.Apartments.Queries;
 using Dhanman.MyHome.Application.Features.BuildingTypes.Queries;
 using Dhanman.MyHome.Application.Features.Floors.Commands.CreateFloor;
+using Dhanman.MyHome.Application.Features.Floors.Commands.DeleteFloor;
+using Dhanman.MyHome.Application.Features.Floors.Commands.UpdateFloor;
 using Dhanman.MyHome.Application.Features.Floors.Queries;
 using Dhanman.MyHome.Application.Features.Gates.Commands.CreateGate;
 using Dhanman.MyHome.Application.Features.Gates.Queries;
@@ -81,6 +83,47 @@ public class ApartmentsController : ApiController
          ))
          .Bind(command => Mediator.Send(command))
          .Match(Ok, BadRequest);
+
+    [HttpPut(ApiRoutes.Floors.UpdateFloor)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateFloors([FromBody] UpdateFloorRequest? request)
+    {
+        var result = await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new UpdateFloorCommand(
+                value.FloorId,
+                value.Name,
+                value.BuildingId,
+                value.TotalUnits
+                ))
+            .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
+
+    [HttpDelete(ApiRoutes.Floors.DeleteFloorById)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteFloorById(int floorId)
+    {
+        var result = await Result.Success(new DeleteFloorCommand(floorId))
+                    .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
+
 
     #endregion
 

@@ -30,10 +30,7 @@ public class FloorRepository : IFloorRepository
 
     public void Insert(Floor floor) => _dbContext.InsertInt(floor);
 
-    public void Update(Floor floor)
-    {
-        throw new NotImplementedException();
-    }
+    public void Update(Floor floor) => _dbContext.UpdateInt(floor);
     public void Delete(Floor floor)
     {
         throw new NotImplementedException();
