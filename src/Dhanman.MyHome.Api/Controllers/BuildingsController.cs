@@ -54,7 +54,7 @@ public class BuildingsController : ApiController
     [HttpPost(ApiRoutes.Buildings.CreateBuilding)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> CreateComplaint([FromBody] CreateBuildingRequest? request) =>
+    public async Task<IActionResult> CreateBuilding([FromBody] CreateBuildingRequest? request) =>
       await Result.Create(request, Errors.General.BadRequest)
           .Map(value => new CreateBuildingCommand(
               value.Name,

@@ -24,6 +24,7 @@ public class BuildingRepository : IBuildingRepository
     public async Task<int> GetLastBuildingIdAsync()
     {
         return await _dbContext.SetInt<Building>()
+             .IgnoreQueryFilters()
             .OrderByDescending(b => b.Id)
             .Select(b => b.Id)
             .FirstOrDefaultAsync();
