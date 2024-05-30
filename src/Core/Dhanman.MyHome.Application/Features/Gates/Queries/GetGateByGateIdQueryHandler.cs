@@ -30,33 +30,33 @@ public class GetGateByGateIdQueryHandler : IQueryHandler<GetGateByGateIdQuery, R
               {
                   var gates = await _dbContext.SetInt<Gate>()
                   .AsNoTracking()
-                   .Where(e => e.Id == request.GateId)
-                  .Select(e => new GateResponse(
-                          e.Id,
-                          e.Name,
-                          e.ApartmentId,
+                   .Where(g => g.Id == request.GateId)
+                  .Select(g => new GateResponse(
+                          g.Id,
+                          g.Name,
+                          g.ApartmentId,
                           _dbContext.Set<Apartment>()
-                          .Where(apartment => apartment.Id == e.ApartmentId)
+                          .Where(apartment => apartment.Id == g.ApartmentId)
                           .Select(apartment => apartment.Name)
                           .FirstOrDefault(),
-                          e.BuildingId,
+                          g.BuildingId,
                           _dbContext.SetInt<Building>()
-                          .Where(building => building.Id == e.BuildingId)
+                          .Where(building => building.Id == g.BuildingId)
                           .Select(Building => Building.Name)
                           .FirstOrDefault(),
-                          e.GateTypeId,
+                          g.GateTypeId,
                           _dbContext.SetInt<GateType>()
-                          .Where(gateType => gateType.Id == e.GateTypeId)
+                          .Where(gateType => gateType.Id == g.GateTypeId)
                           .Select(gateType => gateType.Name)
                           .FirstOrDefault(),
-                          e.IsUsedForIn,
-                          e.IsUsedForOut,
-                          e.IsAllUsersAllowed,
-                          e.IsResidentsAllowed,
-                          e.IsStaffAllowed,
-                          e.IsVendorAllowed,
-                          e.CreatedBy,
-                          e.CreatedOnUtc))
+                          g.IsUsedForIn,
+                          g.IsUsedForOut,
+                          g.IsAllUsersAllowed,
+                          g.IsResidentsAllowed,
+                          g.IsStaffAllowed,
+                          g.IsVendorAllowed,
+                          g.CreatedBy,
+                          g.CreatedOnUtc))
                   .ToListAsync(cancellationToken);
 
                   var listResponse = new GateListResponse(gates);
