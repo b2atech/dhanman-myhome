@@ -45,6 +45,7 @@ public class GetAllUnitsQueryHandler : IQueryHandler<GetAllUnitsQuery, Result<Un
                           _dbContext.SetInt<Floor>()
                               .Where(p => p.Id == e.Unit.FloorId)
                               .Select(p => p.Name).FirstOrDefault(),
+                          e.Unit.BuildingId,
                           e.Unit.UnitTypeId,
                           _dbContext.SetInt<UnitType>()
                               .Where(p => p.Id == e.Unit.UnitTypeId)
