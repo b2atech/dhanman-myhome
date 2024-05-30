@@ -21,7 +21,7 @@ public static class ApiRoutes
 
         public const string GetAllBuildingName = apiVersion + "buildingName/{apartmentId:guid}";
 
-        public const string GetBuildingById = apiVersion + "building/{id:int}";
+        public const string GetBuildingByBuildingId = apiVersion + "building/{buildingId:int}";
 
         public const string UpdateBuilding = apiVersion + "updateBuilding";
 
@@ -115,7 +115,7 @@ public static class ApiRoutes
 
         public const string GetFloorNames = apiVersion + "floorNames/{apartmentId:guid}/{buildingId:int}";
 
-        public const string GetFloorById = apiVersion + "floor/{buildingId:int}";
+        public const string GetFloorByFloorId = apiVersion + "floor/{floorId:int}";
 
         public const string UpdateFloor = apiVersion + "updateFloor";
 
@@ -130,7 +130,7 @@ public static class ApiRoutes
 
         public const string GetGateNames = apiVersion + "gateNames/{apartmentId:guid}";
 
-        public const string GetGatesById = apiVersion + "gate/{gateId:int}";
+        public const string GetGateByGateId = apiVersion + "gate/{gateId:int}";
 
         public const string UpdateGates = apiVersion + "updateGate";
 
