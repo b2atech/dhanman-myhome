@@ -28,21 +28,21 @@ public class GetFloorByFloorIdQueryHandler : IQueryHandler<GetFloorByFloorIdQuer
               {
                   var floors = await _dbContext.SetInt<Floor>()
                   .AsNoTracking()
-                  .Where(e => e.Id == request.FloorId)
-                  .Select(e => new FloorResponse(
-                          e.Id,
-                          e.Name,
-                          e.ApartmentId,
-                          e.BuildingId,
+                  .Where(f => f.Id == request.FloorId)
+                  .Select(f => new FloorResponse(
+                          f.Id,
+                          f.Name,
+                          f.ApartmentId,
+                          f.BuildingId,
                           _dbContext.SetInt<Building>()
-                          .Where(building => building.Id == e.BuildingId)
+                          .Where(building => building.Id == f.BuildingId)
                           .Select(building => building.Name)
                           .FirstOrDefault(),
-                          e.TotalUnits,
-                          e.CreatedBy,
-                          e.CreatedOnUtc,
-                          e.ModifiedBy,
-                          e.ModifiedOnUtc))
+                          f.TotalUnits,
+                          f.CreatedBy,
+                          f.CreatedOnUtc,
+                          f.ModifiedBy,
+                          f.ModifiedOnUtc))
                   .ToListAsync(cancellationToken);
 
                   var listResponse = new FloorListResponse(floors);
