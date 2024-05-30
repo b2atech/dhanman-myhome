@@ -30,10 +30,12 @@ namespace Dhanman.MyHome.Application.Features.Units.Command.CreateUnits
         public async Task<Result<EntityCreatedResponse>> Handle(CreateUnitsCommand request, CancellationToken cancellationToken)
         {
             var unitList = new List<Unit>();
-            int nextunitId = _unitRepository.GetTotalRecordsCount() + 1;
+            int lastId = await _unitRepository.GetLastUnitIdAsync();
+           
             foreach (var item in request.UnitsList)
             {
-                var unit = new Unit(nextunitId,item.Name, item.BuildingId,
+                int newId = lastId + 1;
+                var unit = new Unit(newId, item.Name, item.BuildingId,
                     item.FloorId,
                     item.UnitTypeId,
                     item.OccupantId,
@@ -47,8 +49,6 @@ namespace Dhanman.MyHome.Application.Features.Units.Command.CreateUnits
                     Guid.NewGuid()
                     );
                 unitList.Add(unit);
-                nextunitId++;
-
             }
             await _dbContext.SetInt<Unit>().AddRangeAsync(unitList);
             var unitIds = unitList.Select(u => u.Id).ToList();
