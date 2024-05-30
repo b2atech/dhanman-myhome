@@ -16,5 +16,6 @@ public interface IUnitRepository
     int GetTotalRecordsCount();
 
     Task<bool> IsFlatValidAsync(string name);
+    Task<int> GetLastUnitIdAsync();
     #endregion
 }

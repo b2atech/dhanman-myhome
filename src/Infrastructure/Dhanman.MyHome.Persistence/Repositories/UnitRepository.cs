@@ -1,5 +1,6 @@
 ﻿using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Domain.Abstractions;
+using Dhanman.MyHome.Domain.Entities.Buildings;
 using Dhanman.MyHome.Domain.Entities.Units;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,6 +35,12 @@ internal sealed class UnitRepository : IUnitRepository
             return false;
         }
         return true;
+    }
+    public async Task<int> GetLastUnitIdAsync()
+    {
+        return await _dbContext.SetInt<Unit>().
+            IgnoreQueryFilters()
+            .MaxAsync(b => b.Id);
     }
 
     #endregion

@@ -2,7 +2,6 @@
 using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Common;
-using Dhanman.MyHome.Application.Features.ResidentRequests.Events;
 using Dhanman.MyHome.Application.Features.Units.Event;
 using Dhanman.MyHome.Domain.Abstractions;
 using MediatR;
