@@ -72,6 +72,14 @@ public class ApartmentsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [HttpGet(ApiRoutes.Floors.GetFloorByFloorId)]
+    [ProducesResponseType(typeof(FloorListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetFloorsByBuildingId(int floorId) =>
+    await Result.Success(new GetFloorByFloorIdQuery(floorId))
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
     [HttpPost(ApiRoutes.Floors.CreateFloor)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -144,6 +152,14 @@ public class ApartmentsController : ApiController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAllGateNames(Guid apartmentId) =>
     await Result.Success(new GetAllGateNamesQuery(apartmentId))
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
+    [HttpGet(ApiRoutes.Gates.GetGateByGateId)]
+    [ProducesResponseType(typeof(GateListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetGateByGateId(int gateId) =>
+    await Result.Success(new GetGateByGateIdQuery(gateId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
