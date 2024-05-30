@@ -147,6 +147,7 @@ public class ApartmentsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    public async Task<IActionResult> GetGateByGateId(Guid apartmentId) =>
     [HttpPost(ApiRoutes.Gates.CreateGate)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
