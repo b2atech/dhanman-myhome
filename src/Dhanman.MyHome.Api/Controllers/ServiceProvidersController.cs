@@ -95,7 +95,7 @@ public class ServiceProvidersController : ApiController
     public async Task<IActionResult> CreateUnitServiceProvider([FromBody] CreateUnitServiceProviderRequest? request) =>
         await Result.Create(request, Errors.General.BadRequest)
         .Map(value => new CreateUnitServiceProviderCommand(
-            value.UnitId,
+            value.UnitIds,
             value.ServiceProviderId,
             value.Start,
             value.End))

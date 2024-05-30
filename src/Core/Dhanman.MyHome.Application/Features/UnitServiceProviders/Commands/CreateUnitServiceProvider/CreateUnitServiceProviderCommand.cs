@@ -8,16 +8,16 @@ public class CreateUnitServiceProviderCommand : ICommand<Result<EntityCreatedRes
 {
     #region Properties
     public int Id { get; set; }
-    public int UnitId { get; set; }
+    public List<int> UnitIds { get; set; }
     public int ServiceProviderId { get; set; }
     public DateTime Start { get; set; }
     public DateTime End { get; set; }
     #endregion
 
     #region Constructors
-    public CreateUnitServiceProviderCommand(int unitId, int serviceProviderId, DateTime start, DateTime end)
+    public CreateUnitServiceProviderCommand(List<int> unitIds, int serviceProviderId, DateTime start, DateTime end)
     {
-        UnitId = unitId;
+        UnitIds = unitIds;
         ServiceProviderId = serviceProviderId;
         Start = start;
         End = end;

@@ -7,6 +7,7 @@ public sealed class UnitResponse
     public string Name { get; }   // flat number 
     public int FloorId { get; }
     public string FloorNumber { get; }
+    public int BuildingId { get; }
     public int UnitTypeId { get; } // Flat Type
     public string UnitType{ get; } // Flat Type
     public int OccupantTypeId { get; }
@@ -24,12 +25,13 @@ public sealed class UnitResponse
     #endregion
 
     #region Constructor
-    public UnitResponse(int id, string name, int floorId, string floorNumber, int unitTypeId, string unitType, int occupantTypeId, string occupantType, int occupancyTypeId, string occupancyType, int numberOfMembers, decimal area, decimal bHKType, int phoneExtention, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy)
+    public UnitResponse(int id, string name, int floorId, string floorNumber,int buildingId, int unitTypeId, string unitType, int occupantTypeId, string occupantType, int occupancyTypeId, string occupancyType, int numberOfMembers, decimal area, decimal bHKType, int phoneExtention, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy)
     {
         Id = id;
         Name = name;
         FloorId = floorId;
         FloorNumber = floorNumber;
+        BuildingId = buildingId;
         UnitTypeId = unitTypeId;
         UnitType = unitType;
         OccupantTypeId = occupantTypeId;

@@ -1,4 +1,5 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
+using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Features.UnitServiceProviders.Events;
@@ -13,27 +14,36 @@ internal class UnitServiceProviderCommandHandler : ICommandHandler<CreateUnitSer
     #region Properties
     private readonly IUnitServiceProviderRespository _unitServiceProviderRespository;
     private readonly IMediator _mediator;
+    private readonly IApplicationDbContext _dbContext;
     #endregion
 
     #region Constructors
-    public UnitServiceProviderCommandHandler(IUnitServiceProviderRespository unitServiceProviderRespository, IMediator mediator)
+    public UnitServiceProviderCommandHandler(IUnitServiceProviderRespository unitServiceProviderRespository, IMediator mediator, IApplicationDbContext dbContext)
     {
         _unitServiceProviderRespository = unitServiceProviderRespository;
         _mediator = mediator;
+        _dbContext = dbContext;
     }
     #endregion
 
     #region Methodes
     public async Task<Result<EntityCreatedResponse>> Handle(CreateUnitServiceProviderCommand request, CancellationToken cancellationToken)
     {
+        List<UnitServiceProvider> unitServiceProviders = new List<UnitServiceProvider>();
 
-        var unitServiceProvider = new UnitServiceProvider(request.Id, request.UnitId, request.ServiceProviderId, request.Start, request.End);
+        foreach (int unitId in request.UnitIds)
+        {
+            var unitServiceProvider = new UnitServiceProvider(request.Id, unitId, request.ServiceProviderId, request.Start, request.End);
 
-        _unitServiceProviderRespository.InsertInt(unitServiceProvider);
+            unitServiceProviders.Add(unitServiceProvider);
+        }
+         await _dbContext.SetInt<UnitServiceProvider>().AddRangeAsync(unitServiceProviders, cancellationToken);
+        
+        var unitIds = unitServiceProviders.Select(x => x.UnitId).ToList();
 
-        await _mediator.Publish(new UnitServiceProviderCreatedEvent(unitServiceProvider.Id), cancellationToken);
+        await _mediator.Publish(new UnitServiceProviderCreatedEvent(unitIds), cancellationToken);
 
-        return Result.Success(new EntityCreatedResponse(unitServiceProvider.Id));
+        return Result.Success(new EntityCreatedResponse(unitIds));
     }
     #endregion
 }
