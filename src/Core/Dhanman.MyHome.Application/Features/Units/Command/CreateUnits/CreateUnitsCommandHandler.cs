@@ -14,47 +14,41 @@ namespace Dhanman.MyHome.Application.Features.Units.Command.CreateUnits
         #region Properties
         private readonly IUnitRepository _unitRepository;
         private readonly IMediator _mediator;
-        private readonly IApplicationDbContext _dbContext;
         #endregion
 
         #region Constructor
-        public CreateUnitsCommandHandler(IUnitRepository unitRepository, IMediator mediator, IApplicationDbContext dbContext)
+        public CreateUnitsCommandHandler(IUnitRepository unitRepository, IMediator mediator)
         {
             _unitRepository = unitRepository;
             _mediator = mediator;
-            _dbContext = dbContext;
         }
         #endregion
 
         #region Methods
         public async Task<Result<EntityCreatedResponse>> Handle(CreateUnitsCommand request, CancellationToken cancellationToken)
         {
-            var unitList = new List<Unit>();
             int lastId = await _unitRepository.GetLastUnitIdAsync();
            
-            foreach (var item in request.UnitsList)
-            {
-                int newId = lastId + 1;
-                var unit = new Unit(newId, item.Name, item.BuildingId,
-                    item.FloorId,
-                    item.UnitTypeId,
-                    item.OccupantId,
-                    item.OccupancyId,
-                    item.Area,
-                    item.Bhk,
-                    item.PhoneExtension,
-                    item.EIntercom,
+            int newId = lastId + 1;
+                var unit = new Unit(newId, request.Name, request.BuildingId,
+                   request.FloorId,
+                   request.UnitTypeId,
+                   request.OccupantId,
+                   request.OccupancyId,
+                   request.Area,
+                   request.Bhk,
+                   request.PhoneExtension,
+                   request.EIntercom,
                     "1.0",
                     "1.1",
                     Guid.NewGuid()
                     );
-                unitList.Add(unit);
-            }
-            await _dbContext.SetInt<Unit>().AddRangeAsync(unitList);
-            var unitIds = unitList.Select(u => u.Id).ToList();
-            await _mediator.Publish(new UnitCreatedEvent(unitIds), cancellationToken);
 
-            return Result.Success(new EntityCreatedResponse(unitIds));
+            _unitRepository.Insert( unit );
+
+            await _mediator.Publish(new UnitCreatedEvent(unit.Id), cancellationToken);
+
+            return Result.Success(new EntityCreatedResponse(unit.Id));
         }
         #endregion
     }

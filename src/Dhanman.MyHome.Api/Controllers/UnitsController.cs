@@ -71,10 +71,19 @@ public class UnitsController : ApiController
     [HttpPost(ApiRoutes.Units.CreateUnits)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> CreateUnitsListRequest([FromBody] CreateUnitsListRequest? request) =>
+    public async Task<IActionResult> CreateUnitsListRequest([FromBody] CreateUnitsRequest? request) =>
             await Result.Create(request, Errors.General.BadRequest)
             .Map(value => new CreateUnitsCommand(
-                value.UnitsList
+                value.Name,
+                value.BuildingId,
+                value.FloorId,
+                value.UnitTypeId,
+                value.OccupantId,
+                value.OccupancyId,
+                value.Area,
+                value.Bhk,
+                value.EIntercom,
+                value.PhoneExtension
                ))
              .Bind(command => Mediator.Send(command))
                    .Match(Ok, BadRequest);
