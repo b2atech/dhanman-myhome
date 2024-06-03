@@ -23,6 +23,7 @@ public class FloorRepository : IFloorRepository
     public async Task<int> GetLastFloorIdAsync()
     {
         return await _dbContext.SetInt<Floor>()
+            .IgnoreQueryFilters()
             .OrderByDescending(b => b.Id)
             .Select(b => b.Id)
             .FirstOrDefaultAsync();
