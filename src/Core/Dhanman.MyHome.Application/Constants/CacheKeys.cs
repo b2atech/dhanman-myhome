@@ -22,7 +22,9 @@ public static class CacheKeys
 
         public const string UnitList = CacheKeyPrefix + "-list-{1}";
 
-        public const string UnitById = CacheKeyPrefix + "-by-apartmentId-{1}";
+        public const string UnitByBuildingId = CacheKeyPrefix + "-by-buildingId-{1}";
+
+        public const string UnitById = CacheKeyPrefix + "-by-id-{1}";
     }
     #endregion  
 

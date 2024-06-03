@@ -10,7 +10,6 @@ using Dhanman.MyHome.Domain.Entities.Residents;
 using Dhanman.MyHome.Domain.Entities.Units;
 using Dhanman.MyHome.Domain.Entities.UnitTypes;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace Dhanman.MyHome.Application.Features.Units.Queries;
 

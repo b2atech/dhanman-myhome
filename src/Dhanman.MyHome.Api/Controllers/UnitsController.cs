@@ -54,6 +54,13 @@ public class UnitsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [HttpGet(ApiRoutes.Units.GetUnitById)]
+    [ProducesResponseType(typeof(UnitResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetFloorsByFloorId(int unitId) =>
+    await Result.Success(new GetUnitByIdQuery(unitId))
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
 
     [HttpPost(ApiRoutes.Units.CreateUnit)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]

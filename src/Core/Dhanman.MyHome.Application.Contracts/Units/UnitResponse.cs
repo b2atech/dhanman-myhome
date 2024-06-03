@@ -18,6 +18,7 @@ public sealed class UnitResponse
     public decimal Area { get;  }
     public decimal BHKType { get; }
     public int PhoneExtention { get; }
+    public int EIntercom { get; }
     public DateTime CreatedOnUtc { get; }
     public DateTime? ModifiedOnUtc { get; }
     public Guid CreatedBy { get; }
@@ -46,6 +47,27 @@ public sealed class UnitResponse
         ModifiedOnUtc = modifiedOnUtc;
         CreatedBy = createdBy;
         ModifiedBy = modifiedBy;
-    } 
+    }
+
+    public UnitResponse(int id, string name, int floorId, int buildingId, int unitTypeId, int occupantTypeId, int occupancyTypeId, decimal area, decimal bHKType, int phoneExtention, int eIntercom, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy)
+ {
+        Id = id;
+        Name = name;
+        FloorId = floorId;
+        BuildingId = buildingId;
+        UnitTypeId = unitTypeId;
+        OccupantTypeId = occupantTypeId;
+        OccupancyTypeId = occupancyTypeId;
+        Area = area;
+        BHKType = bHKType;
+        PhoneExtention = phoneExtention;
+        EIntercom = eIntercom;
+        CreatedOnUtc = createdOnUtc;
+        ModifiedOnUtc = modifiedOnUtc;
+        CreatedBy = createdBy;
+        ModifiedBy = modifiedBy;
+    }
+
+
     #endregion
 }
