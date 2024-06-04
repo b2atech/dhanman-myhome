@@ -37,7 +37,7 @@ public class CreateResidentRequestCommandHandler : ICommandHandler<CreateResiden
     #region Methodes
     public async Task<Result<EntityCreatedResponse>> Handle(CreateResidentRequestCommand request, CancellationToken cancellationToken)
     {
-        Guid? addressId = null;
+        Guid addressId ;
         if (request.PermanentAddress != null)
         {
             Guid permCityId;
@@ -46,7 +46,10 @@ public class CreateResidentRequestCommandHandler : ICommandHandler<CreateResiden
             var permanentAddress = GetAddress(request.PermanentAddress, permCityId);
             _addressRepository.Insert(permanentAddress);
             addressId = permanentAddress.Id;
-        }         
+        }
+        else 
+        { addressId = new Guid("00000000-0000-0000-0000-000000000000"); }
+
         int nextresidentRequestId = _residentRequestRepository.GetTotalRecordsCount() + 1;
         int requestStatusId = ResidentRequestStatus.PENDING_REQUEST;
 

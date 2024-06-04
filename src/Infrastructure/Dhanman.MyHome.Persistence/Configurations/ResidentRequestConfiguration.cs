@@ -28,7 +28,7 @@ internal sealed class ResidentRequestConfiguration : IEntityTypeConfiguration<Re
 
         builder.Property(residentRequests => residentRequests.ContactNumber).HasColumnName("contact_number").IsRequired();
 
-        builder.Property(residentRequests => residentRequests.PermanentAddressId).HasColumnName("permanent_address_id").IsRequired();
+        builder.Property(residentRequests => residentRequests.PermanentAddressId).HasColumnName("permanent_address_id");
 
         builder.Property(residentRequests => residentRequests.RequestStatusId).HasColumnName("request_status_id").IsRequired();
 
