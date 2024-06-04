@@ -65,7 +65,7 @@ public class BuildingsController : ApiController
     {
         var result = await Result.Create(request, Errors.General.BadRequest)
             .Map(value => new UpdateBuildingCommand(
-                value.BuildingId,
+                value.Id,
                 value.ApartmentId,
                 value.Name,
                 value.BuildingTypeId,

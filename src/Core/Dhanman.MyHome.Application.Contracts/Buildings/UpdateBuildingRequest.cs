@@ -3,7 +3,7 @@
     public sealed class UpdateBuildingRequest
     {
         #region Properties
-        public int BuildingId { get; set; }
+        public int Id { get; set; }
         public Guid ApartmentId { get; set; }
         public string Name { get; set; }
         public int BuildingTypeId { get; set; }
