@@ -4,7 +4,7 @@ public class Address
     #region Properties    
     public Guid CountryId { get; set; }
     public Guid StateId { get; set; }
-    public Guid? CityId { get; set; }
+    public Guid CityId { get; set; }
     public string CityName { get; set; }
     public string AddressLine1 { get; set; }
     public string AddressLine2 { get; set; }
@@ -12,7 +12,7 @@ public class Address
     #endregion
 
     #region Constructor    
-    public Address(Guid countryId, Guid stateId, Guid? cityId, string addressLine1, string addressLine2, string zipCode)
+    public Address(Guid countryId, Guid stateId, Guid cityId, string addressLine1, string addressLine2, string zipCode)
     {
         CountryId = countryId;
         StateId = stateId;
