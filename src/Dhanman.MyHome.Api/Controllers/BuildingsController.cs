@@ -19,38 +19,29 @@ public class BuildingsController : ApiController
     {
     }
 
-
     #region Buildings     
 
     [HttpGet(ApiRoutes.Buildings.GetAllBuildings)]
     [ProducesResponseType(typeof(BuildingListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllBuildings() =>
-    await Result.Success(new GetAllBuildingsQuery())
+    public async Task<IActionResult> GetAllBuildings(Guid apartmentId) =>
+    await Result.Success(new GetAllBuildingsQuery(apartmentId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
     [HttpGet(ApiRoutes.Buildings.GetAllBuildingNames)]
     [ProducesResponseType(typeof(BuildingNameListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllBuildingNames() =>
-    await Result.Success(new GetAllBuildingNamesQuery())
-    .Bind(query => Mediator.Send(query))
-    .Match(Ok, NotFound);
-
-    [HttpGet(ApiRoutes.Buildings.GetAllBuildingName)]
-    [ProducesResponseType(typeof(BuildingNameListResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllBuildingName(Guid apartmentId) =>
+    public async Task<IActionResult> GetAllBuildingNames(Guid apartmentId) =>
     await Result.Success(new GetAllBuildingNameQuery(apartmentId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
-    [HttpGet(ApiRoutes.Buildings.GetBuildingByBuildingId)]
-    [ProducesResponseType(typeof(BuildingListResponse), StatusCodes.Status200OK)]
+    [HttpGet(ApiRoutes.Buildings.GetBuildingById)]
+    [ProducesResponseType(typeof(BuildingResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetBuildingByBuildingId(int buildingId) =>
-    await Result.Success(new GetBuildingByBuildingIdQuery(buildingId))
+    public async Task<IActionResult> GetBuildingById(int id) =>
+    await Result.Success(new GetBuildingByIdQuery(id))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
@@ -67,7 +58,6 @@ public class BuildingsController : ApiController
           ))
           .Bind(command => Mediator.Send(command))
           .Match(Ok, BadRequest);
-
 
     [HttpPut(ApiRoutes.Buildings.UpdateBuilding)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

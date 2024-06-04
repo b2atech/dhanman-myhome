@@ -9,9 +9,9 @@ public static class CacheKeys
 
         public const string BuildingList = CacheKeyPrefix + "-list-{1}";
 
-        public const string BuildingById = CacheKeyPrefix + "-by-apartmentId-{1}";
+        public const string BuildingByApartmentId = CacheKeyPrefix + "-by-apartmentId-{1}";
 
-        public const string BuildingByBuildingId = CacheKeyPrefix + "-by-buildingId-{1}";
+        public const string BuildingById = CacheKeyPrefix + "-by-buildingId-{1}";
     }
     #endregion  
 

@@ -7,18 +7,16 @@ namespace Dhanman.MyHome.Application.Features.Buildings.Queries;
  
 public class GetAllBuildingsQuery : ICacheableQuery<Result<BuildingListResponse>>
 {
-    #region Properties     
+    #region Properties    
+    public Guid ApartmentId { get; }
     #endregion
 
     #region Constructors
-    public GetAllBuildingsQuery()
-    {
-         
-    }
+    public GetAllBuildingsQuery(Guid apartmentId) => ApartmentId = apartmentId;
     #endregion
 
     #region Methodes
-    public string GetCacheKey() => string.Format(CacheKeys.Buildings.BuildingList, "user", "");
+    public string GetCacheKey() => string.Format(CacheKeys.Buildings.BuildingList, "user", ApartmentId);
     #endregion 
 
 }
