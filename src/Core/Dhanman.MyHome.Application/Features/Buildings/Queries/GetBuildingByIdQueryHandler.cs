@@ -9,18 +9,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dhanman.MyHome.Application.Features.Buildings.Queries;
 
-public class GetBuildingByBuildingIdQueryHandler : IQueryHandler<GetBuildingByBuildingIdQuery, Result<BuildingListResponse>>
+public class GetBuildingByIdQueryHandler : IQueryHandler<GetBuildingByIdQuery, Result<BuildingResponse>>
 {
     #region Properties
     private readonly IApplicationDbContext _dbContext;
     #endregion
 
     #region Constructors
-    public GetBuildingByBuildingIdQueryHandler(IApplicationDbContext dbContext) => _dbContext = dbContext;
+    public GetBuildingByIdQueryHandler(IApplicationDbContext dbContext) => _dbContext = dbContext;
     #endregion
 
     #region Methods
-    public async Task<Result<BuildingListResponse>> Handle(GetBuildingByBuildingIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<BuildingResponse>> Handle(GetBuildingByIdQuery request, CancellationToken cancellationToken)
     {
         return await Result.Success(request)
               .Ensure(query => query != null, Errors.General.EntityNotFound)
@@ -42,11 +42,9 @@ public class GetBuildingByBuildingIdQueryHandler : IQueryHandler<GetBuildingByBu
                           e.ModifiedOnUtc,
                           e.CreatedBy,
                           e.ModifiedBy))
-                  .ToListAsync(cancellationToken);
+                  .FirstOrDefaultAsync(cancellationToken);
 
-                  var listResponse = new BuildingListResponse(buildings);
-
-                  return listResponse;
+                  return buildings;
               });
     }
     #endregion

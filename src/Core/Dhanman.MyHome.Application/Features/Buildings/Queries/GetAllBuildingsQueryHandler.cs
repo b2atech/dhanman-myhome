@@ -27,7 +27,8 @@ public class GetAllBuildingsQueryHandler : IQueryHandler<GetAllBuildingsQuery, R
               .Bind(async query =>
               {
                   var buildings = await _dbContext.SetInt<Building>()
-                  .AsNoTracking()                  
+                  .AsNoTracking() 
+                  .Where(building => building.ApartmentId == request.ApartmentId)
                   .Select(e => new BuildingResponse(
                           e.Id,
                           e.Name,

@@ -15,15 +15,13 @@ public static class ApiRoutes
     {
         public const string CreateBuilding = apiVersion + "building";
 
-        public const string GetAllBuildings = apiVersion + "buildings";
+        public const string GetAllBuildings = apiVersion + "buildings/{apartmentId:guid}";
 
-        public const string GetAllBuildingNames = apiVersion + "buildingNames";
+        public const string GetAllBuildingNames = apiVersion + "buildingNames/{apartmentId:guid}";
 
-        public const string GetAllBuildingName = apiVersion + "buildingName/{apartmentId:guid}";
+        public const string GetBuildingById = apiVersion + "building/{id:int}";
 
-        public const string GetBuildingByBuildingId = apiVersion + "building/{buildingId:int}";
-
-        public const string UpdateBuilding = apiVersion + "updateBuilding";
+        public const string UpdateBuilding = apiVersion + "building";
 
         public const string DeleteBuildingById = apiVersion + "building/{id:int}";
 
