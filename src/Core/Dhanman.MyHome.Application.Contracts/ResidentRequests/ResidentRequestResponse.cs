@@ -17,7 +17,7 @@ public sealed class ResidentRequestResponse
     public string RequestedByName { get; }
     public string Email { get; }
     public string ContactNumber { get; }
-    public Guid PermanentAddressId { get; }
+    public Guid? PermanentAddressId { get; }
     public int RequestStatusId { get; }
     public string RequestStatus { get; }
     public int ResidentTypeId { get; }
@@ -32,7 +32,7 @@ public sealed class ResidentRequestResponse
     #endregion
 
     #region Constructor
-    public ResidentRequestResponse(int id, Guid apartmentId, string apartmentType, int buildingId, string buildingType, int floorId, string floor, int unitId, string unit, string firstName, string lastName, string email, string contactNumber, Guid permanentAddressId, int requestStatusId, string requestStatus, int residentTypeId, string residentType, int occupancyStatusId, string occupancyStatus, DateTime createdOnUtc, Guid createdBy, DateTime? modifiedOnUtc, Guid? modifiedBy)
+    public ResidentRequestResponse(int id, Guid apartmentId, string apartmentType, int buildingId, string buildingType, int floorId, string floor, int unitId, string unit, string firstName, string lastName, string email, string contactNumber, Guid? permanentAddressId, int requestStatusId, string requestStatus, int residentTypeId, string residentType, int occupancyStatusId, string occupancyStatus, DateTime createdOnUtc, Guid createdBy, DateTime? modifiedOnUtc, Guid? modifiedBy)
     {
         Id = id;
         ApartmentId = apartmentId;

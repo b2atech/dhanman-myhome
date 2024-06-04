@@ -17,13 +17,13 @@ public class CreateResidentRequestCommand : ICommand<Result<EntityCreatedRespons
     public string LastName { get; set; }
     public string Email { get; set; }
     public string ContactNumber { get; set; }
-    public Address PermanentAddress { get; set; }
+    public Address? PermanentAddress { get; set; }
     public int ResidentTypeId { get; set; }    
     public int OccupancyStatusId { get; set; }
     #endregion
 
     #region Constructors
-    public CreateResidentRequestCommand(Guid apartmentId, int buildingId, int floorId, int unitId, string firstName, string lastName, string email, string contactNumber, Address permanentAddress,  int residentTypeId, int occupancyStatusId)
+    public CreateResidentRequestCommand(Guid apartmentId, int buildingId, int floorId, int unitId, string firstName, string lastName, string email, string contactNumber, Address? permanentAddress,  int residentTypeId, int occupancyStatusId)
     {        
         ApartmentId = apartmentId;
         BuildingId = buildingId;

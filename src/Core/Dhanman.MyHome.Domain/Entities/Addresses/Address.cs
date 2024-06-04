@@ -8,7 +8,7 @@ public class Address : Entity, IAuditableEntity, ISoftDeletableEntity
 
     public Guid CountryId { get; set; }
     public Guid StateId { get; set; }
-    public Guid CityId { get; set; }
+    public Guid? CityId { get; set; }
     public string AddressLine1 { get; set; }
     public string AddressLine2 { get; set; }
     public string ZipCode { get; set; }
@@ -22,7 +22,7 @@ public class Address : Entity, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public Address(Guid id, Guid countryId, Guid stateId, Guid cityId, string addressLine1, string addressLine2, string zipCode)
+    public Address(Guid id, Guid countryId, Guid stateId, Guid? cityId, string addressLine1, string addressLine2, string zipCode)
     {
         Id = id;
         CountryId = countryId;
