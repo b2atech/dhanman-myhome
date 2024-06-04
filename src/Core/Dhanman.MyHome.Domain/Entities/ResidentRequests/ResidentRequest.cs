@@ -14,7 +14,7 @@ public class ResidentRequest : EntityInt, IAuditableEntity, ISoftDeletableEntity
     public string LastName { get; set; }
     public string Email { get; set; }
     public string ContactNumber { get; set; }
-    public Guid PermanentAddressId { get; set; }
+    public Guid? PermanentAddressId { get; set; }
     public int RequestStatusId { get; set; }
     //Co-Owner, Multi Tenant, Owner, Owner Family , Tenant, Tenant Family 
     public int ResidentTypeId { get; set; }
@@ -38,7 +38,7 @@ public class ResidentRequest : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public ResidentRequest(int id, Guid apartmentId, int buildingId, int floorId, int unitId, string firstName, string lastName, string email, string contactNumber, Guid permanentAddressId, int requestStatusId, int residentTypeId, int occupancyStatusId)
+    public ResidentRequest(int id, Guid apartmentId, int buildingId, int floorId, int unitId, string firstName, string lastName, string email, string contactNumber, Guid? permanentAddressId, int requestStatusId, int residentTypeId, int occupancyStatusId)
     {
         Id = id;
         ApartmentId = apartmentId;
