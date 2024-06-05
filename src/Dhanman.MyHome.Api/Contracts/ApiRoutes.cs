@@ -154,6 +154,9 @@ public static class ApiRoutes
 
         public const string UpdateVisitors = apiVersion + "updateVisitors";
 
+        public const string DeleteVisitorById = apiVersion + "visitor/{id:int}";
+
+
     }
 
     public static class Events
