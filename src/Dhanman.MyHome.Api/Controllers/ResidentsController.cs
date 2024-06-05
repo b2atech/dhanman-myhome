@@ -2,8 +2,10 @@
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.MyHome.Application.Contracts.OccupantTypes;
 using Dhanman.MyHome.Application.Contracts.ResidentRequests;
 using Dhanman.MyHome.Application.Contracts.Residents;
+using Dhanman.MyHome.Application.Features.OccupantTypes.Queries;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.CreateResidentRequest;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.UpdateRequestApproveStatus;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.UpdateRequestRejectStatus;
@@ -21,7 +23,6 @@ public class ResidentsController : ApiController
     public ResidentsController(IMediator mediator) : base(mediator)
     {
     }
-
 
     #region Residents  
 
@@ -129,5 +130,16 @@ public class ResidentsController : ApiController
     }
     #endregion
 
+    #region OccupantTypes
 
+    [HttpGet(ApiRoutes.OccupantTypes.GetAllOccupantTypes)]
+    [ProducesResponseType(typeof(OccupantTypeListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+    public async Task<IActionResult> GetAllOccupantTypes() =>
+     await Result.Success(new GetAllOccupantTypesQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
+    #endregion
 }
