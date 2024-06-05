@@ -2,11 +2,15 @@
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Buildings;
+using Dhanman.MyHome.Application.Contracts.BuildingTypes;
 using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.MyHome.Application.Contracts.OccupancyTypes;
 using Dhanman.MyHome.Application.Features.Buildings.Commands.CreateBuildings;
 using Dhanman.MyHome.Application.Features.Buildings.Commands.DeleteBuilding;
 using Dhanman.MyHome.Application.Features.Buildings.Commands.UpdateBuilding;
 using Dhanman.MyHome.Application.Features.Buildings.Queries;
+using Dhanman.MyHome.Application.Features.BuildingTypes.Queries;
+using Dhanman.MyHome.Application.Features.OccupancyTypes.Queries;
 using Dhanman.MyHome.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +21,7 @@ public class BuildingsController : ApiController
 {
     public BuildingsController(IMediator mediator) : base(mediator)
     {
+
     }
 
     #region Buildings     
@@ -100,6 +105,30 @@ public class BuildingsController : ApiController
         }
     }
 
+
+    #endregion
+
+    #region BuildingType
+
+    [HttpGet(ApiRoutes.BuildingsTypes.GetAllBuildingTypes)]
+    [ProducesResponseType(typeof(BuildingTypeListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllBuildingTypes() =>
+    await Result.Success(new GetAllBuildingTypesQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
+    #endregion
+
+    #region OccupancyTypes     
+
+    [HttpGet(ApiRoutes.OccupancyTypes.GetAllOccupancyTypes)]
+    [ProducesResponseType(typeof(OccupancyTypeListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllOccupancyTypes() =>
+    await Result.Success(new GetAllOccupancyTypesQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
     #endregion
 
 }
