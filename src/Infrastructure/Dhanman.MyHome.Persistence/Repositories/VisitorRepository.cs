@@ -23,9 +23,11 @@ public class VisitorRepository : IVisitorRepository
     public async Task<int> GetLastVisitorIdAsync()
     {
         return await _dbContext.SetInt<Visitor>()
-            .OrderByDescending(g => g.Id)
-            .Select(g => g.Id)
-            .FirstOrDefaultAsync();
+            .IgnoreQueryFilters()
+            //.OrderByDescending(g => g.Id)
+            //.Select(g => g.Id)
+            //.FirstOrDefaultAsync();
+            .MaxAsync(b => b.Id);
     }
 
     public void Insert(Visitor visitor) => _dbContext.InsertInt(visitor);

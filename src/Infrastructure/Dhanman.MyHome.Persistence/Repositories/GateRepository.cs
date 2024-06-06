@@ -23,6 +23,7 @@ public class GateRepository : IGateRepository
     public async Task<int> GetLastGateIdAsync()
     {
         return await _dbContext.SetInt<Gate>()
+            .IgnoreQueryFilters()
             .OrderByDescending(g => g.Id)
             .Select(g => g.Id)
             .FirstOrDefaultAsync();
