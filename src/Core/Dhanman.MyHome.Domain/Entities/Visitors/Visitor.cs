@@ -24,7 +24,7 @@ public class Visitor : EntityInt, IAuditableEntity, ISoftDeletableEntity
 
     public DateTime? DeletedOnUtc { get; }
 
-    public bool IsDeleted { get; }
+    public bool IsDeleted { get; set; }
 
     public Guid CreatedBy { get; }
 

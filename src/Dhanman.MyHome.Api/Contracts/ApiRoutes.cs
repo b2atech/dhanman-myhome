@@ -146,6 +146,10 @@ public static class ApiRoutes
         public const string GetVisitorById = apiVersion + "visitor/{id:int}";
 
         public const string UpdateVisitors = apiVersion + "updateVisitors";
+
+        public const string DeleteVisitorById = apiVersion + "visitor/{id:int}";
+
+
     }
 
     public static class Events
