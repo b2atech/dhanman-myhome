@@ -31,9 +31,9 @@ public async Task<Result<ResidentListResponse>> Handle(GetAllResidentsQuery requ
               .AsNoTracking()                  
               .Select(e => new ResidentResponse(
                       e.Id,   
-                      e.UnitId,
+                      1,
                       _dbContext.SetInt<Unit>()
-                              .Where(p => p.Id == e.UnitId)
+                              .Where(p => p.Id == 1)
                               .Select(p => p.Name).FirstOrDefault(),
                       e.FirstName,
                       e.LastName,

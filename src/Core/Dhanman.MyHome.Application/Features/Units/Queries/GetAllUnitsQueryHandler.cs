@@ -35,7 +35,7 @@ public class GetAllUnitsQueryHandler : IQueryHandler<GetAllUnitsQuery, Result<Un
                   .Select(e => new
                   {   Unit = e,
                       NumberOfMembers = _dbContext.SetInt<Resident>()
-                                         .Where(r => r.UnitId == e.Id)
+                                         .Where(r => 1 == e.Id)
                                          .Count()})
                   .Select(e => new UnitResponse(
                           e.Unit.Id,

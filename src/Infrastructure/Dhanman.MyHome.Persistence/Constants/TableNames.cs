@@ -92,5 +92,8 @@ internal static class TableNames
 
     internal const string SubCategories = "sub_categories";
 
+    internal const string ResidentUnits = "resident_units";
+
+
 }
 

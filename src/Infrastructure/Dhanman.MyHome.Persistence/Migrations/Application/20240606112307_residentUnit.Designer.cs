@@ -3,6 +3,7 @@ using System;
 using Dhanman.MyHome.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dhanman.MyHome.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240606112307_residentUnit")]
+    partial class residentUnit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,8 +151,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("text")
                         .HasColumnName("address_line2");
 
-                    b.Property<Guid?>("CityId")
-                        .IsRequired()
+                    b.Property<Guid>("CityId")
                         .HasColumnType("uuid")
                         .HasColumnName("city_id");
 
@@ -1165,7 +1167,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("occupancy_status_id");
 
-                    b.Property<Guid?>("PermanentAddressId")
+                    b.Property<Guid>("PermanentAddressId")
                         .HasColumnType("uuid")
                         .HasColumnName("permanent_address_id");
 
@@ -1276,6 +1278,14 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasDefaultValue(false)
                         .HasColumnName("is_deleted");
 
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("modified_by");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("modified_on_utc");
+
                     b.Property<int>("ResidentId")
                         .HasColumnType("integer")
                         .HasColumnName("resident_id");
@@ -1357,6 +1367,10 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.Property<int>("ResidentTypeId")
                         .HasColumnType("integer")
                         .HasColumnName("resident_type_id");
+
+                    b.Property<int>("UnitId")
+                        .HasColumnType("integer")
+                        .HasColumnName("unit_id");
 
                     b.HasKey("Id")
                         .HasName("pk_residents");

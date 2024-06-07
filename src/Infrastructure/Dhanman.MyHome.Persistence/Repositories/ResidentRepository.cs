@@ -24,5 +24,10 @@ internal sealed class ResidentRepository : IResidentRepository
     public void Update(Resident resident) => _dbContext?.UpdateInt(resident);
     public int GetTotalRecordsCount() => Resident.Count();
 
+    public Resident? GetByEmail(string email ) 
+    {
+         return _dbContext.SetInt<Resident>().FirstOrDefault(r => r.Email == email);
+    }
+
     #endregion
 }
