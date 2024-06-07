@@ -5,14 +5,14 @@ using Dhanman.MyHome.Application.Contracts.Floors;
 
 namespace Dhanman.MyHome.Application.Features.Floors.Queries;
 
-public class GetFloorByFloorIdQuery : ICacheableQuery<Result<FloorListResponse>>
+public class GetFloorByIdQuery : ICacheableQuery<Result<FloorResponse>>
 {
     #region Properties
     public int FloorId { get; set; }
     #endregion
 
     #region Constructors
-    public GetFloorByFloorIdQuery(int floorId) => FloorId = floorId;
+    public GetFloorByIdQuery(int floorId) => FloorId = floorId;
     #endregion
 
     #region Methodes

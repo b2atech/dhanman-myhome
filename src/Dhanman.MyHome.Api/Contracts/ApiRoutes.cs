@@ -33,13 +33,13 @@ public static class ApiRoutes
 
         public const string CreateUnits = apiVersion + "units";
 
-        public const string GetAllUnits = apiVersion + "units";
+        public const string GetAllUnits = apiVersion + "units/{apartmentId:guid}";
 
         public const string GetAllUnitNames = apiVersion + "unitNames/{apartmentId:guid}/{buildingId:int}/{floorId:int}";
 
-        public const string GetUnitById = apiVersion + "unit/{unitId:int}";
+        public const string GetUnitById = apiVersion + "unit/{id:int}";
 
-        public const string UpdateUnits = apiVersion + "updateUnits";
+        public const string UpdateUnit = apiVersion + "unit";
        
         public const string GetAllUnitDetails = apiVersion + "unitDetails";
 
@@ -104,28 +104,28 @@ public static class ApiRoutes
     {
         public const string CreateFloor = apiVersion + "floor";
 
-        public const string GetFloors = apiVersion + "floor/{apartmentId:guid}";
+        public const string GetFloors = apiVersion + "floors/{apartmentId:guid}";
 
         public const string GetFloorNames = apiVersion + "floorNames/{apartmentId:guid}/{buildingId:int}";
 
-        public const string GetFloorByFloorId = apiVersion + "floor/{floorId:int}";
+        public const string GetFloorById = apiVersion + "floor/{id:int}";
 
-        public const string UpdateFloor = apiVersion + "updateFloor";
+        public const string UpdateFloor = apiVersion + "floor";
 
-        public const string DeleteFloorById = apiVersion + "deleteFloor/{floorId:int}";
+        public const string DeleteFloorById = apiVersion + "floor/{id:int}";
     }
 
     public static class Gates
     {
         public const string CreateGate = apiVersion + "gate";
 
-        public const string GetGates = apiVersion + "gates/{apartmentId:guid}";
+        public const string GetAllGates = apiVersion + "gates/{apartmentId:guid}";
 
         public const string GetGateNames = apiVersion + "gateNames/{apartmentId:guid}";
 
-        public const string GetGateByGateId = apiVersion + "gate/{gateId:int}";
+        public const string GetGateById = apiVersion + "gate/{gateId:int}";
 
-        public const string UpdateGates = apiVersion + "updateGate";
+        public const string UpdateGate = apiVersion + "gate";
 
         public const string DeleteGateById = apiVersion + "gate/{id:int}";
     }

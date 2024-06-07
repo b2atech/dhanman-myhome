@@ -4,12 +4,12 @@ public sealed class UnitResponse
 {
     #region Properties 
     public int Id { get; }
-    public string Name { get; }   // flat number 
+    public string Name { get; }  
     public int FloorId { get; }
     public string FloorNumber { get; }
     public int BuildingId { get; }
-    public int UnitTypeId { get; } // Flat Type
-    public string UnitType{ get; } // Flat Type
+    public int UnitTypeId { get; } 
+    public string UnitType{ get; } 
     public int OccupantTypeId { get; }
     public string OccupantType { get; }
     public int OccupancyTypeId { get; }

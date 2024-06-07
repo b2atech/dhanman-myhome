@@ -29,8 +29,8 @@ public class UnitsController : ApiController
     [HttpGet(ApiRoutes.Units.GetAllUnits)]
     [ProducesResponseType(typeof(UnitListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllUnits() =>
-    await Result.Success(new GetAllUnitsQuery())
+    public async Task<IActionResult> GetAllUnits(Guid apartmentId) =>
+    await Result.Success(new GetAllUnitsQuery(apartmentId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
@@ -57,12 +57,12 @@ public class UnitsController : ApiController
     [HttpGet(ApiRoutes.Units.GetUnitById)]
     [ProducesResponseType(typeof(UnitResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetFloorsByFloorId(int unitId) =>
-    await Result.Success(new GetUnitByIdQuery(unitId))
+    public async Task<IActionResult> GetFloorsByFloorId(int id) =>
+    await Result.Success(new GetUnitByIdQuery(id))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
-    [HttpPost(ApiRoutes.Units.CreateUnit)]
+    [HttpPost(ApiRoutes.Units.CreateUnits)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> CreateUnitListRequest([FromBody] CreateUnitListRequest? request) =>
@@ -73,12 +73,11 @@ public class UnitsController : ApiController
              .Bind(command => Mediator.Send(command))
                    .Match(Ok, BadRequest);
 
-    //Create Unit by manual --->
 
-    [HttpPost(ApiRoutes.Units.CreateUnits)]
+    [HttpPost(ApiRoutes.Units.CreateUnit)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> CreateUnitsListRequest([FromBody] CreateUnitsRequest? request) =>
+    public async Task<IActionResult> CreateUnitRequest([FromBody] CreateUnitsRequest? request) =>
             await Result.Create(request, Errors.General.BadRequest)
             .Map(value => new CreateUnitsCommand(
                 value.Name,
@@ -95,15 +94,14 @@ public class UnitsController : ApiController
              .Bind(command => Mediator.Send(command))
                    .Match(Ok, BadRequest);
 
-    //Update Unit --->
 
-    [HttpPut(ApiRoutes.Units.UpdateUnits)]
+    [HttpPut(ApiRoutes.Units.UpdateUnit)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateInvoice([FromBody] UpdateUnitRequest? request)
     {
         var result = await Result.Create(request, Errors.General.BadRequest)
             .Map(value => new UpdateUnitCommand(
-                value.UnitId,
+                value.Id,
                 value.Name,
                 value.BuildingId,
                 value.FloorId,

@@ -34,7 +34,6 @@ public class Floor : EntityInt, IAuditableEntity, ISoftDeletableEntity
         ApartmentId = apartmentId;
         BuildingId = buildingId;
         TotalUnits = totalUnits;
-
     }
     #endregion
 }
