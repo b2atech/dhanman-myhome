@@ -34,6 +34,7 @@ namespace Dhanman.MyHome.Application.Features.Units.Command.DeleteUnit
             {
                 throw new InvoiceNotFoundException(request.UnitId);
             }
+
             updateUnits.IsDeleted = true;
             _unitRepository.Update(updateUnits);
 

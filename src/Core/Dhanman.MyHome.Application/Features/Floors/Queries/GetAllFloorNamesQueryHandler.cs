@@ -25,13 +25,9 @@ public class GetAllFloorNamesQueryHandler : IQueryHandler<GetAllFloorNamesQuery,
               .Ensure(query => query != null, Errors.General.EntityNotFound)
               .Bind(async query =>
               {
-                  var floors = await _dbContext.SetInt<Floor>()
-                  .AsNoTracking()
-                  .Where(e => e.ApartmentId == request.ApartmentId && e.BuildingId == request.BuildingId)
-                  .Select(e => new FloorNameResponse(
-                          e.Id,
-                          e.Name))
-                  .ToListAsync(cancellationToken);
+                  var floors = await(from floor in _dbContext.SetInt<Floor>().AsNoTracking()
+                                     where floor.ApartmentId == request.ApartmentId && floor.BuildingId == request.BuildingId
+                                     select new FloorNameResponse(floor.Id,floor.Name)).ToListAsync(cancellationToken);
 
                   var listResponse = new FloorNameListResponse(floors);
 

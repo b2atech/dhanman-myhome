@@ -15,8 +15,7 @@ public class ComplaintsController : ApiController
     public ComplaintsController(IMediator mediator) : base(mediator)
     {
     }
-
-    #region Events
+    
     [HttpPost(ApiRoutes.Complaints.CreateComplaint)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -38,5 +37,4 @@ public class ComplaintsController : ApiController
             ))
             .Bind(command => Mediator.Send(command))
             .Match(Ok, BadRequest);
-    #endregion
 }

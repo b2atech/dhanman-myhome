@@ -15,7 +15,6 @@ public class CreateGateRequest
     public bool IsVendorAllowed { get; set; }
     #endregion
 
-
     #region Constructor
     public CreateGateRequest()
     {

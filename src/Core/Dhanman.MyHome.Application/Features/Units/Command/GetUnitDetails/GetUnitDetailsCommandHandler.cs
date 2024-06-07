@@ -42,21 +42,21 @@ public sealed class GetUnitDetailsCommandHandler : ICommandHandler<GetUnitDetail
         }
 
 
-        var unitDetails = await unitDetailsQuery
-        .Select(e => new UnitDetailResponse(
-            e.Id,
-            e.Name,
-            e.CustomerId,
-            e.AccountId,
-            Convert.ToDecimal(e.Area),
-            Convert.ToDecimal(e.BHKType)
-        ))
-        .ToListAsync(cancellationToken);
+            var unitDetails = await unitDetailsQuery
+            .Select(e => new UnitDetailResponse(
+                e.Id,
+                e.Name,
+                e.CustomerId,
+                e.AccountId,
+                Convert.ToDecimal(e.Area),
+                Convert.ToDecimal(e.BHKType)
+            ))
+            .ToListAsync(cancellationToken);
 
-        int count = unitDetails.Count;
+            int count = unitDetails.Count;
 
-        await _mediator.Publish(new GetUnitDetailEvent(count));
-return Result.Success(new UnitDetailListResponse(unitDetails));
+            await _mediator.Publish(new GetUnitDetailEvent(count));
+           return Result.Success(new UnitDetailListResponse(unitDetails));
     }
    
     #endregion

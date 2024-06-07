@@ -21,7 +21,7 @@ public class GatesController : ApiController
 
     #region Gates
 
-    [HttpGet(ApiRoutes.Gates.GetGates)]
+    [HttpGet(ApiRoutes.Gates.GetAllGates)]
     [ProducesResponseType(typeof(GateListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAllGates(Guid apartmentId) =>
@@ -37,8 +37,8 @@ public class GatesController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
-    [HttpGet(ApiRoutes.Gates.GetGateByGateId)]
-    [ProducesResponseType(typeof(GateListResponse), StatusCodes.Status200OK)]
+    [HttpGet(ApiRoutes.Gates.GetGateById)]
+    [ProducesResponseType(typeof(GateResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetGateByGateId(int gateId) =>
     await Result.Success(new GetGateByGateIdQuery(gateId))
@@ -64,13 +64,15 @@ public class GatesController : ApiController
          ))
          .Bind(command => Mediator.Send(command))
          .Match(Ok, BadRequest);
-    [HttpPut(ApiRoutes.Gates.UpdateGates)]
+
+
+    [HttpPut(ApiRoutes.Gates.UpdateGate)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateGates([FromBody] UpdateGateRequest? request)
     {
         var result = await Result.Create(request, Errors.General.BadRequest)
             .Map(value => new UpdateGateCommand(
-                value.GateId,
+                value.Id,
                 value.Name,
                 value.ApartmentId,
                 value.BuildingId,

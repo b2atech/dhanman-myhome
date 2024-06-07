@@ -10,8 +10,7 @@ public sealed class GateNameResponse
     #endregion
 
     #region Constructor
-    public GateNameResponse(int id,
-         string name)
+    public GateNameResponse(int id, string name)
     {
         Id = id;
         Name = name;

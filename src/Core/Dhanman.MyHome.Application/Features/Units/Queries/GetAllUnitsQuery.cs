@@ -6,15 +6,16 @@ using Dhanman.MyHome.Application.Contracts.Units;
 namespace Dhanman.MyHome.Application.Features.Units.Queries;
 public class GetAllUnitsQuery : ICacheableQuery<Result<UnitListResponse>>
 {
-    #region Properties     
+    #region Properties 
+    public Guid ApartmentId { get; }
     #endregion
 
     #region Constructors
-    public GetAllUnitsQuery(){ }
+    public GetAllUnitsQuery(Guid apartmentId) => ApartmentId = apartmentId;
     #endregion
 
-    #region Methodes
-    public string GetCacheKey() => string.Format(CacheKeys.Units.UnitList, "user", "");
+    #region Methods
+    public string GetCacheKey() => string.Format(CacheKeys.Units.UnitList, "user", ApartmentId);
     #endregion 
 
 }

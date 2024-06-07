@@ -5,11 +5,12 @@ using Dhanman.MyHome.Application.Contracts.Gates;
 
 namespace Dhanman.MyHome.Application.Features.Gates.Queries;
 
-public class GetGateByGateIdQuery : ICacheableQuery<Result<GateListResponse>>
+public class GetGateByGateIdQuery : ICacheableQuery<Result<GateResponse>>
 {
     #region Properties
     public int GateId { get; set; }
     #endregion
+
     #region Constructors
     public GetGateByGateIdQuery(int gateId)
     {

@@ -6,7 +6,6 @@ using Dhanman.MyHome.Domain;
 using Dhanman.MyHome.Domain.Entities.Floors;
 using Dhanman.MyHome.Domain.Entities.OccupancyTypes;
 using Dhanman.MyHome.Domain.Entities.OccupantTypes;
-using Dhanman.MyHome.Domain.Entities.Residents;
 using Dhanman.MyHome.Domain.Entities.Units;
 using Dhanman.MyHome.Domain.Entities.UnitTypes;
 using Microsoft.EntityFrameworkCore;
@@ -30,43 +29,38 @@ public class GetAllUnitsQueryHandler : IQueryHandler<GetAllUnitsQuery, Result<Un
               .Ensure(query => query != null, Errors.General.EntityNotFound)
               .Bind(async query =>
               {
-                  var units = await _dbContext.SetInt<Unit>()
-                  .AsNoTracking()
-                  .Select(e => new
-                  {   Unit = e,
-                      NumberOfMembers = _dbContext.SetInt<Resident>()
-                                         .Where(r => r.UnitId == e.Id)
-                                         .Count()})
-                  .Select(e => new UnitResponse(
-                          e.Unit.Id,
-                          e.Unit.Name,
-                          e.Unit.FloorId,
-                          _dbContext.SetInt<Floor>()
-                              .Where(p => p.Id == e.Unit.FloorId)
-                              .Select(p => p.Name).FirstOrDefault(),
-                          e.Unit.BuildingId,
-                          e.Unit.UnitTypeId,
-                          _dbContext.SetInt<UnitType>()
-                              .Where(p => p.Id == e.Unit.UnitTypeId)
-                              .Select(p => p.Name).FirstOrDefault(),
-                          e.Unit.OccupantTypeId,
-                          _dbContext.SetInt<OccupantType>()
-                              .Where(p => p.Id == e.Unit.OccupantTypeId)
-                              .Select(p => p.Name).FirstOrDefault(),
-                          e.Unit.OccupancyTypeId,
-                          _dbContext.SetInt<OccupancyType>()
-                              .Where(p => p.Id == e.Unit.OccupancyTypeId)
-                              .Select(p => p.Name).FirstOrDefault(),
-                          e.NumberOfMembers,
-                          e.Unit.Area,
-                          e.Unit.BHKType,
-                          e.Unit.PhoneExtention,
-                          e.Unit.CreatedOnUtc,
-                          e.Unit.ModifiedOnUtc,
-                          e.Unit.CreatedBy,
-                          e.Unit.ModifiedBy))
-                  .ToListAsync(cancellationToken);
-
+                  var units = await ( from unit in _dbContext.SetInt<Unit>().AsNoTracking()
+                                      where unit.ApartmentId == request.ApartmentId
+                                      join floor in _dbContext.SetInt<Floor>()
+                                      on unit.FloorId equals floor.Id
+                                      join unitType in _dbContext.SetInt<UnitType>()
+                                      on unit.FloorId equals unitType.Id
+                                      join occupantType in _dbContext.SetInt<OccupantType>()
+                                      on unit.OccupantTypeId equals occupantType.Id
+                                      join occupancyType in _dbContext.SetInt<OccupancyType>()
+                                      on unit.OccupancyTypeId equals occupancyType.Id
+                                      select new UnitResponse(
+                                          unit.Id,
+                                          unit.Name,
+                                          unit.FloorId,
+                                          floor.Name,
+                                          unit.BuildingId,
+                                          unit.UnitTypeId,
+                                          unitType.Name,
+                                          unit.OccupantTypeId,
+                                          occupantType.Name,
+                                          unit.OccupancyTypeId,
+                                          occupancyType.Name,
+                                          10,
+                                          unit.Area,
+                                          unit.BHKType,
+                                          unit.PhoneExtention,
+                                          unit.CreatedOnUtc,
+                                          unit.ModifiedOnUtc,
+                                          unit.CreatedBy,
+                                          unit.ModifiedBy))
+                                     .ToListAsync(cancellationToken);
+                 
                   var listResponse = new UnitListResponse(units);
 
                   return listResponse;

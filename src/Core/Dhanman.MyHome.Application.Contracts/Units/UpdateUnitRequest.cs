@@ -3,7 +3,7 @@
     public class UpdateUnitRequest
     {
         #region Properties
-        public int UnitId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public int BuildingId { get; set; }
         public int FloorId { get; set; }
@@ -19,9 +19,9 @@
         #endregion
 
         #region Constructor
-        public UpdateUnitRequest(int unitId, string name, int buildingId, int floorId, int unitTypeId, int occupantId, int occupancyId, decimal area, decimal bhk, int eIntercom, int phoneExtension, Guid createdBy)
+        public UpdateUnitRequest(int id, string name, int buildingId, int floorId, int unitTypeId, int occupantId, int occupancyId, decimal area, decimal bhk, int eIntercom, int phoneExtension, Guid createdBy)
         {
-            UnitId = unitId;
+            Id = id;
             Name = name;
             BuildingId = buildingId;
             FloorId = floorId;

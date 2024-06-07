@@ -17,4 +17,5 @@ public sealed class UnitListResponse
         Cursor = cursor;
     }
     #endregion
+
 }
