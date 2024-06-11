@@ -230,4 +230,13 @@ public static class CacheKeys
 
     }
     #endregion
+
+    #region ServiceProviderAssignUnits
+    public static class ServiceProviderAssignUnits
+    {
+        public const string CacheKeyPrefix = "unitTypes-{0}";
+
+        public const string ServiceProviderAssignUnitsId = CacheKeyPrefix + "-by-id-{1}";
+    }
+    #endregion
 }

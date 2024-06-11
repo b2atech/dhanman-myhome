@@ -30,7 +30,6 @@
     <Folder Include="Features\Categories\Events\" />
     <Folder Include="Features\ServiceProviderSubType\Commands\" />
     <Folder Include="Features\ServiceProviderSubType\Events\" />
-    <Folder Include="Features\UnitServiceProviders\Queries\" />
   </ItemGroup>
 
 </Project>
