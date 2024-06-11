@@ -2,6 +2,7 @@
 using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Buildings;
+using Dhanman.MyHome.Application.Contracts.Floors;
 using Dhanman.MyHome.Domain;
 using Dhanman.MyHome.Domain.Entities.Buildings;
 using Dhanman.MyHome.Domain.Entities.BuildingTypes;
@@ -26,25 +27,26 @@ public class GetBuildingByIdQueryHandler : IQueryHandler<GetBuildingByIdQuery, R
               .Ensure(query => query != null, Errors.General.EntityNotFound)
               .Bind(async query =>
               {
-                  var buildings = await _dbContext.SetInt<Building>()
-                  .AsNoTracking()
-                  .Where(e => e.Id == query.BuildingId)
-                  .OrderBy(e => e.Id)
-                  .Select(e => new BuildingResponse(
-                          e.Id,
-                          e.Name,
-                          e.BuildingTypeId,
-                          _dbContext.SetInt<BuildingType>()
-                              .Where(p => p.Id == e.BuildingTypeId)
-                              .Select(p => p.Name).FirstOrDefault(),
-                          e.TotalUnits,
-                          e.CreatedOnUtc,
-                          e.ModifiedOnUtc,
-                          e.CreatedBy,
-                          e.ModifiedBy))
-                  .FirstOrDefaultAsync(cancellationToken);
+                  var buildingResponse = await (from building in _dbContext.SetInt<Building>().AsNoTracking()
+                                         where building.Id == request.BuildingId
+                                         join buildingType in _dbContext.SetInt<BuildingType>().AsNoTracking()
+                                         on building.BuildingTypeId equals buildingType.Id
+                                         select new BuildingResponse(
+                                                  building.Id,
+                                                  building.Name,
+                                                  building.BuildingTypeId,
+                                                  buildingType.Name,
+                                                  building.TotalUnits,
+                                                  building.CreatedOnUtc,
+                                                  building.ModifiedOnUtc,
+                                                  building.CreatedBy,
+                                                  building.ModifiedBy))
+                                         .FirstOrDefaultAsync(cancellationToken);
 
-                  return buildings;
+                  return buildingResponse != null
+                     ? Result.Success(buildingResponse)
+                     : Result.Failure<BuildingResponse>(Errors.General.EntityNotFound);
+
               });
     }
     #endregion

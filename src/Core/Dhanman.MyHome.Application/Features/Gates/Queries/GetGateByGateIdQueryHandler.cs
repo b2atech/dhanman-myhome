@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dhanman.MyHome.Application.Features.Gates.Queries;
 
-public class GetGateByGateIdQueryHandler : IQueryHandler<GetGateByGateIdQuery, Result<GateListResponse>>
+public class GetGateByGateIdQueryHandler : IQueryHandler<GetGateByGateIdQuery, Result<GateResponse>>
 {
     #region Properties
     private readonly IApplicationDbContext _dbContext;
@@ -22,46 +22,42 @@ public class GetGateByGateIdQueryHandler : IQueryHandler<GetGateByGateIdQuery, R
     #endregion
 
     #region Methods
-    public async Task<Result<GateListResponse>> Handle(GetGateByGateIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<GateResponse>> Handle(GetGateByGateIdQuery request, CancellationToken cancellationToken)
     {
         return await Result.Success(request)
               .Ensure(query => query != null, Errors.General.EntityNotFound)
               .Bind(async query =>
               {
-                  var gates = await _dbContext.SetInt<Gate>()
-                  .AsNoTracking()
-                   .Where(g => g.Id == request.GateId)
-                  .Select(g => new GateResponse(
-                          g.Id,
-                          g.Name,
-                          g.ApartmentId,
-                          _dbContext.Set<Apartment>()
-                          .Where(apartment => apartment.Id == g.ApartmentId)
-                          .Select(apartment => apartment.Name)
-                          .FirstOrDefault(),
-                          g.BuildingId,
-                          _dbContext.SetInt<Building>()
-                          .Where(building => building.Id == g.BuildingId)
-                          .Select(Building => Building.Name)
-                          .FirstOrDefault(),
-                          g.GateTypeId,
-                          _dbContext.SetInt<GateType>()
-                          .Where(gateType => gateType.Id == g.GateTypeId)
-                          .Select(gateType => gateType.Name)
-                          .FirstOrDefault(),
-                          g.IsUsedForIn,
-                          g.IsUsedForOut,
-                          g.IsAllUsersAllowed,
-                          g.IsResidentsAllowed,
-                          g.IsStaffAllowed,
-                          g.IsVendorAllowed,
-                          g.CreatedBy,
-                          g.CreatedOnUtc))
-                  .ToListAsync(cancellationToken);
+                  var gateResponse = await (from gate in _dbContext.SetInt<Gate>().AsNoTracking()
+                                            where gate.Id == request.GateId
+                                            join apartment in _dbContext.Set<Apartment>()
+                                            on gate.ApartmentId equals apartment.Id
+                                            join building in _dbContext.SetInt<Building>()
+                                            on gate.BuildingId equals building.Id
+                                            join gateType in _dbContext.SetInt<GateType>()
+                                            on gate.GateTypeId equals gateType.Id
+                                            select new GateResponse(
+                                                                 gate.Id,
+                                                                 gate.Name,
+                                                                 gate.ApartmentId,
+                                                                 apartment.Name,
+                                                                 gate.BuildingId,
+                                                                 building.Name,
+                                                                 gate.GateTypeId,
+                                                                 gateType.Name,
+                                                                 gate.IsUsedForIn,
+                                                                 gate.IsUsedForOut,
+                                                                 gate.IsAllUsersAllowed,
+                                                                 gate.IsResidentsAllowed,
+                                                                 gate.IsStaffAllowed,
+                                                                 gate.IsVendorAllowed,
+                                                                 gate.CreatedBy,
+                                                                 gate.CreatedOnUtc))
+                                          .FirstOrDefaultAsync(cancellationToken);
 
-                  var listResponse = new GateListResponse(gates);
-
-                  return listResponse;
+                  return gateResponse != null
+                      ? Result.Success(gateResponse)
+                      : Result.Failure<GateResponse>(Errors.General.EntityNotFound);
               });
     }
     #endregion

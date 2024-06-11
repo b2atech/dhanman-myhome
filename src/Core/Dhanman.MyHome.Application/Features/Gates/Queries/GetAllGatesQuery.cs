@@ -10,12 +10,14 @@ public class GetAllGatesQuery : ICacheableQuery<Result<GateListResponse>>
     #region Properties
     public Guid ApartmentId { get; set; }
     #endregion
+
     #region Constructors
     public GetAllGatesQuery(Guid apartmentId)
     {
         ApartmentId = apartmentId;
     }
     #endregion
+
     #region Methodes
     public string GetCacheKey() => string.Format(CacheKeys.Gates.GateList, "user", "");
     #endregion 

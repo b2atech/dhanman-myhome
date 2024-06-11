@@ -26,28 +26,28 @@ public class GetAllBuildingsQueryHandler : IQueryHandler<GetAllBuildingsQuery, R
               .Ensure(query => query != null, Errors.General.EntityNotFound)
               .Bind(async query =>
               {
-                  var buildings = await _dbContext.SetInt<Building>()
-                  .AsNoTracking() 
-                  .Where(building => building.ApartmentId == request.ApartmentId)
-                  .Select(e => new BuildingResponse(
-                          e.Id,
-                          e.Name,
-                          e.BuildingTypeId,
-                          _dbContext.SetInt<BuildingType>()
-                              .Where(p => p.Id == e.BuildingTypeId)
-                              .Select(p => p.Name).FirstOrDefault(),                          
-                          e.TotalUnits,
-                          e.CreatedOnUtc,
-                          e.ModifiedOnUtc,
-                          e.CreatedBy,
-                          e.ModifiedBy))
-                  .ToListAsync(cancellationToken);
+                  var buildings = await(from building in _dbContext.SetInt<Building>().AsNoTracking()
+                                        where building.ApartmentId == request.ApartmentId
+                                        join buildingType in _dbContext.SetInt<BuildingType>().AsNoTracking()
+                                        on building.BuildingTypeId equals buildingType.Id
+                                        select new BuildingResponse(
+                                                 building.Id,
+                                                 building.Name,
+                                                 building.BuildingTypeId,
+                                                 buildingType.Name,
+                                                 building.TotalUnits,
+                                                 building.CreatedOnUtc,
+                                                 building.ModifiedOnUtc,
+                                                 building.CreatedBy,
+                                                 building.ModifiedBy)
+                                          ).ToListAsync(cancellationToken);
 
                   var listResponse = new BuildingListResponse(buildings);
 
                   return listResponse;
               });
     }
+
     #endregion
 
 }

@@ -28,37 +28,34 @@ public class GetAllGatesQueryHandler : IQueryHandler<GetAllGatesQuery, Result<Ga
               .Ensure(query => query != null, Errors.General.EntityNotFound)
               .Bind(async query =>
               {
-                  var gates = await _dbContext.SetInt<Gate>()
-                  .AsNoTracking()
-                   .Where(e => e.ApartmentId == request.ApartmentId)
-                  .Select(e => new GateResponse(
-                          e.Id,
-                          e.Name,
-                          e.ApartmentId,
-                          _dbContext.Set<Apartment>()
-                          .Where(apartment => apartment.Id == e.ApartmentId)
-                          .Select(apartment => apartment.Name)
-                          .FirstOrDefault(),
-                          e.BuildingId,
-                          _dbContext.SetInt<Building>()
-                          .Where(building => building.Id == e.BuildingId)
-                          .Select(Building => Building.Name)
-                          .FirstOrDefault(),
-                          e.GateTypeId,
-                          _dbContext.SetInt<GateType>()
-                          .Where(gateType => gateType.Id == e.GateTypeId)
-                          .Select(gateType => gateType.Name)
-                          .FirstOrDefault(),
-                          e.IsUsedForIn,
-                          e.IsUsedForOut,
-                          e.IsAllUsersAllowed,
-                          e.IsResidentsAllowed,
-                          e.IsStaffAllowed,
-                          e.IsVendorAllowed,
-                          e.CreatedBy,
-                          e.CreatedOnUtc))
-                  .ToListAsync(cancellationToken);
 
+                  var gates = await (from gate in _dbContext.SetInt<Gate>().AsNoTracking()
+                                      where gate.ApartmentId == request.ApartmentId
+                                      join apartment in _dbContext.Set<Apartment>()
+                                      on gate.ApartmentId equals apartment.Id
+                                      join building in _dbContext.SetInt<Building>()
+                                      on gate.BuildingId equals building.Id
+                                      join gateType in _dbContext.SetInt<GateType>()
+                                      on gate.GateTypeId equals gateType.Id
+                                      select new GateResponse(
+                                                           gate.Id,
+                                                           gate.Name,
+                                                           gate.ApartmentId,
+                                                           apartment.Name,
+                                                           gate.BuildingId,
+                                                           building.Name,
+                                                           gate.GateTypeId,
+                                                           gateType.Name,
+                                                           gate.IsUsedForIn,
+                                                           gate.IsUsedForOut,
+                                                           gate.IsAllUsersAllowed,
+                                                           gate.IsResidentsAllowed,
+                                                           gate.IsStaffAllowed,
+                                                           gate.IsVendorAllowed,
+                                                           gate.CreatedBy,
+                                                           gate.CreatedOnUtc))
+                                .ToListAsync(cancellationToken);
+                 
                   var listResponse = new GateListResponse(gates);
 
                   return listResponse;

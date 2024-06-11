@@ -37,11 +37,11 @@ public class FloorsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
-    [HttpGet(ApiRoutes.Floors.GetFloorByFloorId)]
-    [ProducesResponseType(typeof(FloorListResponse), StatusCodes.Status200OK)]
+    [HttpGet(ApiRoutes.Floors.GetFloorById)]
+    [ProducesResponseType(typeof(FloorResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetFloorsByBuildingId(int floorId) =>
-    await Result.Success(new GetFloorByFloorIdQuery(floorId))
+    public async Task<IActionResult> GetFloorsByBuildingId(int id) =>
+    await Result.Success(new GetFloorByIdQuery(id))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
@@ -65,7 +65,7 @@ public class FloorsController : ApiController
     {
         var result = await Result.Create(request, Errors.General.BadRequest)
             .Map(value => new UpdateFloorCommand(
-                value.FloorId,
+                value.Id,
                 value.Name,
                 value.BuildingId,
                 value.TotalUnits
@@ -84,9 +84,9 @@ public class FloorsController : ApiController
 
     [HttpDelete(ApiRoutes.Floors.DeleteFloorById)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteFloorById(int floorId)
+    public async Task<IActionResult> DeleteFloorById(int id)
     {
-        var result = await Result.Success(new DeleteFloorCommand(floorId))
+        var result = await Result.Success(new DeleteFloorCommand(id))
                     .Bind(command => Mediator.Send(command));
 
         if (result.IsSuccess)

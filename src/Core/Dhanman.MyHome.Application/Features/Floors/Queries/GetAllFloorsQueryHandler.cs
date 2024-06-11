@@ -26,24 +26,22 @@ public class GetAllFloorsQueryHandler : IQueryHandler<GetAllFloorsQuery, Result<
               .Ensure(query => query != null, Errors.General.EntityNotFound)
               .Bind(async query =>
               {
-                  var floors = await _dbContext.SetInt<Floor>()
-                  .AsNoTracking()
-                  .Where(e => e.ApartmentId == request.ApartmentId )
-                  .Select(e => new FloorResponse(
-                          e.Id,
-                          e.Name,
-                          e.ApartmentId,
-                          e.BuildingId,
-                          _dbContext.SetInt<Building>()
-                          .Where(building => building.Id == e.BuildingId)
-                          .Select(building => building.Name)
-                          .FirstOrDefault(),
-                          e.TotalUnits,
-                          e.CreatedBy,
-                          e.CreatedOnUtc,
-                          e.ModifiedBy,
-                          e.ModifiedOnUtc))
-                  .ToListAsync(cancellationToken);
+                  var floors = await (from floor in _dbContext.SetInt<Floor>().AsNoTracking()
+                                      where floor.ApartmentId == request.ApartmentId
+                                      join building in _dbContext.SetInt<Building>().AsNoTracking()
+                                      on floor.BuildingId equals building.Id
+                                      select new FloorResponse(
+                                          floor.Id,
+                                          floor.Name,
+                                          floor.ApartmentId,
+                                          floor.BuildingId,
+                                          building.Name,
+                                          floor.TotalUnits,
+                                          floor.CreatedBy,
+                                          floor.CreatedOnUtc,
+                                          floor.ModifiedBy,
+                                          floor.ModifiedOnUtc))
+                      .ToListAsync(cancellationToken);
 
                   var listResponse = new FloorListResponse(floors);
 
