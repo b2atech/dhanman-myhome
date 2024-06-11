@@ -1,12 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Dhanman.MyHome.Domain.Entities.ResidentUnits;
 
-namespace Dhanman.MyHome.Domain.Entities.ResidentUnits
-{
-    internal class UnitId
-    {
-    }
-}
+public record UnitId(int Value);
