@@ -14,6 +14,7 @@ public interface IResidentRepository
     void Update(Resident resident);
 
     int GetTotalRecordsCount();
+    Resident? GetByEmail(string email);
 
     #endregion
 

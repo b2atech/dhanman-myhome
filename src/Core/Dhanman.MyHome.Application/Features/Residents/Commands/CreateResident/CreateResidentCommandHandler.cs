@@ -7,6 +7,7 @@ using Dhanman.MyHome.Domain.Abstractions;
 using Dhanman.MyHome.Domain.Entities.Addresses;
 using Dhanman.MyHome.Domain.Entities.Cities;
 using Dhanman.MyHome.Domain.Entities.Residents;
+using Dhanman.MyHome.Domain.Entities.ResidentUnits;
 using MediatR;
 using ResidentAddress = Dhanman.MyHome.Application.Contracts.ServiceProviders.Address;
 
@@ -17,15 +18,17 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
     #region Properties
     private readonly IResidentRepository _residentRepository;
     private readonly IAddressRepository _addressRepository;
+    private readonly IResidentUnitRepository _residentUnitRepository;
     private readonly IMediator _mediator;
     private readonly IApplicationDbContext _dbContext;
     #endregion
 
     #region Constructors
-    public CreateResidentCommandHandler(IResidentRepository residentRepository, IAddressRepository addressRepository, IMediator mediator, IApplicationDbContext dbContext)
+    public CreateResidentCommandHandler(IResidentRepository residentRepository, IAddressRepository addressRepository, IResidentUnitRepository residentUnitRepository, IMediator mediator, IApplicationDbContext dbContext)
     {
         _residentRepository = residentRepository;
         _addressRepository = addressRepository;
+        _residentUnitRepository = residentUnitRepository;
         _mediator = mediator;
         _dbContext = dbContext;
     }
@@ -34,19 +37,30 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
     #region Methodes
     public async Task<Result<EntityCreatedResponse>> Handle(CreateResidentCommand request, CancellationToken cancellationToken)
     {
+        ResidentUnit residentUnit;
+        Resident resident = _residentRepository.GetByEmail(request.Email);
 
-        Guid permCityId;
-        Guid cityId = GetCityId(request.PermanentAddress.CityName, request.PermanentAddress.ZipCode, request.PermanentAddress.StateId);
-        permCityId = cityId;
+        if (resident != null)
+        {
+            //var assignedUnits = _residentUnitRepository.GetByResidentId(resident.Id);
+            residentUnit = new ResidentUnit(request.UnitId, resident.Id);
+            _residentUnitRepository.Insert(residentUnit);
+        }
+        else
+        {
+            Guid cityId = GetCityId(request.PermanentAddress.CityName, request.PermanentAddress.ZipCode, request.PermanentAddress.StateId);
 
-        var permanentAddress = GetAddress(request.PermanentAddress, permCityId);
-        _addressRepository.Insert(permanentAddress);
+            var permanentAddress = GetAddress(request.PermanentAddress, cityId);
+            _addressRepository.Insert(permanentAddress);
 
-        int nextresidentId = _residentRepository.GetTotalRecordsCount() + 1;
+            int nextresidentId = _residentRepository.GetTotalRecordsCount() + 1;
 
-        var resident = new Resident(nextresidentId, request.UnitId, request.FirstName, request.LastName, request.Email, request.ContactNumber, permanentAddress.Id, request.ResidentTypeId, request.OccupancyStatusId);
+            resident = new Resident(nextresidentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, permanentAddress.Id, request.ResidentTypeId, request.OccupancyStatusId);
+            _residentRepository.Insert(resident);
 
-        _residentRepository.Insert(resident);
+            residentUnit = new ResidentUnit(request.UnitId, resident.Id);
+            _residentUnitRepository.Insert(residentUnit);
+        }
 
         await _mediator.Publish(new ResidentCreatedEvent(resident.Id), cancellationToken);
 

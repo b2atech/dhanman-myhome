@@ -42,7 +42,7 @@ public class UpdateRequestApproveStatusCommandHandler : ICommandHandler<UpdateRe
         _residentRequestRepository.Update(updateRequestApproveStatus);
 
         int nextresidentId = _residentRepository.GetTotalRecordsCount() + 1;
-        var resident = new Resident(nextresidentId, updateRequestApproveStatus.UnitId, updateRequestApproveStatus.FirstName, updateRequestApproveStatus.LastName, updateRequestApproveStatus.Email, updateRequestApproveStatus.ContactNumber, updateRequestApproveStatus.PermanentAddressId, updateRequestApproveStatus.ResidentTypeId, updateRequestApproveStatus.OccupancyStatusId);
+        var resident = new Resident(nextresidentId, updateRequestApproveStatus.FirstName, updateRequestApproveStatus.LastName, updateRequestApproveStatus.Email, updateRequestApproveStatus.ContactNumber, updateRequestApproveStatus.PermanentAddressId, updateRequestApproveStatus.ResidentTypeId, updateRequestApproveStatus.OccupancyStatusId);
         _residentRepository.Insert(resident);
 
         await _mediator.Publish(new ResidentRequestUpdatedEvent(updateRequestApproveStatus.Id), cancellationToken);

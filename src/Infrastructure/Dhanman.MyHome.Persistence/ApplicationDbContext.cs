@@ -31,7 +31,9 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         modelBuilder.ApplyUtcDateTimeConverter();
         base.OnModelCreating(modelBuilder);
+
     }
+
 
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

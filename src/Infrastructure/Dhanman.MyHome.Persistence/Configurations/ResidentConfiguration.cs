@@ -12,8 +12,6 @@ internal sealed class ResidentConfiguration : IEntityTypeConfiguration<Resident>
         builder.ToTable(TableNames.Residents);
         builder.HasKey(resident => resident.Id);
 
-        builder.Property(resident => resident.UnitId).HasColumnName("unit_id").IsRequired();
-
         builder.Property(resident => resident.FirstName).HasColumnName("first_name").IsRequired();
 
         builder.Property(resident => resident.LastName).HasColumnName("last_name").IsRequired();
