@@ -211,9 +211,11 @@ public static class ApiRoutes
         public const string GetAllSubCategory = apiVersion + "subCategory";
     }
 
-    public static class AssignUnits
+    public static class ServiceProviderAssignedUnits
     {
         public const string GetAllAssignUnits = apiVersion + "assignUnits";
+
+        public const string GetAllServiceProviderAssignedUnitsById = apiVersion + "assignUnits/{id:int}";
     }
 
     public static class OccupantTypes

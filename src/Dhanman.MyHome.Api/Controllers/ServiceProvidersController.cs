@@ -14,6 +14,7 @@ using Dhanman.MyHome.Application.Features.ServiceProviderTypes.Queries;
 using Dhanman.MyHome.Application.Features.Units.Command.GetUnitDetails;
 using Dhanman.MyHome.Application.Features.UnitServiceProviders.Commands.CreateUnitServiceProvider;
 using Dhanman.MyHome.Application.Features.UnitServiceProviders.Commands.GetAssignUnits;
+using Dhanman.MyHome.Application.Features.UnitServiceProviders.Queries;
 using Dhanman.MyHome.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -120,7 +121,7 @@ public class ServiceProvidersController : ApiController
     #endregion
 
     #region AssignServiceProviderUnits
-    [HttpPost(ApiRoutes.AssignUnits.GetAllAssignUnits)]
+    [HttpPost(ApiRoutes.ServiceProviderAssignedUnits.GetAllAssignUnits)]
     [ProducesResponseType(typeof(AssignSPUnitsListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAllAssignUnits([FromBody] GetAssignUnitsResquest? request) =>
@@ -130,6 +131,15 @@ await Result.Create(request, Errors.General.BadRequest)
               ))
             .Bind(command => Mediator.Send(command))
            .Match(Ok, BadRequest);
+
+    [HttpGet(ApiRoutes.ServiceProviderAssignedUnits.GetAllServiceProviderAssignedUnitsById)]
+    [ProducesResponseType(typeof(AssignUnitListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllServiceProviderAssignedUnits(int id) =>
+    await Result.Success(new GetAllServiceProviderUnitsByIdQuery(id))
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
 
     #endregion
 
