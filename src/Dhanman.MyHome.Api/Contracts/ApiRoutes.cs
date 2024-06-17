@@ -44,6 +44,7 @@ public static class ApiRoutes
         public const string GetAllUnitDetails = apiVersion + "unitDetails";
 
         public const string DeleteUnit = apiVersion + "unit/{id:int}";
+        public const string GetUnitByFloorId = apiVersion + "unitsByFloorId";
     }
 
     public static class Residents
