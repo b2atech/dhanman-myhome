@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Abstractions\Cryptography\" />
     <Folder Include="Dhanman\MyHome\Domain\Entities\UnitTypes\" />
     <Folder Include="Features\BookingFacilities\Commands\" />
     <Folder Include="Features\BookingFacilities\Events\" />

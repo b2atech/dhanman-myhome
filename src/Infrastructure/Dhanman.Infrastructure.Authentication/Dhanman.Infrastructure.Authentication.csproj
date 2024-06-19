@@ -17,4 +17,8 @@
     <ProjectReference Include="..\..\Core\Dhanman.MyHome.Application\Dhanman.MyHome.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Cryptography\" />
+  </ItemGroup>
+
 </Project>
