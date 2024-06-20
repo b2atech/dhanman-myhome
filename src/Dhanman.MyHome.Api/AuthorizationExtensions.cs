@@ -17,8 +17,6 @@ public static class AuthorizationExtensions
         {
             string connectionString = configuration.GetConnectionString(ConnectionString.PermissionDBKey);
 
-            //services.AddSingleton(new ConnectionString(connectionString));
-
             if (connectionString.Length > 0)
             {
                 services.AddDbContext<PermissionDbContext>(options =>

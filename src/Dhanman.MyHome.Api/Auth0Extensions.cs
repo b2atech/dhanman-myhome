@@ -16,14 +16,14 @@ public static class Auth0Extensions
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(options =>
         {
-            options.Authority = "https://dev-dhanman.us.auth0.com/";
-            options.Audience = "dev-dhanman-api";
+            options.Authority = domain;
+            options.Audience = audience;
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = true,
-                ValidIssuer = "https://dev-dhanman.us.auth0.com/",
+                ValidIssuer = domain,
                 ValidateAudience = true,
-                ValidAudience = "dev-dhanman-api",
+                ValidAudience = audience,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true
             };

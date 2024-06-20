@@ -82,7 +82,6 @@ builder.Services.AddHeaderPropagation(options => options.Headers.Add("correlatio
 
 builder.Services.AddAuth0Authentication(builder.Configuration);
 builder.Services.AddCustomAuthorization();
-//builder.Services.AddSwaggerWithAuth0($"https://{builder.Configuration["Auth0:Domain"]}/", builder.Configuration["Auth0:Audience"]);
 
 
 builder.Services.AddCors(options =>
@@ -98,8 +97,11 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
+if (!app.Environment.IsProduction())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 
 if (app.Environment.IsDevelopment())
