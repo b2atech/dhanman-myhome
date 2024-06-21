@@ -16,7 +16,7 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
     #endregion
 
     #region Constructors
-    public ApplicationDbContext(DbContextOptions options, IDateTime dateTime)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IDateTime dateTime)
         : base(options)
     {
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);

@@ -6,6 +6,7 @@ public sealed class ConnectionString
     /// The connection strings key.
     /// </summary>
     public const string SettingsKey = "MyHomeDb";
+    public const string PermissionDBKey = "PermissionsDb";
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ConnectionString"/> class.

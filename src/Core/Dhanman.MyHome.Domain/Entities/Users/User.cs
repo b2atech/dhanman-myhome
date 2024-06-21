@@ -1,6 +1,5 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Abstractions;
 using B2aTech.CrossCuttingConcern.Core.Primitives;
-using Dhanman.MyHome.Domain.Entities.Users.Services;
 using Dhanman.MyHome.Domain.Utility;
 
 namespace Dhanman.MyHome.Domain.Entities.Users;
@@ -17,20 +16,18 @@ public class User : Entity, IAuditableEntity, ISoftDeletableEntity
     /// <param name="lastName">The user last name.</param>
     /// <param name="email">The user email instance.</param>
     /// <param name="passwordHash">The user password hash.</param>
-    public User(Guid id, FirstName firstName, LastName lastName, Email email, string passwordHash)
+    public User(Guid id, FirstName firstName, LastName lastName, Email email)
         : this()
     {
         Ensure.NotEmpty(id, "The identifier is required.", nameof(id));
         Ensure.NotEmpty(firstName, "The first name is required.", nameof(firstName));
         Ensure.NotEmpty(lastName, "The last name is required.", nameof(lastName));
         Ensure.NotEmpty(email, "The email is required.", nameof(email));
-        Ensure.NotEmpty(passwordHash, "The password hash is required", nameof(passwordHash));
 
         Id = id;
         FirstName = firstName;
         LastName = lastName;
         Email = email;
-        _passwordHash = passwordHash;
     }
 
     /// <summary>
@@ -84,6 +81,6 @@ public class User : Entity, IAuditableEntity, ISoftDeletableEntity
     /// <param name="password">The password to be checked against the user password hash.</param>
     /// <param name="passwordHashChecker">The password hash checker.</param>
     /// <returns>True if the password hashes match, otherwise false.</returns>
-    public bool VerifyPasswordHash(string password, IPasswordHashChecker passwordHashChecker)
-        => !string.IsNullOrWhiteSpace(password) && passwordHashChecker.HashesMatch(_passwordHash, password);
+    public bool VerifyPasswordHash(string password)
+        => !string.IsNullOrWhiteSpace(password);
 }

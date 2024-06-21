@@ -4,14 +4,12 @@ using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Authentication;
 using Dhanman.MyHome.Domain;
 using Dhanman.MyHome.Domain.Abstractions;
-using Dhanman.MyHome.Domain.Entities.Users.Services;
 
 namespace Dhanman.MyHome.Application.Features.Authentication.Commands.Login;
 
 internal sealed class LoginCommandHandler : ICommandHandler<LoginCommand, Result<TokenResponse>>
 {
     private readonly IUserRepository _userRepository;
-    private readonly IPasswordHashChecker _passwordHashChecker;
     private readonly IJwtProvider _jwtProvider;
 
     /// <summary>
@@ -20,11 +18,10 @@ internal sealed class LoginCommandHandler : ICommandHandler<LoginCommand, Result
     /// <param name="userRepository">The user repository.</param>
     /// <param name="passwordHashChecker">The password hash checker.</param>
     /// <param name="jwtProvider">The JWT provider.</param>
-    public LoginCommandHandler(IUserRepository userRepository, IPasswordHashChecker passwordHashChecker, IJwtProvider jwtProvider)
+    public LoginCommandHandler(IUserRepository userRepository,IJwtProvider jwtProvider)
     {
         _userRepository = userRepository;
         _jwtProvider = jwtProvider;
-        _passwordHashChecker = passwordHashChecker;
     }
 
     public async Task<Result<TokenResponse>> Handle(LoginCommand request, CancellationToken cancellationToken) =>
@@ -33,7 +30,7 @@ internal sealed class LoginCommandHandler : ICommandHandler<LoginCommand, Result
                     command => _userRepository.GetByEmailAsync(command.Email),
                     Errors.Authentication.InvalidEmailOrPassword)
                 .Ensure(
-                    user => user.VerifyPasswordHash(request.Password, _passwordHashChecker),
+                    user => user.VerifyPasswordHash(request.Password),
                     Errors.Authentication.InvalidEmailOrPassword)
                 .Bind(user => _jwtProvider.CreateAsync(user));
 }
