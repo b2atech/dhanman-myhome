@@ -1,34 +1,32 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
-namespace Dhanman.MyHome.Api;
-
-public static class Auth0Extensions
+namespace Dhanman.MyHome.Api
 {
-    public static IServiceCollection AddAuth0Authentication(this IServiceCollection services, IConfiguration configuration)
+    public static class Auth0Extensions
     {
-        var domain = $"https://{configuration["Auth0:Domain"]}/";
-        var audience = configuration["Auth0:Audience"];
+        public static void AddAuthentication(this IServiceCollection services, IConfiguration configuration, string dummy)
+        {
 
-        services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(options =>
-        {
-            options.Authority = domain;
-            options.Audience = audience;
-            options.TokenValidationParameters = new TokenValidationParameters
+            services.AddAuthentication(options =>
             {
-                ValidateIssuer = true,
-                ValidIssuer = domain,
-                ValidateAudience = true,
-                ValidAudience = audience,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true
-            };
-        });
-
-        return services;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.Authority = $"https://{configuration["Auth0:Domain"]}/";
+                options.Audience = configuration["Auth0:Audience"];
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidIssuer = $"https://{configuration["Auth0:Domain"]}/",
+                    ValidAudience = configuration["Auth0:Audience"],
+                    NameClaimType = ClaimTypes.NameIdentifier
+                };
+            });
+        }
     }
 }

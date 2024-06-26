@@ -1,4 +1,5 @@
-﻿using B2aTech.CrossCuttingConcern.Core.Result;
+﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Common;
@@ -20,7 +21,7 @@ namespace Dhanman.MyHome.Api.Controllers;
 
 public class UnitsController : ApiController
 {
-    public UnitsController(IMediator mediator) : base(mediator)
+    public UnitsController(IMediator mediator, IUserContextService userContextService) : base(mediator, userContextService)
     {
     }
 
@@ -124,8 +125,7 @@ public class UnitsController : ApiController
                 value.Area,
                 value.Bhk,
                 value.EIntercom,
-                value.PhoneExtension,
-                value.CreatedBy
+                value.PhoneExtension
               ))
             .Bind(command => Mediator.Send(command));
 

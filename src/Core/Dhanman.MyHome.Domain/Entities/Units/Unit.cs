@@ -46,7 +46,7 @@ public class Unit : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #region Constructor
     public Unit(int id,string name, int buildingId, int floorId, int unitTypeId,
         int occupantTypeId, int occupancyTypeId,decimal area, decimal bhkType, int phoneExtention,
-        int eIntercom, string latitude, string longitude, Guid createdBy)
+        int eIntercom, string latitude, string longitude)
     {
         Id = id;
         Name = name;
@@ -59,14 +59,14 @@ public class Unit : EntityInt, IAuditableEntity, ISoftDeletableEntity
         BHKType = bhkType;
         PhoneExtention = phoneExtention;
         EIntercom = eIntercom;
-        CreatedBy = createdBy;
+        //CreatedBy = createdBy;
         Latitude = latitude;
         Longitude = longitude;
     }
 
     public Unit(int id, string name, int floorId, int unitTypeId,
         int occupantTypeId, int occupancyTypeId, int phoneExtention,
-        int eIntercom, string latitude, string longitude, Guid createdBy)
+        int eIntercom, string latitude, string longitude)
     {
         Id = id;
         Name = name;
@@ -78,7 +78,7 @@ public class Unit : EntityInt, IAuditableEntity, ISoftDeletableEntity
         EIntercom = eIntercom;
         Latitude = latitude;
         Longitude = longitude;
-        CreatedBy = createdBy;
+        //CreatedBy = createdBy;
         CreatedOnUtc = DateTime.UtcNow;
     }
     #endregion

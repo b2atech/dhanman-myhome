@@ -28,7 +28,7 @@ public class Vehicle : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public Vehicle(int id, string vehicleNumber, int vehicleTypeId, int unitId, string? vehicleRfid, string? vehicleRfidSecretCode, Guid createdBy)
+    public Vehicle(int id, string vehicleNumber, int vehicleTypeId, int unitId, string? vehicleRfid, string? vehicleRfidSecretCode)
     {
         Id = id;
         VehicleNumber = vehicleNumber;
@@ -36,7 +36,7 @@ public class Vehicle : EntityInt, IAuditableEntity, ISoftDeletableEntity
         UnitId = unitId;
         VehicleRfid = vehicleRfid;
         VehicleRfidSecretCode = vehicleRfidSecretCode;
-        CreatedBy = createdBy;
+        //CreatedBy = createdBy;
         CreatedOnUtc = DateTime.UtcNow;
 
     }

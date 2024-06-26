@@ -1,4 +1,5 @@
-﻿using B2aTech.CrossCuttingConcern.Core.Abstractions;
+﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Core.Abstractions;
 using B2aTech.CrossCuttingConcern.Core.Primitives;
 using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Domain.Abstractions;
@@ -13,15 +14,18 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
 {
     #region Properties
     private readonly IDateTime _dateTime;
+    private readonly IUserContextService _userContextService;
+
     #endregion
 
     #region Constructors
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IDateTime dateTime)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IDateTime dateTime, IUserContextService userContextService)
         : base(options)
     {
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
         _dateTime = dateTime;
+        _userContextService = userContextService;
     }
     #endregion
 
@@ -49,22 +53,26 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
 
     private void UpdateAuditableEntities(DateTime utcNow)
     {
+        var currentUsedId = _userContextService.GetCurrentUserId();
         foreach (EntityEntry<IAuditableEntity> entityEntry in ChangeTracker.Entries<IAuditableEntity>())
         {
             if (entityEntry.State == EntityState.Added)
             {
                 entityEntry.Property(nameof(IAuditableEntity.CreatedOnUtc)).CurrentValue = utcNow.SetKindUtc();
+                entityEntry.Property(nameof(IAuditableEntity.CreatedBy)).CurrentValue = currentUsedId;
             }
 
             if (entityEntry.State == EntityState.Modified)
             {
                 entityEntry.Property(nameof(IAuditableEntity.ModifiedOnUtc)).CurrentValue = utcNow.SetKindUtc();
+                entityEntry.Property(nameof(IAuditableEntity.ModifiedBy)).CurrentValue = currentUsedId;
             }
         }
     }
 
     private void UpdateSoftDeletableEntities(DateTime utcNow)
     {
+        var currentUsedId = _userContextService.GetCurrentUserId();
         foreach (EntityEntry<ISoftDeletableEntity> entityEntry in ChangeTracker.Entries<ISoftDeletableEntity>())
         {
             if (entityEntry.State == EntityState.Deleted)
@@ -74,6 +82,8 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
                 entityEntry.Property(nameof(ISoftDeletableEntity.IsDeleted)).CurrentValue = true;
 
                 entityEntry.State = EntityState.Modified;
+                entityEntry.Property(nameof(IAuditableEntity.ModifiedBy)).CurrentValue = currentUsedId;
+
 
                 UpdateDeletedEntityEntryReferencesToUnchanged(entityEntry);
             }

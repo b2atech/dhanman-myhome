@@ -18,12 +18,11 @@ public sealed class UpdateUnitCommand : ICommand<Result<EntityUpdatedResponse>>
     public decimal Bhk { get; set; }
     public int EIntercom { get; set; }
     public int PhoneExtension { get; set; }
-    public Guid CreatedBy { get; set; }
 
     #endregion
 
     #region Constructor
-    public UpdateUnitCommand(int unitId, string name, int buildingId, int floorId, int unitTypeId, int occupantId, int occupancyId, decimal area, decimal bhk, int eIntercom, int phoneExtension, Guid createdBy)
+    public UpdateUnitCommand(int unitId, string name, int buildingId, int floorId, int unitTypeId, int occupantId, int occupancyId, decimal area, decimal bhk, int eIntercom, int phoneExtension)
     {
         UnitId = unitId;
         Name = name;
@@ -36,7 +35,7 @@ public sealed class UpdateUnitCommand : ICommand<Result<EntityUpdatedResponse>>
         Bhk = bhk;
         EIntercom = eIntercom;
         PhoneExtension = phoneExtension;
-        CreatedBy = createdBy;
+        //CreatedBy = createdBy;
     }
     #endregion
 }

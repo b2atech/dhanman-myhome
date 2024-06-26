@@ -1,4 +1,5 @@
-﻿using B2aTech.CrossCuttingConcern.Core.Result;
+﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Vehicles;
@@ -10,7 +11,7 @@ namespace Dhanman.MyHome.Api.Controllers;
 
 public class VehiclesController : ApiController
 {
-    public VehiclesController(IMediator mediator) : base(mediator)
+    public VehiclesController(IMediator mediator, IUserContextService userContextService) : base(mediator, userContextService)
     {
     }
 

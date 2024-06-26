@@ -16,12 +16,11 @@ public class CreateVisitorCommand : ICommand<Result<EntityCreatedResponse>>
     public string? VehicleNumber { get; set; }
     public int IdentityTypeId { get; set; }
     public string IdentityNumber { get; set; }
-    public Guid CreatedBy { get; set; }
 
     #endregion
 
     #region Constructors
-    public CreateVisitorCommand(string firstName, string? lastName, string email, string visitingFrom, string contactNumber, int visitorTypeId, string? vehicleNumber, int identityTypeId, string identityNumber, Guid createdBy)
+    public CreateVisitorCommand(string firstName, string? lastName, string email, string visitingFrom, string contactNumber, int visitorTypeId, string? vehicleNumber, int identityTypeId, string identityNumber)
     {
         FirstName = firstName;
         LastName = lastName;
@@ -32,7 +31,6 @@ public class CreateVisitorCommand : ICommand<Result<EntityCreatedResponse>>
         VehicleNumber = vehicleNumber;
         IdentityTypeId = identityTypeId;
         IdentityNumber = identityNumber;
-        CreatedBy = createdBy;
     }
     #endregion
 

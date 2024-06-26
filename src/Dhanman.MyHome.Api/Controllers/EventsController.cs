@@ -1,4 +1,5 @@
-﻿using B2aTech.CrossCuttingConcern.Core.Result;
+﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.BookingFacilites;
@@ -16,7 +17,7 @@ namespace Dhanman.MyHome.Api.Controllers;
 
 public class EventsController : ApiController
 {
-    public EventsController(IMediator mediator) : base(mediator)
+    public EventsController(IMediator mediator, IUserContextService userContextService) : base(mediator, userContextService)
     {
     }
 

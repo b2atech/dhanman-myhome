@@ -20,8 +20,6 @@ public class CreateServiceProviderRequest
     public bool IsHireable { get; set; }
     public bool IsVisible { get; set; }
     public bool IsFrequentVisitor { get; set; }
-    public DateTime CreatedOnUtc { get; }
-    public Guid CreatedBy { get; set; }
     #endregion
 
     #region Constructors
