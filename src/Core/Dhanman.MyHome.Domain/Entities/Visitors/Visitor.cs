@@ -44,8 +44,6 @@ public class Visitor : EntityInt, IAuditableEntity, ISoftDeletableEntity
         VehicleNumber = vehicleNumber;
         IdentityTypeId = identityTypeId;
         IdentityNumber = identityNumber;
-       // CreatedBy = createdBy;
-        CreatedOnUtc = DateTime.UtcNow;
     }
 
     #endregion

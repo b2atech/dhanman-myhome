@@ -35,7 +35,6 @@ public sealed class UpdateUnitCommand : ICommand<Result<EntityUpdatedResponse>>
         Bhk = bhk;
         EIntercom = eIntercom;
         PhoneExtension = phoneExtension;
-        //CreatedBy = createdBy;
     }
     #endregion
 }

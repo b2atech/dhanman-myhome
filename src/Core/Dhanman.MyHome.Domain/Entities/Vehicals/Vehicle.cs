@@ -36,9 +36,6 @@ public class Vehicle : EntityInt, IAuditableEntity, ISoftDeletableEntity
         UnitId = unitId;
         VehicleRfid = vehicleRfid;
         VehicleRfidSecretCode = vehicleRfidSecretCode;
-        //CreatedBy = createdBy;
-        CreatedOnUtc = DateTime.UtcNow;
-
     }
     #endregion
 }

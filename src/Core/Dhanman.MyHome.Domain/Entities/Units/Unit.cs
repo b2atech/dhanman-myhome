@@ -59,7 +59,6 @@ public class Unit : EntityInt, IAuditableEntity, ISoftDeletableEntity
         BHKType = bhkType;
         PhoneExtention = phoneExtention;
         EIntercom = eIntercom;
-        //CreatedBy = createdBy;
         Latitude = latitude;
         Longitude = longitude;
     }
@@ -78,7 +77,6 @@ public class Unit : EntityInt, IAuditableEntity, ISoftDeletableEntity
         EIntercom = eIntercom;
         Latitude = latitude;
         Longitude = longitude;
-        //CreatedBy = createdBy;
         CreatedOnUtc = DateTime.UtcNow;
     }
     #endregion
