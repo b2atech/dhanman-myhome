@@ -22,7 +22,7 @@ public class ResidentUnitRepository : IResidentUnitRepository
 
     public void Delete(ResidentUnit residentUnit) => _dbContext.RemoveInt(residentUnit);
 
-    public Task<ResidentUnit?> GetBydIdIntAsync(int id) => _dbContext.GetBydIdIntAsync<ResidentUnit>(id);
+    public Task<ResidentUnit?> GetByIdIntAsync(int id) => _dbContext.GetByIdIntAsync<ResidentUnit>(id);
 
     public Task<int> GetLastResidentUnitIdAsync()
     {

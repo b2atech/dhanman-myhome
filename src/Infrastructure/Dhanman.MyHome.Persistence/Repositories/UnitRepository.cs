@@ -18,7 +18,7 @@ internal sealed class UnitRepository : IUnitRepository
 
     #region Methods
     public DbSet<Unit> Unit => _dbContext.SetInt<Unit>();
-    public async Task<Unit?> GetBydIdIntAsync(int id) => await _dbContext.GetBydIdIntAsync<Unit>(id);
+    public async Task<Unit?> GetByIdIntAsync(int id) => await _dbContext.GetByIdIntAsync<Unit>(id);
 
     public void Insert(Unit unit) => _dbContext.InsertInt(unit);
     public void Delete(Unit unit) => _dbContext.RemoveInt(unit);

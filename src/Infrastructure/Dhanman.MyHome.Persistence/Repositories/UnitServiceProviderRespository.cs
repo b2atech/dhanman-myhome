@@ -16,16 +16,12 @@ internal sealed class UnitServiceProviderRespository: IUnitServiceProviderRespos
     #endregion
 
     #region Methods
-    public async Task<UnitServiceProvider?> GetByIdIntAsync(int id) => await _dbContext.GetBydIdIntAsync<UnitServiceProvider>(id);
+    public async Task<UnitServiceProvider?> GetByIdIntAsync(int id) => await _dbContext.GetByIdIntAsync<UnitServiceProvider>(id);
 
     public void InsertInt(UnitServiceProvider unitServiceProvider) => _dbContext.InsertInt(unitServiceProvider);
 
     public void DeleteInt(UnitServiceProvider unitServiceProvider) => _dbContext.RemoveInt(unitServiceProvider);
 
     public void UpdateInt(UnitServiceProvider updateUnitServiceProvider) => _dbContext?.UpdateInt(updateUnitServiceProvider);
-
-    public Task<UnitServiceProvider?> GetBydIdIntAsync(int id)=> _dbContext.GetBydIdIntAsync<UnitServiceProvider>(id);
-    
-
     #endregion
 }

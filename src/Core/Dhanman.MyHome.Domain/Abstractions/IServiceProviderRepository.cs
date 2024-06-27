@@ -5,7 +5,7 @@ namespace Dhanman.MyHome.Domain.Abstractions;
 public interface IServiceProviderRepository
 {
     #region Methods
-    Task<ServiceProvider?> GetBydIdIntAsync(int id);
+    Task<ServiceProvider?> GetByIdIntAsync(int id);
 
     void Insert(ServiceProvider serviceProvider);
 

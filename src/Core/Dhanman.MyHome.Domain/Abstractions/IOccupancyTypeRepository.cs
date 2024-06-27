@@ -6,7 +6,7 @@ namespace Dhanman.MyHome.Domain.Abstractions;
 public interface IOccupancyTypeRepository
 {
     #region Methods
-    Task<OccupancyType?> GetBydIdIntAsync(int id);
+    Task<OccupancyType?> GetByIdIntAsync(int id);
     Task<int> GetBydNameAsync(string occupancyType);
     void Insert(OccupantType occupancyType);
 
