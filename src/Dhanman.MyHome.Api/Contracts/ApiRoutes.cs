@@ -235,9 +235,4 @@ public static class ApiRoutes
         public const string GetAllBuildingTypes = apiVersion + "buildingTypes";
     }
 
-    public static class ValidateServiceProviders
-    {
-        public const string ValidateServiceProvider = apiVersion + "validateServiceProviders/{apartmentId:guid}/{pinCode:int}";
-
-    }
 }
