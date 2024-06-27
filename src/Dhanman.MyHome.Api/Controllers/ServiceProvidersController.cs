@@ -53,6 +53,8 @@ public class ServiceProvidersController : ApiController
              value.IsHireable,
              value.IsVisible,
              value.IsFrequentVisitor,
+             value.ApartmentId,
+             value.PinCode,
              value.CreatedBy))
          .Bind(command => Mediator.Send(command))
                .Match(Ok, BadRequest);
@@ -142,6 +144,8 @@ await Result.Create(request, Errors.General.BadRequest)
 
 
     #endregion
+
+   
 
 
 }

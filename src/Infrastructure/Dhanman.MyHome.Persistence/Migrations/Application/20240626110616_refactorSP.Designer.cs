@@ -3,6 +3,7 @@ using System;
 using Dhanman.MyHome.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dhanman.MyHome.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240626110616_refactorSP")]
+    partial class refactorSP
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1704,10 +1707,9 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("permanent_address_id");
 
-                    b.Property<string>("PinCode")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("pin_code");
+                    b.Property<int>("PinCodeId")
+                        .HasColumnType("integer")
+                        .HasColumnName("pin_code_id");
 
                     b.Property<bool>("PoliceverificationStatus")
                         .HasColumnType("boolean")

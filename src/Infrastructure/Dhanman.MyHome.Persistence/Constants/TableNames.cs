@@ -94,6 +94,8 @@ internal static class TableNames
 
     internal const string ResidentUnits = "resident_units";
 
+    internal const string Pins = "pins";
+
 
 }
 
