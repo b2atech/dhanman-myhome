@@ -73,8 +73,6 @@ public class ServiceProvider : EntityInt, IAuditableEntity, ISoftDeletableEntity
         IsHireable = isHireable;
         IsVisible = isVisible;
         IsFrequentVisitor = isFrequentVisitor;
-       // CreatedBy = createdBy;
-        CreatedOnUtc = DateTime.UtcNow;
     }
     #endregion
 }

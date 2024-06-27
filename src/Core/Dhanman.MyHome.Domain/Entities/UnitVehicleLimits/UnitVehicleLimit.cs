@@ -28,7 +28,7 @@ public class UnitVehicleLimit : EntityInt, IAuditableEntity, ISoftDeletableEntit
     #endregion
 
     #region Constructor
-    public UnitVehicleLimit(int id, int unitId, int carLimit, int twoWheelarsLimit, int noOfCarsAllotted, int noOfTwoWheelarsAllotted, Guid createdBy)
+    public UnitVehicleLimit(int id, int unitId, int carLimit, int twoWheelarsLimit, int noOfCarsAllotted, int noOfTwoWheelarsAllotted)
     {
         Id = id;
         UnitId = unitId;
@@ -36,8 +36,6 @@ public class UnitVehicleLimit : EntityInt, IAuditableEntity, ISoftDeletableEntit
         TwoWheelarsLimit = twoWheelarsLimit;
         NoOfCarsAllotted = noOfCarsAllotted;
         NoOfTwoWheelarsAllotted = noOfTwoWheelarsAllotted;
-        CreatedBy = createdBy;
-        CreatedOnUtc = DateTime.UtcNow;
     }
     #endregion
 }

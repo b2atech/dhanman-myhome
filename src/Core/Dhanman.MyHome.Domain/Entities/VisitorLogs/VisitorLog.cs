@@ -32,7 +32,7 @@ public class VisitorLog : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public VisitorLog(int id, int visitorId, int visitingUnitId, int? visitPurposeId, string visitingFrom, int currentStatusId, DateTime entryTime, DateTime? exitTime, Guid createdBy)
+    public VisitorLog(int id, int visitorId, int visitingUnitId, int? visitPurposeId, string visitingFrom, int currentStatusId, DateTime entryTime, DateTime? exitTime)
     {
         Id = id;
         VisitorId = visitorId;
@@ -42,8 +42,6 @@ public class VisitorLog : EntityInt, IAuditableEntity, ISoftDeletableEntity
         CurrentStatusId = currentStatusId;
         EntryTime = entryTime;
         ExitTime = exitTime;
-        CreatedBy = createdBy;
-        CreatedOnUtc = DateTime.UtcNow;
     }
     #endregion
 }
