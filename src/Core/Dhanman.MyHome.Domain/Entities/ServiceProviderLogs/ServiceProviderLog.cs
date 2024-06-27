@@ -32,7 +32,7 @@ public class ServiceProviderLog : EntityInt, IAuditableEntity, ISoftDeletableEnt
     #endregion
 
     #region Constructor
-    public ServiceProviderLog(int id, int serviceProviderId, int visitingUnitId, int? visitPurposeId, string visitingFrom, int currentStatusId, DateTime entryTime, DateTime? exitTime, Guid createdBy)
+    public ServiceProviderLog(int id, int serviceProviderId, int visitingUnitId, int? visitPurposeId, string visitingFrom, int currentStatusId, DateTime entryTime, DateTime? exitTime)
     {
         Id = id;
         ServiceProviderId = serviceProviderId;
@@ -42,8 +42,6 @@ public class ServiceProviderLog : EntityInt, IAuditableEntity, ISoftDeletableEnt
         CurrentStatusId = currentStatusId;
         EntryTime = entryTime;
         ExitTime = exitTime;
-        CreatedBy = createdBy;
-        CreatedOnUtc = DateTime.UtcNow;
     }
     #endregion
 }

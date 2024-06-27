@@ -32,7 +32,7 @@ public class Visitor : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public Visitor(int id, string firstName, string? lastName, string email, string visitingFrom, string contactNumber, int visitorTypeId, string? vehicleNumber, int identityTypeId, string identityNumber, Guid createdBy)
+    public Visitor(int id, string firstName, string? lastName, string email, string visitingFrom, string contactNumber, int visitorTypeId, string? vehicleNumber, int identityTypeId, string identityNumber)
     {
         Id = id;
         FirstName = firstName;
@@ -44,8 +44,6 @@ public class Visitor : EntityInt, IAuditableEntity, ISoftDeletableEntity
         VehicleNumber = vehicleNumber;
         IdentityTypeId = identityTypeId;
         IdentityNumber = identityNumber;
-        CreatedBy = createdBy;
-        CreatedOnUtc = DateTime.UtcNow;
     }
 
     #endregion

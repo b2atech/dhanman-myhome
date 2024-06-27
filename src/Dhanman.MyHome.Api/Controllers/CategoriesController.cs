@@ -1,4 +1,5 @@
-﻿using B2aTech.CrossCuttingConcern.Core.Result;
+﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Catergories;
@@ -12,7 +13,7 @@ namespace Dhanman.MyHome.Api.Controllers;
 
 public class CategoriesController: ApiController
 {
-    public CategoriesController(IMediator mediator) : base(mediator)
+    public CategoriesController(IMediator mediator, IUserContextService userContextService) : base(mediator, userContextService)
     {
     }
     #region Category

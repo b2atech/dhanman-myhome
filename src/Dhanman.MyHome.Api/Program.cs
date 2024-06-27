@@ -1,5 +1,6 @@
 using Azure.Identity;
-using Dhanman.Infrastructure.Authentication;
+using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.UserContext;
 using Dhanman.MyHome.Api;
 using Dhanman.MyHome.Api.Middleware;
 using Dhanman.MyHome.Application;
@@ -7,8 +8,7 @@ using Dhanman.MyHome.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Azure.KeyVault;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 using Serilog;
 
 var DhanManSpecificOrigins = "_dhanmanAllowSpecificOrigins";
@@ -26,7 +26,6 @@ builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 // Add configuration to load environment-specific settings
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -43,28 +42,28 @@ if (builder.Environment.EnvironmentName == "Production")
         return token.Token;
     });
 
-    // Retrieve first connection string
+    // Retrieve and set connection strings from Key Vault
     var secretMyHomeDb = await keyVaultClient.GetSecretAsync(keyVaultEndpoint.ToString(), "MyHomeDb");
-    var connectionStringMyHomeDb = secretMyHomeDb.Value;
-    // Add first connection string to configuration
-    builder.Configuration["ConnectionStrings:MyHomeDb"] = connectionStringMyHomeDb;
+    builder.Configuration["ConnectionStrings:MyHomeDb"] = secretMyHomeDb.Value;
 
-    // Retrieve second connection string
     var secretPermissionsDb = await keyVaultClient.GetSecretAsync(keyVaultEndpoint.ToString(), "PermissionsDb");
-    var connectionStringPermissionsDb = secretPermissionsDb.Value;
-    // Add second connection string to configuration
-    builder.Configuration["ConnectionStrings:PermissionsDb"] = connectionStringPermissionsDb;
+    builder.Configuration["ConnectionStrings:PermissionsDb"] = secretPermissionsDb.Value;
 }
 
+// Add services to the container
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddHeaderPropagation(options => options.Headers.Add("correlation-id"));
+builder.Services.AddScoped<IUserContextService, UserContextService>();
 
+
+// Add application services
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddPermissionService(builder.Configuration);
-builder.Services.AddAuthentication(builder.Configuration,"");
-
+builder.Services.AddAuthentication(builder.Configuration, "");
+builder.Services.AddCustomAuthorization();
 builder.Services.AddApplication();
-builder.Services.AddControllers();
-//.AddFluentValidation();
-//builder.Services.AddCarter();
 
 builder.Services.AddApiVersioning(config =>
 {
@@ -74,25 +73,40 @@ builder.Services.AddApiVersioning(config =>
     config.ApiVersionReader = ApiVersionReader.Combine(new HeaderApiVersionReader("x-api-version"), new QueryStringApiVersionReader("api-version"));
 });
 
-
-
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddHeaderPropagation(options => options.Headers.Add("correlation-id"));
-
-
-builder.Services.AddAuth0Authentication(builder.Configuration);
-builder.Services.AddCustomAuthorization();
-
-
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: DhanManSpecificOrigins,
-        policy =>
+    options.AddPolicy(name: DhanManSpecificOrigins, policy =>
+    {
+        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
+// Add Swagger
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter into field the word 'Bearer' followed by space and JWT",
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
         {
-            policy.WithOrigins("http://localhost:3000",
-                                "http://localhost:7240",
-                               "https://dev.dhanman.com");
-        });
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] { }
+        }
+    });
 });
 
 var app = builder.Build();
@@ -100,35 +114,23 @@ var app = builder.Build();
 if (!app.Environment.IsProduction())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-
-if (app.Environment.IsDevelopment())
-{
-    string connectionString = builder.Configuration.GetConnectionString(ConnectionString.SettingsKey);
-
-    if (connectionString.Length > 0)
+    app.UseSwaggerUI(c =>
     {
-        //app.ExecuteMigrations(connectionString);
-    }
-
-    //app.ApplyMigrations();
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+        c.OAuthClientId(builder.Configuration["Auth0:ClientId"]);
+        c.OAuthAppName("Demo API - Swagger");
+        c.OAuthUsePkce();
+    });
 }
 
+// Configure middleware
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-
 app.UseHttpsRedirection();
 app.UseRouting();
-
-//app.UseRateLimiter();
-
-
 app.UseCors(DhanManSpecificOrigins);
-
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseMiddleware<ExceptionHandlerMiddleware>();
-
-//app.MapCarter();
 app.UseEndpoints(endpoints => endpoints.MapControllers());
 
 app.Run();

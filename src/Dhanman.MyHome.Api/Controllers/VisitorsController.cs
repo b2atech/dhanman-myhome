@@ -1,4 +1,5 @@
-﻿using B2aTech.CrossCuttingConcern.Core.Result;
+﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Common;
@@ -14,7 +15,7 @@ namespace Dhanman.MyHome.Api.Controllers;
 
 public class VisitorsController : ApiController
 {
-    public VisitorsController(IMediator mediator) : base(mediator)
+    public VisitorsController(IMediator mediator, IUserContextService userContextService) : base(mediator, userContextService)
     {
     }
 
@@ -50,8 +51,7 @@ public class VisitorsController : ApiController
              value.VisitorTypeId,
              value.VehicleNumber,
              value.IdentityTypeId,
-             value.IdentityNumber,
-             value.CreatedBy
+             value.IdentityNumber
          ))
          .Bind(command => Mediator.Send(command))
          .Match(Ok, BadRequest);

@@ -14,12 +14,11 @@ public class CreateUnitRequest
     public string Longitude { get; set; }
     public int NumberOfMembers { get; set; }
     public string Society { get; set; }
-    public Guid CreatedBy { get; set; }
 
     #endregion
 
     #region Constructor
-    public CreateUnitRequest(string status, string flat, string flatType, string occupant, string occupancy, int phoneExtention, int eIntercom, string latitude, string longitude, int numberOfMembers, string society, Guid createdBy)
+    public CreateUnitRequest(string status, string flat, string flatType, string occupant, string occupancy, int phoneExtention, int eIntercom, string latitude, string longitude, int numberOfMembers, string society)
     {
         Status = status;
         Flat = flat;
@@ -32,7 +31,6 @@ public class CreateUnitRequest
         Longitude = longitude;
         NumberOfMembers = numberOfMembers;
         Society = society;
-        CreatedBy = createdBy;
     }
     #endregion
 }

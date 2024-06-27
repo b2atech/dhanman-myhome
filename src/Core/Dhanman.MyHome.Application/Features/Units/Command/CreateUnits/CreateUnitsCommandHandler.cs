@@ -40,8 +40,7 @@ namespace Dhanman.MyHome.Application.Features.Units.Command.CreateUnits
                    request.PhoneExtension,
                    request.EIntercom,
                     "1.0",
-                    "1.1",
-                    Guid.NewGuid()
+                    "1.1"
                     );
 
             _unitRepository.Insert( unit );

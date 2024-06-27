@@ -1,26 +1,30 @@
-﻿using B2aTech.CrossCuttingConcern.Core.Primitives;
+﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Core.Primitives;
 using Dhanman.MyHome.Api.Contracts;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dhanman.MyHome.Api.Infrastructure;
 
-//[Authorize]
+[Authorize]
 public abstract class ApiController : ControllerBase
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="ApiController"/> class.
     /// </summary>
     /// <param name="mediator">The mediator.</param>
-    protected ApiController(IMediator mediator)
+    protected ApiController(IMediator mediator, IUserContextService userContextService)
     {
         Mediator = mediator;
+        UserContextService = userContextService;
     }
 
     /// <summary>
     /// Gets the <see cref="IMediator"/> instance.
     /// </summary>
     protected IMediator Mediator { get; }
+    protected IUserContextService UserContextService { get; }
 
     /// <summary>
     /// Creates an <see cref="BadRequestObjectResult"/> that produces a <see cref="StatusCodes.Status400BadRequest"/>.
