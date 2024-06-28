@@ -5,7 +5,7 @@ namespace Dhanman.MyHome.Domain.Abstractions;
 public interface IUnitRepository
 {
     #region Methods
-    Task<Unit?> GetBydIdIntAsync(int id);
+    Task<Unit?> GetByIdIntAsync(int id);
 
     void Insert(Unit unit);
 

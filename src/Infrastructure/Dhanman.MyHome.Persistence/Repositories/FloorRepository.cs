@@ -18,7 +18,7 @@ public class FloorRepository : IFloorRepository
 
     #region Methods
 
-    public Task<Floor?> GetByIntIdAsync(int id) => _dbContext.GetBydIdIntAsync<Floor>(id);
+    public Task<Floor?> GetByIntIdAsync(int id) => _dbContext.GetByIdIntAsync<Floor>(id);
 
     public async Task<int> GetLastFloorIdAsync()
     {

@@ -27,7 +27,7 @@ public interface IApplicationDbContext
     DbSet<TEntity> SetInt<TEntity>()
            where TEntity : EntityInt;
 
-    Task<TEntity?> GetBydIdIntAsync<TEntity>(int id)
+    Task<TEntity?> GetByIdIntAsync<TEntity>(int id)
             where TEntity : EntityInt;
 
     void InsertInt<TEntity>(TEntity entity)

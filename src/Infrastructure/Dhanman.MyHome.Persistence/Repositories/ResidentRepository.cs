@@ -17,17 +17,12 @@ internal sealed class ResidentRepository : IResidentRepository
 
     #region Methods
     public DbSet<Resident> Resident => _dbContext.SetInt<Resident>();
-    public async Task<Resident?> GetBydIdIntAsync(int id) => await _dbContext.GetBydIdIntAsync<Resident>(id);
-
+    public async Task<Resident?> GetByIdIntAsync(int id) => await _dbContext.GetByIdIntAsync<Resident>(id);
     public void Insert(Resident resident) => _dbContext.InsertInt(resident);
     public void Delete(Resident resident) => _dbContext.RemoveInt(resident);
     public void Update(Resident resident) => _dbContext?.UpdateInt(resident);
     public int GetTotalRecordsCount() => Resident.Count();
-
-    public Resident? GetByEmail(string email ) 
-    {
-         return _dbContext.SetInt<Resident>().FirstOrDefault(r => r.Email == email);
-    }
-
+    public Resident? GetByEmail(string email ) => _dbContext.SetInt<Resident>().FirstOrDefault(r => r.Email == email);
+    
     #endregion
 }

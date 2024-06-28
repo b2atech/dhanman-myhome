@@ -18,7 +18,7 @@ public class VisitorRepository : IVisitorRepository
 
     #region Methods
 
-    public Task<Visitor?> GetByIntIdAsync(int id) => _dbContext.GetBydIdIntAsync<Visitor>(id);
+    public Task<Visitor?> GetByIntIdAsync(int id) => _dbContext.GetByIdIntAsync<Visitor>(id);
 
     public async Task<int> GetLastVisitorIdAsync()
     {

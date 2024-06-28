@@ -39,7 +39,6 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
     }
 
 
-
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         DateTime utcNow = _dateTime.UtcNow;
@@ -140,7 +139,7 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
            where TEntity : EntityInt =>
            base.Set<TEntity>();
 
-    public async Task<TEntity?> GetBydIdIntAsync<TEntity>(int id)
+    public async Task<TEntity?> GetByIdIntAsync<TEntity>(int id)
            where TEntity : EntityInt
     {
         return await SetInt<TEntity>().FirstOrDefaultAsync(e => e.Id == id);

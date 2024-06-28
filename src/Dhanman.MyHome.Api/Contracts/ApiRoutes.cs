@@ -234,5 +234,12 @@ public static class ApiRoutes
     {
         public const string GetAllBuildingTypes = apiVersion + "buildingTypes";
     }
+
+
+    public static class DeliveryPersons
+    {
+        public const string CreateDeliveryPerson = apiVersion + "DeliveryPerson";
+    }
+
 }
 

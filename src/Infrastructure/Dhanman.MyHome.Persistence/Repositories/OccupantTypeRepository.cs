@@ -17,7 +17,7 @@ internal class OccupantTypeRepository : IOccupantTypeRepository
 
     #region Methods
     public DbSet<OccupantType> OccupantType => _dbContext.SetInt<OccupantType>();
-    public async Task<OccupantType?> GetBydIdIntAsync(int id) => await _dbContext.GetBydIdIntAsync<OccupantType>(id);
+    public async Task<OccupantType?> GetByIdIntAsync(int id) => await _dbContext.GetByIdIntAsync<OccupantType>(id);
 
     public async Task<int> GetBydNameAsync(string occupantType)
     {

@@ -18,7 +18,7 @@ public class GateRepository : IGateRepository
 
     #region Methods
 
-    public Task<Gate?> GetByIntIdAsync(int id) => _dbContext.GetBydIdIntAsync<Gate>(id);
+    public Task<Gate?> GetByIntIdAsync(int id) => _dbContext.GetByIdIntAsync<Gate>(id);
 
     public async Task<int> GetLastGateIdAsync()
     {

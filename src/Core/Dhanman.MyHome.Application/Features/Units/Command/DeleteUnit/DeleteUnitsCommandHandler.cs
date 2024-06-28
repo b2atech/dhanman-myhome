@@ -28,7 +28,7 @@ namespace Dhanman.MyHome.Application.Features.Units.Command.DeleteUnit
         #region Methods
         public async Task<Result<EntityDeletedResponse>> Handle(DeleteUnitCommand request, CancellationToken cancellationToken)
         {
-            var updateUnits = await _unitRepository.GetBydIdIntAsync(request.UnitId);
+            var updateUnits = await _unitRepository.GetByIdIntAsync(request.UnitId);
 
             if (updateUnits == null)
             {

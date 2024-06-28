@@ -17,7 +17,7 @@ internal sealed class ServiceProviderRepository : IServiceProviderRepository
 
     #region Methods
     public DbSet<ServiceProvider> ServiceProvider => _dbContext.SetInt<ServiceProvider>();
-    public async Task<ServiceProvider?> GetBydIdIntAsync(int id) => await _dbContext.GetBydIdIntAsync<ServiceProvider>(id);
+    public async Task<ServiceProvider?> GetByIdIntAsync(int id) => await _dbContext.GetByIdIntAsync<ServiceProvider>(id);
 
     public void Insert(ServiceProvider serviceProvider) => _dbContext.InsertInt(serviceProvider);
     public void Delete(ServiceProvider serviceProvider) => _dbContext.RemoveInt(serviceProvider);

@@ -5,6 +5,6 @@ namespace Dhanman.MyHome.Domain.Abstractions;
 public interface IBookingFacilitesRepository
 {
     #region Methodes
-    Task<BookingFacilitie?> GetBydIdIntAsync(int id);
+    Task<BookingFacilitie?> GetByIdIntAsync(int id);
     #endregion
 }

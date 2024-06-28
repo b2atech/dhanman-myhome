@@ -27,7 +27,7 @@ public class UpdateRequestRejectStatusCommandHandler : ICommandHandler<UpdateReq
     #region Methods
     public async Task<Result<EntityUpdatedResponse>> Handle(UpdateRequestRejectStatusCommand request, CancellationToken cancellationToken)
     {
-        var updateRequestRejectStatus = await _residentRequestRepository.GetBydIdIntAsync(request.Id);
+        var updateRequestRejectStatus = await _residentRequestRepository.GetByIdIntAsync(request.Id);
 
         if (updateRequestRejectStatus is null)
         {

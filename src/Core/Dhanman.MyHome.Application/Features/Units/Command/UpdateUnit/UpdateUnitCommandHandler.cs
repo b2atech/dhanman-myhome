@@ -27,7 +27,7 @@ namespace Dhanman.MyHome.Application.Features.Units.Command.UpdateUnit
         #region Methods
         public async Task<Result<EntityUpdatedResponse>> Handle(UpdateUnitCommand request, CancellationToken cancellationToken)
         {
-            var updateUnits = await _unitRepository.GetBydIdIntAsync(request.UnitId);
+            var updateUnits = await _unitRepository.GetByIdIntAsync(request.UnitId);
 
             if (updateUnits == null)
             {

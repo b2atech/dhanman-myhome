@@ -17,7 +17,7 @@ internal class UnitTypeRepository: IUnitTypeRepository
 
     #region Methods
     public DbSet<UnitType> UnitType => _dbContext.SetInt<UnitType>();
-    public async Task<UnitType?> GetBydIdIntAsync(int id) => await _dbContext.GetBydIdIntAsync<UnitType>(id);
+    public async Task<UnitType?> GetByIdIntAsync(int id) => await _dbContext.GetByIdIntAsync<UnitType>(id);
 
     public async Task<int> GetBydNameAsync(string unitType)
     {

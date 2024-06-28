@@ -17,7 +17,7 @@ internal sealed class ResidentRequestRepository : IResidentRequestRepository
 
     #region Methods
     public DbSet<ResidentRequest> ResidentRequest => _dbContext.SetInt<ResidentRequest>();
-    public async Task<ResidentRequest?> GetBydIdIntAsync(int id) => await _dbContext.GetBydIdIntAsync<ResidentRequest>(id);
+    public async Task<ResidentRequest?> GetByIdIntAsync(int id) => await _dbContext.GetByIdIntAsync<ResidentRequest>(id);
 
     public void Insert(ResidentRequest residentRequest) => _dbContext.InsertInt(residentRequest);
 

@@ -20,7 +20,7 @@ internal sealed class BookingFacilitesRepository: IBookingFacilitesRepository
 
     #region Methods
 
-    public Task<BookingFacilitie?> GetBydIdIntAsync(int id) => _dbContext.GetBydIdIntAsync<BookingFacilitie>(id);
+    public Task<BookingFacilitie?> GetByIdIntAsync(int id) => _dbContext.GetByIdIntAsync<BookingFacilitie>(id);
 
     /*public void Insert(BookingFacilitie bookingFacilitie) => _dbContext.InsertInt(bookingFacilitie)*/
 
