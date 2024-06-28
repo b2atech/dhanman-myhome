@@ -6,14 +6,14 @@ public class ValidateServiceProviderRequest
     #region Properties    
   public Guid ApartmentId { get; set; }
 
-    public char PinCode { get; set; }
+    public string Pin { get; set; }
     #endregion
 
     #region Constructor
-    public ValidateServiceProviderRequest(Guid apartmentId, char pinCode)
+    public ValidateServiceProviderRequest(Guid apartmentId, string pin)
     {
         ApartmentId = apartmentId;
-        PinCode = pinCode;
+        Pin = pin;
     }
     #endregion
 }

@@ -36,6 +36,10 @@ internal sealed class ServiceProviderConfiguration : IEntityTypeConfiguration<Se
 
         builder.Property(serviceProviders => serviceProviders.IdentityImage).HasColumnName("identity_image").HasColumnType("bytea").IsRequired(false);
 
+        builder.Property(serviceProviders => serviceProviders.ApartmentId).HasColumnName("apartment_id").IsRequired();
+
+        builder.Property(serviceProviders => serviceProviders.Pin).HasColumnName("pin").IsRequired();
+
         builder.Property(serviceProviders => serviceProviders.CreatedBy).HasColumnType("uuid");
 
         builder.Property(serviceProviders => serviceProviders.ModifiedBy).HasColumnType("uuid");

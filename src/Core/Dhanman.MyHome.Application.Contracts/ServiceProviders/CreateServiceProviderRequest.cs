@@ -21,7 +21,7 @@ public class CreateServiceProviderRequest
     public bool IsVisible { get; set; }
     public bool IsFrequentVisitor { get; set; }
     public Guid ApartmentId { get; set; }
-    public string PinCode { get; set; }
+    public string Pin { get; set; }
     #endregion
 
     #region Constructors
