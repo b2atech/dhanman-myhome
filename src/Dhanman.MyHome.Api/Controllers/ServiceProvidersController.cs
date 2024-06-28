@@ -53,7 +53,9 @@ public class ServiceProvidersController : ApiController
              value.PoliceVerificationStatus,
              value.IsHireable,
              value.IsVisible,
-             value.IsFrequentVisitor))
+             value.IsFrequentVisitor,
+             value.ApartmentId,
+             value.PinCode))
          .Bind(command => Mediator.Send(command))
                .Match(Ok, BadRequest);
 
@@ -142,6 +144,8 @@ await Result.Create(request, Errors.General.BadRequest)
 
 
     #endregion
+
+   
 
 
 }

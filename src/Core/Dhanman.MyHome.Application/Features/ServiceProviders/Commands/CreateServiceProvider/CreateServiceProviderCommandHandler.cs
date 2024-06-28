@@ -56,7 +56,7 @@ public class CreateServiceProviderCommandHandler : ICommandHandler<CreateService
 
         int nextServiceProviderId = _serviceProviderRepository.GetTotalRecordsCount() + 1;
 
-        var serviceProvider = new ServiceProvider(nextServiceProviderId, request.FirstName, request.LastName, request.Email, request.VisitingFrom, request.ContactNumber, permanentAddress.Id, presentAddress.Id, request.ServiceProviderTypeId, request.ServiceProviderSubTypeId, request.VehicleNumber, request.IdentityTypeId, request.IdentityNumber, request.ValidityDate, request.PoliceVerificationStatus, request.IsHireable, request.IsVisible, request.IsFrequentVisitor);
+        var serviceProvider = new ServiceProvider(nextServiceProviderId, request.FirstName, request.LastName, request.Email, request.VisitingFrom, request.ContactNumber, permanentAddress.Id, presentAddress.Id, request.ServiceProviderTypeId, request.ServiceProviderSubTypeId, request.VehicleNumber, request.IdentityTypeId, request.IdentityNumber, request.ValidityDate, request.PoliceVerificationStatus, request.IsHireable, request.IsVisible, request.IsFrequentVisitor, request.ApartmentId, request.PinCode,request.CreatedBy);
 
         _serviceProviderRepository.Insert(serviceProvider);
 

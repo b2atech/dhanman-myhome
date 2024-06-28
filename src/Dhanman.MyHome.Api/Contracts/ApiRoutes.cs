@@ -3,7 +3,7 @@
 public static class ApiRoutes
 {
     public const string apiVersion = "api/v{version:apiVersion}/";
-    
+
     public static class Authentication
     {
         public const string Login = "authentication/login";
@@ -40,7 +40,7 @@ public static class ApiRoutes
         public const string GetUnitById = apiVersion + "unit/{id:int}";
 
         public const string UpdateUnit = apiVersion + "unit";
-       
+
         public const string GetAllUnitDetails = apiVersion + "unitDetails";
 
         public const string DeleteUnit = apiVersion + "unit/{id:int}";
@@ -132,8 +132,8 @@ public static class ApiRoutes
     }
 
     public static class OccupancyTypes
-    {       
-        public const string GetAllOccupancyTypes = apiVersion + "occupancyTypes";        
+    {
+        public const string GetAllOccupancyTypes = apiVersion + "occupancyTypes";
     }
 
     public static class Visitors
@@ -234,5 +234,5 @@ public static class ApiRoutes
     {
         public const string GetAllBuildingTypes = apiVersion + "buildingTypes";
     }
-}
 
+}
