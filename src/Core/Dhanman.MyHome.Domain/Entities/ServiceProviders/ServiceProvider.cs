@@ -78,8 +78,6 @@ public class ServiceProvider : EntityInt, IAuditableEntity, ISoftDeletableEntity
         IsFrequentVisitor = isFrequentVisitor;
         ApartmentId = ApartmentId;
         PinCode = pinCode;
-        CreatedBy = createdBy;
-        CreatedOnUtc = DateTime.UtcNow;
     }
     #endregion
 }

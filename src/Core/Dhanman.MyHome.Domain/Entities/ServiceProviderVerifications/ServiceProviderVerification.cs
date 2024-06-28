@@ -27,7 +27,7 @@ public class ServiceProviderVerification : EntityInt, IAuditableEntity, ISoftDel
     #endregion
 
     #region Constructor
-    public ServiceProviderVerification(int id, string name, int serviceProviderId, int verificationTypeId, string comments, bool isVerified, Guid createdBy)
+    public ServiceProviderVerification(int id, string name, int serviceProviderId, int verificationTypeId, string comments, bool isVerified)
     {
         Id = id;
         Name = name;
@@ -35,8 +35,6 @@ public class ServiceProviderVerification : EntityInt, IAuditableEntity, ISoftDel
         VerificationTypeId = verificationTypeId;
         Comments = comments;
         IsVerified = isVerified;
-        CreatedBy = createdBy;
-        CreatedOnUtc = DateTime.UtcNow;
     }
     #endregion
 }

@@ -14,12 +14,11 @@
         public decimal Bhk { get; set; }
         public int EIntercom { get; set; }
         public int PhoneExtension { get; set; }
-        public Guid CreatedBy { get; set; }
 
         #endregion
 
         #region Constructor
-        public UpdateUnitRequest(int id, string name, int buildingId, int floorId, int unitTypeId, int occupantId, int occupancyId, decimal area, decimal bhk, int eIntercom, int phoneExtension, Guid createdBy)
+        public UpdateUnitRequest(int id, string name, int buildingId, int floorId, int unitTypeId, int occupantId, int occupancyId, decimal area, decimal bhk, int eIntercom, int phoneExtension)
         {
             Id = id;
             Name = name;
@@ -32,7 +31,6 @@
             Bhk = bhk;
             EIntercom = eIntercom;
             PhoneExtension = phoneExtension;
-            CreatedBy = createdBy;
         }
         #endregion
     }

@@ -22,8 +22,6 @@ public class CreateServiceProviderRequest
     public bool IsFrequentVisitor { get; set; }
     public Guid ApartmentId { get; set; }
     public string PinCode { get; set; }
-    public DateTime CreatedOnUtc { get; }
-    public Guid CreatedBy { get; set; }
     #endregion
 
     #region Constructors

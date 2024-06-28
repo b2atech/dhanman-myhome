@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\Authentication\Commands\**" />
+    <EmbeddedResource Remove="Features\Authentication\Commands\**" />
+    <None Remove="Features\Authentication\Commands\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Features\OccupancyTypes\Queries\GetAllOccupancyTypesQuery.cs~RF93383e6.TMP" />
   </ItemGroup>
 
@@ -25,6 +31,7 @@
   <ItemGroup>
     <Folder Include="Abstractions\Cryptography\" />
     <Folder Include="Dhanman\MyHome\Domain\Entities\UnitTypes\" />
+    <Folder Include="Features\Authentication\" />
     <Folder Include="Features\BookingFacilities\Commands\" />
     <Folder Include="Features\BookingFacilities\Events\" />
     <Folder Include="Features\Categories\Commands\" />

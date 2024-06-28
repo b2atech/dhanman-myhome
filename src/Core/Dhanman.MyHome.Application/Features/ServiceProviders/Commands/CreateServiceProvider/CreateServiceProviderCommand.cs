@@ -55,8 +55,6 @@ public class CreateServiceProviderCommand : ICommand<Result<EntityCreatedRespons
         IsFrequentVisitor = isFrequentVisitor;
         ApartmentId = apartmentId;
         PinCode = pinCode;
-        CreatedBy = createdBy;
-        CreatedOnUtc = DateTime.Now;
     }
     public CreateServiceProviderCommand() { }
 

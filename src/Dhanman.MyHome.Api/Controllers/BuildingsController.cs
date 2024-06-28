@@ -1,4 +1,5 @@
-﻿using B2aTech.CrossCuttingConcern.Core.Result;
+﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Buildings;
@@ -19,7 +20,7 @@ namespace Dhanman.MyHome.Api.Controllers;
 
 public class BuildingsController : ApiController
 {
-    public BuildingsController(IMediator mediator) : base(mediator)
+    public BuildingsController(IMediator mediator, IUserContextService userContextService) : base(mediator, userContextService)
     {
 
     }
@@ -34,6 +35,7 @@ public class BuildingsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+
     [HttpGet(ApiRoutes.Buildings.GetAllBuildingNames)]
     [ProducesResponseType(typeof(BuildingNameListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -42,6 +44,7 @@ public class BuildingsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+
     [HttpGet(ApiRoutes.Buildings.GetBuildingById)]
     [ProducesResponseType(typeof(BuildingResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -49,6 +52,7 @@ public class BuildingsController : ApiController
     await Result.Success(new GetBuildingByIdQuery(id))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
+
 
     [HttpPost(ApiRoutes.Buildings.CreateBuilding)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
@@ -63,6 +67,7 @@ public class BuildingsController : ApiController
           ))
           .Bind(command => Mediator.Send(command))
           .Match(Ok, BadRequest);
+
 
     [HttpPut(ApiRoutes.Buildings.UpdateBuilding)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
