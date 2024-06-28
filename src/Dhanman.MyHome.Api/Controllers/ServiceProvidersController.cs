@@ -55,7 +55,7 @@ public class ServiceProvidersController : ApiController
              value.IsVisible,
              value.IsFrequentVisitor,
              value.ApartmentId,
-             value.PinCode))
+             value.Pin))
          .Bind(command => Mediator.Send(command))
                .Match(Ok, BadRequest);
 
