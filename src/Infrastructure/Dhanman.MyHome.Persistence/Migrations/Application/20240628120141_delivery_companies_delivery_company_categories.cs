@@ -12,6 +12,8 @@ namespace Dhanman.MyHome.Persistence.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            const string TimestampType = "timestamp";
+
             migrationBuilder.CreateTable(
                 name: "delivery_companies",
                 columns: table => new
@@ -21,9 +23,9 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     name = table.Column<string>(type: "text", nullable: false),
                     delivery_company_category_id = table.Column<int>(type: "integer", nullable: false),
                     icon = table.Column<string>(type: "text", nullable: false),
-                    created_on_utc = table.Column<DateTime>(type: "timestamp", nullable: false),
-                    modified_on_utc = table.Column<DateTime>(type: "timestamp", nullable: true),
-                    deleted_on_utc = table.Column<DateTime>(type: "timestamp", nullable: true),
+                    created_on_utc = table.Column<DateTime>(type: TimestampType, nullable: false),
+                    modified_on_utc = table.Column<DateTime>(type: TimestampType, nullable: true),
+                    deleted_on_utc = table.Column<DateTime>(type: TimestampType, nullable: true),
                     is_deleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
                     created_by = table.Column<Guid>(type: "uuid", nullable: false),
                     modified_by = table.Column<Guid>(type: "uuid", nullable: true)
@@ -40,7 +42,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     name = table.Column<string>(type: "text", nullable: false),
-                    deleted_on_utc = table.Column<DateTime>(type: "timestamp", nullable: true),
+                    deleted_on_utc = table.Column<DateTime>(type: TimestampType, nullable: true),
                     is_deleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
