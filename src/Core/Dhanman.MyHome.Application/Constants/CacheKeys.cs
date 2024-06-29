@@ -239,4 +239,15 @@ public static class CacheKeys
         public const string ServiceProviderAssignUnitsId = CacheKeyPrefix + "-by-id-{1}";
     }
     #endregion
+
+    #region DeliveryCompanies
+    public static class DeliveryCompanies
+    {
+        public const string CacheKeyPrefix = "deliveryCompanies-{0}";
+
+        public const string DeliveryCompanyList = CacheKeyPrefix + "-list-{1}";
+ 
+    }
+    #endregion
+    
 }
