@@ -235,4 +235,10 @@ public static class ApiRoutes
         public const string GetAllBuildingTypes = apiVersion + "buildingTypes";
     }
 
+    public static class DeliveryCompanies
+    {       
+        public const string GetAllDeliveryCompanies = apiVersion + "deliveryCompanies";       
+
+    }
+    
 }
