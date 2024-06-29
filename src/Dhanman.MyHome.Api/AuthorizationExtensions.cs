@@ -41,43 +41,13 @@ public static class AuthorizationExtensions
     }
     public static IServiceCollection AddCustomAuthorization(this IServiceCollection services)
     {
-        var manageUsersPermission = new PermissionRequirement("ManageUsers", new List<PermissionRequirement>
-            {
-                new PermissionRequirement("CreateUser",new List<PermissionRequirement>()),
-                new PermissionRequirement("UpdateUser",new List<PermissionRequirement>()),
-                new PermissionRequirement("DeleteUser",new List<PermissionRequirement>())
-            });
-
-        var adminPermission = new PermissionRequirement("Test", new List<PermissionRequirement>
-            {
-                manageUsersPermission
-            });
-
-        var tstPermission = new PermissionRequirement("read:coa", new List<PermissionRequirement>
-            {
-                manageUsersPermission
-            });
-
         services.AddAuthorization(options =>
         {
-            options.AddPolicy("ManageUsersPolicy", policy =>
-            {
-                policy.Requirements.Add(manageUsersPermission);
-            });
-
-            options.AddPolicy("AdminPolicy", policy =>
-            {
-                policy.Requirements.Add(adminPermission);
-            });
-
-            options.AddPolicy("coapolicy", policy =>
-            {
-                policy.Requirements.Add(tstPermission);
-            });
+            options.AddPolicy("DynamicPermissionPolicy", policy =>
+                policy.Requirements.Add(new PermissionRequirement("DynamicPermission")));
         });
 
-        // Register the handlers
-        services.AddScoped<IAuthorizationHandler, PermissionHandler>();
+        services.AddScoped<IAuthorizationHandler, DynamicPermissionHandler>();
 
         return services;
     }
