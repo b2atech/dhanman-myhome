@@ -11,7 +11,7 @@
 	  <PackageReference Include="Azure.Identity" Version="1.12.0" />
 	  <PackageReference Include="Azure.Security.KeyVault.Secrets" Version="4.6.0" />
 	  <PackageReference Include="B2aTech.CrossCuttingConcern" Version="1.2.0" />
-	  <PackageReference Include="Carter" Version="8.2.1" />
+	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.6" />
 	  <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.7.0" />
 	  <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.7.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.HeaderPropagation" Version="8.0.6" />
@@ -34,8 +34,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\migrations\Dhanman.MyHome.Migrations.Core\Dhanman.MyHome.Migrations.Core.csproj" />
     <ProjectReference Include="..\Core\Dhanman.MyHome.Application.Contracts\Dhanman.MyHome.Application.Contracts.csproj" />
-    <ProjectReference Include="..\Infrastructure\Dhanman.Infrastructure.Authentication\Dhanman.Infrastructure.Authentication.csproj" />
     <ProjectReference Include="..\Infrastructure\Dhanman.MyHome.Persistence\Dhanman.MyHome.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Endpoints\" />
   </ItemGroup>
 
 </Project>
