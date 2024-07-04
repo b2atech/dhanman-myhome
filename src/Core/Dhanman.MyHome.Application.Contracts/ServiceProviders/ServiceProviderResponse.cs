@@ -17,7 +17,9 @@ public sealed class ServiceProviderResponse
     public string ServiceProviderSubType { get; }
     public string? VehicleNumber { get; }
     public int IdentityTypeId { get; }
-    public string IdentityNumber { get; }    
+    public string IdentityNumber { get; }  
+    
+    public string Pin { get; }
     public Guid CreatedBy { get; }
     public DateTime CreatedOnUtc { get; }
     public Guid? ModifiedBy { get; }
@@ -26,7 +28,7 @@ public sealed class ServiceProviderResponse
     #endregion
 
     #region Constructor
-    public ServiceProviderResponse(int id, string firstName, string? lastName, string? email, string visitingFrom, string contactNumber, Guid prermanentAddressId, Guid presentAddressId, int serviceProviderTypeId, string serviceProviderType, int serviceProviderSubTypeId, string serviceProviderSubType, string? vehicleNumber, int identityTypeId, string identityNumber, Guid createdBy, DateTime createdOnUtc, Guid? modifiedBy, DateTime? modifiedOnUtc)
+    public ServiceProviderResponse(int id, string firstName, string? lastName, string? email, string visitingFrom, string contactNumber, Guid prermanentAddressId, Guid presentAddressId, int serviceProviderTypeId, string serviceProviderType, int serviceProviderSubTypeId, string serviceProviderSubType, string? vehicleNumber, int identityTypeId, string identityNumber,string pin, Guid createdBy, DateTime createdOnUtc, Guid? modifiedBy, DateTime? modifiedOnUtc)
     {
         Id = id;
         FirstName = firstName;
@@ -43,6 +45,7 @@ public sealed class ServiceProviderResponse
         VehicleNumber = vehicleNumber;
         IdentityTypeId = identityTypeId;
         IdentityNumber = identityNumber;
+        Pin = pin;
         CreatedBy = createdBy;
         CreatedOnUtc = createdOnUtc;
         ModifiedBy = modifiedBy;
