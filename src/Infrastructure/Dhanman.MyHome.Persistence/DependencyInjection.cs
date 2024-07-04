@@ -1,9 +1,12 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Abstractions;
+using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Application.Abstractions.Data;
+using Dhanman.MyHome.Application.Features.ServiceProviders.Queries;
 using Dhanman.MyHome.Domain.Abstractions;
 using Dhanman.MyHome.Persistence.Common;
 using Dhanman.MyHome.Persistence.Data;
 using Dhanman.MyHome.Persistence.Repositories;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,7 +39,6 @@ public static class DependencyInjection
             services.AddScoped<ISqlConnectionFactory, SqlConnectionFactory>();
 
             services.AddScoped<IDbExecutor, DbExecutor>();
-
 
             services.AddScoped<IApplicationDbContext>(sp =>
                 sp.GetRequiredService<ApplicationDbContext>());

@@ -176,6 +176,7 @@ public static class ApiRoutes
         public const string GetServiceProviderById = apiVersion + "serviceProvider/{id:int}";
 
         public const string UpdateServiceProviders = apiVersion + "updateServiceProviders";
+        public const string ValidateByPin = apiVersion + "validateServiceProviderByPin";
     }
 
     public static class ServiceProviderSubType

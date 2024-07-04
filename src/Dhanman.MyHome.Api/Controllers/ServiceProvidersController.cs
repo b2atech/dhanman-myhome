@@ -19,6 +19,7 @@ using Dhanman.MyHome.Application.Features.UnitServiceProviders.Queries;
 using Dhanman.MyHome.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace Dhanman.MyHome.Api.Controllers;
 
@@ -74,6 +75,15 @@ public class ServiceProvidersController : ApiController
     await Result.Success(new GetAllServiceProviderNamesQuery())
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
+
+    [HttpGet(ApiRoutes.ServiceProviders.ValidateByPin)]
+    [ProducesResponseType(typeof(ServiceProviderValidationResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ValidateServiceProviderByPin([FromQuery] string pin) =>
+           await Result.Success(new ValidateServiceProviderByPinQuery(pin))
+               .Bind(query => Mediator.Send(query))
+               .Match(Ok, NotFound);
+
 
     #endregion
 

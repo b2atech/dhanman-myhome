@@ -14,6 +14,7 @@ public interface IServiceProviderRepository
     void Update(ServiceProvider serviceProvider);
 
     int GetTotalRecordsCount();
+    Task<bool> GetByPinAsync(string pin);
 
     #endregion
 

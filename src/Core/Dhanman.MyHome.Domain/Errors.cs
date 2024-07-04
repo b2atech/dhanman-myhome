@@ -59,6 +59,8 @@ namespace Dhanman.MyHome.Domain
             public static Error ServerError => new Error(
                 "General.ServerError",
                 "The server encountered an unrecoverable error.");
+
+            public static Error InvalidPin { get; set; }
         }
         public static class Name
         {
