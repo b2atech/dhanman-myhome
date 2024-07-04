@@ -1,7 +1,9 @@
 ﻿using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Domain.Abstractions;
+using Dhanman.MyHome.Domain.Entities.Pins;
 using Dhanman.MyHome.Domain.Entities.ServiceProviders;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.InteropServices;
 
 namespace Dhanman.MyHome.Persistence.Repositories;
 
@@ -24,5 +26,15 @@ internal sealed class ServiceProviderRepository : IServiceProviderRepository
     public void Update(ServiceProvider serviceProvider) => _dbContext?.UpdateInt(serviceProvider);
     public int GetTotalRecordsCount() => ServiceProvider.Count();
 
+
+    public async Task<bool> GetByPinAsync(string pin)
+    {
+        var spPin = await _dbContext.SetInt<Pin>().Where(x => x.PinCode == pin).FirstOrDefaultAsync();
+        if (spPin == null)
+        {
+            return false;
+        }
+        return true;
+    }
     #endregion
 }

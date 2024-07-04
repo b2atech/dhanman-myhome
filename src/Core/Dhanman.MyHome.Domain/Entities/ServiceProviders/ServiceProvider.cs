@@ -9,8 +9,8 @@ public class ServiceProvider : EntityInt, IAuditableEntity, ISoftDeletableEntity
 {
     #region Properties
     public string FirstName { get; set; }
-    public string? LastName { get; set; }
-    public string? Email { get; set; }
+    public string LastName { get; set; }
+    public string Email { get; set; }
     public string VisitingFrom { get; set; }
     public string ContactNumber { get; set; }
     public Guid PermanentAddressId { get; set; }
@@ -27,7 +27,7 @@ public class ServiceProvider : EntityInt, IAuditableEntity, ISoftDeletableEntity
     //Full Time Helps
     public int ServiceProviderTypeId { get; set; }
     public int ServiceProviderSubTypeId { get; set; }
-    public string? VehicleNumber { get; set; }
+    public string VehicleNumber { get; set; }
     public int IdentityTypeId { get; set; }
     public string IdentityNumber { get; set; }
     public byte[] IdentityImage { get; set; }
