@@ -19,7 +19,13 @@ public class ResidentUnit:EntityInt, IAuditableEntity, ISoftDeletableEntity
 
     #region Constructor
 
-    public ResidentUnit( int unitId, int residentId)
+    public ResidentUnit(int id, int unitId, int residentId)
+    {
+        Id = id;
+        UnitId = unitId;
+        ResidentId = residentId;
+    }
+    public ResidentUnit(int unitId, int residentId)
     {
         UnitId = unitId;
         ResidentId = residentId;
