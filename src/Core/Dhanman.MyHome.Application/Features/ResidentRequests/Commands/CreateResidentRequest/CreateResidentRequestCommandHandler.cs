@@ -8,7 +8,6 @@ using Dhanman.MyHome.Domain.Abstractions;
 using Dhanman.MyHome.Domain.Entities.Addresses;
 using Dhanman.MyHome.Domain.Entities.Cities;
 using Dhanman.MyHome.Domain.Entities.ResidentRequests;
-using Dhanman.MyHome.Domain.Entities.Residents;
 using MediatR;
 using ResidentRequestAddress = Dhanman.MyHome.Application.Contracts.ServiceProviders.Address;
 
@@ -37,24 +36,17 @@ public class CreateResidentRequestCommandHandler : ICommandHandler<CreateResiden
     #region Methodes
     public async Task<Result<EntityCreatedResponse>> Handle(CreateResidentRequestCommand request, CancellationToken cancellationToken)
     {
-        Guid addressId ;
-        if (request.PermanentAddress != null)
-        {
-            Guid permCityId;
-            Guid cityId = GetCityId(request.PermanentAddress.CityName, request.PermanentAddress.ZipCode, request.PermanentAddress.StateId);
-            permCityId = cityId; 
-            var permanentAddress = GetAddress(request.PermanentAddress, permCityId);
-            _addressRepository.Insert(permanentAddress);
-            addressId = permanentAddress.Id;
-        }
-        else 
-        { addressId = new Guid("00000000-0000-0000-0000-000000000000"); }
+        Guid cityId = GetCityId(request.PermanentAddress.CityName, request.PermanentAddress.ZipCode, request.PermanentAddress.StateId);
+        var permanentAddress = GetAddress(request.PermanentAddress, cityId);
+        _addressRepository.Insert(permanentAddress);
+        Guid addressId  = permanentAddress.Id;
+        
 
         int nextresidentRequestId = _residentRequestRepository.GetTotalRecordsCount() + 1;
         int requestStatusId = ResidentRequestStatus.PENDING_REQUEST;
 
-        var residentRequest = new ResidentRequest(nextresidentRequestId, request.ApartmentId, request.BuildingId, request.FloorId, request.UnitId, request.FirstName, request.LastName, request.Email, request.ContactNumber, addressId, requestStatusId, request.ResidentTypeId, request.OccupancyStatusId);
-
+        var residentRequest = new ResidentRequest(nextresidentRequestId,  request.UnitId, request.FirstName, request.LastName, request.Email, request.ContactNumber, addressId, requestStatusId, request.ResidentTypeId, request.OccupancyStatusId);
+     
         _residentRequestRepository.Insert(residentRequest);
 
         await _mediator.Publish(new ResidentRequestCreatedEvent(residentRequest.Id), cancellationToken);

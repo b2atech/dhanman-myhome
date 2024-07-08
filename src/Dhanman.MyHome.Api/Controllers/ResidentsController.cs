@@ -69,10 +69,7 @@ public class ResidentsController : ApiController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> CreateResidentRequest([FromBody] CreateResidentRequestRequest? request) =>
             await Result.Create(request, Errors.General.BadRequest)
-            .Map(value => new CreateResidentRequestCommand(
-                value.ApartmentId,
-                value.BuildingId,
-                value.FloorId,
+            .Map(value => new CreateResidentRequestCommand(               
                 value.UnitId,
                 value.FirstName,
                 value.LastName,

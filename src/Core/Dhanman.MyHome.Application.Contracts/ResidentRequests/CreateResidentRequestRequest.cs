@@ -4,22 +4,19 @@ namespace Dhanman.MyHome.Application.Contracts.ResidentRequests;
 
 public class CreateResidentRequestRequest
 {
-    #region Properties
-    public Guid ApartmentId { get; set; }
-    public int BuildingId { get; set; }
-    public int FloorId { get; set; }
+    #region Properties 
     public int UnitId { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
     public string ContactNumber { get; set; }
-    public Address? PermanentAddress { get; set; }
+    public Address PermanentAddress { get; set; }
     public int ResidentTypeId { get; set; }
     public int OccupancyStatusId { get; set; }
 
     #endregion
 
     #region Constructors
-    public CreateResidentRequestRequest() => ApartmentId = Guid.Empty;
+    public CreateResidentRequestRequest() => FirstName = string.Empty;
     #endregion
 }
