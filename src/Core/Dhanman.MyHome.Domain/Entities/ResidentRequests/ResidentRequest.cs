@@ -40,10 +40,7 @@ public class ResidentRequest : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #region Constructor
     public ResidentRequest(int id, int unitId, string firstName, string lastName, string email, string contactNumber, Guid permanentAddressId, int requestStatusId, int residentTypeId, int occupancyStatusId)
     {
-        Id = id;
-        //ApartmentId = apartmentId;
-        //BuildingId = buildingId;
-        //FloorId = floorId; , Guid apartmentId, int buildingId, int floorId
+        Id = id;       
         UnitId = unitId;
         FirstName = firstName;
         LastName = lastName;

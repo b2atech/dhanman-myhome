@@ -4,10 +4,7 @@ namespace Dhanman.MyHome.Application.Contracts.ResidentRequests;
 
 public class CreateResidentRequestRequest
 {
-    #region Properties
-    //public Guid ApartmentId { get; set; }
-    //public int BuildingId { get; set; }
-    //public int FloorId { get; set; }
+    #region Properties 
     public int UnitId { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
