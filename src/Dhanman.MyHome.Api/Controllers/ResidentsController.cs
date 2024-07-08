@@ -70,9 +70,9 @@ public class ResidentsController : ApiController
     public async Task<IActionResult> CreateResidentRequest([FromBody] CreateResidentRequestRequest? request) =>
             await Result.Create(request, Errors.General.BadRequest)
             .Map(value => new CreateResidentRequestCommand(
-                value.ApartmentId,
-                value.BuildingId,
-                value.FloorId,
+                //value.ApartmentId,
+                //value.BuildingId,
+                //value.FloorId,
                 value.UnitId,
                 value.FirstName,
                 value.LastName,
