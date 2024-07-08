@@ -5,6 +5,7 @@ using Dhanman.MyHome.Application.Contracts.Residents;
 using Dhanman.MyHome.Domain;
 using Dhanman.MyHome.Domain.Entities.Residents;
 using Dhanman.MyHome.Domain.Entities.ResidentTypes;
+using Dhanman.MyHome.Domain.Entities.ResidentUnits;
 using Dhanman.MyHome.Domain.Entities.Units;
 using Dhanman.MyHome.Domain.Entities.UnitStatuses;
 using Microsoft.EntityFrameworkCore;
@@ -30,11 +31,17 @@ public async Task<Result<ResidentListResponse>> Handle(GetAllResidentsQuery requ
               var residents = await _dbContext.SetInt<Resident>()
               .AsNoTracking()                  
               .Select(e => new ResidentResponse(
-                      e.Id,   
-                      1,
-                      _dbContext.SetInt<Unit>()
-                              .Where(p => p.Id == 1)
-                              .Select(p => p.Name).FirstOrDefault(),
+                      e.Id,
+                      _dbContext.SetInt<ResidentUnit>()
+                              .Where(p => p.Id == e.Id)
+                              .Select(p => p.UnitId).FirstOrDefault(),
+                      _dbContext.SetInt<ResidentUnit>()
+                          .Where(p => p.ResidentId == e.Id)
+                          .Join(_dbContext.SetInt<Unit>(),
+                                p => p.UnitId,
+                                u => u.Id,
+                                (p, u) => u.Name)
+                          .FirstOrDefault(),                  
                       e.FirstName,
                       e.LastName,
                       e.Email,

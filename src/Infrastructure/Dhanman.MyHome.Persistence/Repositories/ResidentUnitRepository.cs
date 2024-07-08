@@ -1,6 +1,7 @@
 ﻿using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Domain.Abstractions;
 using Dhanman.MyHome.Domain.Entities.ResidentUnits;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dhanman.MyHome.Persistence.Repositories;
 
@@ -29,6 +30,8 @@ public class ResidentUnitRepository : IResidentUnitRepository
         throw new NotImplementedException();
     }
 
+    public DbSet<ResidentUnit> ResidentUnit => _dbContext.SetInt<ResidentUnit>();    
+    public int GetTotalRecordsCount() => ResidentUnit.Count();
     public List<ResidentUnit> GetByResidentId(int residentId)
     {
         var units = _dbContext.SetInt<ResidentUnit>().Where(u => u.ResidentId == residentId).ToList();

@@ -14,7 +14,7 @@ public interface IResidentUnitRepository
     void Update(ResidentUnit residentUnit);
 
     Task<int> GetLastResidentUnitIdAsync();
-
+    int GetTotalRecordsCount();
     List<ResidentUnit> GetByResidentId(int residentId);
     #endregion
 
