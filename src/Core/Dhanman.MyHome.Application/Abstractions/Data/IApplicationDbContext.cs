@@ -1,11 +1,16 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Primitives;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Dhanman.MyHome.Application.Abstractions.Data;
 
 
 public interface IApplicationDbContext
 {
+    DatabaseFacade Database
+    {
+        get;
+    }
     #region Guid Based Entities
     DbSet<TEntity> Set<TEntity>()
            where TEntity : Entity;
