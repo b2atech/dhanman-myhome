@@ -56,7 +56,7 @@ public class ServiceProvider : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public ServiceProvider(int id, string firstName, string? lastName, string? email, string visitingFrom, string contactNumber, Guid permanentAddressId, Guid presentAddressId, int serviceProviderTypeId, int serviceProviderSubTypeId, string? vehicleNumber, int identityTypeId, string identityNumber, DateTime validityDate, bool policeverificationStatus, bool isHireable, bool isVisible, bool isFrequentVisitor,Guid apartmentId, string pin)
+    public ServiceProvider(int id, string firstName, string? lastName, string? email, string visitingFrom, string contactNumber, Guid permanentAddressId, Guid presentAddressId, int serviceProviderTypeId, int serviceProviderSubTypeId, string? vehicleNumber, int identityTypeId, string identityNumber, DateTime validityDate, bool policeverificationStatus, bool isHireable, bool isVisible, bool isFrequentVisitor, Guid apartmentId, string pin)
     {
         Id = id;
         FirstName = firstName;
@@ -76,7 +76,7 @@ public class ServiceProvider : EntityInt, IAuditableEntity, ISoftDeletableEntity
         IsHireable = isHireable;
         IsVisible = isVisible;
         IsFrequentVisitor = isFrequentVisitor;
-        ApartmentId = ApartmentId;
+        ApartmentId = apartmentId;
         Pin = pin;
     }
     #endregion
