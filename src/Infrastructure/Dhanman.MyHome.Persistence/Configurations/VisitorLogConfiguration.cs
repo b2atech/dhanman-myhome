@@ -16,7 +16,7 @@ internal sealed class VisitorLogConfiguration : IEntityTypeConfiguration<Visitor
 
         builder.Property(visitorLogs => visitorLogs.VisitingUnitId).HasColumnName("visiting_unit_id").IsRequired();
 
-        builder.Property(visitorLogs => visitorLogs.VisitPurposeId).HasColumnName("visit_purpose_id").IsRequired();
+        builder.Property(visitorLogs => visitorLogs.VisitorTypeId).HasColumnName("visitor_type_id").IsRequired();
 
         builder.Property(visitorLogs => visitorLogs.VisitingFrom).HasColumnName("visiting_from").IsRequired();
 

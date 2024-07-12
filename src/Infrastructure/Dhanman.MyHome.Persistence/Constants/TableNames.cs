@@ -100,5 +100,6 @@ internal static class TableNames
 
     internal const string DeliveryCompanyCategories = "delivery_company_categories";
 
+    internal const string VisitorUnitLogs = "visitor_unit_logs"; 
 }
 
