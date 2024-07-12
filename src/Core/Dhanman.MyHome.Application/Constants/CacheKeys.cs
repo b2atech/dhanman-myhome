@@ -121,6 +121,8 @@ public static class CacheKeys
         public const string VisitorList = CacheKeyPrefix + "-list-{1}";
 
         public const string VisitorById = CacheKeyPrefix + "-by-id-{1}";
+
+        public const string VisitorLogList = CacheKeyPrefix + "-list-{1}";
     }
     #endregion
 

@@ -6,6 +6,7 @@ using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.VisitorLogs;
 using Dhanman.MyHome.Application.Contracts.Visitors;
 using Dhanman.MyHome.Application.Features.VisitorLogs.Commands.CreateVisitorLog;
+using Dhanman.MyHome.Application.Features.VisitorLogs.Queries;
 using Dhanman.MyHome.Application.Features.Visitors.Commands.CreateVisitor;
 using Dhanman.MyHome.Application.Features.Visitors.Commands.DeleteVisitor;
 using Dhanman.MyHome.Application.Features.Visitors.Queries;
@@ -78,6 +79,14 @@ public class VisitorsController : ApiController
     #endregion
 
     #region VisitorLogs 
+    
+    [HttpGet(ApiRoutes.Visitors.GetAllVisitorLogs)]
+    [ProducesResponseType(typeof(VisitorLogListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllVisitorLogs(Guid apartmentId, int visitorId, int visitorTypeId) =>
+    await Result.Success(new GetAllVisitorLogsQuery(apartmentId, visitorId, visitorTypeId))
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
 
     [HttpPost(ApiRoutes.Visitors.CreateVisitorLog)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
