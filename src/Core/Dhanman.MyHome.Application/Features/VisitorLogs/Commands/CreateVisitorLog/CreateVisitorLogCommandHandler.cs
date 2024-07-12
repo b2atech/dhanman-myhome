@@ -37,10 +37,10 @@ public class CreateVisitorLogCommandHandler : ICommandHandler<CreateVisitorLogCo
     {
         var visitorLog = CreateVisitorLogEntity(request);
         _visitorLogRepository.Insert(visitorLog);
-
+        int nextVisitorUnitLogId = _visitorUnitLogRepository.GetTotalRecordsCount();
         foreach (var unitId in request.VisitingUnitIds)
         {
-            int nextVisitorUnitLogId = _visitorUnitLogRepository.GetTotalRecordsCount() + 1;            
+            nextVisitorUnitLogId = nextVisitorUnitLogId + 1;            
             var visitorUnitLog = new VisitorUnitLog(nextVisitorUnitLogId, visitorLog.Id, unitId);
             _visitorUnitLogRepository.Insert(visitorUnitLog);
         }
