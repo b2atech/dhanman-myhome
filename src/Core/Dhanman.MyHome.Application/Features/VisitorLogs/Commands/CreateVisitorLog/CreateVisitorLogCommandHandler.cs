@@ -35,37 +35,24 @@ public class CreateVisitorLogCommandHandler : ICommandHandler<CreateVisitorLogCo
 
     public async Task<Result<EntityCreatedResponse>> Handle(CreateVisitorLogCommand request, CancellationToken cancellationToken)
     {
+        var visitorLog = CreateVisitorLogEntity(request);
+        _visitorLogRepository.Insert(visitorLog);
 
-        List<int> visitLogIds = new List<int>();
-        Dictionary<int, int> visitLogToUnitIdMap = new Dictionary<int, int>();
-
-        foreach (var item in request.VisitorLogDetails)
+        foreach (var unitId in request.VisitingUnitIds)
         {
-            var visitorLog = CreateVisitorLogEntity(item);
-            _visitorLogRepository.Insert(visitorLog);
-            visitLogIds.Add(visitorLog.Id);
-            visitLogToUnitIdMap.Add(visitorLog.Id, item.VisitingUnitId);
+            int nextVisitorUnitLogId = _visitorUnitLogRepository.GetTotalRecordsCount() + 1;            
+            var visitorUnitLog = new VisitorUnitLog(nextVisitorUnitLogId, visitorLog.Id, unitId);
+            _visitorUnitLogRepository.Insert(visitorUnitLog);
         }
-
-        if (visitLogIds.Any())
-        {
-            foreach (var id in visitLogIds)
-            {
-                int nextVisitorUnitLogId = _visitorUnitLogRepository.GetTotalRecordsCount() + 1;
-                var visitingUnitId = visitLogToUnitIdMap[id];
-                var visitorUnitLog = new VisitorUnitLog(nextVisitorUnitLogId, id, visitingUnitId);
-                _visitorUnitLogRepository.Insert(visitorUnitLog);
-            }
-        }
-
+        
         await _mediator.Publish(new VisitorLogCreatedEvent(request.VisitorId), cancellationToken);
         return Result.Success(new EntityCreatedResponse(request.VisitorId));
     }
 
-    private VisitorLog CreateVisitorLogEntity(Contracts.VisitorLogs.VisitorLog visitorLog)
+    private VisitorLog CreateVisitorLogEntity(CreateVisitorLogCommand visitorLog)
     {
         int nextVisitorLogId = _visitorLogRepository.GetTotalRecordsCount() + 1;
-        return new VisitorLog(nextVisitorLogId, visitorLog.VisitorId, visitorLog.VisitingUnitId, visitorLog.VisitorTypeId, visitorLog.VisitingFrom, visitorLog.CurrentStatusId, visitorLog.EntryTime, visitorLog.ExitTime);
+        return new VisitorLog(nextVisitorLogId, visitorLog.VisitorId, visitorLog.VisitorTypeId, visitorLog.VisitingFrom, visitorLog.CurrentStatusId, visitorLog.EntryTime, visitorLog.ExitTime);
     }   
     #endregion
 }

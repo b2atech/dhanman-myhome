@@ -86,8 +86,12 @@ public class VisitorsController : ApiController
         await Result.Create(request, Errors.General.BadRequest)
             .Map(value => new CreateVisitorLogCommand(
                 value.VisitorId,
-                value.VisitorLogDetails
-                ))
+                value.VisitingUnitIds,
+                value.VisitorTypeId,
+                value.VisitingFrom,
+                value.CurrentStatusId,
+                value.EntryTime,
+                value.ExitTime))
             .Bind(command => Mediator.Send(command))
            .Match(Ok, BadRequest);
     #endregion
