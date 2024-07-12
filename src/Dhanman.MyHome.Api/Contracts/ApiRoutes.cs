@@ -150,7 +150,7 @@ public static class ApiRoutes
 
         public const string DeleteVisitorById = apiVersion + "visitor/{id:int}";
 
-
+        public const string CreateVisitorLog = apiVersion + "visitorLog"; 
     }
 
     public static class Events

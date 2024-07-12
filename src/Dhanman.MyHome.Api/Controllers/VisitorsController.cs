@@ -3,7 +3,9 @@ using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.MyHome.Application.Contracts.VisitorLogs;
 using Dhanman.MyHome.Application.Contracts.Visitors;
+using Dhanman.MyHome.Application.Features.VisitorLogs.Commands.CreateVisitorLog;
 using Dhanman.MyHome.Application.Features.Visitors.Commands.CreateVisitor;
 using Dhanman.MyHome.Application.Features.Visitors.Commands.DeleteVisitor;
 using Dhanman.MyHome.Application.Features.Visitors.Queries;
@@ -75,4 +77,18 @@ public class VisitorsController : ApiController
 
     #endregion
 
+    #region VisitorLogs 
+
+    [HttpPost(ApiRoutes.Visitors.CreateVisitorLog)]
+    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> CreateVisitorLog([FromBody] CreateVisitorLogRequest? request) =>
+        await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new CreateVisitorLogCommand(
+                value.VisitorId,
+                value.VisitorLogDetails
+                ))
+            .Bind(command => Mediator.Send(command))
+           .Match(Ok, BadRequest);
+    #endregion
 }

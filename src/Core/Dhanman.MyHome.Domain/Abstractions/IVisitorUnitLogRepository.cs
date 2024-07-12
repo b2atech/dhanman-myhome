@@ -9,5 +9,7 @@ public interface IVisitorUnitLogRepository
     void Insert(VisitorUnitLog visitorUnitLog);
     void Update(VisitorUnitLog visitorUnitLog);
     void Delete(VisitorUnitLog visitorUnitLog);
+
+    int GetTotalRecordsCount();
     #endregion
 }

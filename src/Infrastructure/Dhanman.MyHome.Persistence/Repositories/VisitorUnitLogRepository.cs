@@ -1,6 +1,7 @@
 ﻿using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Domain.Abstractions;
 using Dhanman.MyHome.Domain.Entities.VisitorUnitLogs;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dhanman.MyHome.Persistence.Repositories;
 
@@ -25,6 +26,8 @@ public class VisitorUnitLogRepository : IVisitorUnitLogRepository
 
     public void Delete(VisitorUnitLog visitorUnitLog) => _dbContext.RemoveInt(visitorUnitLog);
 
+    public DbSet<VisitorUnitLog> VisitorUnitLog => _dbContext.SetInt<VisitorUnitLog>();
+    public int GetTotalRecordsCount() => VisitorUnitLog.Count();
     #endregion
 
 
