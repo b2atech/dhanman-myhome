@@ -12,6 +12,8 @@ internal sealed class VisitorConfiguration : IEntityTypeConfiguration<Visitor>
         builder.ToTable(TableNames.Visitors);
         builder.HasKey(visitors => visitors.Id);
 
+        builder.Property(visitors => visitors.ApartmentId).HasColumnName("apartment_id");
+
         builder.Property(visitors => visitors.FirstName).HasColumnName("first_name").IsRequired();
 
         builder.Property(visitors => visitors.LastName).HasColumnName("last_name").IsRequired();
