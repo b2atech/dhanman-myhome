@@ -1,0 +1,33 @@
+﻿using B2aTech.CrossCuttingConcern.Core.Result;
+using Dhanman.MyHome.Application.Abstractions.Messaging;
+using Dhanman.MyHome.Application.Contracts.Common;
+
+namespace Dhanman.MyHome.Application.Features.VisitorLogs.Commands.CreateVisitorLog;
+
+public sealed class CreateVisitorLogCommand : ICommand<Result<EntityCreatedResponse>>
+{
+    #region Properties    
+    public int VisitorId { get; set; }
+    public List<int> VisitingUnitIds { get; set; }
+    public int? VisitorTypeId { get; set; }
+    public string VisitingFrom { get; set; }
+    public int CurrentStatusId { get; set; }
+    public DateTime EntryTime { get; set; }
+    public DateTime? ExitTime { get; set; }
+    #endregion
+
+    #region Constructor
+    public CreateVisitorLogCommand(int visitorId, List<int> visitingUnitIds, int? visitorTypeId, string visitingFrom, int currentStatusId, DateTime entryTime, DateTime? exitTime)
+    {        
+        VisitorId = visitorId;
+        VisitingUnitIds = visitingUnitIds;
+        VisitorTypeId = visitorTypeId;
+        VisitingFrom = visitingFrom;
+        CurrentStatusId = currentStatusId;
+        EntryTime = entryTime;
+        ExitTime = exitTime;
+    }
+
+    #endregion
+
+}

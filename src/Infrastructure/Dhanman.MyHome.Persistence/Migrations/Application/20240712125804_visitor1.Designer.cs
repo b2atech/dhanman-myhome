@@ -3,6 +3,7 @@ using System;
 using Dhanman.MyHome.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dhanman.MyHome.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240712125804_visitor1")]
+    partial class visitor1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2432,6 +2435,10 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("visiting_from");
+
+                    b.Property<int>("VisitingUnitId")
+                        .HasColumnType("integer")
+                        .HasColumnName("visiting_unit_id");
 
                     b.Property<int>("VisitorId")
                         .HasColumnType("integer")

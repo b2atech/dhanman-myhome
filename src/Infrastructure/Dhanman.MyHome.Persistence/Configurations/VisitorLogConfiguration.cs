@@ -12,9 +12,7 @@ internal sealed class VisitorLogConfiguration : IEntityTypeConfiguration<Visitor
         builder.ToTable(TableNames.VisitorLogs);
         builder.HasKey(visitorLogs => visitorLogs.Id);
 
-        builder.Property(visitorLogs => visitorLogs.VisitorId).HasColumnName("visitor_id").IsRequired();
-
-        builder.Property(visitorLogs => visitorLogs.VisitingUnitId).HasColumnName("visiting_unit_id").IsRequired();
+        builder.Property(visitorLogs => visitorLogs.VisitorId).HasColumnName("visitor_id").IsRequired();      
 
         builder.Property(visitorLogs => visitorLogs.VisitorTypeId).HasColumnName("visitor_type_id").IsRequired();
 

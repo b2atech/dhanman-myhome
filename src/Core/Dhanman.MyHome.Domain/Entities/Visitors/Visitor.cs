@@ -6,6 +6,7 @@ namespace Dhanman.MyHome.Domain.Entities.Visitors;
 public class Visitor : EntityInt, IAuditableEntity, ISoftDeletableEntity
 {
     #region Properties
+    public Guid ApartmentId { get; set; }
     public string FirstName { get; set; }
     public string? LastName { get; set; }
     public string Email { get; set; }
@@ -35,6 +36,7 @@ public class Visitor : EntityInt, IAuditableEntity, ISoftDeletableEntity
     public Visitor(int id, string firstName, string? lastName, string email, string visitingFrom, string contactNumber, int visitorTypeId, string? vehicleNumber, int identityTypeId, string identityNumber)
     {
         Id = id;
+        //ApartmentId = apartmentId; Guid apartmentId,
         FirstName = firstName;
         LastName = lastName;
         Email = email;
