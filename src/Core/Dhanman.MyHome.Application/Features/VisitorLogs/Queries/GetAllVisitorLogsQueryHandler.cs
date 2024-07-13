@@ -3,9 +3,11 @@ using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.VisitorLogs;
 using Dhanman.MyHome.Domain;
+using Dhanman.MyHome.Domain.Entities.Units;
 using Dhanman.MyHome.Domain.Entities.VisitorLogs;
 using Dhanman.MyHome.Domain.Entities.Visitors;
 using Dhanman.MyHome.Domain.Entities.VisitorTypes;
+using Dhanman.MyHome.Domain.Entities.VisitorUnitLogs;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dhanman.MyHome.Application.Features.VisitorLogs.Queries;
@@ -31,31 +33,35 @@ public class GetAllVisitorLogsQueryHandler : IQueryHandler<GetAllVisitorLogsQuer
                            .Where(e => e.Id == request.VisitorId)
                            .Select(e => e.ApartmentId)
                            .FirstOrDefault();
-                  var visitorLogs = await _dbContext.SetInt<VisitorLog>()
-                  .AsNoTracking()
-                  .Where(e => apartmentId == query.ApartmentId && e.VisitorId == query.VisitorId && e.VisitorTypeId == query.VisitorTypeId)
-                  .OrderBy(e => e.Id)
-                  .Select(e => new VisitorLogResponse(
-                          e.Id,
-                          e.VisitorId,
-                          _dbContext.SetInt<Visitor>()
-                              .Where(p => p.Id == e.VisitorId)
-                              .Select(p => p.FirstName).FirstOrDefault(),
-                          e.VisitorTypeId,
-                          _dbContext.SetInt<VisitorType>()
-                              .Where(p => p.Id == e.VisitorTypeId)
-                              .Select(p => p.Name).FirstOrDefault(),
-                          e.VisitingFrom,
-                          e.CurrentStatusId,
-                          e.EntryTime,
-                          e.ExitTime))
-                  .ToListAsync(cancellationToken);
+
+                  var visitorLogs = await (from vl in _dbContext.SetInt<VisitorLog>().AsNoTracking()
+                                           join v in _dbContext.SetInt<Visitor>() on vl.VisitorId equals v.Id
+                                           join vut in _dbContext.SetInt<VisitorUnitLog>() on vl.Id equals vut.VisitorLogId
+                                           join u in _dbContext.SetInt<Unit>() on vut.UnitId equals u.Id
+                                           where apartmentId == query.ApartmentId
+                                               && vl.VisitorId == query.VisitorId
+                                               && vl.VisitorTypeId == query.VisitorTypeId
+                                           orderby vl.Id
+                                           select new VisitorLogResponse(
+                                               vl.Id,
+                                               vl.VisitorId,
+                                               v.FirstName,
+                                               u.Id,
+                                               u.Name,
+                                               vl.VisitorTypeId,
+                                               (from vt in _dbContext.SetInt<VisitorType>()
+                                                where vt.Id == vl.VisitorTypeId
+                                                select vt.Name).FirstOrDefault(),
+                                               vl.VisitingFrom,
+                                               vl.CurrentStatusId,
+                                               vl.EntryTime,
+                                               vl.ExitTime)).ToListAsync(cancellationToken);
 
                   var listResponse = new VisitorLogListResponse(visitorLogs);
 
                   return listResponse;
               });
-    }
+    }    
     #endregion
 
 }
