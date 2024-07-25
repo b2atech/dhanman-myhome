@@ -76,10 +76,17 @@ public class VisitorsController : ApiController
         }
     }
 
+    [HttpGet(ApiRoutes.Visitors.GetVisitorsByUnitId)]
+    [ProducesResponseType(typeof(VisitorsByUnitIdListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetVisitorsByUnitId(Guid apartmentId, int unitId) =>
+    await Result.Success(new GetVisitorsByUnitIdQuery(apartmentId, unitId))
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
     #endregion
 
     #region VisitorLogs 
-    
+
     [HttpGet(ApiRoutes.Visitors.GetAllVisitorLogs)]
     [ProducesResponseType(typeof(VisitorLogListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
