@@ -153,6 +153,8 @@ public static class ApiRoutes
         public const string CreateVisitorLog = apiVersion + "visitorLog";
 
         public const string GetAllVisitorLogs = apiVersion + "visitorLogs/{apartmentId:guid}/{visitorId:int}/{visitorTypeId:int}";
+
+        public const string GetVisitorsByUnitId = apiVersion + "visitorsByUnitId/{apartmentId:guid}/{unitId:int}";        
     }
 
     public static class Events
