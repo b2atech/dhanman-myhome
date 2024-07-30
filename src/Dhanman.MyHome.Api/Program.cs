@@ -63,7 +63,7 @@ builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddPermissionService(builder.Configuration);
 builder.Services.AddAuthentication(builder.Configuration, "");
 builder.Services.AddCustomAuthorization();
-builder.Services.AddApplication();
+builder.Services.AddApplication(builder.Configuration);
 
 builder.Services.AddApiVersioning(config =>
 {

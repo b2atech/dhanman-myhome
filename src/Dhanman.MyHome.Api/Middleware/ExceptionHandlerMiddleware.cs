@@ -22,6 +22,7 @@ public class ExceptionHandlerMiddleware
         }
         catch (Exception exception)
         {
+            
             _logger.LogError(exception, "Exception occurred: {Message}", exception.Message);
 
             var exceptionDetails = GetExceptionDetails(exception);

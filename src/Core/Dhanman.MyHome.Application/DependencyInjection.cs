@@ -1,7 +1,11 @@
-﻿using Dhanman.MyHome.Application.Behaviors;
+﻿using Dhanman.MyHome.Application.Abstractions;
+using Dhanman.MyHome.Application.Behaviors;
+using Dhanman.MyHome.Application.Caching;
 using Dhanman.MyHome.Application.Extentions;
+using Dhanman.MyHome.Application.ServiceClient;
 using MediatR;
 using MediatR.NotificationPublishers;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -9,10 +13,20 @@ namespace Dhanman.MyHome.Application;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddApplication(this IServiceCollection services)
+    public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-
+        services.AddSingleton<CacheService>();
+        services.AddHttpClient<ICommonServiceClient, CommonServiceClient>(client =>
+        {
+            client.BaseAddress = new Uri(configuration["ApiSettings:CommonServiceBaseAddress"]);
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+        });
+        services.AddHttpClient<ISalesServiceClient, SalesServiceClient>(client =>
+        {
+            client.BaseAddress = new Uri(configuration["ApiSettings:SalesServiceBaseAddress"]);
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+        });
         services.AddMediatR(config =>
         {
             config.RegisterServicesFromAssemblyContaining<ApplicationAssemblyReference>();

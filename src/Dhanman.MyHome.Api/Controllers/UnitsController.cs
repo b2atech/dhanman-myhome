@@ -11,7 +11,6 @@ using Dhanman.MyHome.Application.Features.Units.Command.DeleteUnit;
 using Dhanman.MyHome.Application.Features.Units.Command.GetUnitDetails;
 using Dhanman.MyHome.Application.Features.Units.Command.UpdateUnit;
 using Dhanman.MyHome.Application.Features.Units.Queries;
-using Dhanman.MyHome.Application.Features.UnitServiceProviders.Queries;
 using Dhanman.MyHome.Application.Features.UnitTypes;
 using Dhanman.MyHome.Domain;
 using MediatR;
@@ -103,7 +102,9 @@ public class UnitsController : ApiController
                 value.Area,
                 value.Bhk,
                 value.EIntercom,
-                value.PhoneExtension
+                value.PhoneExtension,
+                value.ApartmentId,
+                Guid.NewGuid()
                ))
              .Bind(command => Mediator.Send(command))
                    .Match(Ok, BadRequest);

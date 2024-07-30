@@ -46,7 +46,7 @@ public class Unit : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #region Constructor
     public Unit(int id,string name, int buildingId, int floorId, int unitTypeId,
         int occupantTypeId, int occupancyTypeId,decimal area, decimal bhkType, int phoneExtention,
-        int eIntercom, string latitude, string longitude)
+        int eIntercom, string latitude, string longitude, Guid apartmentId, Guid customerId)
     {
         Id = id;
         Name = name;
@@ -61,6 +61,8 @@ public class Unit : EntityInt, IAuditableEntity, ISoftDeletableEntity
         EIntercom = eIntercom;
         Latitude = latitude;
         Longitude = longitude;
+        ApartmentId = apartmentId;
+        CustomerId = customerId;
     }
 
     public Unit(int id, string name, int floorId, int unitTypeId,
