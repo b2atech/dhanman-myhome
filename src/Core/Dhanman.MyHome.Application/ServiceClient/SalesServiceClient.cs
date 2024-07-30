@@ -1,0 +1,105 @@
+﻿using Dhanman.MyHome.Application.Abstractions;
+using Dhanman.MyHome.Application.Constants;
+using Dhanman.MyHome.Application.Contracts;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
+using System.Text;
+
+namespace Dhanman.MyHome.Application.ServiceClient;
+ 
+public class SalesServiceClient : ServiceClientBase, ISalesServiceClient
+{
+    #region Properties
+    private readonly HttpClient _httpClient;
+    private readonly string _salesBaseUrl;
+
+    #endregion
+
+    #region Constructors
+    public SalesServiceClient(HttpClient httpClient, IConfiguration configuration, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
+    {
+        _httpClient = httpClient;
+        if (configuration != null && !String.IsNullOrEmpty(configuration["ApiSettings:SalesServiceBaseAddress"]))
+        {
+            _salesBaseUrl = configuration["ApiSettings:SalesServiceBaseAddress"];
+        }
+        else
+        {
+            _salesBaseUrl = string.Empty;
+        }
+    }
+    #endregion
+
+    #region Methods
+    private async Task<string> SendHttpRequestAsync(HttpMethod method, string url, string content)
+    {
+        HttpRequestMessage request = new HttpRequestMessage(method, url);
+        request.Headers.Add("accept", "text/plain");
+
+        var token = GetBearerToken();
+        if (!string.IsNullOrEmpty(token))
+        {
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        }
+
+        request.Content = new StringContent(content, Encoding.UTF8, "application/json");
+        request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+        try
+        {
+            HttpResponseMessage response = await _httpClient.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsStringAsync();
+        }
+        catch (HttpRequestException e)
+        {
+            // Log the error with detailed information
+            Console.WriteLine($"Request URL: {url}");
+            Console.WriteLine($"Request Content: {content}");
+            Console.WriteLine($"HTTP Request Exception: {e.Message}");
+            throw;
+        }
+    }
+
+    public async Task<string> GetDataFromSalesServiceAsync(string endpoint)
+    {
+        var token = GetBearerToken();
+        if (!string.IsNullOrEmpty(token))
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        }
+
+        var response = await _httpClient.GetAsync(endpoint);
+        response.EnsureSuccessStatusCode();
+        return await response.Content.ReadAsStringAsync();
+    }
+
+    public async Task<string> CreateCustomerAsync(CustomerDto customer)
+    {
+        var jsonObject = new
+        {
+            customerId = customer.Id,
+            name = customer.Name,
+            companyId = customer.CompanyId,
+            createdBy = customer.CreatedBy,
+        };
+
+        string json = JsonConvert.SerializeObject(jsonObject);
+        string fullUrl = $"{_salesBaseUrl}{ApiClientRoutes.Customers.CreateSalesCustomer}";
+
+        // Log the request
+        Console.WriteLine($"Request URL: {fullUrl}");
+        Console.WriteLine($"Request Content: {json}");
+        var response = await SendHttpRequestAsync(HttpMethod.Post, fullUrl, json);
+
+        // Log the response
+        Console.WriteLine($"Response: {response}");
+
+        return response;
+    }
+
+    #endregion
+
+}
