@@ -1,9 +1,10 @@
-﻿using Dhanman.MyHome.Domain.Entities.Users;
+﻿using User = Dhanman.MyHome.Domain.Entities.Users.User;
 
 namespace Dhanman.MyHome.Domain.Abstractions;
 
 public interface IUserRepository
 {
+    Task<User?> GetByIdAsync(Guid id);
     /// <summary>
     /// Checks if the specified email is unique among all existing users.
     /// </summary>
