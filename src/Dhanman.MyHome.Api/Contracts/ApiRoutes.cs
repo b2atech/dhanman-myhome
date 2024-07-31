@@ -244,5 +244,10 @@ public static class ApiRoutes
         public const string GetAllDeliveryCompanies = apiVersion + "deliveryCompanies";       
 
     }
-    
+
+    public static class Users
+    {
+        public const string GetAllUsers = apiVersion + "users";
+
+    }
 }

@@ -43,6 +43,20 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
                 .IsRequired();
         });
 
+        builder.OwnsOne(user => user.ContactNumber, contactNumberBuilder =>
+        {
+            contactNumberBuilder.WithOwner();
+
+            contactNumberBuilder.Property(contactNumber => contactNumber.Value)
+                .HasColumnName("contact_number")
+                .HasMaxLength(ContactNumber.MaxLength)
+                .IsRequired();
+        });
+
+        builder.Property(user => user.IsOwner)
+            .HasColumnName("is_owner")
+            .IsRequired();
+
         builder.Property<string>("_passwordHash")
             .HasField("_passwordHash")
             .HasColumnName("password_hash")

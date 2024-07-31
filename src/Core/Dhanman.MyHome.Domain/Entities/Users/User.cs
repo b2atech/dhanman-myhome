@@ -15,19 +15,23 @@ public class User : Entity, IAuditableEntity, ISoftDeletableEntity
     /// <param name="firstName">The user first name.</param>
     /// <param name="lastName">The user last name.</param>
     /// <param name="email">The user email instance.</param>
-    /// <param name="passwordHash">The user password hash.</param>
-    public User(Guid id, FirstName firstName, LastName lastName, Email email)
+    /// <param name="contactNumber">The user password hash.</param>
+    /// <param name="isOwner">Indicates if the user is an owner.</param>
+    public User(Guid id, FirstName firstName, LastName lastName, Email email, ContactNumber contactNumber, bool isOwner)
         : this()
     {
         Ensure.NotEmpty(id, "The identifier is required.", nameof(id));
         Ensure.NotEmpty(firstName, "The first name is required.", nameof(firstName));
         Ensure.NotEmpty(lastName, "The last name is required.", nameof(lastName));
         Ensure.NotEmpty(email, "The email is required.", nameof(email));
+        Ensure.NotEmpty(contactNumber, "The contact number is required.", nameof(contactNumber));
 
         Id = id;
         FirstName = firstName;
         LastName = lastName;
         Email = email;
+        ContactNumber = contactNumber;
+        IsOwner = isOwner;
     }
 
     /// <summary>
@@ -42,6 +46,8 @@ public class User : Entity, IAuditableEntity, ISoftDeletableEntity
         LastName = LastName.Empty;
         Email = Email.Empty;
         _passwordHash = string.Empty;
+        ContactNumber = ContactNumber.Empty;
+        IsOwner = false;
     }
 
     /// <summary>
@@ -58,6 +64,16 @@ public class User : Entity, IAuditableEntity, ISoftDeletableEntity
     /// Gets the user email.
     /// </summary>
     public Email Email { get; private set; }
+    /// <summary>
+    /// Gets the user number.
+    /// </summary>
+    public ContactNumber ContactNumber { get; private set; }
+
+    /// <summary>
+    /// Gets the user type.
+    /// </summary>
+    public bool IsOwner { get; private set; }
+
 
     /// <inheritdoc />
     public DateTime CreatedOnUtc { get; }

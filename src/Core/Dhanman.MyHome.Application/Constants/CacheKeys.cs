@@ -251,5 +251,15 @@ public static class CacheKeys
  
     }
     #endregion
-    
+
+    #region Users
+    public static class Users
+    {
+        public const string CacheKeyPrefix = "Users-{0}";
+
+        public const string UserList = CacheKeyPrefix + "-list-{1}";
+
+    }
+    #endregion
+
 }

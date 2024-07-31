@@ -11,6 +11,7 @@ internal class UserRepository : IUserRepository
 
     public UserRepository(IApplicationDbContext dbContext) => _dbContext = dbContext;
 
+    public Task<User?> GetByIdAsync(Guid id) => _dbContext.GetBydIdAsync<User>(id);
     public async Task<bool> IsEmailUniqueAsync(string email)
          => !await _dbContext.Set<User>().AnyAsync(user => user.Email.Value == email);
 
