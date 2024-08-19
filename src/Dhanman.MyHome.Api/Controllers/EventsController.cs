@@ -1,4 +1,5 @@
 ﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Attributes;
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
@@ -11,6 +12,7 @@ using Dhanman.MyHome.Application.Features.Events.Commands.CreateEvent;
 using Dhanman.MyHome.Application.Features.Events.Queries;
 using Dhanman.MyHome.Domain;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dhanman.MyHome.Api.Controllers;
@@ -23,6 +25,8 @@ public class EventsController : ApiController
 
 
     #region Events
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Events.Write")]
     [HttpPost(ApiRoutes.Events.CreateEvents)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -46,6 +50,8 @@ public class EventsController : ApiController
             .Bind(command => Mediator.Send(command))
                   .Match(Ok, BadRequest);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Events.Read")]
     [HttpGet(ApiRoutes.Events.GetAllEvents)]
     [ProducesResponseType(typeof(EventResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -57,6 +63,8 @@ public class EventsController : ApiController
     #endregion
 
     #region Bookings
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Events.Read")]
     [HttpGet(ApiRoutes.BokkingFacilities.GetAllBokkingFacilities)]
     [ProducesResponseType(typeof(BookingFacilitesResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

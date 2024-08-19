@@ -1,4 +1,5 @@
 ﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Attributes;
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
@@ -18,6 +19,8 @@ public class ApartmentsController : ApiController
 
     #region Apartments     
     //[Authorize(Policy = "coapolicy")]
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Apartment.Read")]
     [HttpGet(ApiRoutes.Apartments.GetApartments)]
     [ProducesResponseType(typeof(ApartmentListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -26,6 +29,8 @@ public class ApartmentsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Apartment.Read")]
     [HttpGet(ApiRoutes.Apartments.GetApartmentNames)]
     [ProducesResponseType(typeof(ApartmentNameListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

@@ -1,4 +1,5 @@
 ﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Attributes;
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
@@ -14,6 +15,7 @@ using Dhanman.MyHome.Application.Features.BuildingTypes.Queries;
 using Dhanman.MyHome.Application.Features.OccupancyTypes.Queries;
 using Dhanman.MyHome.Domain;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dhanman.MyHome.Api.Controllers;
@@ -26,7 +28,8 @@ public class BuildingsController : ApiController
     }
 
     #region Buildings     
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Building.Read")]
     [HttpGet(ApiRoutes.Buildings.GetAllBuildings)]
     [ProducesResponseType(typeof(BuildingListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -35,7 +38,8 @@ public class BuildingsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Building.Read")]
     [HttpGet(ApiRoutes.Buildings.GetAllBuildingNames)]
     [ProducesResponseType(typeof(BuildingNameListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -44,7 +48,8 @@ public class BuildingsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Building.Read")]
     [HttpGet(ApiRoutes.Buildings.GetBuildingById)]
     [ProducesResponseType(typeof(BuildingResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -53,7 +58,8 @@ public class BuildingsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Building.Write")]
     [HttpPost(ApiRoutes.Buildings.CreateBuilding)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -68,7 +74,8 @@ public class BuildingsController : ApiController
           .Bind(command => Mediator.Send(command))
           .Match(Ok, BadRequest);
 
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Building.Write")]
     [HttpPut(ApiRoutes.Buildings.UpdateBuilding)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateBuilding([FromBody] UpdateBuildingRequest? request)
@@ -93,6 +100,8 @@ public class BuildingsController : ApiController
         }
     }
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Building.Delete")]
     [HttpDelete(ApiRoutes.Buildings.DeleteBuildingById)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteBuildingById(int id)
@@ -114,7 +123,8 @@ public class BuildingsController : ApiController
     #endregion
 
     #region BuildingType
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Building.Read")]
     [HttpGet(ApiRoutes.BuildingsTypes.GetAllBuildingTypes)]
     [ProducesResponseType(typeof(BuildingTypeListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -126,7 +136,8 @@ public class BuildingsController : ApiController
     #endregion
 
     #region OccupancyTypes     
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Building.Read")]
     [HttpGet(ApiRoutes.OccupancyTypes.GetAllOccupancyTypes)]
     [ProducesResponseType(typeof(OccupancyTypeListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

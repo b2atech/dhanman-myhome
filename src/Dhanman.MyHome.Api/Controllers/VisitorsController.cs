@@ -1,4 +1,5 @@
 ﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Attributes;
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
@@ -12,6 +13,7 @@ using Dhanman.MyHome.Application.Features.Visitors.Commands.DeleteVisitor;
 using Dhanman.MyHome.Application.Features.Visitors.Queries;
 using Dhanman.MyHome.Domain;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dhanman.MyHome.Api.Controllers;
@@ -23,7 +25,8 @@ public class VisitorsController : ApiController
     }
 
     #region Visitors   
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Visitors.Read")]
     [HttpGet(ApiRoutes.Visitors.GetAllVisitors)]
     [ProducesResponseType(typeof(VisitorListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -32,6 +35,8 @@ public class VisitorsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Read")]
     [HttpGet(ApiRoutes.Visitors.GetAllVisitorNames)]
     [ProducesResponseType(typeof(VisitorNameListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -40,6 +45,8 @@ public class VisitorsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Visitors.Write")]
     [HttpPost(ApiRoutes.Visitors.CreateVisitor)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -59,6 +66,8 @@ public class VisitorsController : ApiController
          .Bind(command => Mediator.Send(command))
          .Match(Ok, BadRequest);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Visitors.Delete")]
     [HttpDelete(ApiRoutes.Visitors.DeleteVisitorById)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteVisitorById(int id)
@@ -76,6 +85,8 @@ public class VisitorsController : ApiController
         }
     }
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Read")]
     [HttpGet(ApiRoutes.Visitors.GetVisitorsByUnitId)]
     [ProducesResponseType(typeof(VisitorsByUnitIdListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -86,7 +97,8 @@ public class VisitorsController : ApiController
     #endregion
 
     #region VisitorLogs 
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Read")]
     [HttpGet(ApiRoutes.Visitors.GetAllVisitorLogs)]
     [ProducesResponseType(typeof(VisitorLogListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -95,6 +107,8 @@ public class VisitorsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Visitors.Write")]
     [HttpPost(ApiRoutes.Visitors.CreateVisitorLog)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

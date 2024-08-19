@@ -1,4 +1,5 @@
 ﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Attributes;
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
@@ -15,6 +16,7 @@ using Dhanman.MyHome.Application.Features.Residents.Commands.CreateResident;
 using Dhanman.MyHome.Application.Features.Residents.Queries;
 using Dhanman.MyHome.Domain;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dhanman.MyHome.Api.Controllers;
@@ -26,7 +28,6 @@ public class ResidentsController : ApiController
     }
 
     #region Residents  
-
     [HttpPost(ApiRoutes.Residents.CreateResident)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -44,6 +45,8 @@ public class ResidentsController : ApiController
              .Bind(command => Mediator.Send(command))
                    .Match(Ok, BadRequest);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Resident.Read")]
     [HttpGet(ApiRoutes.Residents.GetAllResidents)]
     [ProducesResponseType(typeof(ResidentListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -52,6 +55,8 @@ public class ResidentsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Resident.Read")]
     [HttpGet(ApiRoutes.Residents.GetAllResidentNames)]
     [ProducesResponseType(typeof(ResidentNameListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -63,7 +68,7 @@ public class ResidentsController : ApiController
     #endregion
 
     #region ResidentRequests     
-
+    
     [HttpPost(ApiRoutes.ResidentRequests.CreateResidentRequest)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -81,6 +86,8 @@ public class ResidentsController : ApiController
              .Bind(command => Mediator.Send(command))
                    .Match(Ok, BadRequest);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.ResidentRequest.Read")]
     [HttpGet(ApiRoutes.ResidentRequests.GetAllResidentRequests)]
     [ProducesResponseType(typeof(ResidentRequestListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -89,6 +96,8 @@ public class ResidentsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.ResidentRequest.Approve")]
     [HttpPut(ApiRoutes.ResidentRequests.UpdateRequestApproveStatus)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateRequestApproveStatus([FromBody] UpdateRequestApproveStatusRequest? request)
@@ -108,6 +117,8 @@ public class ResidentsController : ApiController
         }
     }
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.ResidentRequest.Approve")]
     [HttpPut(ApiRoutes.ResidentRequests.UpdateRequestRejectStatus)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateRequestRejectStatus([FromBody] UpdateRequestRejectStatusRequest? request)
@@ -129,7 +140,8 @@ public class ResidentsController : ApiController
     #endregion
 
     #region OccupantTypes
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Read")]
     [HttpGet(ApiRoutes.OccupantTypes.GetAllOccupantTypes)]
     [ProducesResponseType(typeof(OccupantTypeListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

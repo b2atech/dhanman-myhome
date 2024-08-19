@@ -1,4 +1,5 @@
 ﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Attributes;
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
@@ -10,6 +11,7 @@ using Dhanman.MyHome.Application.Features.Gates.Commands.UpdateGate;
 using Dhanman.MyHome.Application.Features.Gates.Queries;
 using Dhanman.MyHome.Domain;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dhanman.MyHome.Api.Controllers;
@@ -21,7 +23,8 @@ public class GatesController : ApiController
     }
 
     #region Gates
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Gate.Read")]
     [HttpGet(ApiRoutes.Gates.GetAllGates)]
     [ProducesResponseType(typeof(GateListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -30,6 +33,8 @@ public class GatesController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Gate.Read")]
     [HttpGet(ApiRoutes.Gates.GetGateNames)]
     [ProducesResponseType(typeof(GateNameListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -38,6 +43,8 @@ public class GatesController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Gate.Read")]
     [HttpGet(ApiRoutes.Gates.GetGateById)]
     [ProducesResponseType(typeof(GateResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -46,6 +53,8 @@ public class GatesController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Gate.Write")]
     [HttpPost(ApiRoutes.Gates.CreateGate)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -66,7 +75,8 @@ public class GatesController : ApiController
          .Bind(command => Mediator.Send(command))
          .Match(Ok, BadRequest);
 
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Gate.Write")]
     [HttpPut(ApiRoutes.Gates.UpdateGate)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateGates([FromBody] UpdateGateRequest? request)
@@ -97,6 +107,8 @@ public class GatesController : ApiController
         }
     }
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Gate.Delete")]
     [HttpDelete(ApiRoutes.Gates.DeleteGateById)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteGateById(int id)
