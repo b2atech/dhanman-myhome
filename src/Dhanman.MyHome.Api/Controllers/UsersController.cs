@@ -1,4 +1,5 @@
 ﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Attributes;
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
@@ -6,6 +7,7 @@ using Dhanman.MyHome.Application.Contracts.Users;
 using Dhanman.MyHome.Application.Features.Units.Queries;
 using Dhanman.MyHome.Application.Features.Users.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dhanman.MyHome.Api.Controllers;
@@ -18,7 +20,8 @@ public class UsersController : ApiController
 
 
     #region Users     
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.User.Read")]
     [HttpGet(ApiRoutes.Users.GetAllUsers)]
     [ProducesResponseType(typeof(UserListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

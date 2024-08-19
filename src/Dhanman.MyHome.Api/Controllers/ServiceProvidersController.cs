@@ -1,4 +1,5 @@
 ﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Attributes;
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
@@ -18,6 +19,7 @@ using Dhanman.MyHome.Application.Features.UnitServiceProviders.Commands.GetAssig
 using Dhanman.MyHome.Application.Features.UnitServiceProviders.Queries;
 using Dhanman.MyHome.Domain;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dhanman.MyHome.Api.Controllers;
@@ -30,7 +32,8 @@ public class ServiceProvidersController : ApiController
 
 
     #region ServiceProviders    
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.ServiceProvider.Write")]
     [HttpPost(ApiRoutes.ServiceProviders.CreateServiceProvider)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -59,6 +62,8 @@ public class ServiceProvidersController : ApiController
          .Bind(command => Mediator.Send(command))
                .Match(Ok, BadRequest);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.ServiceProvider.Read")]
     [HttpGet(ApiRoutes.ServiceProviders.GetAllServiceProviders)]
     [ProducesResponseType(typeof(ServiceProviderListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -67,6 +72,8 @@ public class ServiceProvidersController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Read")]
     [HttpGet(ApiRoutes.ServiceProviders.GetAllServiceProviderNames)]
     [ProducesResponseType(typeof(ServiceProviderNameListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -78,7 +85,8 @@ public class ServiceProvidersController : ApiController
     #endregion
 
     #region ServiceProviderSubType     
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Read")]
     [HttpGet(ApiRoutes.ServiceProviderSubType.GetAllServiceProvderSubType)]
     [ProducesResponseType(typeof(ServiceProivderSubTypeResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -91,7 +99,8 @@ public class ServiceProvidersController : ApiController
     #endregion
 
     #region ServiceProviders    
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.ServiceProvider.Write")]
     [HttpPost(ApiRoutes.UnitServiceProviders.CreateUnitServiceProvider)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -110,7 +119,8 @@ public class ServiceProvidersController : ApiController
     #endregion
 
     #region ServiceProviderType     
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Read")]
     [HttpGet(ApiRoutes.ServiceProviderType.GetAllServiceProvderType)]
     [ProducesResponseType(typeof(ServiceProivderTypeResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -123,6 +133,8 @@ public class ServiceProvidersController : ApiController
     #endregion
 
     #region AssignServiceProviderUnits
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Read")]
     [HttpPost(ApiRoutes.ServiceProviderAssignedUnits.GetAllAssignUnits)]
     [ProducesResponseType(typeof(AssignSPUnitsListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -134,6 +146,8 @@ await Result.Create(request, Errors.General.BadRequest)
             .Bind(command => Mediator.Send(command))
            .Match(Ok, BadRequest);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Read")]
     [HttpGet(ApiRoutes.ServiceProviderAssignedUnits.GetAllServiceProviderAssignedUnitsById)]
     [ProducesResponseType(typeof(AssignUnitListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
