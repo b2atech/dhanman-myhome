@@ -23,7 +23,7 @@ namespace Dhanman.MyHome.Api
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidIssuer = $"https://{configuration["Auth0:Domain"]}/",
-                    ValidAudience = configuration["Auth0:Audience"],
+                    ValidAudiences = new[] { configuration["Auth0:Audience"], configuration["Auth0:NativeAudience"] },
                     NameClaimType = ClaimTypes.NameIdentifier
                 };
             });
