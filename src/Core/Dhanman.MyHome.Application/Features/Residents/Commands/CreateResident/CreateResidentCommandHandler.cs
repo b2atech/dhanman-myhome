@@ -48,14 +48,19 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
         }
         else
         {
-            Guid cityId = GetCityId(request.PermanentAddress.CityName, request.PermanentAddress.ZipCode, request.PermanentAddress.StateId);
+            Guid? permanentAddressId = null;
+            if (request.PermanentAddress != null)
+            {
+                Guid cityId = GetCityId(request.PermanentAddress.CityName, request.PermanentAddress.ZipCode, request.PermanentAddress.StateId);
 
-            var permanentAddress = GetAddress(request.PermanentAddress, cityId);
-            _addressRepository.Insert(permanentAddress);
+                 var permanentAddress = GetAddress(request.PermanentAddress, cityId);
+                _addressRepository.Insert(permanentAddress);
+                permanentAddressId = permanentAddress.Id;
+            }
 
             int nextresidentId = _residentRepository.GetTotalRecordsCount() + 1;
 
-            resident = new Resident(nextresidentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, permanentAddress.Id, request.ResidentTypeId, request.OccupancyStatusId);
+            resident = new Resident(nextresidentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, permanentAddressId, request.ResidentTypeId, request.OccupancyStatusId);
             _residentRepository.Insert(resident);
 
             int nextresidentUnitId = _residentUnitRepository.GetTotalRecordsCount() + 1;
