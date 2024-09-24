@@ -10,6 +10,7 @@ public sealed class UnitResponse
     public int BuildingId { get; }
     public int UnitTypeId { get; } 
     public string UnitType{ get; } 
+    public Guid CustomerId{ get; } 
     public int OccupantTypeId { get; }
     public string OccupantType { get; }
     public int OccupancyTypeId { get; }
@@ -49,13 +50,14 @@ public sealed class UnitResponse
         ModifiedBy = modifiedBy;
     }
 
-    public UnitResponse(int id, string name, int floorId, int buildingId, int unitTypeId, int occupantTypeId, int occupancyTypeId, decimal area, decimal bHKType, int phoneExtention, int eIntercom, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy)
+    public UnitResponse(int id, string name, int floorId, int buildingId, int unitTypeId, Guid customerId, int occupantTypeId, int occupancyTypeId, decimal area, decimal bHKType, int phoneExtention, int eIntercom, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy)
  {
         Id = id;
         Name = name;
         FloorId = floorId;
         BuildingId = buildingId;
         UnitTypeId = unitTypeId;
+        CustomerId = customerId;
         OccupantTypeId = occupantTypeId;
         OccupancyTypeId = occupancyTypeId;
         Area = area;

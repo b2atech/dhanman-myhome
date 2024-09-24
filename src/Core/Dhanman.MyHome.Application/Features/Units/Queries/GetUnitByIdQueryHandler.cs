@@ -34,6 +34,7 @@ public class GetUnitByIdQueryHandler : IQueryHandler<GetUnitByIdQuery, Result<Un
                         u.FloorId,
                         u.BuildingId,
                         u.UnitTypeId,
+                        u.CustomerId,
                         u.OccupantTypeId,
                         u.OccupancyTypeId,
                         u.Area,
