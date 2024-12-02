@@ -15,9 +15,9 @@ public static class ApiRoutes
     {
         public const string CreateBuilding = apiVersion + "building";
 
-        public const string GetAllBuildings = apiVersion + "buildings/{apartmentId:guid}";
+        public const string GetAllBuildings = apiVersion + "apartments/{apartmentId:guid}/buildings";
 
-        public const string GetAllBuildingNames = apiVersion + "buildingNames/{apartmentId:guid}";
+        public const string GetAllBuildingNames = apiVersion + "apartments/{apartmentId:guid}/building-names";
 
         public const string GetBuildingById = apiVersion + "building/{id:int}";
 
@@ -33,46 +33,47 @@ public static class ApiRoutes
 
         public const string CreateUnits = apiVersion + "units";
 
-        public const string GetAllUnits = apiVersion + "units/{apartmentId:guid}";
+        public const string GetAllUnits = apiVersion + "apartments/{apartmentId:guid}/units";
 
-        public const string GetAllUnitNames = apiVersion + "unitNames/{apartmentId:guid}/{buildingId:int}/{floorId:int}";
+        public const string GetAllUnitNames = apiVersion + "apartments/{apartmentId:guid}/buildings/{buildingId:int}/floors/{floorId:int}/unit-names";
 
         public const string GetUnitById = apiVersion + "unit/{id:int}";
 
         public const string UpdateUnit = apiVersion + "unit";
 
-        public const string GetAllUnitDetails = apiVersion + "unitDetails";
+        public const string GetAllUnitDetails = apiVersion + "unit-details";
 
         public const string DeleteUnit = apiVersion + "unit/{id:int}";
-        public const string GetUnitByFloorId = apiVersion + "unitsByFloorId";
+
+        public const string GetUnitByFloorId = apiVersion + "floors/{floorId:guid}/units";
     }
 
     public static class Residents
     {
-        public const string CreateResident = apiVersion + "resident";
+        public const string CreateResident = apiVersion + "residents";
 
-        public const string GetAllResidents = apiVersion + "residents";
+        public const string GetAllResidents = apiVersion + "apartments/{apartmentId:guid}/residents";
 
-        public const string GetAllResidentNames = apiVersion + "residentNames";
+        public const string GetAllResidentNames = apiVersion + "apartments/{apartmentId:guid}/resident-names";
 
         public const string GetResidentById = apiVersion + "resident/{id:int}";
 
-        public const string UpdateResidents = apiVersion + "updateResidents";
+        public const string UpdateResidents = apiVersion + "update-residents";
     }
 
     public static class ResidentRequests
     {
-        public const string CreateResidentRequest = apiVersion + "residentRequest";
+        public const string CreateResidentRequest = apiVersion + "resident-request";
 
-        public const string GetAllResidentRequests = apiVersion + "residentRequests";
+        public const string GetAllResidentRequests = apiVersion + "resident-requests";
 
-        public const string GetAllResidentRequestNames = apiVersion + "residentRequestNames";
+        public const string GetAllResidentRequestNames = apiVersion + "resident-request-names";
 
-        public const string GetResidentRequestById = apiVersion + "ResidentRequest/{id:int}";
+        public const string GetResidentRequestById = apiVersion + "resident-request/{id:int}";
 
-        public const string UpdateRequestApproveStatus = apiVersion + "requestApproveStatus";
+        public const string UpdateRequestApproveStatus = apiVersion + "request-approve-status";
 
-        public const string UpdateRequestRejectStatus = apiVersion + "requestRejectStatus";
+        public const string UpdateRequestRejectStatus = apiVersion + "request-reject-status";
     }
 
     public static class Vehicles
@@ -81,11 +82,11 @@ public static class ApiRoutes
 
         public const string GetAllVehicles = apiVersion + "vehicles";
 
-        public const string GetAllVehicleNames = apiVersion + "vehicleNames";
+        public const string GetAllVehicleNames = apiVersion + "vehicle-names";
 
         public const string GetVehicleById = apiVersion + "vehicle/{id:int}";
 
-        public const string UpdateVehicles = apiVersion + "updateVehicles";
+        public const string UpdateVehicles = apiVersion + "update-vehicles";
     }
 
     public static class Apartments
@@ -94,20 +95,20 @@ public static class ApiRoutes
 
         public const string GetApartments = apiVersion + "apartments";
 
-        public const string GetApartmentNames = apiVersion + "apartmentNames";
+        public const string GetApartmentNames = apiVersion + "apartment-names";
 
         public const string GetApartmentById = apiVersion + "apartments/{apartmentId:guid}";
 
-        public const string UpdateApartments = apiVersion + "updateApartments";
+        public const string UpdateApartments = apiVersion + "update-apartments";
     }
 
     public static class Floors
     {
         public const string CreateFloor = apiVersion + "floor";
 
-        public const string GetFloors = apiVersion + "floors/{apartmentId:guid}";
+        public const string GetFloors = apiVersion + "apartments/{apartmentId:guid}/floors";
 
-        public const string GetFloorNames = apiVersion + "floorNames/{apartmentId:guid}/{buildingId:int}";
+        public const string GetFloorNames = apiVersion + "apartments/{apartmentId:guid}/buildings/{buildingId:int}/floor-names";
 
         public const string GetFloorById = apiVersion + "floor/{id:int}";
 
@@ -120,9 +121,9 @@ public static class ApiRoutes
     {
         public const string CreateGate = apiVersion + "gate";
 
-        public const string GetAllGates = apiVersion + "gates/{apartmentId:guid}";
+        public const string GetAllGates = apiVersion + "apartments/{apartmentId:guid}/gates";
 
-        public const string GetGateNames = apiVersion + "gateNames/{apartmentId:guid}";
+        public const string GetGateNames = apiVersion + "apartments/{apartmentId:guid}/gate-names";
 
         public const string GetGateById = apiVersion + "gate/{gateId:int}";
 
@@ -133,7 +134,7 @@ public static class ApiRoutes
 
     public static class OccupancyTypes
     {
-        public const string GetAllOccupancyTypes = apiVersion + "occupancyTypes";
+        public const string GetAllOccupancyTypes = apiVersion + "occupancy-types";
     }
 
     public static class Visitors
@@ -142,61 +143,61 @@ public static class ApiRoutes
 
         public const string GetAllVisitors = apiVersion + "visitors";
 
-        public const string GetAllVisitorNames = apiVersion + "visitorNames";
+        public const string GetAllVisitorNames = apiVersion + "visitor-names";
 
         public const string GetVisitorById = apiVersion + "visitor/{id:int}";
 
-        public const string UpdateVisitors = apiVersion + "updateVisitors";
+        public const string UpdateVisitors = apiVersion + "update-visitors";
 
         public const string DeleteVisitorById = apiVersion + "visitor/{id:int}";
 
-        public const string CreateVisitorLog = apiVersion + "visitorLog";
+        public const string CreateVisitorLog = apiVersion + "visitor-log";
 
-        public const string GetAllVisitorLogs = apiVersion + "visitorLogs/{apartmentId:guid}/{visitorId:int}/{visitorTypeId:int}";
+        public const string GetAllVisitorLogs = apiVersion + "apartments/{apartmentId:guid}/visitors/{visitorId:int}/visitorTypeIds/{visitorTypeId:int}/visitorLogs";
 
-        public const string GetVisitorsByUnitId = apiVersion + "visitorsByUnitId/{apartmentId:guid}/{unitId:int}";        
+        public const string GetVisitorsByUnitId = apiVersion + "apartments/{apartmentId:guid}/units/{unitId:int}/visitorsByUnitId";
     }
 
     public static class Events
     {
-        public const string GetAllEvents = apiVersion + "events/{companyId:guid}/{bookingFacilitiesId:int}";
+        public const string GetAllEvents = apiVersion + "companies/{companyId:guid}/booking-facilities/{bookingFacilitiesId:int}/events";
 
         public const string CreateEvents = apiVersion + "events";
     }
 
     public static class BokkingFacilities
     {
-        public const string GetAllBokkingFacilities = apiVersion + "bookingFacilities";
+        public const string GetAllBokkingFacilities = apiVersion + "booking-facilities";
     }
 
     public static class ServiceProviders
     {
-        public const string CreateServiceProvider = apiVersion + "serviceProviders";
+        public const string CreateServiceProvider = apiVersion + "service-providers";
 
-        public const string GetAllServiceProviders = apiVersion + "serviceProviders";
+        public const string GetAllServiceProviders = apiVersion + "service-providers";
 
-        public const string GetAllServiceProviderNames = apiVersion + "serviceProviderNames";
+        public const string GetAllServiceProviderNames = apiVersion + "service-provider-names";
 
-        public const string GetServiceProviderById = apiVersion + "serviceProvider/{id:int}";
+        public const string GetServiceProviderById = apiVersion + "service-provider/{id:int}";
 
-        public const string UpdateServiceProviders = apiVersion + "updateServiceProviders";
+        public const string UpdateServiceProviders = apiVersion + "update-service-providers";
     }
 
     public static class ServiceProviderSubType
     {
-        public const string GetAllServiceProvderSubType = apiVersion + "serviceProviderSubType";
+        public const string GetAllServiceProvderSubType = apiVersion + "service-provider-sub-type";
     }
 
     public static class UnitServiceProviders
     {
-        public const string CreateUnitServiceProvider = apiVersion + "unitServiceProvider";
+        public const string CreateUnitServiceProvider = apiVersion + "unit-service-provider";
 
-        public const string GetAllUnitServiceProviders = apiVersion + "unitServiceProviders";
+        public const string GetAllUnitServiceProviders = apiVersion + "unit-service-providers";
     }
 
     public static class ServiceProviderType
     {
-        public const string GetAllServiceProvderType = apiVersion + "serviceProviderType";
+        public const string GetAllServiceProvderType = apiVersion + "service-provider-type";
     }
 
     public static class Complaints
@@ -213,35 +214,35 @@ public static class ApiRoutes
 
     public static class SubCategory
     {
-        public const string GetAllSubCategory = apiVersion + "subCategory";
+        public const string GetAllSubCategory = apiVersion + "sub-category";
     }
 
     public static class ServiceProviderAssignedUnits
     {
-        public const string GetAllAssignUnits = apiVersion + "assignUnits";
+        public const string GetAllAssignUnits = apiVersion + "assign-units";
 
-        public const string GetAllServiceProviderAssignedUnitsById = apiVersion + "assignUnits/{id:int}";
+        public const string GetAllServiceProviderAssignedUnitsById = apiVersion + "assign-units/{id:int}";
     }
 
     public static class OccupantTypes
     {
-        public const string GetAllOccupantTypes = apiVersion + "occupantTypes";
+        public const string GetAllOccupantTypes = apiVersion + "occupant-types";
 
     }
 
     public static class UnitTypes
     {
-        public const string GetAllUnitTypes = apiVersion + "unitTypes";
+        public const string GetAllUnitTypes = apiVersion + "unit-types";
     }
 
     public static class BuildingsTypes
     {
-        public const string GetAllBuildingTypes = apiVersion + "buildingTypes";
+        public const string GetAllBuildingTypes = apiVersion + "building-types";
     }
 
     public static class DeliveryCompanies
-    {       
-        public const string GetAllDeliveryCompanies = apiVersion + "deliveryCompanies";       
+    {
+        public const string GetAllDeliveryCompanies = apiVersion + "delivery-companies";
 
     }
 
