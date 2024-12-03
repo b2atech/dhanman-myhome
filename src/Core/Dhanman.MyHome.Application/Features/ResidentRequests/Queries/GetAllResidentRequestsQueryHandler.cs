@@ -34,6 +34,7 @@ public class GetAllResidentRequestsQueryHandler : IQueryHandler<GetAllResidentRe
               {
                   var residentRequests = await _dbContext.SetInt<ResidentRequest>()
                   .AsNoTracking()
+                  .Where(e => e.ApartmentId == request.ApartmentId)
                    .Select(e => new
                    {
                        e.Id,

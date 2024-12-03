@@ -84,8 +84,8 @@ public class ResidentsController : ApiController
     [HttpGet(ApiRoutes.ResidentRequests.GetAllResidentRequests)]
     [ProducesResponseType(typeof(ResidentRequestListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllResidentRequests() =>
-    await Result.Success(new GetAllResidentRequestsQuery())
+    public async Task<IActionResult> GetAllResidentRequests(Guid apartmentId) =>
+    await Result.Success(new GetAllResidentRequestsQuery(apartmentId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 

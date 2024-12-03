@@ -65,7 +65,7 @@ public static class ApiRoutes
     {
         public const string CreateResidentRequest = apiVersion + "resident-request";
 
-        public const string GetAllResidentRequests = apiVersion + "resident-requests";
+        public const string GetAllResidentRequests = apiVersion + "apartments/{apartmentId:guid}/resident-requests";
 
         public const string GetAllResidentRequestNames = apiVersion + "resident-request-names";
 
