@@ -60,7 +60,7 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
 
             int nextresidentId = _residentRepository.GetTotalRecordsCount() + 1;
 
-            resident = new Resident(nextresidentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, permanentAddressId, request.ResidentTypeId, request.OccupancyStatusId);
+            resident = new Resident(nextresidentId, request.ApartmentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, permanentAddressId, request.ResidentTypeId, request.OccupancyStatusId);
             _residentRepository.Insert(resident);
 
             int nextresidentUnitId = _residentUnitRepository.GetTotalRecordsCount() + 1;

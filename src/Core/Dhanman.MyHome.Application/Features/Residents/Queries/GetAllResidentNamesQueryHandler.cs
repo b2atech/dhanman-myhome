@@ -27,6 +27,7 @@ public class GetAllResidentNamesQueryHandler : IQueryHandler<GetAllResidentNames
               {
                   var residents = await _dbContext.SetInt<Resident>()
                   .AsNoTracking()
+                  .Where(e => e.ApartmentId == request.ApartmentId)
                   .Select(e => new ResidentNameResponse(
                           e.Id,                           
                           e.FirstName,

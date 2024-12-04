@@ -13,7 +13,7 @@ public static class ApiRoutes
 
     public static class Buildings
     {
-        public const string CreateBuilding = apiVersion + "building";
+        public const string CreateBuilding = apiVersion + "building";  
 
         public const string GetAllBuildings = apiVersion + "apartments/{apartmentId:guid}/buildings";
 
@@ -84,14 +84,14 @@ public static class ApiRoutes
 
         public const string GetAllVehicleNames = apiVersion + "vehicle-names";
 
-        public const string GetVehicleById = apiVersion + "vehicle/{id:int}";
+        public const string GetVehicleById = apiVersion + "vehicle/{id:int}"; 
 
         public const string UpdateVehicles = apiVersion + "update-vehicles";
     }
 
     public static class Apartments
     {
-        public const string CreateApartments = apiVersion + "apartment";
+        public const string CreateApartments = apiVersion + "apartment"; 
 
         public const string GetApartments = apiVersion + "apartments";
 
@@ -104,13 +104,13 @@ public static class ApiRoutes
 
     public static class Floors
     {
-        public const string CreateFloor = apiVersion + "floor";
+        public const string CreateFloor = apiVersion + "floor";  
 
         public const string GetFloors = apiVersion + "apartments/{apartmentId:guid}/floors";
 
         public const string GetFloorNames = apiVersion + "apartments/{apartmentId:guid}/buildings/{buildingId:int}/floor-names";
 
-        public const string GetFloorById = apiVersion + "floor/{id:int}";
+        public const string GetFloorById = apiVersion + "floor/{id:int}"; 
 
         public const string UpdateFloor = apiVersion + "floor";
 
@@ -119,7 +119,7 @@ public static class ApiRoutes
 
     public static class Gates
     {
-        public const string CreateGate = apiVersion + "gate";
+        public const string CreateGate = apiVersion + "gate"; 
 
         public const string GetAllGates = apiVersion + "apartments/{apartmentId:guid}/gates";
 

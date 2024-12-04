@@ -6,6 +6,7 @@ namespace Dhanman.MyHome.Domain.Entities.Residents;
 public class Resident : EntityInt, IAuditableEntity, ISoftDeletableEntity
 {
     #region Properties
+    public Guid ApartmentId { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
@@ -25,9 +26,10 @@ public class Resident : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public Resident(int id, string firstName, string lastName, string email, string contactNumber, Guid? permanentAddressId, int residentTypeId, int occupancyStatusId)
+    public Resident(int id, Guid apartmentId, string firstName, string lastName, string email, string contactNumber, Guid? permanentAddressId, int residentTypeId, int occupancyStatusId)
     {
         Id = id;
+        ApartmentId = apartmentId;
         FirstName = firstName;
         LastName = lastName;
         Email = email;

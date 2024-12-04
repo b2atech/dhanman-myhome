@@ -29,7 +29,8 @@ public async Task<Result<ResidentListResponse>> Handle(GetAllResidentsQuery requ
           .Bind(async query =>
           {
               var residents = await _dbContext.SetInt<Resident>()
-              .AsNoTracking()                  
+              .AsNoTracking()
+              .Where(e => e.ApartmentId == request.ApartmentId)
               .Select(e => new ResidentResponse(
                       e.Id,
                       _dbContext.SetInt<ResidentUnit>()
