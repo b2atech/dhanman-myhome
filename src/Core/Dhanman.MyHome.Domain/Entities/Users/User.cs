@@ -12,21 +12,24 @@ public class User : Entity, IAuditableEntity, ISoftDeletableEntity
     /// Initializes a new instance of the <see cref="User"/> class.
     /// </summary>
     /// <param name="id">The user identifier.</param>
+    /// <param name="companyId">The user's company or resident identifier.</param>
     /// <param name="firstName">The user first name.</param>
     /// <param name="lastName">The user last name.</param>
     /// <param name="email">The user email instance.</param>
     /// <param name="contactNumber">The user password hash.</param>
     /// <param name="isOwner">Indicates if the user is an owner.</param>
-    public User(Guid id, FirstName firstName, LastName lastName, Email email, ContactNumber contactNumber, bool isOwner)
+    public User(Guid id, Guid companyId, FirstName firstName, LastName lastName, Email email, ContactNumber contactNumber, bool isOwner)
         : this()
     {
         Ensure.NotEmpty(id, "The identifier is required.", nameof(id));
+        Ensure.NotEmpty(id, "The identifier is required.", nameof(companyId));
         Ensure.NotEmpty(firstName, "The first name is required.", nameof(firstName));
         Ensure.NotEmpty(lastName, "The last name is required.", nameof(lastName));
         Ensure.NotEmpty(email, "The email is required.", nameof(email));
         Ensure.NotEmpty(contactNumber, "The contact number is required.", nameof(contactNumber));
 
         Id = id;
+        CompanyId = companyId;
         FirstName = firstName;
         LastName = lastName;
         Email = email;
@@ -42,6 +45,7 @@ public class User : Entity, IAuditableEntity, ISoftDeletableEntity
     /// </remarks>
     protected User()
     {
+        CompanyId = Guid.Empty;
         FirstName = FirstName.Empty;
         LastName = LastName.Empty;
         Email = Email.Empty;
@@ -49,6 +53,11 @@ public class User : Entity, IAuditableEntity, ISoftDeletableEntity
         ContactNumber = ContactNumber.Empty;
         IsOwner = false;
     }
+
+    /// <summary>
+    /// Gets the user first name.
+    /// </summary>
+    public Guid CompanyId { get; private set; }
 
     /// <summary>
     /// Gets the user first name.

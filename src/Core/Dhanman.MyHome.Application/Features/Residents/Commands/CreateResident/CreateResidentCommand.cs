@@ -2,6 +2,7 @@
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.ServiceProviders;
+using System.ComponentModel.Design;
 
 namespace Dhanman.MyHome.Application.Features.Residents.Commands.CreateResident;
 
@@ -9,6 +10,7 @@ public class CreateResidentCommand : ICommand<Result<EntityCreatedResponse>>
 {
     #region Properties
     public int Id { get; set; }
+    public Guid ApartmentId { get; set; }
     public int UnitId { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
@@ -20,8 +22,9 @@ public class CreateResidentCommand : ICommand<Result<EntityCreatedResponse>>
     #endregion
 
     #region Constructors
-    public CreateResidentCommand(int unitId, string firstName, string lastName, string email, string contactNumber, Address permanentAddress, int residentTypeId, int occupancyStatusId)
+    public CreateResidentCommand(Guid apartmentId, int unitId, string firstName, string lastName, string email, string contactNumber, Address permanentAddress, int residentTypeId, int occupancyStatusId)
     {
+        ApartmentId = apartmentId;
         UnitId = unitId;
         FirstName = firstName;
         LastName = lastName;

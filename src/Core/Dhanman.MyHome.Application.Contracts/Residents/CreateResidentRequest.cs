@@ -5,6 +5,7 @@ namespace Dhanman.MyHome.Application.Contracts.Residents;
 public class CreateResidentRequest
 {
     #region Properties    
+    public Guid ApartmentId { get; set; }
     public int UnitId { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }

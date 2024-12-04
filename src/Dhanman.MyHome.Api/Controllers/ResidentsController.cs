@@ -33,6 +33,7 @@ public class ResidentsController : ApiController
     public async Task<IActionResult> CreateResidentRequest([FromBody] CreateResidentRequest? request) =>
             await Result.Create(request, Errors.General.BadRequest)
             .Map(value => new CreateResidentCommand(
+                value.ApartmentId,
                 value.UnitId,
                 value.FirstName,
                 value.LastName,
@@ -47,16 +48,16 @@ public class ResidentsController : ApiController
     [HttpGet(ApiRoutes.Residents.GetAllResidents)]
     [ProducesResponseType(typeof(ResidentListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllResidents() =>
-    await Result.Success(new GetAllResidentsQuery())
+    public async Task<IActionResult> GetAllResidents(Guid apartmentId) =>
+    await Result.Success(new GetAllResidentsQuery(apartmentId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
     [HttpGet(ApiRoutes.Residents.GetAllResidentNames)]
     [ProducesResponseType(typeof(ResidentNameListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllResidentNames() =>
-    await Result.Success(new GetAllResidentNamesQuery())
+    public async Task<IActionResult> GetAllResidentNames(Guid apartmentId) =>
+    await Result.Success(new GetAllResidentNamesQuery(apartmentId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 

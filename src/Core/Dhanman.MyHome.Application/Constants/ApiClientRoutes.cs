@@ -4,7 +4,7 @@ public class ApiClientRoutes
 {
     public static class Customers
     {
-        public const string CreateCommonCustomer = "customer";
-        public const string CreateSalesCustomer = "unitCustomer";        
+        public const string CreateCommonCustomer = "customers";
+        public const string CreateSalesCustomer = "unit-customers";      
     }     
 }

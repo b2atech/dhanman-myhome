@@ -13,6 +13,8 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.HasKey(user => user.Id);
 
+        builder.Property(user => user.CompanyId).HasColumnType("uuid");
+
         builder.OwnsOne(user => user.FirstName, firstNameBuilder =>
         {
             firstNameBuilder.WithOwner();
