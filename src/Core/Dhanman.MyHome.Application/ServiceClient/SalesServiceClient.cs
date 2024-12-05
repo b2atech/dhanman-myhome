@@ -100,6 +100,32 @@ public class SalesServiceClient : ServiceClientBase, ISalesServiceClient
         return response;
     }
 
+    public async Task<string> CreateUserAsync(UserDto user)
+    {
+        var jsonObject = new
+        {
+            userId = user.Id,
+            companyId = user.CompanyId,
+            firstName = user.FirstName,
+            lastName = user.LastName,
+            email = user.Email,
+            phoneNumber = user.PhoneNumber,
+        };
+
+        string json = JsonConvert.SerializeObject(jsonObject);
+        string fullUrl = $"{_salesBaseUrl}{ApiClientRoutes.User.CreateUser}";
+
+        // Log the request
+        Console.WriteLine($"Request URL: {fullUrl}");
+        Console.WriteLine($"Request Content: {json}");
+        var response = await SendHttpRequestAsync(HttpMethod.Post, fullUrl, json);
+
+        // Log the response
+        Console.WriteLine($"Response: {response}");
+
+        return response;
+    }
+
     #endregion
 
 }

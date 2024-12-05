@@ -21,7 +21,7 @@ public sealed class Email : ValueObject
     #endregion
 
     #region Constructor
-    private Email(string value) => Value = value;
+    public Email(string value) => Value = value;
     #endregion
 
     #region Methodes

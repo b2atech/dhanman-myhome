@@ -248,6 +248,9 @@ public static class ApiRoutes
 
     public static class Users
     {
+
+        public const string CreateUser = apiVersion + "users";
+
         public const string GetAllUsers = apiVersion + "users";
 
     }
