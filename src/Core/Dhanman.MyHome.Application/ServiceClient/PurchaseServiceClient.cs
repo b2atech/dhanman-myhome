@@ -8,26 +8,26 @@ using System.Net.Http.Headers;
 using System.Text;
 
 namespace Dhanman.MyHome.Application.ServiceClient;
- 
-public class CommonServiceClient : ServiceClientBase, ICommonServiceClient
+
+public class PurchaseServiceClient : ServiceClientBase, IPurchaseServiceClient
 {
     #region Properties
     private readonly HttpClient _httpClient;
-    private readonly string _commonBaseUrl;
+    private readonly string _purchaseBaseUrl;
 
     #endregion
 
     #region Constructors
-    public CommonServiceClient(HttpClient httpClient, IConfiguration configuration, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
+    public PurchaseServiceClient(HttpClient httpClient, IConfiguration configuration, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
     {
         _httpClient = httpClient;
-        if (configuration != null && !String.IsNullOrEmpty(configuration["ApiSettings:CommonServiceBaseAddress"]))
+        if (configuration != null && !String.IsNullOrEmpty(configuration["ApiSettings:PurchaseServiceBaseAddress"]))
         {
-            _commonBaseUrl = configuration["ApiSettings:CommonServiceBaseAddress"];
+            _purchaseBaseUrl = configuration["ApiSettings:PurchaseServiceBaseAddress"];
         }
         else
         {
-            _commonBaseUrl = string.Empty;
+            _purchaseBaseUrl = string.Empty;
         }
     }
     #endregion
@@ -63,7 +63,7 @@ public class CommonServiceClient : ServiceClientBase, ICommonServiceClient
         }
     }
 
-    public async Task<string> GetDataFromCommonServiceAsync(string endpoint)
+    public async Task<string> GetDataFromPurchaseServiceAsync(string endpoint)
     {
         var token = GetBearerToken();
         if (!string.IsNullOrEmpty(token))
@@ -75,31 +75,6 @@ public class CommonServiceClient : ServiceClientBase, ICommonServiceClient
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadAsStringAsync();
     }
-
-    public async Task<string> CreateCustomerAsync(CustomerDto customer)
-    {
-        var jsonObject = new
-        {
-            customerId = customer.Id,
-            name = customer.Name,
-            companyId = customer.CompanyId,
-            createdBy = customer.CreatedBy,
-        };
-
-        string json = JsonConvert.SerializeObject(jsonObject);
-        string fullUrl = $"{_commonBaseUrl}{ApiClientRoutes.Customers.CreateCommonCustomer}";
-
-        // Log the request
-        Console.WriteLine($"Request URL: {fullUrl}");
-        Console.WriteLine($"Request Content: {json}");
-        var response = await SendHttpRequestAsync(HttpMethod.Post, fullUrl, json);
-
-        // Log the response
-        Console.WriteLine($"Response: {response}");
-
-        return response;
-    }
-
     public async Task<string> CreateUserAsync(UserDto user)
     {
         var jsonObject = new
@@ -113,7 +88,7 @@ public class CommonServiceClient : ServiceClientBase, ICommonServiceClient
         };
 
         string json = JsonConvert.SerializeObject(jsonObject);
-        string fullUrl = $"{_commonBaseUrl}{ApiClientRoutes.User.CreateUser}";
+        string fullUrl = $"{_purchaseBaseUrl}{ApiClientRoutes.User.CreateUser}";
 
         // Log the request
         Console.WriteLine($"Request URL: {fullUrl}");
@@ -125,7 +100,5 @@ public class CommonServiceClient : ServiceClientBase, ICommonServiceClient
 
         return response;
     }
-
     #endregion
-
 }

@@ -26,17 +26,21 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
     private readonly IResidentUnitRepository _residentUnitRepository;
     private readonly IUserRepository _userRepository;
     private readonly ISalesServiceClient _salesServiceClient;
+    private readonly IPurchaseServiceClient _purchaseServiceClient;
+    private readonly ICommonServiceClient _commonServiceClient;
     private readonly IMediator _mediator;
     private readonly IApplicationDbContext _dbContext;
     #endregion
 
     #region Constructors
-    public CreateResidentCommandHandler(IResidentRepository residentRepository, IAddressRepository addressRepository, IResidentUnitRepository residentUnitRepository, IUserRepository userRepository, ISalesServiceClient salesServiceClient, IMediator mediator, IApplicationDbContext dbContext)
+    public CreateResidentCommandHandler(IResidentRepository residentRepository, IAddressRepository addressRepository, IResidentUnitRepository residentUnitRepository, IUserRepository userRepository, ICommonServiceClient commonServiceClient, ISalesServiceClient salesServiceClient, IPurchaseServiceClient purchaseServiceClient, IMediator mediator, IApplicationDbContext dbContext)
     {
         _residentRepository = residentRepository;
         _addressRepository = addressRepository;
         _residentUnitRepository = residentUnitRepository;
         _userRepository = userRepository;
+        _commonServiceClient = commonServiceClient;
+        _purchaseServiceClient = purchaseServiceClient;
         _salesServiceClient = salesServiceClient;
         _mediator = mediator;
         _dbContext = dbContext;
@@ -85,7 +89,9 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
 
             var user = new UserDto(newUserId, request.ApartmentId, firstName, lastName, email, contactNumber);
 
+            await _commonServiceClient.CreateUserAsync(user);
             await _salesServiceClient.CreateUserAsync(user);
+            await _purchaseServiceClient.CreateUserAsync(user);
 
             int nextresidentUnitId = _residentUnitRepository.GetTotalRecordsCount() + 1;
 

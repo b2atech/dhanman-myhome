@@ -27,6 +27,11 @@ public static class DependencyInjection
             client.BaseAddress = new Uri(configuration["ApiSettings:SalesServiceBaseAddress"]);
             client.DefaultRequestHeaders.Add("Accept", "application/json");
         });
+        services.AddHttpClient<IPurchaseServiceClient, PurchaseServiceClient>(client =>
+        {
+            client.BaseAddress = new Uri(configuration["ApiSettings:PurchaseServiceBaseAddress"]);
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+        });
         services.AddMediatR(config =>
         {
             config.RegisterServicesFromAssemblyContaining<ApplicationAssemblyReference>();
