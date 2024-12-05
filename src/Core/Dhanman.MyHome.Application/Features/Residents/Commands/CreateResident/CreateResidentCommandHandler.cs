@@ -79,7 +79,7 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
             var contactNumber = new ContactNumber(request.ContactNumber);
 
 
-            var userResident = new User(newUserId, request.ApartmentId, firstName, lastName, email, contactNumber, request.ResidentTypeId == (int)ResidentType.OWNER ? true : false);
+            var userResident = new User(newUserId, request.ApartmentId, firstName, lastName, email, contactNumber, request.ResidentTypeId == (int)ResidentType.OWNER);
 
             _userRepository.Insert(userResident);
 
