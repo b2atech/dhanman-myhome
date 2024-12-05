@@ -1,6 +1,5 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Primitives;
 using B2aTech.CrossCuttingConcern.Core.Result;
-using Dhanman.MyHome.Domain.Entities.UnitTypes;
 
 namespace Dhanman.MyHome.Domain.Entities.Users;
 
@@ -17,7 +16,7 @@ public sealed class FirstName : ValueObject
 
     #region Constructors
 
-    private FirstName(string value) => Value = value;
+    public FirstName(string value) => Value = value;
     #endregion
 
     #region Methodes

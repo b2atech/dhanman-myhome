@@ -15,7 +15,7 @@ public sealed class ContactNumber: ValueObject
 
     #region Constructors
 
-    private ContactNumber(string value) => Value = value;
+    public ContactNumber(string value) => Value = value;
     #endregion
 
     #region Methodes

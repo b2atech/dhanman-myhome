@@ -18,7 +18,7 @@ public sealed class LastName : ValueObject
 
     #region Constructors
 
-    private LastName(string value) => Value = value;
+    public LastName(string value) => Value = value;
     #endregion
 
     #region Methodes
