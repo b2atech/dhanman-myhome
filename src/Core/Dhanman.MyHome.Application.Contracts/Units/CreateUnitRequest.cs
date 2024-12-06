@@ -1,36 +1,37 @@
-﻿namespace Dhanman.MyHome.Application.Contracts.Units;
-
-public class CreateUnitRequest
+﻿namespace Dhanman.MyHome.Application.Contracts.Units
 {
-    #region Properties
-    public string Status { get; set; }
-    public string Flat {  get; set; }
-    public string FlatType { get; set; }
-    public string Occupant { get; set; }
-    public string Occupancy { get; set; }
-    public int PhoneExtention { get; set; }
-    public int EIntercom { get; set; }
-    public string Latitude { get; set; }
-    public string Longitude { get; set; }
-    public int NumberOfMembers { get; set; }
-    public string Society { get; set; }
-
-    #endregion
-
-    #region Constructor
-    public CreateUnitRequest(string status, string flat, string flatType, string occupant, string occupancy, int phoneExtention, int eIntercom, string latitude, string longitude, int numberOfMembers, string society)
+    public class CreateUnitRequest
     {
-        Status = status;
-        Flat = flat;
-        FlatType = flatType;
-        Occupant = occupant;
-        Occupancy = occupancy;
-        PhoneExtention = phoneExtention;
-        EIntercom = eIntercom;
-        Latitude = latitude;
-        Longitude = longitude;
-        NumberOfMembers = numberOfMembers;
-        Society = society;
+        #region Properties
+        public string Name { get; set; }
+        public int BuildingId { get; set; }
+        public int FloorId { get; set; }
+        public int UnitTypeId { get; set; }
+        public int OccupantId { get; set; }
+        public int OccupancyId { get; set; }
+        public decimal Area { get; set; }
+        public decimal Bhk { get; set; }
+        public int EIntercom { get; set; }
+        public int PhoneExtension { get; set; }
+        public Guid ApartmentId { get; set; }
+        #endregion
+
+        #region Constructor
+        public CreateUnitRequest(string name,int buildingId, int floorId, int unitTypeId, int occupantId, int occupancyId, decimal area, decimal bhk, int eIntercom, int phoneExtension, Guid apartmentId)
+        {
+            Name = name;
+            BuildingId = buildingId;
+            FloorId = floorId;
+            UnitTypeId = unitTypeId;
+            OccupantId = occupantId;
+            OccupancyId = occupancyId;
+            Area = area;
+            Bhk = bhk;
+            EIntercom = eIntercom;
+            PhoneExtension = phoneExtension;
+            ApartmentId = apartmentId;
+        }
+        #endregion
     }
-    #endregion
+
 }
