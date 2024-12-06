@@ -5,7 +5,7 @@ using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.Units;
 using Dhanman.MyHome.Application.Contracts.UnitTypes;
-using Dhanman.MyHome.Application.Features.Units.Command.CreateUnit;
+using Dhanman.MyHome.Application.Features.Units.Command.CreateMultipleUnits;
 using Dhanman.MyHome.Application.Features.Units.Command.CreateUnits;
 using Dhanman.MyHome.Application.Features.Units.Command.DeleteUnit;
 using Dhanman.MyHome.Application.Features.Units.Command.GetUnitDetails;
@@ -20,10 +20,11 @@ namespace Dhanman.MyHome.Api.Controllers;
 
 public class UnitsController : ApiController
 {
+    #region Constructor
     public UnitsController(IMediator mediator, IUserContextService userContextService) : base(mediator, userContextService)
     {
     }
-
+    #endregion
 
     #region Units     
 
@@ -80,7 +81,7 @@ public class UnitsController : ApiController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> CreateUnitListRequest([FromBody] CreateUnitListRequest? request) =>
             await Result.Create(request, Errors.General.BadRequest)
-            .Map(value => new CreateUnitCommand(
+            .Map(value => new CreateMultipleUnitCommand(
                 value.UnitList
                ))
              .Bind(command => Mediator.Send(command))
@@ -90,9 +91,9 @@ public class UnitsController : ApiController
     [HttpPost(ApiRoutes.Units.CreateUnit)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> CreateUnitRequest([FromBody] CreateUnitsRequest? request) =>
+    public async Task<IActionResult> CreateUnitRequest([FromBody] CreateUnitRequest? request) =>
             await Result.Create(request, Errors.General.BadRequest)
-            .Map(value => new CreateUnitsCommand(
+            .Map(value => new CreateUnitCommand(
                 value.Name,
                 value.BuildingId,
                 value.FloorId,
@@ -103,8 +104,7 @@ public class UnitsController : ApiController
                 value.Bhk,
                 value.EIntercom,
                 value.PhoneExtension,
-                value.ApartmentId,
-                Guid.NewGuid()
+                value.ApartmentId
                ))
              .Bind(command => Mediator.Send(command))
                    .Match(Ok, BadRequest);
@@ -112,7 +112,7 @@ public class UnitsController : ApiController
 
     [HttpPut(ApiRoutes.Units.UpdateUnit)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> UpdateInvoice([FromBody] UpdateUnitRequest? request)
+    public async Task<IActionResult> UpdateUnit([FromBody] UpdateUnitRequest? request)
     {
         var result = await Result.Create(request, Errors.General.BadRequest)
             .Map(value => new UpdateUnitCommand(
@@ -172,5 +172,4 @@ public class UnitsController : ApiController
     .Match(Ok, NotFound);
 
     #endregion
-
 }

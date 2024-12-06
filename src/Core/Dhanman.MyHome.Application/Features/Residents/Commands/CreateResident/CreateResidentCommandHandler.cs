@@ -1,6 +1,9 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
+using Dhanman.MyHome.Application.Abstractions;
 using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
+using Dhanman.MyHome.Application.Constants.Enums;
+using Dhanman.MyHome.Application.Contracts;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Features.Residents.Events;
 using Dhanman.MyHome.Domain.Abstractions;
@@ -9,12 +12,8 @@ using Dhanman.MyHome.Domain.Entities.Cities;
 using Dhanman.MyHome.Domain.Entities.Residents;
 using Dhanman.MyHome.Domain.Entities.ResidentUnits;
 using Dhanman.MyHome.Domain.Entities.Users;
-using Dhanman.MyHome.Application.Constants.Enums;
 using MediatR;
 using ResidentAddress = Dhanman.MyHome.Application.Contracts.ServiceProviders.Address;
-using Dhanman.MyHome.Application.Contracts;
-using Dhanman.MyHome.Application.Abstractions;
-using Dhanman.MyHome.Application.ServiceClient;
 
 namespace Dhanman.MyHome.Application.Features.Residents.Commands.CreateResident;
 
@@ -55,7 +54,6 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
 
         if (resident != null)
         {
-            //var assignedUnits = _residentUnitRepository.GetByResidentId(resident.Id);
             residentUnit = new ResidentUnit(request.UnitId, resident.Id);
             _residentUnitRepository.Insert(residentUnit);
         }

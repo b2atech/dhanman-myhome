@@ -3,15 +3,14 @@
 public sealed class CreateUnitListRequest
 {
 	#region Property
-	public List<CreateUnitRequest> UnitList { get; set; }
+	public List<UnitRequest> UnitList { get; set; }
     #endregion
 
     #region Constructor
-    public CreateUnitListRequest(List<CreateUnitRequest> unitList)
+    public CreateUnitListRequest(List<UnitRequest> unitList)
     {
         UnitList = unitList;
     }
     #endregion
-
 
 }
