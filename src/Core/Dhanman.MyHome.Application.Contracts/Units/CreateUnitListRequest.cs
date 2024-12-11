@@ -2,7 +2,7 @@
 
 public sealed class CreateUnitListRequest
 {
-	#region Property
+	#region Properties
 	public List<UnitRequest> UnitList { get; set; }
     #endregion
 

@@ -6,6 +6,7 @@ using Dhanman.MyHome.Application.Features.Units.Event;
 using Dhanman.MyHome.Domain.Abstractions;
 using MediatR;
 using System.Text.RegularExpressions;
+using Unit = Dhanman.MyHome.Domain.Entities.Units.Unit;
 
 namespace Dhanman.MyHome.Application.Features.Units.Command.CreateMultipleUnits;
 
@@ -36,24 +37,23 @@ public class CreateMultipleUnitCommandHandler : ICommandHandler<CreateMultipleUn
 
     public async Task<Result<EntityCreatedResponse>> Handle(CreateMultipleUnitCommand request, CancellationToken cancellationToken)
     {
-        var unitList = new List<Domain.Entities.Units.Unit>();
+        var unitList = new List<Unit>();
         int nextunitId = _unitRepository.GetTotalRecordsCount() + 1;
         foreach (var item in request.UnitList)
         {
-
             int floorId = GetFloorId(item.Flat);
 
             int unitTypeId = await _unitTypeRepository.GetBydNameAsync(item.FlatType);
-            int occupancyTypeId = await _occupancyTypeRepository.GetBydNameAsync(item.Occupancy);
-            int occupantTypeId = await _occupantTypeRepository.GetBydNameAsync(item.Occupant);
-            var unit = new Domain.Entities.Units.Unit(nextunitId, item.Flat, floorId, unitTypeId, occupantTypeId, occupancyTypeId, item.PhoneExtention, item.EIntercom, item.Latitude, item.Longitude);
+           // int occupancyTypeId = await _occupancyTypeRepository.GetBydNameAsync(item.Occupancy);
+           // int occupantTypeId = await _occupantTypeRepository.GetBydNameAsync(item.Occupant);
+            //var unit = new Unit(nextunitId, item.Flat, floorId, unitTypeId, occupantTypeId, occupancyTypeId, item.PhoneExtention, item.EIntercom, item.Latitude, item.Longitude);
 
-            unitList.Add(unit);
+           // unitList.Add(unit);
             nextunitId++;
 
         }
 
-        _dbContext.SetInt<Domain.Entities.Units.Unit>().AddRange(unitList);
+        _dbContext.SetInt<Unit>().AddRange(unitList);
 
         var unitIds = unitList.Select(u => u.Id).ToList();
         await _mediator.Publish(new UnitCreatedEvent(unitIds), cancellationToken);
