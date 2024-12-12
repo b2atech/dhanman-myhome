@@ -8,9 +8,7 @@ public class CreateMultipleUnitCommandValidator : AbstractValidator<CreateMultip
     #region Constructor
     public CreateMultipleUnitCommandValidator(IUnitRepository unitRepository)
     {
-        RuleFor(c => c.UnitList)
-            .NotEmpty()
-            .WithMessage("At least one Unit Id is required");
+       
 
        
     }
