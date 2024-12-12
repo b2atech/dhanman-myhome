@@ -5,7 +5,7 @@ using Dhanman.MyHome.Application.Contracts.Units;
 
 namespace Dhanman.MyHome.Application.Features.Units.Command.CreateMultipleUnits;
 
-public class CreateMultipleUnitCommand : ICommand<Result<EntityCreatedResponse>>
+public class CreateMultipleUnitCommand : ICommand<Result<List<EntityCreatedResponse>>>
 {
     #region Properties
     public List<UnitRequest> UnitList { get; set; }

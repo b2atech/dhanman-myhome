@@ -10,14 +10,9 @@ public class CreateMultipleUnitCommandValidator : AbstractValidator<CreateMultip
     {
         RuleFor(c => c.UnitList)
             .NotEmpty()
-            .WithMessage("At least one Flat Id is required");
+            .WithMessage("At least one Unit Id is required");
 
-        RuleForEach(c => c.UnitList)
-            .MustAsync(async (unit, flat, context) =>
-            {
-                return await unitRepository.IsFlatValidAsync(flat.Flat);
-            })
-            .WithMessage("The flat id is invalid.");
+       
     }
 
     #endregion
