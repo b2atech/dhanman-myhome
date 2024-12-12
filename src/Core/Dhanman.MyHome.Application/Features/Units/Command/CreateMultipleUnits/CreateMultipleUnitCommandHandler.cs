@@ -1,74 +1,84 @@
-﻿using B2aTech.CrossCuttingConcern.Core.Result;
-using Dhanman.MyHome.Application.Abstractions.Data;
+﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Core.Result;
+using Dhanman.MyHome.Application.Abstractions;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Features.Units.Event;
 using Dhanman.MyHome.Domain.Abstractions;
 using MediatR;
-using System.Text.RegularExpressions;
+using Unit = Dhanman.MyHome.Domain.Entities.Units.Unit;
 
 namespace Dhanman.MyHome.Application.Features.Units.Command.CreateMultipleUnits;
 
-public class CreateMultipleUnitCommandHandler : ICommandHandler<CreateMultipleUnitCommand, Result<EntityCreatedResponse>>
+public class CreateMultipleUnitCommandHandler : ICommandHandler<CreateMultipleUnitCommand, Result<List<EntityCreatedResponse>>>
 {
     #region Properties
     private readonly IUnitRepository _unitRepository;
-    private readonly IUnitTypeRepository _unitTypeRepository;
-    private readonly IOccupancyTypeRepository _occupancyTypeRepository;
-    private readonly IOccupantTypeRepository _occupantTypeRepository;
     private readonly IMediator _mediator;
-    private readonly IApplicationDbContext _dbContext;
+    private readonly ICommonServiceClient _commonServiceClient;
+    private readonly ISalesServiceClient _salesServiceClient;
+    private readonly IUserContextService _userContextService;
     #endregion
 
-    #region Constructors
-    public CreateMultipleUnitCommandHandler(IUnitRepository unitRepository, IUnitTypeRepository unitTypeRepository, IOccupantTypeRepository occupantTypeRepository, IOccupancyTypeRepository occupancyTypeRepository, IMediator mediator, IApplicationDbContext applicationDbContext)
+    #region Constructor
+    public CreateMultipleUnitCommandHandler(IUnitRepository unitRepository, IMediator mediator, ICommonServiceClient commonServiceClient, ISalesServiceClient salesServiceClient, IUserContextService userContextService)
     {
         _unitRepository = unitRepository;
-        _unitTypeRepository = unitTypeRepository;
-        _occupancyTypeRepository = occupancyTypeRepository;
-        _occupantTypeRepository = occupantTypeRepository;
         _mediator = mediator;
-        _dbContext = applicationDbContext;
+        _commonServiceClient = commonServiceClient;
+        _salesServiceClient = salesServiceClient;
+        _userContextService = userContextService;
     }
     #endregion
 
     #region Methodes
 
-    public async Task<Result<EntityCreatedResponse>> Handle(CreateMultipleUnitCommand request, CancellationToken cancellationToken)
+    public async Task<Result<List<EntityCreatedResponse>>> Handle(CreateMultipleUnitCommand request, CancellationToken cancellationToken)
     {
-        var unitList = new List<Domain.Entities.Units.Unit>();
-        int nextunitId = _unitRepository.GetTotalRecordsCount() + 1;
-        foreach (var item in request.UnitList)
+        var createdResponses = new List<EntityCreatedResponse>();
+        int lastId = await _unitRepository.GetLastUnitIdAsync();
+
+        foreach (var unitDto in request.UnitList)
         {
+            int newId = ++lastId;
 
-            int floorId = GetFloorId(item.Flat);
 
-            int unitTypeId = await _unitTypeRepository.GetBydNameAsync(item.FlatType);
-            int occupancyTypeId = await _occupancyTypeRepository.GetBydNameAsync(item.Occupancy);
-            int occupantTypeId = await _occupantTypeRepository.GetBydNameAsync(item.Occupant);
-            var unit = new Domain.Entities.Units.Unit(nextunitId, item.Flat, floorId, unitTypeId, occupantTypeId, occupancyTypeId, item.PhoneExtention, item.EIntercom, item.Latitude, item.Longitude);
+            // Check if the entity already exists
+            var existingUnit = await _unitRepository.GetBydIdIntAsync(newId);
+            if (existingUnit != null)
+            {
+                throw new InvalidOperationException($"Unit with ID {newId} already exists.");
+            }
+            var unit = new Unit(newId,
+                unitDto.Name,
+                unitDto.BuildingId,
+                unitDto.FloorId,
+                unitDto.UnitTypeId,
+                unitDto.OccupantId,
+                unitDto.OccupancyId,
+                unitDto.Area,
+                unitDto.Bhk,
+                unitDto.PhoneExtension,
+                unitDto.EIntercom,
+                "1.0",
+                "1.1",
+                unitDto.ApartmentId,
+                Guid.NewGuid()
+            );
 
-            unitList.Add(unit);
-            nextunitId++;
+            _unitRepository.Insert(unit);
 
+            await _commonServiceClient.CreateCustomerAsync(new Contracts.CustomerDto() { Id = unit.CustomerId, Name = unitDto.Name, CompanyId = unitDto.ApartmentId, CreatedBy = _userContextService.GetCurrentUserId() });
+            await _salesServiceClient.CreateCustomerAsync(new Contracts.CustomerDto() { Id = unit.CustomerId, Name = unitDto.Name, CompanyId = unitDto.ApartmentId, CreatedBy = _userContextService.GetCurrentUserId() });
+
+            await _mediator.Publish(new UnitCreatedEvent(unit.Id), cancellationToken);
+
+            createdResponses.Add(new EntityCreatedResponse(unit.Id));
         }
 
-        _dbContext.SetInt<Domain.Entities.Units.Unit>().AddRange(unitList);
-
-        var unitIds = unitList.Select(u => u.Id).ToList();
-        await _mediator.Publish(new UnitCreatedEvent(unitIds), cancellationToken);
-
-        return Result.Success(new EntityCreatedResponse(unitIds));
+        return Result.Success(createdResponses);
     }
-
-    private int GetFloorId(string flat)
-    {
-        string pattern = @"\d";
-        string input = flat;
-        TimeSpan timeout = TimeSpan.FromSeconds(1);
-        Match match = Regex.Match(input, pattern, RegexOptions.None, timeout);
-        return int.Parse(match.Value);
-    }
-
     #endregion
+
+
 }
