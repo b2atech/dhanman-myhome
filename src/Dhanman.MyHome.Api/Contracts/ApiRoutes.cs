@@ -254,4 +254,9 @@ public static class ApiRoutes
         public const string GetAllUsers = apiVersion + "users";
 
     }
+
+    public static class Companies
+    {
+        public const string CreateCompany = apiVersion + "companies";
+    }
 }

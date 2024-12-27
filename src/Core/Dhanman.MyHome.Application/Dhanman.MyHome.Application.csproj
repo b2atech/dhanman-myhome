@@ -41,6 +41,7 @@
     <Folder Include="Features\BookingFacilities\Events\" />
     <Folder Include="Features\Categories\Commands\" />
     <Folder Include="Features\Categories\Events\" />
+    <Folder Include="Features\Companies\Queries\" />
     <Folder Include="Features\ServiceProviderSubType\Commands\" />
     <Folder Include="Features\ServiceProviderSubType\Events\" />
   </ItemGroup>
