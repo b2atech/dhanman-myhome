@@ -14,7 +14,9 @@ internal sealed class CompanyConfiguration : IEntityTypeConfiguration<Company>
 
         builder.Property(company => company.Name).HasColumnName("name").IsRequired();
 
-        builder.Property(company => company.OrganizationId).HasColumnName("organization_id").HasColumnType("uuid");        
+        builder.Property(company => company.OrganizationId).HasColumnName("organization_id").HasColumnType("uuid");
+
+        builder.Property(company => company.IsApartment).HasColumnName("is_apartment").HasDefaultValue(false);
 
         builder.Property(company => company.CreatedBy).HasColumnType("uuid");
 
