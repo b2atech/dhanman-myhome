@@ -27,7 +27,7 @@ public sealed class UnitResponse
     #endregion
 
     #region Constructor
-    public UnitResponse(int id, string name, int floorId, string floorNumber,int buildingId, int unitTypeId, string unitType, int occupantTypeId, string occupantType, int occupancyTypeId, string occupancyType, int numberOfMembers, decimal area, decimal bHKType, int phoneExtention, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy)
+    public UnitResponse(int id, string name, int floorId, string floorNumber,int buildingId, int unitTypeId, string unitType,Guid customerId, int occupantTypeId, string occupantType, int occupancyTypeId, string occupancyType, int numberOfMembers, decimal area, decimal bHKType, int phoneExtention, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy)
     {
         Id = id;
         Name = name;
@@ -36,6 +36,7 @@ public sealed class UnitResponse
         BuildingId = buildingId;
         UnitTypeId = unitTypeId;
         UnitType = unitType;
+        CustomerId = customerId;
         OccupantTypeId = occupantTypeId;
         OccupantType = occupantType;
         OccupancyTypeId = occupancyTypeId;

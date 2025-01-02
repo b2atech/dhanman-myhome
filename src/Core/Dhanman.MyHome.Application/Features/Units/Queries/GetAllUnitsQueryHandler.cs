@@ -51,6 +51,7 @@ public class GetAllUnitsQueryHandler : IQueryHandler<GetAllUnitsQuery, Result<Un
                                          unit.BuildingId,
                                          unit.UnitTypeId,
                                          unitType.Name,
+                                         unit.CustomerId,
                                          unit.OccupantTypeId,
                                          occupantType.Name,
                                          unit.OccupancyTypeId,
