@@ -2,8 +2,8 @@
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
-using Dhanman.MyHome.Application.Contracts;
 using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.MyHome.Application.Contracts.Companies;
 using Dhanman.MyHome.Application.Features.Companies.Commands;
 using Dhanman.MyHome.Domain;
 using MediatR;

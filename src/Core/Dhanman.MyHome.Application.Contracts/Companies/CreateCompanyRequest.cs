@@ -1,4 +1,4 @@
-﻿namespace Dhanman.MyHome.Application.Contracts;
+﻿namespace Dhanman.MyHome.Application.Contracts.Companies;
 
 public sealed class CreateCompanyRequest
 {
