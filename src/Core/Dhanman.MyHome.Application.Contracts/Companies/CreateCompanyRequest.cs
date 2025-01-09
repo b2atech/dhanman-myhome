@@ -4,7 +4,7 @@ public sealed class CreateCompanyRequest
 {
     #region Properties  
     public Guid CompanyId { get; set; }
-    public Guid OrgnizationId { get; set; }
+    public Guid OrganizationId { get; set; }
     public string Name { get; set; }
     public bool IsApartment { get; set; }
     #endregion

@@ -24,6 +24,7 @@ public class PurchaseServiceClient : ServiceClientBase, IPurchaseServiceClient
         if (configuration != null && !String.IsNullOrEmpty(configuration["ApiSettings:PurchaseServiceBaseAddress"]))
         {
             _purchaseBaseUrl = configuration["ApiSettings:PurchaseServiceBaseAddress"];
+            _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
         }
         else
         {
