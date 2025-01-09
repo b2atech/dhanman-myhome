@@ -24,6 +24,7 @@ public class CommonServiceClient : ServiceClientBase, ICommonServiceClient
         if (configuration != null && !String.IsNullOrEmpty(configuration["ApiSettings:CommonServiceBaseAddress"]))
         {
             _commonBaseUrl = configuration["ApiSettings:CommonServiceBaseAddress"];
+            _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
         }
         else
         {

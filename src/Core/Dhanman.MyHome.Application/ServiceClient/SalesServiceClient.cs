@@ -24,6 +24,7 @@ public class SalesServiceClient : ServiceClientBase, ISalesServiceClient
         if (configuration != null && !String.IsNullOrEmpty(configuration["ApiSettings:SalesServiceBaseAddress"]))
         {
             _salesBaseUrl = configuration["ApiSettings:SalesServiceBaseAddress"];
+            _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
         }
         else
         {

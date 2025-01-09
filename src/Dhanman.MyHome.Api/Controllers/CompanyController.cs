@@ -7,7 +7,6 @@ using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Features.Companies.Commands;
 using Dhanman.MyHome.Domain;
 using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dhanman.MyHome.Api.Controllers;
@@ -25,7 +24,7 @@ public class CompanyController : ApiController
            await Result.Create(request, Errors.General.BadRequest)
                .Map(value => new CreateCompanyCommand(
                    value.CompanyId,
-                   value.OrgnizationId,
+                   value.OrganizationId,
                    value.Name,
                    value.IsApartment
                    ))
