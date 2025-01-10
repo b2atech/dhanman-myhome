@@ -50,11 +50,12 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
     public async Task<Result<EntityCreatedResponse>> Handle(CreateResidentCommand request, CancellationToken cancellationToken)
     {
         ResidentUnit residentUnit;
-        Resident resident = _residentRepository.GetByEmail(request.Email);
+        Resident resident = _residentRepository.GetByEmail(request.Email, request.ApartmentId);
 
         if (resident != null)
         {
-            residentUnit = new ResidentUnit(request.UnitId, resident.Id);
+            var residentUnitId = _residentUnitRepository.GetTotalRecordsCount() + 1;
+            residentUnit = new ResidentUnit(residentUnitId , request.UnitId, resident.Id);
             _residentUnitRepository.Insert(residentUnit);
         }
         else
