@@ -17,7 +17,22 @@ public static class DependencyInjection
     {
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddSingleton<CacheService>();
-      
+        services.AddHttpClient<ICommonServiceClient, CommonServiceClient>(client =>
+        {
+            client.BaseAddress = new Uri(configuration["ApiSettings:CommonServiceBaseAddress"]);
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+        });
+        services.AddHttpClient<ISalesServiceClient, SalesServiceClient>(client =>
+        {
+            client.BaseAddress = new Uri(configuration["ApiSettings:SalesServiceBaseAddress"]);
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+        });
+        services.AddHttpClient<IPurchaseServiceClient, PurchaseServiceClient>(client =>
+        {
+            client.BaseAddress = new Uri(configuration["ApiSettings:PurchaseServiceBaseAddress"]);
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+        });
+
         services.AddMediatR(config =>
         {
             config.RegisterServicesFromAssemblyContaining<ApplicationAssemblyReference>();
