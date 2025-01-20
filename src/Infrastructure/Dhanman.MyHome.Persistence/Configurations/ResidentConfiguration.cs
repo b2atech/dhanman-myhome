@@ -22,7 +22,7 @@ internal sealed class ResidentConfiguration : IEntityTypeConfiguration<Resident>
 
         builder.Property(resident => resident.ContactNumber).HasColumnName("contact_number").IsRequired();
 
-        builder.Property(resident => resident.PermanentAddressId).HasColumnName("permanent_address_id").IsRequired();
+        builder.Property(resident => resident.PermanentAddressId).HasColumnName("permanent_address_id").IsRequired(false);
 
         builder.Property(resident => resident.ResidentTypeId).HasColumnName("resident_type_id").IsRequired();
 
