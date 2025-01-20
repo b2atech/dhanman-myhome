@@ -255,6 +255,11 @@ public static class ApiRoutes
 
     }
 
+    public static class Organizations
+    {
+        public const string CreateInitializeOrganization = apiVersion + "initialize-organizations";
+    }
+
     public static class Companies
     {
         public const string CreateCompany = apiVersion + "companies";
