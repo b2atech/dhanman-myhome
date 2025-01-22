@@ -3,16 +3,16 @@ using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Common;
-using Dhanman.MyHome.Application.Features.InitializeOrganizations.Events;
+using Dhanman.MyHome.Application.Features.Organizations.Events;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using NpgsqlTypes;
 
 
-namespace Dhanman.MyHome.Application.Features.InitializeOrganizations.Commands.CreateInitializeOrganization;
+namespace Dhanman.MyHome.Application.Features.Organizations.Commands.InitializeOrganization;
 
-public class CreateInitializeOrganizationCommandHandler : ICommandHandler<CreateInitializeOrganizationCommand, Result<EntityCreatedResponse>>
+public class InitializeOrganizationCommandHandler : ICommandHandler<InitializeOrganizationCommand, Result<EntityCreatedResponse>>
 {
     #region Properties
     private readonly IApplicationDbContext _dbContext;
@@ -21,7 +21,7 @@ public class CreateInitializeOrganizationCommandHandler : ICommandHandler<Create
     #endregion
 
     #region Constructors
-    public CreateInitializeOrganizationCommandHandler(IApplicationDbContext dbContext, IMediator mediator, IUserContextService userContextService)
+    public InitializeOrganizationCommandHandler(IApplicationDbContext dbContext, IMediator mediator, IUserContextService userContextService)
     {
         _dbContext = dbContext;
         _mediator = mediator;
@@ -31,7 +31,7 @@ public class CreateInitializeOrganizationCommandHandler : ICommandHandler<Create
     #endregion
 
     #region Methods
-    public async Task<Result<EntityCreatedResponse>> Handle(CreateInitializeOrganizationCommand request, CancellationToken cancellationToken)
+    public async Task<Result<EntityCreatedResponse>> Handle(InitializeOrganizationCommand request, CancellationToken cancellationToken)
     {
 
         await _dbContext.Database.ExecuteSqlRawAsync(
@@ -49,7 +49,7 @@ public class CreateInitializeOrganizationCommandHandler : ICommandHandler<Create
                 new NpgsqlParameter("p_created_by", NpgsqlDbType.Uuid) { Value = _userContextService.GetCurrentUserId() }
             );
 
-        await _mediator.Publish(new InitializeOrganizationCreatedEvent(request.Id), cancellationToken);
+        await _mediator.Publish(new InitializeOrganizationEvent(request.Id), cancellationToken);
         return Result.Success(new EntityCreatedResponse(request.Id));
 
     }

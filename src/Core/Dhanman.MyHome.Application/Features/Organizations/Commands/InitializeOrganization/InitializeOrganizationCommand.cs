@@ -2,9 +2,8 @@
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Common;
 
-namespace Dhanman.MyHome.Application.Features.InitializeOrganizations.Commands.CreateInitializeOrganization;
-
-public class CreateInitializeOrganizationCommand : ICommand<Result<EntityCreatedResponse>>
+namespace Dhanman.MyHome.Application.Features.Organizations.Commands.InitializeOrganization;
+public class InitializeOrganizationCommand : ICommand<Result<EntityCreatedResponse>>
 {
     #region Properties
     public Guid Id { get; set; }
@@ -21,7 +20,7 @@ public class CreateInitializeOrganizationCommand : ICommand<Result<EntityCreated
     #endregion
 
     #region Constructor
-    public CreateInitializeOrganizationCommand(Guid id, string name, string companyGuids, string companyNames, Guid userId, string userFirstName, string userLastName, string phoneNumber, string email,  Guid createdBy)
+    public InitializeOrganizationCommand(Guid id, string name, string companyGuids, string companyNames, Guid userId, string userFirstName, string userLastName, string phoneNumber, string email, Guid createdBy)
     {
         Id = id;
         Name = name;

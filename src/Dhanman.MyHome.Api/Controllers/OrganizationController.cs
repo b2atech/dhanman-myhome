@@ -5,7 +5,8 @@ using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.Organizations;
-using Dhanman.MyHome.Application.Features.InitializeOrganizations.Commands.CreateInitializeOrganization;
+using Dhanman.MyHome.Application.Features.Organizations.Commands.HardDeleteOrganization;
+using Dhanman.MyHome.Application.Features.Organizations.Commands.InitializeOrganization;
 using Dhanman.MyHome.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -23,13 +24,13 @@ public class OrganizationController : ApiController
 
     [Authorize(Policy = "DynamicPermissionPolicy")]
     [RequiresPermissions("Dhanman.MyHome.Write")]
-    [HttpPost(ApiRoutes.Organizations.CreateInitializeOrganization)]
+    [HttpPost(ApiRoutes.Organizations.InitializeOrganization)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> CreateInitializeOrganization([FromBody] CreateInitializeOrganizationRequest? request) =>
            await Result.Create(request, Errors.General.BadRequest)
-               .Map(value => new CreateInitializeOrganizationCommand(
-                    Guid.NewGuid(),
+               .Map(value => new InitializeOrganizationCommand(
+                    value.Id,
                     value.Name,
                     value.CompanyGuids,
                     value.CompanyNames,
@@ -42,6 +43,25 @@ public class OrganizationController : ApiController
                    ))
                .Bind(command => Mediator.Send(command))
               .Match(Ok, BadRequest);
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Delete")]
+    [HttpDelete(ApiRoutes.Organizations.HardDeleteOrganization)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> HardDeleteOrganization(Guid id)
+    {
+        var result = await Result.Success(new HardDeleteOrganizationCommand(id))
+                    .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
 
     #endregion
 
