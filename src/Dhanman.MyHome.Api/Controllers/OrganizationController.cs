@@ -5,7 +5,7 @@ using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.Organizations;
-using Dhanman.MyHome.Application.Features.InitializeOrganizations.Commands.CreateInitializeOrganization;
+using Dhanman.MyHome.Application.Features.Organizations.Commands.InitializeOrganization;
 using Dhanman.MyHome.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -28,7 +28,7 @@ public class OrganizationController : ApiController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> CreateInitializeOrganization([FromBody] CreateInitializeOrganizationRequest? request) =>
            await Result.Create(request, Errors.General.BadRequest)
-               .Map(value => new CreateInitializeOrganizationCommand(
+               .Map(value => new InitializeOrganizationCommand(
                     Guid.NewGuid(),
                     value.Name,
                     value.CompanyGuids,
