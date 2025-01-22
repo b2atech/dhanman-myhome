@@ -30,7 +30,7 @@ public class OrganizationController : ApiController
     public async Task<IActionResult> CreateInitializeOrganization([FromBody] CreateInitializeOrganizationRequest? request) =>
            await Result.Create(request, Errors.General.BadRequest)
                .Map(value => new InitializeOrganizationCommand(
-                    Guid.NewGuid(),
+                    value.Id,
                     value.Name,
                     value.CompanyGuids,
                     value.CompanyNames,
