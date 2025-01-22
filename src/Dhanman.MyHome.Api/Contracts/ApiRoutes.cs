@@ -257,7 +257,8 @@ public static class ApiRoutes
 
     public static class Organizations
     {
-        public const string CreateInitializeOrganization = apiVersion + "initialize-organizations";
+        public const string InitializeOrganization = apiVersion + "initialize-organizations";
+        public const string HardDeleteOrganization = apiVersion + "hard_delete-organizations";
     }
 
     public static class Companies
