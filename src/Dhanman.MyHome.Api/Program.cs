@@ -7,9 +7,11 @@ using Dhanman.MyHome.Application;
 using Dhanman.MyHome.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Azure.KeyVault;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using System.IO.Compression;
 
 var DhanManSpecificOrigins = "_dhanmanAllowSpecificOrigins";
 
@@ -81,6 +83,23 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddResponseCompression(options =>
+{
+    options.EnableForHttps = true;
+    options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+        new[] { "application/json", "application/xml", "text/html", "text/plain" });
+});
+
+builder.Services.Configure<BrotliCompressionProviderOptions>(options =>
+{
+    options.Level = CompressionLevel.Fastest; // Use Optimal for better compression
+});
+
+builder.Services.Configure<GzipCompressionProviderOptions>(options =>
+{
+    options.Level = CompressionLevel.Optimal;
+});
+
 // Add Swagger
 builder.Services.AddSwaggerGen(c =>
 {
@@ -125,6 +144,7 @@ if (!app.Environment.IsProduction())
 
 // Configure middleware
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+app.UseResponseCompression();
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors(DhanManSpecificOrigins);
