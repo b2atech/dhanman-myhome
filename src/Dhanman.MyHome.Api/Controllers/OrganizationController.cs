@@ -48,9 +48,9 @@ public class OrganizationController : ApiController
     [RequiresPermissions("Dhanman.MyHome.Delete")]
     [HttpDelete(ApiRoutes.Organizations.HardDeleteOrganization)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> HardDeleteOrganization(Guid id)
+    public async Task<IActionResult> HardDeleteOrganization(Guid organizationId)
     {
-        var result = await Result.Success(new HardDeleteOrganizationCommand(id))
+        var result = await Result.Success(new HardDeleteOrganizationCommand(organizationId))
                     .Bind(command => Mediator.Send(command));
 
         if (result.IsSuccess)
