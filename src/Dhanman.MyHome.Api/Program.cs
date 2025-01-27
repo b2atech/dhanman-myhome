@@ -22,6 +22,13 @@ var logger = new LoggerConfiguration()
             .Enrich.FromLogContext()
             .Enrich.WithProperty("Application_name", nameof(Dhanman))
             .Enrich.WithCorrelationIdHeader("correlation-id")
+                .WriteTo.ApplicationInsights(
+    new Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration
+    {
+        ConnectionString = "InstrumentationKey=ae98c694-ba50-4047-b24d-545377d1dd32;IngestionEndpoint=https://southindia-0.in.applicationinsights.azure.com/;LiveEndpoint=https://southindia.livediagnostics.monitor.azure.com/;ApplicationId=87b507a0-428e-4b59-9bc2-08dd4b2a03e2"
+    },
+    new Serilog.Sinks.ApplicationInsights.TelemetryConverters.TraceTelemetryConverter()
+)
             .CreateLogger();
 
 builder.Logging.ClearProviders();
