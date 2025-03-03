@@ -4,10 +4,13 @@ using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.Gates;
+using Dhanman.MyHome.Application.Contracts.IdendityTypes;
 using Dhanman.MyHome.Application.Features.Gates.Commands.CreateGate;
 using Dhanman.MyHome.Application.Features.Gates.Commands.DeleteGate;
 using Dhanman.MyHome.Application.Features.Gates.Commands.UpdateGate;
 using Dhanman.MyHome.Application.Features.Gates.Queries;
+using Dhanman.MyHome.Application.Features.GateTypes.Queries;
+using Dhanman.MyHome.Application.Features.IdendityTypes.Queries;
 using Dhanman.MyHome.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -113,5 +116,16 @@ public class GatesController : ApiController
             return BadRequest(result.Error);
         }
     }
+
+    [HttpGet(ApiRoutes.GateTypes.GetAllGateTypes)]
+    [ProducesResponseType(typeof(GateTypeListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+    public async Task<IActionResult> GetAllGateTypes() =>
+     await Result.Success(new GetAllGateTypeQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
+
     #endregion
 }
