@@ -271,4 +271,10 @@ public static class ApiRoutes
         public const string GetAllIdentityTypes = apiVersion + "identity-types";
 
     }
+
+    public static class GateTypes
+    {
+        public const string GetAllGateTypes = apiVersion + "gate-types";
+
+    }
 }

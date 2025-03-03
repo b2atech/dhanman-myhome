@@ -269,6 +269,20 @@ public static class CacheKeys
 
         public const string IdentityTypeList = CacheKeyPrefix + "-by-id-{1}";
     }
+
+
     #endregion
+
+    #region GateTypes
+    public static class GateTypes
+    {
+        public const string CacheKeyPrefix = "identityTypes-{0}";
+
+        public const string GateTypeList = CacheKeyPrefix + "-by-id-{1}";
+    }
+
+
+    #endregion
+
 
 }
