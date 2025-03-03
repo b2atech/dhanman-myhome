@@ -8,6 +8,7 @@ using Dhanman.MyHome.Domain.Entities.ResidentTypes;
 using Dhanman.MyHome.Domain.Entities.ResidentUnits;
 using Dhanman.MyHome.Domain.Entities.Units;
 using Dhanman.MyHome.Domain.Entities.UnitStatuses;
+using Dhanman.MyHome.Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dhanman.MyHome.Application.Features.Residents.Queries;
@@ -58,7 +59,14 @@ public async Task<Result<ResidentListResponse>> Handle(GetAllResidentsQuery requ
                       e.CreatedOnUtc,
                       e.ModifiedOnUtc,
                       e.CreatedBy,
-                      e.ModifiedBy))
+                      e.ModifiedBy,
+                      _dbContext.Set<User>()
+                              .Where(p => p.Id == e.CreatedBy)
+                              .Select(p => p.FirstName + " " + p.LastName).FirstOrDefault(),
+                      _dbContext.Set<User>()
+                              .Where(p => p.Id == e.ModifiedBy)
+                              .Select(p => p.FirstName + " " + p.LastName).FirstOrDefault()
+                      ))
               .ToListAsync(cancellationToken);
 
               var listResponse = new ResidentListResponse(residents);
