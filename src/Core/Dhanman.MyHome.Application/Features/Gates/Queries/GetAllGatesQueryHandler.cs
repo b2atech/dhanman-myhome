@@ -7,6 +7,7 @@ using Dhanman.MyHome.Domain.Entities.Apartments;
 using Dhanman.MyHome.Domain.Entities.Buildings;
 using Dhanman.MyHome.Domain.Entities.Gates;
 using Dhanman.MyHome.Domain.Entities.GateTypes;
+using Dhanman.MyHome.Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dhanman.MyHome.Application.Features.Gates.Queries;
@@ -37,7 +38,15 @@ public class GetAllGatesQueryHandler : IQueryHandler<GetAllGatesQuery, Result<Ga
                                       on gate.BuildingId equals building.Id
                                       join gateType in _dbContext.SetInt<GateType>()
                                       on gate.GateTypeId equals gateType.Id
-                                      select new GateResponse(
+                                     join createdByUser in _dbContext.Set<User>()
+                                        on building.CreatedBy
+                                        equals createdByUser.Id into createdByUserGroup
+                                     from createdByUser in createdByUserGroup.DefaultIfEmpty() // Left join for CreatedBy user
+                                     join modifiedByUser in _dbContext.Set<User>()
+                                         on building.ModifiedBy
+                                         equals modifiedByUser.Id into modifiedByUserGroup
+                                     from modifiedByUser in modifiedByUserGroup.DefaultIfEmpty() // Left join for ModifiedBy user
+                                     select new GateResponse(
                                                            gate.Id,
                                                            gate.Name,
                                                            gate.ApartmentId,
@@ -53,7 +62,12 @@ public class GetAllGatesQueryHandler : IQueryHandler<GetAllGatesQuery, Result<Ga
                                                            gate.IsStaffAllowed,
                                                            gate.IsVendorAllowed,
                                                            gate.CreatedBy,
-                                                           gate.CreatedOnUtc))
+                                                           gate.ModifiedBy,
+                                                           gate.CreatedOnUtc,
+                                                           gate.ModifiedOnUtc,
+                                                           $"{createdByUser.FirstName.Value} {createdByUser.LastName.Value}",
+                                                           $"{modifiedByUser.FirstName.Value} {modifiedByUser.LastName.Value}"
+                                                           ))
                                 .ToListAsync(cancellationToken);
                  
                   var listResponse = new GateListResponse(gates);

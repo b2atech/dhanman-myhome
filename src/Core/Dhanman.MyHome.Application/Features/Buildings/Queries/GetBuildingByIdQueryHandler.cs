@@ -2,7 +2,6 @@
 using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Buildings;
-using Dhanman.MyHome.Application.Contracts.Floors;
 using Dhanman.MyHome.Domain;
 using Dhanman.MyHome.Domain.Entities.Buildings;
 using Dhanman.MyHome.Domain.Entities.BuildingTypes;
@@ -39,9 +38,9 @@ public class GetBuildingByIdQueryHandler : IQueryHandler<GetBuildingByIdQuery, R
                                          join modifiedByUser in _dbContext.Set<User>()
                                              on building.ModifiedBy
                                              equals modifiedByUser.Id into modifiedByUserGroup
-                                         from modifiedByUser in modifiedByUserGroup.DefaultIfEmpty() // Left join for CreatedBy user
+                                         from modifiedByUser in modifiedByUserGroup.DefaultIfEmpty() // Left join for ModifiedBy user
 
-                                         select new BuildingResponse(
+                                                select new BuildingResponse(
                                                   building.Id,
                                                   building.Name,
                                                   building.BuildingTypeId,

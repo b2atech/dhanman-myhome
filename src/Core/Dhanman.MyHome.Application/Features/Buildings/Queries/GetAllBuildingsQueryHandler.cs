@@ -38,7 +38,7 @@ public class GetAllBuildingsQueryHandler : IQueryHandler<GetAllBuildingsQuery, R
                                         join modifiedByUser in _dbContext.Set<User>()
                                             on building.ModifiedBy
                                             equals modifiedByUser.Id into modifiedByUserGroup
-                                        from modifiedByUser in modifiedByUserGroup.DefaultIfEmpty() // Left join for CreatedBy user
+                                        from modifiedByUser in modifiedByUserGroup.DefaultIfEmpty() // Left join for ModifiedBy user
                                         select new BuildingResponse(
                                                  building.Id,
                                                  building.Name,

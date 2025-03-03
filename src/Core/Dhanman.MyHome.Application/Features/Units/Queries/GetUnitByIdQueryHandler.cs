@@ -4,6 +4,7 @@ using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Units;
 using Dhanman.MyHome.Domain;
 using Dhanman.MyHome.Domain.Entities.Units;
+using Dhanman.MyHome.Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dhanman.MyHome.Application.Features.Units.Queries;
@@ -25,28 +26,38 @@ public class GetUnitByIdQueryHandler : IQueryHandler<GetUnitByIdQuery, Result<Un
             .Ensure(query => query != null, Errors.General.EntityNotFound)
             .Bind(async query =>
             {
-                var unit = await _dbContext.SetInt<Unit>()
-                  .AsNoTracking()
-                  .Where(u => u.Id == request.UnitId)
-                  .Select(u => new UnitResponse(
-                        u.Id,
-                        u.Name,
-                        u.FloorId,
-                        u.BuildingId,
-                        u.UnitTypeId,
-                        u.CustomerId,
-                        u.OccupantTypeId,
-                        u.OccupancyTypeId,
-                        u.Area,
-                        u.BHKType,
-                        u.PhoneExtention,
-                        u.EIntercom,
-                        u.CreatedOnUtc,
-                        u.ModifiedOnUtc,
-                        u.CreatedBy,
-                  u.ModifiedBy))
+                var unitResponse = await (from unit in _dbContext.SetInt<Unit>().AsNoTracking()
+                  where unit.Id == request.UnitId
+                join createdByUser in _dbContext.Set<User>()
+                       on unit.CreatedBy equals createdByUser.Id into createdByUserGroup
+                from createdByUser in createdByUserGroup.DefaultIfEmpty() // Left join for CreatedBy user
+                join modifiedByUser in _dbContext.Set<User>()
+                       on unit.ModifiedBy equals modifiedByUser.Id into modifiedByUserGroup
+                from modifiedByUser in modifiedByUserGroup.DefaultIfEmpty() // Left join for ModifiedBy user
+                                          select new UnitResponse(
+                        unit.Id,
+                        unit.Name,
+                        unit.FloorId,
+                        unit.BuildingId,
+                        unit.UnitTypeId,
+                        unit.CustomerId,
+                        unit.OccupantTypeId,
+                        unit.OccupancyTypeId,
+                        unit.Area,
+                        unit.BHKType,
+                        unit.PhoneExtention,
+                        unit.EIntercom,
+                        unit.CreatedOnUtc,
+                        unit.ModifiedOnUtc,
+                        unit.CreatedBy,
+                        unit.ModifiedBy,
+                        $"{createdByUser.FirstName.Value} {createdByUser.LastName.Value}",
+                        $"{modifiedByUser.FirstName.Value} {modifiedByUser.LastName.Value}"
+                  ))
                   .FirstOrDefaultAsync(cancellationToken);
-                return unit;
+                return unitResponse != null
+                ? Result.Success(unitResponse)
+                : Result.Failure<UnitResponse>(Errors.General.EntityNotFound);
             });
     }
     #endregion
