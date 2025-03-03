@@ -46,11 +46,11 @@ public class GetAllUnitsQueryHandler : IQueryHandler<GetAllUnitsQuery, Result<Un
                                          .Where(ru => ru.UnitId == unit.Id)
                                          .Count()
                                      join createdByUser in _dbContext.Set<User>()
-                                     on floor.CreatedBy
+                                     on unit.CreatedBy
                                      equals createdByUser.Id into createdByUserGroup
                                      from createdByUser in createdByUserGroup.DefaultIfEmpty() // Left join for CreatedBy user
                                      join modifiedByUser in _dbContext.Set<User>()
-                                         on floor.ModifiedBy
+                                         on unit.ModifiedBy
                                          equals modifiedByUser.Id into modifiedByUserGroup
                                      from modifiedByUser in modifiedByUserGroup.DefaultIfEmpty() // Left join for ModifiedBy user
                                      select new UnitResponse(

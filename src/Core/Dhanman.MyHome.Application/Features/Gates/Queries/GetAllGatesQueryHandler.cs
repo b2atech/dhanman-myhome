@@ -39,11 +39,11 @@ public class GetAllGatesQueryHandler : IQueryHandler<GetAllGatesQuery, Result<Ga
                                       join gateType in _dbContext.SetInt<GateType>()
                                       on gate.GateTypeId equals gateType.Id
                                      join createdByUser in _dbContext.Set<User>()
-                                        on building.CreatedBy
+                                        on gate.CreatedBy
                                         equals createdByUser.Id into createdByUserGroup
                                      from createdByUser in createdByUserGroup.DefaultIfEmpty() // Left join for CreatedBy user
                                      join modifiedByUser in _dbContext.Set<User>()
-                                         on building.ModifiedBy
+                                         on gate.ModifiedBy
                                          equals modifiedByUser.Id into modifiedByUserGroup
                                      from modifiedByUser in modifiedByUserGroup.DefaultIfEmpty() // Left join for ModifiedBy user
                                      select new GateResponse(
