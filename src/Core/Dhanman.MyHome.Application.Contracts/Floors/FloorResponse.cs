@@ -20,7 +20,7 @@ public sealed class FloorResponse
     #endregion
 
     #region Constructor
-    public FloorResponse(int id, string name,Guid apartmentId, int buildingId, string buildingName, int totalUnits, Guid createdBy, DateTime createdOnUtc, Guid? modifiedBy, DateTime? modifiedOnUtc, string createdByName, string? modifiedByName)
+    public FloorResponse(int id, string name,Guid apartmentId, int buildingId, string buildingName, int totalUnits, Guid createdBy, Guid? modifiedBy, DateTime createdOnUtc,  DateTime? modifiedOnUtc, string createdByName, string? modifiedByName)
     {
         Id = id;
         Name = name;

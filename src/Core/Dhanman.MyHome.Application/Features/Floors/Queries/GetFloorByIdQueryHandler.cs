@@ -33,11 +33,11 @@ public class GetFloorByIdQueryHandler : IQueryHandler<GetFloorByIdQuery, Result<
                                      join building in _dbContext.SetInt<Building>().AsNoTracking()
                                      on floor.BuildingId equals building.Id
                                              join createdByUser in _dbContext.Set<User>()
-                                                 on building.CreatedBy
+                                                 on floor.CreatedBy
                                                  equals createdByUser.Id into createdByUserGroup
                                              from createdByUser in createdByUserGroup.DefaultIfEmpty() // Left join for CreatedBy user
                                              join modifiedByUser in _dbContext.Set<User>()
-                                                 on building.ModifiedBy
+                                                 on floor.ModifiedBy
                                                  equals modifiedByUser.Id into modifiedByUserGroup
                                              from modifiedByUser in modifiedByUserGroup.DefaultIfEmpty() // Left join for CreatedBy user
                                              select new FloorResponse(
@@ -48,8 +48,8 @@ public class GetFloorByIdQueryHandler : IQueryHandler<GetFloorByIdQuery, Result<
                                          building.Name,
                                          floor.TotalUnits,
                                          floor.CreatedBy,
-                                         floor.CreatedOnUtc,
                                          floor.ModifiedBy,
+                                         floor.CreatedOnUtc,
                                          floor.ModifiedOnUtc,
                                          $"{createdByUser.FirstName.Value} {createdByUser.LastName.Value}",
                                          $"{modifiedByUser.FirstName.Value} {modifiedByUser.LastName.Value}"
