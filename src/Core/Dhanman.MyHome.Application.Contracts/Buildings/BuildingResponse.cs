@@ -12,10 +12,12 @@ public sealed class BuildingResponse
     public DateTime? ModifiedOnUtc { get; }
     public Guid CreatedBy { get; }
     public Guid? ModifiedBy { get; }
+    public string CreatedByName { get; }
+    public string? ModifiedByName { get; }
     #endregion
 
     #region Constructor
-    public BuildingResponse(int id, string name, int buildingTypeId, string buildingTypeName, int totalUnits, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy)
+    public BuildingResponse(int id, string name, int buildingTypeId, string buildingTypeName, int totalUnits, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy, string createdByName, string? modifiedByName)
     {
         Id = id;
         Name = name;
@@ -26,6 +28,8 @@ public sealed class BuildingResponse
         ModifiedOnUtc = modifiedOnUtc;
         CreatedBy = createdBy;
         ModifiedBy = modifiedBy;
+        CreatedByName = createdByName;
+        ModifiedByName = modifiedByName;
     }     
     #endregion
 }

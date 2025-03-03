@@ -19,11 +19,13 @@ public sealed class ResidentResponse
     public DateTime? ModifiedOnUtc { get; }
     public Guid CreatedBy { get; }
     public Guid? ModifiedBy { get; }
+    public string CreatedByName { get; }
+    public string? ModifiedByName { get; }
 
     #endregion
 
     #region Constructor
-    public ResidentResponse(int id, int unitId, string unit, string firstName, string lastName, string email, string contactNumber,  int residentTypeId, string residentType, int occupancyStatusId, string occupancyStatus, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy)
+    public ResidentResponse(int id, int unitId, string unit, string firstName, string lastName, string email, string contactNumber,  int residentTypeId, string residentType, int occupancyStatusId, string occupancyStatus, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy, string createdByName, string? modifiedByName)
     {
         Id = id;
         UnitId = unitId;
@@ -41,6 +43,8 @@ public sealed class ResidentResponse
         ModifiedOnUtc = modifiedOnUtc;
         CreatedBy = createdBy;
         ModifiedBy = modifiedBy;
+        CreatedByName = createdByName;
+        ModifiedByName = modifiedByName;
     }
 
     #endregion
