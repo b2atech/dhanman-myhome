@@ -262,4 +262,13 @@ public static class CacheKeys
     }
     #endregion
 
+    #region IdentiyTypes
+    public static class IdentiyTypes
+    {
+        public const string CacheKeyPrefix = "identityTypes-{0}";
+
+        public const string IdentityTypeList = CacheKeyPrefix + "-by-id-{1}";
+    }
+    #endregion
+
 }

@@ -3,11 +3,15 @@ using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.MyHome.Application.Contracts.IdendityTypes;
+using Dhanman.MyHome.Application.Contracts.OccupantTypes;
 using Dhanman.MyHome.Application.Contracts.ServiceProviders;
 using Dhanman.MyHome.Application.Contracts.ServiceProviderSubTypes;
 using Dhanman.MyHome.Application.Contracts.ServiceProviderTypes;
 using Dhanman.MyHome.Application.Contracts.Units;
 using Dhanman.MyHome.Application.Contracts.UnitServiceProviders;
+using Dhanman.MyHome.Application.Features.IdendityTypes.Queries;
+using Dhanman.MyHome.Application.Features.OccupantTypes.Queries;
 using Dhanman.MyHome.Application.Features.ServiceProviders.Commands.CreateServiceProvider;
 using Dhanman.MyHome.Application.Features.ServiceProviders.Queries;
 using Dhanman.MyHome.Application.Features.ServiceProviderSubType.Queries;
@@ -145,7 +149,18 @@ await Result.Create(request, Errors.General.BadRequest)
 
     #endregion
 
-   
+    #region IdentityTypes
+
+    [HttpGet(ApiRoutes.IdentityTypes.GetAllIdentityTypes)]
+    [ProducesResponseType(typeof(IdentityTypeListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+    public async Task<IActionResult> GetAllIdendityTypes() =>
+     await Result.Success(new GetAllIdendityTypeQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
+    #endregion
 
 
 }
