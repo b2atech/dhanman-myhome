@@ -265,4 +265,10 @@ public static class ApiRoutes
     {
         public const string CreateCompany = apiVersion + "companies";
     }
+
+    public static class IdentityTypes
+    {
+        public const string GetAllIdentityTypes = apiVersion + "identity-types";
+
+    }
 }
