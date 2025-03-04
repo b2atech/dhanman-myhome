@@ -27,16 +27,16 @@ public class VisitorsController : ApiController
     [HttpGet(ApiRoutes.Visitors.GetAllVisitors)]
     [ProducesResponseType(typeof(VisitorListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllVisitors() =>
-    await Result.Success(new GetAllVisitorsQuery())
+    public async Task<IActionResult> GetAllVisitors(Guid apartmentId) =>
+    await Result.Success(new GetAllVisitorsQuery(apartmentId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
     [HttpGet(ApiRoutes.Visitors.GetAllVisitorNames)]
     [ProducesResponseType(typeof(VisitorNameListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllVisitorNames() =>
-    await Result.Success(new GetAllVisitorNamesQuery())
+    public async Task<IActionResult> GetAllVisitorNames(Guid apartmentId) =>
+    await Result.Success(new GetAllVisitorNamesQuery(apartmentId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
