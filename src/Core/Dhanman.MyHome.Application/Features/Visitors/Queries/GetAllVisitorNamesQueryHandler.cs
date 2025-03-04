@@ -22,11 +22,12 @@ public class GetAllVisitorNamesQueryHandler : IQueryHandler<GetAllVisitorNamesQu
     public async Task<Result<VisitorNameListResponse>> Handle(GetAllVisitorNamesQuery request, CancellationToken cancellationToken)
     {
         return await Result.Success(request)
-              .Ensure(query => query != null, Errors.General.EntityNotFound)
+              .Ensure(query => query.ApartmentId != Guid.Empty, Errors.General.EntityNotFound)
               .Bind(async query =>
               {
                   var visitors = await _dbContext.SetInt<Visitor>()
                   .AsNoTracking()
+                  .Where(x => x.ApartmentId == query.ApartmentId)
                   .Select(e => new VisitorNameResponse(
                           e.Id,
                           e.FirstName,
