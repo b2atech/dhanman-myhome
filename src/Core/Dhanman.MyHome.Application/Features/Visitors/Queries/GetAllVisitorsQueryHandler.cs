@@ -22,7 +22,7 @@ public class GetAllVisitorsQueryHandler : IQueryHandler<GetAllVisitorsQuery, Res
     public async Task<Result<VisitorListResponse>> Handle(GetAllVisitorsQuery request, CancellationToken cancellationToken)
     {
         return await Result.Success(request)
-              .Ensure(query => query != null, Errors.General.EntityNotFound)
+              .Ensure(query => query.ApartmentId != Guid.Empty, Errors.General.EntityNotFound)
               .Bind(async query =>
               {
                   var visitors = await _dbContext.SetInt<Visitor>()

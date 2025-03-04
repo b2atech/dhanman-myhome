@@ -7,11 +7,15 @@ namespace Dhanman.MyHome.Application.Features.Visitors.Queries;
 
 public class GetAllVisitorNamesQuery : ICacheableQuery<Result<VisitorNameListResponse>>
 {
-    #region Properties     
+    #region Properties   
+    public Guid ApartmentId { get; set; }
     #endregion
 
     #region Constructors
-    public GetAllVisitorNamesQuery() { }
+    public GetAllVisitorNamesQuery(Guid apartmentId)
+    {
+        ApartmentId = apartmentId;
+    }
     #endregion
 
     #region Methodes
