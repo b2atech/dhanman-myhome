@@ -104,6 +104,8 @@ internal static class TableNames
 
     internal const string Companies = "companies";
 
-    internal const string Organizations = "organizations";
+    internal const string Organizations = "organizations"; 
+
+    internal const string VisitorStatuses = "visitor_statuses";
 }
 
