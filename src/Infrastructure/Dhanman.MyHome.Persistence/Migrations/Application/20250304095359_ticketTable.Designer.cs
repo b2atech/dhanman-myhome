@@ -3,6 +3,7 @@ using System;
 using Dhanman.MyHome.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dhanman.MyHome.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250304095359_ticketTable")]
+    partial class ticketTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2027,99 +2030,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasName("pk_sub_categories");
 
                     b.ToTable("sub_categories", (string)null);
-                });
-
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.TicketCategories.TicketCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("DeletedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("deleted_on_utc");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("is_deleted");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("name");
-
-                    b.HasKey("Id")
-                        .HasName("pk_ticket_categories");
-
-                    b.ToTable("ticket_categories", (string)null);
-                });
-
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.TicketPriorities.TicketPriority", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("DeletedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("deleted_on_utc");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("is_deleted");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("name");
-
-                    b.HasKey("Id")
-                        .HasName("pk_ticket_priorities");
-
-                    b.ToTable("ticket_priorities", (string)null);
-                });
-
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.TicketStatuses.TicketStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("DeletedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("deleted_on_utc");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("is_deleted");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("name");
-
-                    b.HasKey("Id")
-                        .HasName("pk_ticket_statuses");
-
-                    b.ToTable("ticket_statuses", (string)null);
                 });
 
             modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Tickets.Ticket", b =>
