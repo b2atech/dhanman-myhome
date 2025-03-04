@@ -1,14 +1,14 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
-using Dhanman.MyHome.Application.Contracts.IdendityTypes;
+using Dhanman.MyHome.Application.Contracts.Gates;
 using Dhanman.MyHome.Domain;
-using Dhanman.MyHome.Domain.Entities.IdentityTypes;
+using Dhanman.MyHome.Domain.Entities.GateTypes;
 using Microsoft.EntityFrameworkCore;
 
-namespace Dhanman.MyHome.Application.Features.IdendityTypes.Queries;
+namespace Dhanman.MyHome.Application.Features.GateTypes.Queries;
 
-class GetAllIdendityTypeQueryHandler : IQueryHandler<GetAllIdendityTypeQuery, Result<IdentityTypeListResponse>>
+class GetAllGateTypeQueryHandler : IQueryHandler<GetAllGateTypeQuery, Result<GateTypeListResponse>>
 {
 
     #region Properties
@@ -16,24 +16,24 @@ class GetAllIdendityTypeQueryHandler : IQueryHandler<GetAllIdendityTypeQuery, Re
     #endregion
 
     #region Constructors
-    public GetAllIdendityTypeQueryHandler(IApplicationDbContext dbContext) => _dbContext = dbContext;
+    public GetAllGateTypeQueryHandler(IApplicationDbContext dbContext) => _dbContext = dbContext;
     #endregion
 
     #region Methods
-    public async Task<Result<IdentityTypeListResponse>> Handle(GetAllIdendityTypeQuery request, CancellationToken cancellationToken)
+    public async Task<Result<GateTypeListResponse>> Handle(GetAllGateTypeQuery request, CancellationToken cancellationToken)
     {
         return await Result.Success(request)
               .Ensure(query => query != null, Errors.General.EntityNotFound)
               .Bind(async query =>
               {
-                  var identityTypes = await _dbContext.SetInt<IdentityType>()
+                  var gateTypes = await _dbContext.SetInt<GateType>()
                   .AsNoTracking()
-                  .Select(e => new IdendityTypeResponse(
+                  .Select(e => new GateTypeResponse(
                           e.Id,
                           e.Name))
                   .ToListAsync(cancellationToken);
 
-                  var listResponse = new IdentityTypeListResponse(identityTypes);
+                  var listResponse = new GateTypeListResponse(gateTypes);
 
                   return listResponse;
               });

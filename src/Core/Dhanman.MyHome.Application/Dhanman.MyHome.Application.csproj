@@ -42,6 +42,7 @@
     <Folder Include="Features\Categories\Commands\" />
     <Folder Include="Features\Categories\Events\" />
     <Folder Include="Features\Companies\Queries\" />
+    <Folder Include="Features\IdendityTypes\" />
     <Folder Include="Features\ServiceProviderSubType\Commands\" />
     <Folder Include="Features\ServiceProviderSubType\Events\" />
   </ItemGroup>
