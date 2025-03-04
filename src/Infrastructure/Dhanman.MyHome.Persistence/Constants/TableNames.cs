@@ -1,4 +1,6 @@
-﻿namespace Dhanman.MyHome.Persistence.Constants;
+﻿using Dhanman.MyHome.Domain.Entities.TicketStatuses;
+
+namespace Dhanman.MyHome.Persistence.Constants;
 
 internal static class TableNames
 {
@@ -12,7 +14,7 @@ internal static class TableNames
 
     internal const string Apartments = "apartments";
 
-    internal const string ApartmentTypes = "apartment_types";    
+    internal const string ApartmentTypes = "apartment_types";
 
     internal const string Buildings = "buildings";
 
@@ -80,7 +82,7 @@ internal static class TableNames
 
     internal const string VerificationTypes = "verification_types";
 
-    internal const string ServiceProviderVerifications = "service_provider_verifications"; 
+    internal const string ServiceProviderVerifications = "service_provider_verifications";
 
     internal const string ServiceProviderSubTypes = "service_provider_sub_types";
 
@@ -95,7 +97,7 @@ internal static class TableNames
     internal const string ResidentUnits = "resident_units";
 
     internal const string Pins = "pins";
-    
+
     internal const string DeliveryCompanies = "delivery_companies";
 
     internal const string DeliveryCompanyCategories = "delivery_company_categories";
@@ -104,8 +106,14 @@ internal static class TableNames
 
     internal const string Companies = "companies";
 
-    internal const string Organizations = "organizations"; 
+    internal const string Organizations = "organizations";
 
     internal const string VisitorStatuses = "visitor_statuses";
+
+    internal const string TicketCategories = "ticket_categories";
+
+    internal const string TicketStatuses = "ticket_statuses";
+
+    internal const string TicketPriorities = "ticket_priorities";
 }
 
