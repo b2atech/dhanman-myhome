@@ -1,6 +1,6 @@
 ﻿namespace Dhanman.MyHome.Application.Contracts.TicketCatetories;
  
-public sealed class TicketCatetoryResponse
+public sealed class TicketCategoryResponse
 {
     #region Properties 
 
@@ -9,7 +9,7 @@ public sealed class TicketCatetoryResponse
     #endregion
 
     #region Constructor
-    public TicketCatetoryResponse(int id, string name)
+    public TicketCategoryResponse(int id, string name)
     {
         Id = id;
         Name = name;

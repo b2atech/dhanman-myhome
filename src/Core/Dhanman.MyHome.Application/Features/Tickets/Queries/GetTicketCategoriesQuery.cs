@@ -1,11 +1,11 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Constants;
-using Dhanman.MyHome.Application.Contracts.TicketCatetories;
+using Dhanman.MyHome.Application.Contracts.TicketCategories;
 
 namespace Dhanman.MyHome.Application.Features.Tickets.Queries;
 
-public class GetTicketCatetoriesQuery : ICacheableQuery<Result<TicketCatetoryListResponse>>
+public class GetTicketCategoriesQuery : ICacheableQuery<Result<TicketCategoryListResponse>>
 {
 
     #region Methodes

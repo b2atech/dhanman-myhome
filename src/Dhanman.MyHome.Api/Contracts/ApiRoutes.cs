@@ -280,17 +280,17 @@ public static class ApiRoutes
 
     public static class TicketStatuses 
     {
-        public const string GetTicketStatuses = apiVersion + "ticketStatuses";
+        public const string GetTicketStatuses = apiVersion + "ticket-statuses";
     }
 
-    public static class TicketCatetories
+    public static class TicketCategories
     {
-        public const string GetTicketCatetories = apiVersion + "ticketCatetories";
+        public const string GetTicketCategories = apiVersion + "ticket-categories";
     }
 
     public static class TicketPriorities
     {
-        public const string GetTicketPriorities = apiVersion + "ticketPriorities";
+        public const string GetTicketPriorities = apiVersion + "ticket-priorities";
     }
 
     public static class Tickets

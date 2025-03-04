@@ -3,6 +3,7 @@ using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.MyHome.Application.Contracts.TicketCategories;
 using Dhanman.MyHome.Application.Contracts.TicketCatetories;
 using Dhanman.MyHome.Application.Contracts.TicketPriorities;
 using Dhanman.MyHome.Application.Contracts.Tickets;
@@ -51,11 +52,11 @@ public class TicketsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
-    [HttpGet(ApiRoutes.TicketCatetories.GetTicketCatetories)]
-    [ProducesResponseType(typeof(TicketCatetoryListResponse), StatusCodes.Status200OK)]
+    [HttpGet(ApiRoutes.TicketCategories.GetTicketCategories)]
+    [ProducesResponseType(typeof(TicketCategoryListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetTicketCatetories() =>
-    await Result.Success(new GetTicketCatetoriesQuery())
+    public async Task<IActionResult> GetTicketCategories() =>
+    await Result.Success(new GetTicketCategoriesQuery())
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
