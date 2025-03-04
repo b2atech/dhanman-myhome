@@ -27,6 +27,7 @@ public class GetAllVisitorsQueryHandler : IQueryHandler<GetAllVisitorsQuery, Res
               {
                   var visitors = await _dbContext.SetInt<Visitor>()
                   .AsNoTracking()
+                  .Where(x => x.ApartmentId == query.ApartmentId)
                   .Select(e => new VisitorResponse(
                           e.Id,
                           e.FirstName,
