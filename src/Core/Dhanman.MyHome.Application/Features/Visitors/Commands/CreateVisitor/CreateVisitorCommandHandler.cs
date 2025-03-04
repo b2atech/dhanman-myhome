@@ -32,6 +32,7 @@ public class CreateVisitorCommandHandler : ICommandHandler<CreateVisitorCommand,
         var visitor = new Visitor
         (
             newId,
+            request.ApartmentId,
             request.FirstName,
             request.LastName,
             request.Email,

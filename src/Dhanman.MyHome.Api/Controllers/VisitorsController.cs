@@ -46,6 +46,7 @@ public class VisitorsController : ApiController
     public async Task<IActionResult> CreateVisitor([FromBody] CreateVisitorRequest? request) =>
      await Result.Create(request, Errors.General.BadRequest)
          .Map(value => new CreateVisitorCommand(
+             value.ApartmentId,
              value.FirstName,
              value.LastName,
              value.Email,

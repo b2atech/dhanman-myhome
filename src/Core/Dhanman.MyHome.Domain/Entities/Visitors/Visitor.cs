@@ -33,10 +33,10 @@ public class Visitor : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public Visitor(int id, string firstName, string? lastName, string email, string visitingFrom, string contactNumber, int visitorTypeId, string? vehicleNumber, int identityTypeId, string identityNumber)
+    public Visitor(int id, Guid apartmentId, string firstName, string? lastName, string email, string visitingFrom, string contactNumber, int visitorTypeId, string? vehicleNumber, int identityTypeId, string identityNumber)
     {
         Id = id;
-        //ApartmentId = apartmentId; Guid apartmentId,
+        ApartmentId = apartmentId; 
         FirstName = firstName;
         LastName = lastName;
         Email = email;
