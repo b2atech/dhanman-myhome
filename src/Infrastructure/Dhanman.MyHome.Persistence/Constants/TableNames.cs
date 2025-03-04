@@ -115,5 +115,7 @@ internal static class TableNames
     internal const string TicketStatuses = "ticket_statuses";
 
     internal const string TicketPriorities = "ticket_priorities";
+
+    internal const string Tickets = "tickets";
 }
 

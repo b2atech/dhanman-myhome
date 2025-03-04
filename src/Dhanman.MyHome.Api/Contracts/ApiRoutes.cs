@@ -277,4 +277,10 @@ public static class ApiRoutes
         public const string GetAllGateTypes = apiVersion + "gate-types";
 
     }
+
+    public static class Tickets
+    {
+        public const string CreateTicket = apiVersion + "tickets";
+
+    }
 }
