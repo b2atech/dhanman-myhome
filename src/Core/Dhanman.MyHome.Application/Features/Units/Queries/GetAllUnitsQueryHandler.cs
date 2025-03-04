@@ -3,12 +3,14 @@ using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Units;
 using Dhanman.MyHome.Domain;
+using Dhanman.MyHome.Domain.Entities.Buildings;
 using Dhanman.MyHome.Domain.Entities.Floors;
 using Dhanman.MyHome.Domain.Entities.OccupancyTypes;
 using Dhanman.MyHome.Domain.Entities.OccupantTypes;
 using Dhanman.MyHome.Domain.Entities.ResidentUnits;
 using Dhanman.MyHome.Domain.Entities.Units;
 using Dhanman.MyHome.Domain.Entities.UnitTypes;
+using Dhanman.MyHome.Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dhanman.MyHome.Application.Features.Units.Queries;
@@ -43,6 +45,14 @@ public class GetAllUnitsQueryHandler : IQueryHandler<GetAllUnitsQuery, Result<Un
                                      let numberOfMembers = _dbContext.SetInt<ResidentUnit>()
                                          .Where(ru => ru.UnitId == unit.Id)
                                          .Count()
+                                     join createdByUser in _dbContext.Set<User>()
+                                     on unit.CreatedBy
+                                     equals createdByUser.Id into createdByUserGroup
+                                     from createdByUser in createdByUserGroup.DefaultIfEmpty() // Left join for CreatedBy user
+                                     join modifiedByUser in _dbContext.Set<User>()
+                                         on unit.ModifiedBy
+                                         equals modifiedByUser.Id into modifiedByUserGroup
+                                     from modifiedByUser in modifiedByUserGroup.DefaultIfEmpty() // Left join for ModifiedBy user
                                      select new UnitResponse(
                                          unit.Id,
                                          unit.Name,
@@ -63,7 +73,10 @@ public class GetAllUnitsQueryHandler : IQueryHandler<GetAllUnitsQuery, Result<Un
                                          unit.CreatedOnUtc,
                                          unit.ModifiedOnUtc,
                                          unit.CreatedBy,
-                                         unit.ModifiedBy))
+                                         unit.ModifiedBy,
+                                         $"{createdByUser.FirstName.Value} {createdByUser.LastName.Value}",
+                                         $"{modifiedByUser.FirstName.Value} {modifiedByUser.LastName.Value}"
+                                         ))
                                     .ToListAsync(cancellationToken);
 
                   var listResponse = new UnitListResponse(units);

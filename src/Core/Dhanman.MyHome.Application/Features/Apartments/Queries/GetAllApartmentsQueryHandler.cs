@@ -6,6 +6,7 @@ using Dhanman.MyHome.Domain.Entities.Apartments;
 using Microsoft.EntityFrameworkCore;
 using Dhanman.MyHome.Domain.Entities.AppartmentTypes;
 using Dhanman.MyHome.Domain;
+using Dhanman.MyHome.Domain.Entities.Users;
 
 namespace Dhanman.MyHome.Application.Features.Apartments.Queries;
 
@@ -44,7 +45,14 @@ public class GetAllApartmentsQueryHandler : IQueryHandler<GetAllApartmentsQuery,
                           e.CreatedBy,
                           e.CreatedOnUtc,
                           e.ModifiedBy,
-                          e.ModifiedOnUtc  ))
+                          e.ModifiedOnUtc,
+                      _dbContext.Set<User>()
+                              .Where(p => p.Id == e.CreatedBy)
+                              .Select(p => p.FirstName + " " + p.LastName).FirstOrDefault(),
+                      _dbContext.Set<User>()
+                              .Where(p => p.Id == e.ModifiedBy)
+                              .Select(p => p.FirstName + " " + p.LastName).FirstOrDefault()
+                        ))
                   .ToListAsync(cancellationToken);
 
                   var listResponse = new ApartmentListResponse(apartments);
