@@ -278,6 +278,21 @@ public static class ApiRoutes
 
     }
 
+    public static class TicketStatuses 
+    {
+        public const string GetTicketStatuses = apiVersion + "ticketStatuses";
+    }
+
+    public static class TicketCatetories
+    {
+        public const string GetTicketCatetories = apiVersion + "ticketCatetories";
+    }
+
+    public static class TicketPriorities
+    {
+        public const string GetTicketPriorities = apiVersion + "ticketPriorities";
+    }
+
     public static class Tickets
     {
         public const string CreateTicket = apiVersion + "tickets";
