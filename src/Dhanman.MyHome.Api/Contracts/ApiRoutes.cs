@@ -141,9 +141,9 @@ public static class ApiRoutes
     {
         public const string CreateVisitor = apiVersion + "visitor";
 
-        public const string GetAllVisitors = apiVersion + "visitors";
+        public const string GetAllVisitors = apiVersion + "visitors/{apartmentId:guid}";
 
-        public const string GetAllVisitorNames = apiVersion + "visitor-names";
+        public const string GetAllVisitorNames = apiVersion + "visitor-names/{apartmentId:guid}";
 
         public const string GetVisitorById = apiVersion + "visitor/{id:int}";
 
