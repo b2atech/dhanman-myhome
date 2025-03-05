@@ -4,6 +4,7 @@ public class CreateTicketRequest
 {
     #region Properties
     public Guid Id { get; set; }
+    public Guid ApartmentId { get; set; }
     public int UnitId { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }

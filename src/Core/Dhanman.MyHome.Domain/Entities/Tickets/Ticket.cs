@@ -26,10 +26,10 @@ public class Ticket : Entity, IAuditableEntity, ISoftDeletableEntity
     #region Constructors
     public Ticket() { }
 
-    public Ticket(Guid id,  int unitId, string title, string description, int ticketCategoryId, int ticketPriorityId, int ticketStatusId, int? ticketAssignedTo)
+    public Ticket(Guid id, Guid apartmentId, int unitId, string title, string description, int ticketCategoryId, int ticketPriorityId, int ticketStatusId, int? ticketAssignedTo)
     {
         Id = id;
-        //ApartmentId = apartmentId;Guid apartmentId,
+        ApartmentId = apartmentId;
         UnitId = unitId;
         Title = title;
         Description = description;

@@ -28,6 +28,7 @@ public class CreateTicketCommandHandler : ICommandHandler<CreateTicketCommand, R
     {
         var ticketRequest = new Ticket(
             request.Id,
+            request.ApartmentId,
             request.UnitId,
             request.Title,
             request.Description,
