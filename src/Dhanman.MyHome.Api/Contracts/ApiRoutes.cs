@@ -295,7 +295,7 @@ public static class ApiRoutes
 
     public static class Tickets
     {
-        public const string CreateTicket = apiVersion + "tickets";
-
+        public const string CreateTicket = apiVersion + "tickets"; 
+        public const string GetAllTickets = apiVersion + "tickets/{apartmentId:guid}";
     }
 }
