@@ -31,6 +31,7 @@ public class TicketsController : ApiController
      await Result.Create(request, Errors.General.BadRequest)
          .Map(value => new CreateTicketCommand(
              value.Id,
+             value.ApartmentId,
              value.UnitId,
              value.Title,
              value.Description,
