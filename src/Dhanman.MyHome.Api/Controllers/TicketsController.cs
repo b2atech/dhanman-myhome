@@ -4,7 +4,6 @@ using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.TicketCategories;
-using Dhanman.MyHome.Application.Contracts.TicketCatetories;
 using Dhanman.MyHome.Application.Contracts.TicketPriorities;
 using Dhanman.MyHome.Application.Contracts.Tickets;
 using Dhanman.MyHome.Application.Contracts.TicketStatuses;
@@ -42,6 +41,14 @@ public class TicketsController : ApiController
          ))
          .Bind(command => Mediator.Send(command))
          .Match(Ok, BadRequest);
+
+    [HttpGet(ApiRoutes.Tickets.GetAllTickets)]
+    [ProducesResponseType(typeof(TicketListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllTickets(Guid apartmentId) =>
+    await Result.Success(new GetAllTicketsQuery(apartmentId))
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
     #endregion
 
     #region Status Catetory priority 
