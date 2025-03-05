@@ -14,6 +14,8 @@ internal sealed class TicketConfiguration : IEntityTypeConfiguration<Ticket>
 
         builder.HasKey(ticket => ticket.Id);
 
+        builder.Property(ticket => ticket.ApartmentId).HasColumnName("apartment_id");
+
         builder.Property(ticket => ticket.UnitId).HasColumnType("integer").IsRequired();
 
         builder.Property(ticket => ticket.Title).HasMaxLength(255).IsRequired();
