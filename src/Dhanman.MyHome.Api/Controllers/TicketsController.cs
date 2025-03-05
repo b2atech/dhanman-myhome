@@ -49,6 +49,14 @@ public class TicketsController : ApiController
     await Result.Success(new GetAllTicketsQuery(apartmentId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
+
+    [HttpGet(ApiRoutes.Tickets.GetTicketById)]
+    [ProducesResponseType(typeof(TicketResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetTicketById(Guid id) =>
+    await Result.Success(new GetTicketByIdQuery(id))
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
     #endregion
 
     #region Status Catetory priority 

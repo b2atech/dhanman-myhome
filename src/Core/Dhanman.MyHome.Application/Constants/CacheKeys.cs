@@ -290,7 +290,9 @@ public static class CacheKeys
         public const string CacheKeyPrefix = "tickets-{0}";
 
         public const string TicketList = CacheKeyPrefix + "-list-{1}";
-         
+
+        public const string TicketById = CacheKeyPrefix + "-by-ticketId-{1}";
+
     }
     #endregion  
 
