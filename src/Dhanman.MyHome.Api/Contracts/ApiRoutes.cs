@@ -297,5 +297,6 @@ public static class ApiRoutes
     {
         public const string CreateTicket = apiVersion + "tickets"; 
         public const string GetAllTickets = apiVersion + "tickets/{apartmentId:guid}";
+        public const string GetTicketById = apiVersion + "ticket/{id:guid}";
     }
 }
