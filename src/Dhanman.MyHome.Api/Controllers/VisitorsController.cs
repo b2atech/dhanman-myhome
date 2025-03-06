@@ -2,13 +2,16 @@
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
+using Dhanman.MyHome.Application.Contracts.Buildings;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.VisitorLogs;
 using Dhanman.MyHome.Application.Contracts.Visitors;
+using Dhanman.MyHome.Application.Features.Buildings.Commands.UpdateBuilding;
 using Dhanman.MyHome.Application.Features.VisitorLogs.Commands.CreateVisitorLog;
 using Dhanman.MyHome.Application.Features.VisitorLogs.Queries;
 using Dhanman.MyHome.Application.Features.Visitors.Commands.CreateVisitor;
 using Dhanman.MyHome.Application.Features.Visitors.Commands.DeleteVisitor;
+using Dhanman.MyHome.Application.Features.Visitors.Commands.UpdateVisitor;
 using Dhanman.MyHome.Application.Features.Visitors.Queries;
 using Dhanman.MyHome.Domain;
 using MediatR;
@@ -59,6 +62,36 @@ public class VisitorsController : ApiController
          ))
          .Bind(command => Mediator.Send(command))
          .Match(Ok, BadRequest);
+
+    [HttpPut(ApiRoutes.Visitors.UpdateVisitor)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateVisitor([FromBody] UpdateVisitorRequest? request)
+    {
+        var result = await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new UpdateVisitorCommand(
+                 value.Id,
+                 value.ApartmentId,
+                 value.FirstName,
+                 value.LastName,
+                 value.Email,
+                 value.VisitingFrom,
+                 value.ContactNumber,
+                 value.VisitorTypeId,
+                 value.VehicleNumber,
+                 value.IdentityTypeId,
+                 value.IdentityNumber
+                ))
+            .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
 
     [HttpDelete(ApiRoutes.Visitors.DeleteVisitorById)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

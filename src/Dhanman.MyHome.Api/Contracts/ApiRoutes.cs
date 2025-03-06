@@ -160,6 +160,8 @@ public static class ApiRoutes
         public const string GetVisitorTypes = apiVersion + "visitor-types"; 
 
         public const string GetVisitorIdentityTypes = apiVersion + "visitor-identity-types";
+
+        public const string UpdateVisitor = apiVersion + "visitor";
     }
 
     public static class Events
