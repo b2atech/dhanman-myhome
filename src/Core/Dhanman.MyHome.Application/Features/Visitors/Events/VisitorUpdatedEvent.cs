@@ -4,8 +4,12 @@ namespace Dhanman.MyHome.Application.Features.Visitors.Events;
 
 public class VisitorUpdatedEvent : IEvent
 {
+    #region Properties
     public int VisitorId { get; set; }
+    #endregion
 
-    public VisitorUpdatedEvent(int gateId) => VisitorId = gateId;
-
+    #region Constructors
+    public VisitorUpdatedEvent(int visitorId) => VisitorId = visitorId;
+    #endregion
 }
+ 
