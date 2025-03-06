@@ -3,8 +3,10 @@ using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.MyHome.Application.Contracts.TicketStatuses;
 using Dhanman.MyHome.Application.Contracts.VisitorLogs;
 using Dhanman.MyHome.Application.Contracts.Visitors;
+using Dhanman.MyHome.Application.Features.Tickets.Queries;
 using Dhanman.MyHome.Application.Features.VisitorLogs.Commands.CreateVisitorLog;
 using Dhanman.MyHome.Application.Features.VisitorLogs.Queries;
 using Dhanman.MyHome.Application.Features.Visitors.Commands.CreateVisitor;
@@ -111,5 +113,23 @@ public class VisitorsController : ApiController
                 value.ExitTime))
             .Bind(command => Mediator.Send(command))
            .Match(Ok, BadRequest);
+    #endregion
+
+    #region VisitorTypes Identity
+    [HttpGet(ApiRoutes.Visitors.GetVisitorTypes)]
+    [ProducesResponseType(typeof(VisitorTypeListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetVisitorTypes() =>
+    await Result.Success(new GetVisitorTypesQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
+    [HttpGet(ApiRoutes.Visitors.GetVisitorIdentityTypes)]
+    [ProducesResponseType(typeof(VisitorIdentityTypeListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetVisitorIdentityTypes() =>
+    await Result.Success(new GetVisitorIdentityTypesQuery())
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
     #endregion
 }

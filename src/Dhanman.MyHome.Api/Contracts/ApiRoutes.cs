@@ -156,6 +156,10 @@ public static class ApiRoutes
         public const string GetAllVisitorLogs = apiVersion + "apartments/{apartmentId:guid}/visitors/{visitorId:int}/visitorTypeIds/{visitorTypeId:int}/visitorLogs";
 
         public const string GetVisitorsByUnitId = apiVersion + "apartments/{apartmentId:guid}/units/{unitId:int}/visitorsByUnitId";
+
+        public const string GetVisitorTypes = apiVersion + "visitor-types"; 
+
+        public const string GetVisitorIdentityTypes = apiVersion + "visitor-identity-types";
     }
 
     public static class Events
