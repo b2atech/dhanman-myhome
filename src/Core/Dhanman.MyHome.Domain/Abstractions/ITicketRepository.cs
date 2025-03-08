@@ -10,6 +10,8 @@ public interface ITicketRepository
     Task<Ticket?> GetByIdAsync(Guid id);
     void Insert(Ticket ticket);
     void Update(Ticket ticket);
+    Task<List<Ticket>> UpdateStatus(Guid apartmentId, int ticketStatusId, List<Guid> ticketIds, Guid modifiedBy, CancellationToken cancellationToken);
+
     void Delete(Ticket ticket);
 
     #endregion
