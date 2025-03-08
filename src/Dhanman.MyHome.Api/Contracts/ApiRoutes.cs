@@ -287,6 +287,18 @@ public static class ApiRoutes
     public static class TicketStatuses 
     {
         public const string GetTicketStatuses = apiVersion + "ticket-statuses";
+
+        public const string UpdateTicketStatusAssign = apiVersion + "ticket-statuses/assign";
+
+        public const string UpdateTicketStatusResolved = apiVersion + "ticket-statuses/resolved";
+
+        public const string UpdateTicketStatusClosed = apiVersion + "ticket-statuses/closed";
+
+        public const string UpdateTicketStatusCancelled = apiVersion + "ticket-statuses/cancelled";
+
+        public const string UpdateTicketStatusRejected = apiVersion + "ticket-statuses/rejected";
+
+
     }
 
     public static class TicketCategories

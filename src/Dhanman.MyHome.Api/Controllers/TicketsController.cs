@@ -2,6 +2,7 @@
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
+using Dhanman.MyHome.Application.Constants;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.TicketCategories;
 using Dhanman.MyHome.Application.Contracts.TicketPriorities;
@@ -9,6 +10,7 @@ using Dhanman.MyHome.Application.Contracts.Tickets;
 using Dhanman.MyHome.Application.Contracts.TicketStatuses;
 using Dhanman.MyHome.Application.Features.Tickets.Commands.CreateTicket;
 using Dhanman.MyHome.Application.Features.Tickets.Queries;
+using Dhanman.MyHome.Application.Features.TicketStatuses.Commands.UpdateTicketNextStatus;
 using Dhanman.MyHome.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -83,5 +85,123 @@ public class TicketsController : ApiController
     await Result.Success(new GetTicketPrioritiesQuery())
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
+    #endregion
+
+    #region Ticket Status
+    [HttpPut(ApiRoutes.TicketStatuses.UpdateTicketStatusAssign)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateTicketStatusAssign([FromBody] UpdateTicketStatusRequest? request)
+    {
+        var result = await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new UpdateTicketStatusCommand(
+                value.TicketIds,
+                value.ApartmentId,
+                TicketStatuses.IN_PROGRESS,
+                UserContextService.GetCurrentUserId()
+            ))
+            .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
+
+    [HttpPut(ApiRoutes.TicketStatuses.UpdateTicketStatusResolved)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateTicketStatusResolved([FromBody] UpdateTicketStatusRequest? request)
+    {
+        var result = await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new UpdateTicketStatusCommand(
+                value.TicketIds,
+                value.ApartmentId,
+                TicketStatuses.RESOLVED,
+                UserContextService.GetCurrentUserId()
+            ))
+            .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
+
+    [HttpPut(ApiRoutes.TicketStatuses.UpdateTicketStatusClosed)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateTicketStatusClosed([FromBody] UpdateTicketStatusRequest? request)
+    {
+        var result = await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new UpdateTicketStatusCommand(
+                value.TicketIds,
+                value.ApartmentId,
+                TicketStatuses.CLOSED,
+                UserContextService.GetCurrentUserId()
+            ))
+            .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
+
+    [HttpPut(ApiRoutes.TicketStatuses.UpdateTicketStatusCancelled)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateTicketStatusCancelled([FromBody] UpdateTicketStatusRequest? request)
+    {
+        var result = await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new UpdateTicketStatusCommand(
+                value.TicketIds,
+                value.ApartmentId,
+                TicketStatuses.RESOLVED,
+                UserContextService.GetCurrentUserId()
+            ))
+            .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
+
+    [HttpPut(ApiRoutes.TicketStatuses.UpdateTicketStatusRejected)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateTicketStatusRejected([FromBody] UpdateTicketStatusRequest? request)
+    {
+        var result = await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new UpdateTicketStatusCommand(
+                value.TicketIds,
+                value.ApartmentId,
+                TicketStatuses.REJECTED,
+                UserContextService.GetCurrentUserId()
+            ))
+            .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
+
     #endregion
 }
