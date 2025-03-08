@@ -51,9 +51,9 @@ public sealed class TicketRepository : ITicketRepository
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var tickets = _dbContext.Set<Ticket>()
+        var tickets = await _dbContext.Set<Ticket>()
         .Where(x => ticketIds.Contains(x.Id))
-        .ToList();
+        .ToListAsync();
 
         return tickets.Where(x => x.TicketStatusId == ticketStatusId).ToList();
     }
