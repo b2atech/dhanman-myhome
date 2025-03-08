@@ -10,14 +10,10 @@ namespace Dhanman.MyHome.Application.Features.TicketStatuses.Commands.UpdateTick
 public class UpdateTicketStatusCommandHandler : ICommandHandler<UpdateTicketStatusCommand, Result<EntityUpdatedResponse>>
 {
     private readonly ITicketRepository _ticketRepository;
-    private readonly IApplicationDbContext _dbContext;
-    private readonly IMediator _mediator;
 
-    public UpdateTicketStatusCommandHandler(ITicketRepository ticketRepository, IApplicationDbContext dbContext, IMediator mediator)
+    public UpdateTicketStatusCommandHandler(ITicketRepository ticketRepository)
     {
         _ticketRepository = ticketRepository;
-        _dbContext = dbContext;
-        _mediator = mediator;
     }
 
     public async Task<Result<EntityUpdatedResponse>> Handle(UpdateTicketStatusCommand request, CancellationToken cancellationToken)
