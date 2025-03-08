@@ -18,7 +18,7 @@ public class UpdateTicketStatusCommandHandler : ICommandHandler<UpdateTicketStat
 
     public async Task<Result<EntityUpdatedResponse>> Handle(UpdateTicketStatusCommand request, CancellationToken cancellationToken)
     {
-        var tickets = await _ticketRepository.UpdateStatus(request.ApartmentId, request.TicketStatusId, request.TicketIds, request.CreatedBy, cancellationToken);
+        await _ticketRepository.UpdateStatus(request.ApartmentId, request.TicketStatusId, request.TicketIds, request.CreatedBy, cancellationToken);
 
         var firstTicketId = request.TicketIds.FirstOrDefault();
         return Result.Success(new EntityUpdatedResponse(firstTicketId));
