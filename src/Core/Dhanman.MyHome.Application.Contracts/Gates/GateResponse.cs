@@ -19,9 +19,11 @@ public sealed class GateResponse
     public bool IsStaffAllowed { get; }
     public bool IsVendorAllowed { get; }
     public Guid CreatedBy { get; }
-    public DateTime CreatedOnUtc { get; }
     public Guid? ModifiedBy { get; }
+    public DateTime CreatedOnUtc { get; }
     public DateTime? ModifiedOnUtc { get; }
+    public string CreatedByName { get; }
+    public string? ModifiedByName { get; }
 
     #endregion
 
@@ -41,7 +43,12 @@ public sealed class GateResponse
          bool isStaffAllowed,
          bool isVendorAllowed,
          Guid createdBy,
-         DateTime createdOnUtc)
+         Guid? modifiedBy,
+         DateTime createdOnUtc,
+         DateTime? modifiedOnUtc,
+         string createdByName,
+         string? modifiedByName
+        )
     {
         Id = id;
         Name = name;
@@ -58,7 +65,12 @@ public sealed class GateResponse
         IsStaffAllowed = isStaffAllowed;
         IsVendorAllowed = isVendorAllowed;
         CreatedBy = createdBy;
+        ModifiedBy = modifiedBy;
         CreatedOnUtc = createdOnUtc;
+        ModifiedOnUtc = modifiedOnUtc;
+        CreatedByName = createdByName;
+        ModifiedByName = modifiedByName;
+
     }
     #endregion
 

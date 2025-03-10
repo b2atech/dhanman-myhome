@@ -24,10 +24,12 @@ public sealed class UnitResponse
     public DateTime? ModifiedOnUtc { get; }
     public Guid CreatedBy { get; }
     public Guid? ModifiedBy { get; }
+    public string CreatedByName { get; }
+    public string? ModifiedByName { get; }
     #endregion
 
     #region Constructor
-    public UnitResponse(int id, string name, int floorId, string floorNumber,int buildingId, int unitTypeId, string unitType,Guid customerId, int occupantTypeId, string occupantType, int occupancyTypeId, string occupancyType, int numberOfMembers, decimal area, decimal bHKType, int phoneExtention, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy)
+    public UnitResponse(int id, string name, int floorId, string floorNumber,int buildingId, int unitTypeId, string unitType,Guid customerId, int occupantTypeId, string occupantType, int occupancyTypeId, string occupancyType, int numberOfMembers, decimal area, decimal bHKType, int phoneExtention, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy, string createdByName, string? modifiedByName)
     {
         Id = id;
         Name = name;
@@ -49,9 +51,11 @@ public sealed class UnitResponse
         ModifiedOnUtc = modifiedOnUtc;
         CreatedBy = createdBy;
         ModifiedBy = modifiedBy;
+        CreatedByName = createdByName;
+        ModifiedByName = modifiedByName;
     }
 
-    public UnitResponse(int id, string name, int floorId, int buildingId, int unitTypeId, Guid customerId, int occupantTypeId, int occupancyTypeId, decimal area, decimal bHKType, int phoneExtention, int eIntercom, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy)
+    public UnitResponse(int id, string name, int floorId, int buildingId, int unitTypeId, Guid customerId, int occupantTypeId, int occupancyTypeId, decimal area, decimal bHKType, int phoneExtention, int eIntercom, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy, string createdByName, string? modifiedByName)
  {
         Id = id;
         Name = name;
@@ -69,6 +73,9 @@ public sealed class UnitResponse
         ModifiedOnUtc = modifiedOnUtc;
         CreatedBy = createdBy;
         ModifiedBy = modifiedBy;
+        CreatedByName = createdByName;
+        ModifiedByName = modifiedByName;
+
     }
 
 

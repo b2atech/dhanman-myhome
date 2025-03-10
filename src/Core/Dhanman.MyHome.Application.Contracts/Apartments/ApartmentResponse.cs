@@ -17,11 +17,13 @@ public sealed class ApartmentResponse
     public DateTime CreatedOnUtc { get; }
     public Guid? ModifiedBy { get; }
     public DateTime? ModifiedOnUtc { get; }
+    public string CreatedByName { get; }
+    public string? ModifiedByName { get; }
 
     #endregion
 
     #region Constructor
-    public ApartmentResponse(Guid id, string name, int apartmentTypeId, string apartmentTypeName, Guid addressId, string phone, string pAN, string tAN, string associationName, Guid createdBy, DateTime createdOnUtc, Guid? modifiedBy, DateTime? modifiedOnUtc)
+    public ApartmentResponse(Guid id, string name, int apartmentTypeId, string apartmentTypeName, Guid addressId, string phone, string pAN, string tAN, string associationName, Guid createdBy, DateTime createdOnUtc, Guid? modifiedBy, DateTime? modifiedOnUtc, string createdByName, string? modifiedByName)
     {
         Id = id;
         Name = name;
@@ -36,6 +38,8 @@ public sealed class ApartmentResponse
         CreatedOnUtc = createdOnUtc;
         ModifiedBy = modifiedBy;
         ModifiedOnUtc = modifiedOnUtc;
+        CreatedByName = createdByName;
+        ModifiedByName = modifiedByName;
     }
     #endregion
 
