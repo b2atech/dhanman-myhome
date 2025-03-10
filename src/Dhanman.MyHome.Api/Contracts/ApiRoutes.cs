@@ -141,9 +141,9 @@ public static class ApiRoutes
     {
         public const string CreateVisitor = apiVersion + "visitor";
 
-        public const string GetAllVisitors = apiVersion + "visitors";
+        public const string GetAllVisitors = apiVersion + "visitors/{apartmentId:guid}";
 
-        public const string GetAllVisitorNames = apiVersion + "visitor-names";
+        public const string GetAllVisitorNames = apiVersion + "visitor-names/{apartmentId:guid}";
 
         public const string GetVisitorById = apiVersion + "visitor/{id:int}";
 
@@ -156,6 +156,12 @@ public static class ApiRoutes
         public const string GetAllVisitorLogs = apiVersion + "apartments/{apartmentId:guid}/visitors/{visitorId:int}/visitorTypeIds/{visitorTypeId:int}/visitorLogs";
 
         public const string GetVisitorsByUnitId = apiVersion + "apartments/{apartmentId:guid}/units/{unitId:int}/visitorsByUnitId";
+
+        public const string GetVisitorTypes = apiVersion + "visitor-types"; 
+
+        public const string GetVisitorIdentityTypes = apiVersion + "visitor-identity-types";
+
+        public const string UpdateVisitor = apiVersion + "visitor";
     }
 
     public static class Events
@@ -276,5 +282,39 @@ public static class ApiRoutes
     {
         public const string GetAllGateTypes = apiVersion + "gate-types";
 
+    }
+
+    public static class TicketStatuses 
+    {
+        public const string GetTicketStatuses = apiVersion + "ticket-statuses";
+
+        public const string UpdateTicketStatusAssign = apiVersion + "ticket-statuses/assign";
+
+        public const string UpdateTicketStatusResolved = apiVersion + "ticket-statuses/resolved";
+
+        public const string UpdateTicketStatusClosed = apiVersion + "ticket-statuses/closed";
+
+        public const string UpdateTicketStatusCancelled = apiVersion + "ticket-statuses/cancelled";
+
+        public const string UpdateTicketStatusRejected = apiVersion + "ticket-statuses/rejected";
+
+
+    }
+
+    public static class TicketCategories
+    {
+        public const string GetTicketCategories = apiVersion + "ticket-categories";
+    }
+
+    public static class TicketPriorities
+    {
+        public const string GetTicketPriorities = apiVersion + "ticket-priorities";
+    }
+
+    public static class Tickets
+    {
+        public const string CreateTicket = apiVersion + "tickets"; 
+        public const string GetAllTickets = apiVersion + "tickets/{apartmentId:guid}";
+        public const string GetTicketById = apiVersion + "ticket/{id:guid}";
     }
 }
