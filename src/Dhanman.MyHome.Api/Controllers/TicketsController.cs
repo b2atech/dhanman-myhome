@@ -9,6 +9,7 @@ using Dhanman.MyHome.Application.Contracts.TicketPriorities;
 using Dhanman.MyHome.Application.Contracts.Tickets;
 using Dhanman.MyHome.Application.Contracts.TicketStatuses;
 using Dhanman.MyHome.Application.Features.Tickets.Commands.CreateTicket;
+using Dhanman.MyHome.Application.Features.Tickets.Commands.UpdateTicket;
 using Dhanman.MyHome.Application.Features.Tickets.Queries;
 using Dhanman.MyHome.Application.Features.TicketStatuses.Commands.UpdateTicketNextStatus;
 using Dhanman.MyHome.Domain;
@@ -59,6 +60,28 @@ public class TicketsController : ApiController
     await Result.Success(new GetTicketByIdQuery(id))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
+
+    [HttpPut(ApiRoutes.Tickets.UpdateTicketServiceProvider)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateTicketServiceProvider([FromBody] UpdateTicketServiceProvicerRequest? request)
+    {
+        var result = await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new UpdateTicketServiceProviderCommand(
+                value.TicketId,
+                value.ServiceProviderId,
+                UserContextService.GetCurrentUserId()
+            ))
+            .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
     #endregion
 
     #region Status Catetory priority 
