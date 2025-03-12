@@ -14,9 +14,9 @@ public class Ticket : Entity, IAuditableEntity, ISoftDeletableEntity
     public int TicketCategoryId { get; set; }
     public int TicketPriorityId { get; set; }
     public int TicketStatusId { get; set; }
-    public int? TicketAssignedTo { get; private set; }
-    public Guid CreatedBy { get; protected set; }
-    public Guid? ModifiedBy { get; protected set; }
+    public int? TicketAssignedTo { get; set; }
+    public Guid CreatedBy { get; set; }
+    public Guid? ModifiedBy { get;  set; }
     public DateTime CreatedOnUtc { get; }
     public DateTime? ModifiedOnUtc { get; protected set; }
     public DateTime? DeletedOnUtc { get; }

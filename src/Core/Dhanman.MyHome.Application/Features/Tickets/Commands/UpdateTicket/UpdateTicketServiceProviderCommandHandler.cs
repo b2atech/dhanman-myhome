@@ -34,7 +34,6 @@ public class UpdateTicketServiceProviderCommandHandler : ICommandHandler<UpdateT
             throw new TicketNotFoundException(request.TicketId);
         }
         updateticket.TicketAssignedTo = request.ServiceProviderId > 0 ? request.ServiceProviderId : updateticket.TicketAssignedTo;
-        updateticket.ModifiedOnUtc = DateTime.UtcNow;
 
         _ticketRepository.Update(updateticket);
 
