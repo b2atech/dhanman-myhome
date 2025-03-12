@@ -25,7 +25,7 @@ public sealed class TicketRepository : ITicketRepository
     #region Methods
     public void Insert(Ticket ticket) => _dbContext.Insert(ticket);
 
-    public void Update(Ticket ticket) => _dbContext.Insert(ticket);
+    public void Update(Ticket ticket) => _dbContext.Update(ticket);
 
     public void Delete(Ticket ticket)
     {
