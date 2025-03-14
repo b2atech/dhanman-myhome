@@ -24,6 +24,8 @@ internal sealed class ResidentConfiguration : IEntityTypeConfiguration<Resident>
 
         builder.Property(resident => resident.PermanentAddressId).HasColumnName("permanent_address_id").IsRequired(false);
 
+        builder.Property(resident => resident.UserId).HasColumnName("user_id").IsRequired(true);
+
         builder.Property(resident => resident.ResidentTypeId).HasColumnName("resident_type_id").IsRequired();
 
         builder.Property(resident => resident.OccupancyStatusId).HasColumnName("occupancy_status_id").IsRequired();
