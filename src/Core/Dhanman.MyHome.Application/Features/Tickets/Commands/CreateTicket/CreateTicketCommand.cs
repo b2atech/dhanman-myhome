@@ -15,7 +15,7 @@ public class CreateTicketCommand : ICommand<Result<EntityCreatedResponse>>
     public int TicketCategoryId { get; set; }
     public int TicketPriorityId { get; set; }
     public int TicketStatusId { get; set; }
-    public int? TicketAssignedTo { get; private set; }
+    public int? TicketAssignedTo { get; set; }
     #endregion
 
     #region Constructor
