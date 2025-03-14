@@ -295,6 +295,8 @@ public static class CacheKeys
 
         public const string TicketById = CacheKeyPrefix + "-by-ticketId-{1}";
 
+        public const string ServiceProviderCategoryList = CacheKeyPrefix + "-list-{1}";
+
     }
     #endregion  
 

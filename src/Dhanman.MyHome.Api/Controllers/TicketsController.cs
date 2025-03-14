@@ -82,6 +82,14 @@ public class TicketsController : ApiController
             return BadRequest(result.Error);
         }
     }
+
+    [HttpGet(ApiRoutes.Tickets.GetAllServiceProviderTicketCategories)]
+    [ProducesResponseType(typeof(ServiceProviderTicketCategoryListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllServiceProviderTicketCategories() =>
+   await Result.Success(new GetAllServiceProviderTicketCategoryQuery())
+   .Bind(query => Mediator.Send(query))
+   .Match(Ok, NotFound);
     #endregion
 
     #region Status Catetory priority 
