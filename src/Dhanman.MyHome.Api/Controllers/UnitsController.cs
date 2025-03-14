@@ -36,6 +36,7 @@ public class UnitsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    //need to verify VERB with actual use
     [HttpPost(ApiRoutes.Units.GetAllUnitDetails)]
     [ProducesResponseType(typeof(UnitDetailListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -48,6 +49,7 @@ public class UnitsController : ApiController
                 .Bind(command => Mediator.Send(command))
                .Match(Ok, BadRequest);
 
+    //need to verify VERB with actual use
     [HttpPost(ApiRoutes.Units.GetUnitByFloorId)]
     [ProducesResponseType(typeof(UnitByFloorIdListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -75,6 +77,15 @@ public class UnitsController : ApiController
     await Result.Success(new GetUnitByIdQuery(id))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
+
+
+    [HttpGet(ApiRoutes.Units.GetUnitIdByUserId)]
+    [ProducesResponseType(typeof(GetUnitIdbyUserIdResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetUnitIdByUserId(Guid userId, Guid apartmentId) =>
+    await Result.Success(new GetUnitIdByUserIdQuery(userId,apartmentId))
+    .Bind(query => Mediator.Send(query))
+    .Match(unitId => Ok(unitId), NotFound);
 
     [HttpPost(ApiRoutes.Units.CreateUnits)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
