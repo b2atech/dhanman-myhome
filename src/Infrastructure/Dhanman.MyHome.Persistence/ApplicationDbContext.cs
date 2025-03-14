@@ -38,8 +38,6 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
 
     }
 
-
-
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         DateTime utcNow = _dateTime.UtcNow;

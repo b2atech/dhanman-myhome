@@ -119,5 +119,10 @@ internal static class TableNames
     internal const string Tickets = "tickets";
 
     internal const string TicketWorkFlow = "ticket_workflow";
+
+    internal const string ServiceProviderTicketCategories = "service_provider_ticket_categories";
+
+    internal const string ServiceProvidersTicketCategories = "service_providers_ticket_categories";
+
 }
 
