@@ -3,6 +3,7 @@ using System;
 using Dhanman.MyHome.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dhanman.MyHome.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250313133958_addUserIdInResidentTable")]
+    partial class addUserIdInResidentTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1712,45 +1715,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("service_provider_sub_types", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.ServiceProviderTicketCategories.ServiceProviderTicketCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("DeletedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("deleted_on_utc");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("is_deleted");
-
-                    b.Property<int>("ServiceProviderId")
-                        .HasColumnType("integer")
-                        .HasColumnName("service_provider_id");
-
-                    b.Property<int>("TicketCategoryId")
-                        .HasColumnType("integer")
-                        .HasColumnName("ticket_category_id");
-
-                    b.HasKey("Id")
-                        .HasName("pk_service_provider_ticket_categories");
-
-                    b.HasIndex("ServiceProviderId")
-                        .HasDatabaseName("ix_service_provider_ticket_categories_service_provider_id");
-
-                    b.HasIndex("TicketCategoryId")
-                        .HasDatabaseName("ix_service_provider_ticket_categories_ticket_category_id");
-
-                    b.ToTable("service_provider_ticket_categories", (string)null);
-                });
-
             modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.ServiceProviderTypes.ServiceProviderType", b =>
                 {
                     b.Property<int>("Id")
@@ -3009,23 +2973,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasName("pk_visitors");
 
                     b.ToTable("visitors", (string)null);
-                });
-
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.ServiceProviderTicketCategories.ServiceProviderTicketCategory", b =>
-                {
-                    b.HasOne("Dhanman.MyHome.Domain.Entities.ServiceProviders.ServiceProvider", null)
-                        .WithMany()
-                        .HasForeignKey("ServiceProviderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_service_provider_ticket_categories_service_providers_servic");
-
-                    b.HasOne("Dhanman.MyHome.Domain.Entities.TicketCategories.TicketCategory", null)
-                        .WithMany()
-                        .HasForeignKey("TicketCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_service_provider_ticket_categories_ticket_category_ticket_c");
                 });
 
             modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Users.User", b =>

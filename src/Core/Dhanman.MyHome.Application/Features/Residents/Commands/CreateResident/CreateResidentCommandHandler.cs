@@ -72,10 +72,12 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
 
             int nextresidentId = _residentRepository.GetTotalRecordsCount() + 1;
 
-            resident = new Resident(nextresidentId, request.ApartmentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, permanentAddressId, request.ResidentTypeId, request.OccupancyStatusId);
+            Guid newUserId = Guid.NewGuid();
+
+            resident = new Resident(nextresidentId, request.ApartmentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, permanentAddressId, newUserId, request.ResidentTypeId, request.OccupancyStatusId);
             _residentRepository.Insert(resident);
 
-            Guid newUserId = Guid.NewGuid();
+            
             var firstName = new Domain.Entities.Users.FirstName(request.FirstName);
             var lastName = new LastName(request.LastName);
             var email = new Email(request.Email);
