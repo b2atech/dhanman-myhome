@@ -41,7 +41,9 @@ public class CreateVisitorCommandHandler : ICommandHandler<CreateVisitorCommand,
             request.VisitorTypeId,
             request.VehicleNumber,
             request.IdentityTypeId,
-            request.IdentityNumber
+            request.IdentityNumber,
+            request.EntryTime,
+            request.ExitTime
             );
         _visitorRepository.Insert(visitor);
         await _mediator.Publish(new VisitorCreatedEvent(visitor.Id), cancellationToken);

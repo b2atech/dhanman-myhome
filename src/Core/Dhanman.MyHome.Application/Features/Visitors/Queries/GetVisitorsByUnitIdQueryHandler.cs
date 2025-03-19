@@ -42,7 +42,7 @@ public class GetVisitorsByUnitIdQueryHandler : IQueryHandler<GetVisitorsByUnitId
                                                 join sps in _dbContext.SetInt<Domain.Entities.ServiceProviderSubTypes.ServiveProviderSubType>() on spt.Id equals sps.ServiceProviderTypeId into spsJoin
                                                 from sps in spsJoin.DefaultIfEmpty()
                                                 where u.Id == query.UnitId && u.ApartmentId == apartmentId && (vt.Id == 1 || vt.Id == 3)
-                                                select new VisitorsByUnitIdResponse(                                                    
+                                                select new VisitorsByUnitIdResponse(
                                                     v.Id,
                                                     v.FirstName + " " + v.LastName,
                                                     u.Id,
@@ -50,7 +50,9 @@ public class GetVisitorsByUnitIdQueryHandler : IQueryHandler<GetVisitorsByUnitId
                                                     vt.Id,
                                                     vt.Name,
                                                     sps.Id,
-                                                    sps.Name
+                                                    sps.Name,
+                                                    v.EntryTime,
+                                                    v.ExitTime
                                                 )).ToListAsync(cancellationToken);
 
                   var listResponse = new VisitorsByUnitIdListResponse(visitorsbyUnitId);

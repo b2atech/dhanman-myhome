@@ -32,6 +32,10 @@ internal sealed class VisitorConfiguration : IEntityTypeConfiguration<Visitor>
 
         builder.Property(visitors => visitors.IdentityNumber).HasColumnName("identity_number").IsRequired();
 
+        builder.Property(visitorLogs => visitorLogs.EntryTime).HasColumnName("entry_time").IsRequired();
+
+        builder.Property(visitorLogs => visitorLogs.ExitTime).HasColumnName("exit_time").IsRequired();
+
         builder.Property(visitors => visitors.CreatedBy).HasColumnType("uuid");
 
         builder.Property(visitors => visitors.ModifiedBy).HasColumnType("uuid");
