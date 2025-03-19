@@ -2,11 +2,9 @@
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
-using Dhanman.MyHome.Application.Contracts.Buildings;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.VisitorLogs;
 using Dhanman.MyHome.Application.Contracts.Visitors;
-using Dhanman.MyHome.Application.Features.Buildings.Commands.UpdateBuilding;
 using Dhanman.MyHome.Application.Features.VisitorLogs.Commands.CreateVisitorLog;
 using Dhanman.MyHome.Application.Features.VisitorLogs.Queries;
 using Dhanman.MyHome.Application.Features.Visitors.Commands.CreateVisitor;
@@ -58,7 +56,9 @@ public class VisitorsController : ApiController
              value.VisitorTypeId,
              value.VehicleNumber,
              value.IdentityTypeId,
-             value.IdentityNumber
+             value.IdentityNumber,
+             value.EntryTime,
+             value.ExitTime
          ))
          .Bind(command => Mediator.Send(command))
          .Match(Ok, BadRequest);
