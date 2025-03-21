@@ -26,6 +26,8 @@ public sealed class UnitResponse
     public Guid? ModifiedBy { get; }
     public string CreatedByName { get; }
     public string? ModifiedByName { get; }
+    public string CustomerName { get; }
+    public string ContactNumber { get; }
     #endregion
 
     #region Constructor
@@ -55,7 +57,7 @@ public sealed class UnitResponse
         ModifiedByName = modifiedByName;
     }
 
-    public UnitResponse(int id, string name, int floorId, int buildingId, int unitTypeId, Guid customerId, int occupantTypeId, int occupancyTypeId, decimal area, decimal bHKType, int phoneExtention, int eIntercom, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy, string createdByName, string? modifiedByName)
+    public UnitResponse(int id, string name, int floorId, int buildingId, int unitTypeId, Guid customerId, int occupantTypeId, int occupancyTypeId, decimal area, decimal bHKType, int phoneExtention, int eIntercom, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy, string createdByName, string? modifiedByName, string customerName, string contactNumber)
  {
         Id = id;
         Name = name;
@@ -75,6 +77,8 @@ public sealed class UnitResponse
         ModifiedBy = modifiedBy;
         CreatedByName = createdByName;
         ModifiedByName = modifiedByName;
+        CustomerName = customerName;
+        ContactNumber = contactNumber;
 
     }
 
