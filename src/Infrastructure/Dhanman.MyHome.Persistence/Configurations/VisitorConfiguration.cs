@@ -16,25 +16,25 @@ internal sealed class VisitorConfiguration : IEntityTypeConfiguration<Visitor>
 
         builder.Property(visitors => visitors.FirstName).HasColumnName("first_name").IsRequired();
 
-        builder.Property(visitors => visitors.LastName).HasColumnName("last_name").IsRequired();
+        builder.Property(visitors => visitors.LastName).HasColumnName("last_name").IsRequired(false);
 
-        builder.Property(visitors => visitors.Email).HasColumnName("email").IsRequired();
+        builder.Property(visitors => visitors.Email).HasColumnName("email").IsRequired(false);
 
-        builder.Property(visitors => visitors.VisitingFrom).HasColumnName("visiting_from").IsRequired();
+        builder.Property(visitors => visitors.VisitingFrom).HasColumnName("visiting_from").IsRequired(false);
 
         builder.Property(visitors => visitors.ContactNumber).HasColumnName("contact_number").IsRequired();
 
         builder.Property(visitors => visitors.VisitorTypeId).HasColumnName("visitor_type_id").IsRequired();
 
-        builder.Property(visitors => visitors.VehicleNumber).HasColumnName("vehicle_number").IsRequired();
+        builder.Property(visitors => visitors.VehicleNumber).HasColumnName("vehicle_number").IsRequired(false);
 
-        builder.Property(visitors => visitors.IdentityTypeId).HasColumnName("identity_type_id").IsRequired();
+        builder.Property(visitors => visitors.IdentityTypeId).HasColumnName("identity_type_id").IsRequired(false);
 
-        builder.Property(visitors => visitors.IdentityNumber).HasColumnName("identity_number").IsRequired();
+        builder.Property(visitors => visitors.IdentityNumber).HasColumnName("identity_number").IsRequired(false);
 
-        builder.Property(visitorLogs => visitorLogs.EntryTime).HasColumnName("entry_time").IsRequired();
+        builder.Property(visitorLogs => visitorLogs.EntryTime).HasColumnName("entry_time").IsRequired(false);
 
-        builder.Property(visitorLogs => visitorLogs.ExitTime).HasColumnName("exit_time").IsRequired();
+        builder.Property(visitorLogs => visitorLogs.ExitTime).HasColumnName("exit_time").IsRequired(false);
 
         builder.Property(visitors => visitors.CreatedBy).HasColumnType("uuid");
 
