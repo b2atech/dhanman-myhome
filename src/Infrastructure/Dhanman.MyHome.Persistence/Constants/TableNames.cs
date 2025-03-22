@@ -124,7 +124,7 @@ internal static class TableNames
 
     internal const string ServiceProvidersTicketCategories = "service_providers_ticket_categories";
 
-    internal const string VisitorsApproved = "visitors_approveds";
+    internal const string ApprovedVisitors = "approved_visitors";
 
     internal const string VisitTypes = "visit_types";
 

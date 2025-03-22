@@ -301,6 +301,73 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("apartment_types", (string)null);
                 });
 
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.ApprovedVisitors.ApprovedVisitor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("created_on_utc");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("deleted_on_utc");
+
+                    b.Property<DateTime?>("EndDate")
+                        .IsRequired()
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("end_date");
+
+                    b.Property<TimeSpan?>("EntryTime")
+                        .HasColumnType("interval")
+                        .HasColumnName("entry_time");
+
+                    b.Property<TimeSpan?>("ExitTime")
+                        .HasColumnType("interval")
+                        .HasColumnName("exit_time");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_deleted");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("modified_by");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("modified_on_utc");
+
+                    b.Property<DateTime?>("StartDate")
+                        .IsRequired()
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("start_date");
+
+                    b.Property<int>("VisitTypeId")
+                        .HasColumnType("integer")
+                        .HasColumnName("visit_type_id");
+
+                    b.Property<int>("VisitorId")
+                        .HasColumnType("integer")
+                        .HasColumnName("visitor_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_approved_visitors");
+
+                    b.ToTable("approved_visitors", (string)null);
+                });
+
             modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.BookingFacilites.BookingFacilitie", b =>
                 {
                     b.Property<int>("Id")
@@ -3033,73 +3100,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasName("pk_visitors");
 
                     b.ToTable("visitors", (string)null);
-                });
-
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.VisitorsApproved.VisitorsApproved", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uuid")
-                        .HasColumnName("created_by");
-
-                    b.Property<DateTime>("CreatedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("created_on_utc");
-
-                    b.Property<DateTime?>("DeletedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("deleted_on_utc");
-
-                    b.Property<DateTime?>("EndDate")
-                        .IsRequired()
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("end_date");
-
-                    b.Property<TimeSpan?>("EntryTime")
-                        .HasColumnType("interval")
-                        .HasColumnName("entry_time");
-
-                    b.Property<TimeSpan?>("ExitTime")
-                        .HasColumnType("interval")
-                        .HasColumnName("exit_time");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("is_deleted");
-
-                    b.Property<Guid?>("ModifiedBy")
-                        .HasColumnType("uuid")
-                        .HasColumnName("modified_by");
-
-                    b.Property<DateTime?>("ModifiedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("modified_on_utc");
-
-                    b.Property<DateTime?>("StartDate")
-                        .IsRequired()
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("start_date");
-
-                    b.Property<int>("VisitTypeId")
-                        .HasColumnType("integer")
-                        .HasColumnName("visit_type_id");
-
-                    b.Property<int>("VisitorId")
-                        .HasColumnType("integer")
-                        .HasColumnName("visitor_id");
-
-                    b.HasKey("Id")
-                        .HasName("pk_visitors_approveds");
-
-                    b.ToTable("visitors_approveds", (string)null);
                 });
 
             modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.ServiceProviderTicketCategories.ServiceProviderTicketCategory", b =>

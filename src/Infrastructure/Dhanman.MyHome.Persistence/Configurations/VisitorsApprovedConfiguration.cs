@@ -1,41 +1,41 @@
-﻿using Dhanman.MyHome.Domain.Entities.VisitorsApproved;
+﻿using Dhanman.MyHome.Domain.Entities.ApprovedVisitors;
 using Dhanman.MyHome.Persistence.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Dhanman.MyHome.Persistence.Configurations;
 
-internal sealed class VisitorsApprovedConfiguration : IEntityTypeConfiguration<VisitorsApproved>
+internal sealed class ApprovedVisitorConfiguration : IEntityTypeConfiguration<ApprovedVisitor>
 {
-    public void Configure(EntityTypeBuilder<VisitorsApproved> builder)
+    public void Configure(EntityTypeBuilder<ApprovedVisitor> builder)
     {
-        builder.ToTable(TableNames.VisitorsApproved);
-        builder.HasKey(visitorsApproveds => visitorsApproveds.Id);
+        builder.ToTable(TableNames.ApprovedVisitors);
+        builder.HasKey(approvedVisitors => approvedVisitors.Id);
 
-        builder.Property(visitorsApproveds => visitorsApproveds.VisitorId).HasColumnName("visitor_id").IsRequired();
+        builder.Property(approvedVisitors => approvedVisitors.VisitorId).HasColumnName("visitor_id").IsRequired();
 
-        builder.Property(visitorsApproveds => visitorsApproveds.VisitTypeId).HasColumnName("visit_type_id").IsRequired();
+        builder.Property(approvedVisitors => approvedVisitors.VisitTypeId).HasColumnName("visit_type_id").IsRequired();
 
-        builder.Property(visitorsApproveds => visitorsApproveds.StartDate).HasColumnName("start_date").IsRequired();
+        builder.Property(approvedVisitors => approvedVisitors.StartDate).HasColumnName("start_date").IsRequired();
 
-        builder.Property(visitorsApproveds => visitorsApproveds.EndDate).HasColumnName("end_date").IsRequired();
+        builder.Property(approvedVisitors => approvedVisitors.EndDate).HasColumnName("end_date").IsRequired();
 
-        builder.Property(visitorsApproveds => visitorsApproveds.EntryTime).HasColumnName("entry_time").IsRequired(false);
+        builder.Property(approvedVisitors => approvedVisitors.EntryTime).HasColumnName("entry_time").IsRequired(false);
 
-        builder.Property(visitorsApproveds => visitorsApproveds.ExitTime).HasColumnName("exit_time").IsRequired(false);
+        builder.Property(approvedVisitors => approvedVisitors.ExitTime).HasColumnName("exit_time").IsRequired(false);
 
-        builder.Property(visitorsApproveds => visitorsApproveds.CreatedBy).HasColumnType("uuid");
+        builder.Property(approvedVisitors => approvedVisitors.CreatedBy).HasColumnType("uuid");
 
-        builder.Property(visitorsApproveds => visitorsApproveds.ModifiedBy).HasColumnType("uuid").IsRequired(false);
+        builder.Property(approvedVisitors => approvedVisitors.ModifiedBy).HasColumnType("uuid").IsRequired(false);
 
-        builder.Property(visitorsApproveds => visitorsApproveds.CreatedOnUtc).HasColumnType("timestamp").IsRequired();
+        builder.Property(approvedVisitors => approvedVisitors.CreatedOnUtc).HasColumnType("timestamp").IsRequired();
 
-        builder.Property(visitorsApproveds => visitorsApproveds.ModifiedOnUtc).HasColumnType("timestamp").IsRequired(false);
+        builder.Property(approvedVisitors => approvedVisitors.ModifiedOnUtc).HasColumnType("timestamp").IsRequired(false);
 
-        builder.Property(visitorsApproveds => visitorsApproveds.DeletedOnUtc).HasColumnType("timestamp").IsRequired(false);
+        builder.Property(approvedVisitors => approvedVisitors.DeletedOnUtc).HasColumnType("timestamp").IsRequired(false);
 
-        builder.Property(visitorsApproveds => visitorsApproveds.IsDeleted).HasDefaultValue(false).IsRequired();
+        builder.Property(approvedVisitors => approvedVisitors.IsDeleted).HasDefaultValue(false).IsRequired();
 
-        builder.HasQueryFilter(visitorsApproveds => visitorsApproveds.IsDeleted);
+        builder.HasQueryFilter(approvedVisitors => approvedVisitors.IsDeleted);
     }
 }

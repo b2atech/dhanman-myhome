@@ -7,26 +7,26 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dhanman.MyHome.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class visitorsApprovedTable : Migration
+    public partial class ApprovedVisitor : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "visit_types",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_visit_types", x => x.id);
-                });
+               name: "visit_types",
+               columns: table => new
+               {
+                   id = table.Column<int>(type: "integer", nullable: false)
+                       .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                   name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
+               },
+               constraints: table =>
+               {
+                   table.PrimaryKey("pk_visit_types", x => x.id);
+               });
 
             migrationBuilder.CreateTable(
-                name: "visitors_approveds",
+                name: "approved_visitors",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
@@ -46,7 +46,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_visitors_approveds", x => x.id);
+                    table.PrimaryKey("pk_approved_visitors", x => x.id);
                 });
         }
 
@@ -54,10 +54,10 @@ namespace Dhanman.MyHome.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "visit_types");
+                name: "approved_visitors");
 
             migrationBuilder.DropTable(
-                name: "visitors_approveds");
+               name: "visit_types");
         }
     }
 }
