@@ -30,6 +30,8 @@ internal sealed class CommunityResidentRequestConfiguration : IEntityTypeConfigu
         builder.Property(communityResidentRequests => communityResidentRequests.AboutYourSelf).HasColumnName("about_yourself");
         builder.Property(communityResidentRequests => communityResidentRequests.SpouseName).HasColumnName("spouse_name");
         builder.Property(communityResidentRequests => communityResidentRequests.SpouseHattyId).HasColumnName("spouse_hatty_id");
+        builder.Property(communityResidentRequests => communityResidentRequests.CommunityRequestStatusId).HasColumnName("community_request_status_id");
+
 
         // Audit Properties
         builder.Property(communityResidentRequests => communityResidentRequests.CreatedBy).HasColumnName("created_by").HasColumnType("uuid").IsRequired();

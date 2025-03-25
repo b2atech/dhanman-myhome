@@ -23,6 +23,7 @@ public class CommunityResidentRequest : EntityInt, IAuditableEntity, ISoftDeleta
     public string AboutYourSelf { get; set; }
     public string SpouseName { get; set; }
     public Guid SpouseHattyId { get; set; }
+    public int CommunityRequestStatusId { get; set; }
     #endregion
 
     #region Audit Properties
@@ -40,7 +41,7 @@ public class CommunityResidentRequest : EntityInt, IAuditableEntity, ISoftDeleta
     #endregion
 
     #region Constructor 
-    public CommunityResidentRequest(int id, string memberType, string userName, string password, string firstName, string lastName, Guid hattyId, string email, string mobileNumber, string companyName, string designation, Guid currentAddressId, DateTime dateOfBirth, char gender, string maritalStatus, string aboutYourSelf, string spouseName, Guid spouseHattyId)
+    public CommunityResidentRequest(int id, string memberType, string userName, string password, string firstName, string lastName, Guid hattyId, string email, string mobileNumber, string companyName, string designation, Guid currentAddressId, DateTime dateOfBirth, char gender, string maritalStatus, string aboutYourSelf, string spouseName, Guid spouseHattyId, int communityRequestStatusId)
     {
         Id = id; 
         MemberType = memberType;
@@ -60,6 +61,7 @@ public class CommunityResidentRequest : EntityInt, IAuditableEntity, ISoftDeleta
         AboutYourSelf = aboutYourSelf;
         SpouseName = spouseName;
         SpouseHattyId = spouseHattyId;
+        CommunityRequestStatusId = communityRequestStatusId;
     } 
     #endregion
 }
