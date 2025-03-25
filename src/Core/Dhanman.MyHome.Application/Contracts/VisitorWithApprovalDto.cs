@@ -7,7 +7,6 @@ public class VisitorWithApprovalDto
     public string LastName { get; set; }
     public string ContactNumber { get; set; }
 
-    // Approved Visitor Details
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public TimeSpan? EntryTime { get; set; }

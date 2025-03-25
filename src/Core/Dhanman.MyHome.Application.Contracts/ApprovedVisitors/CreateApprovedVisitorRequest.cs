@@ -11,8 +11,4 @@ public class CreateApprovedVisitorRequest
     public TimeOnly? ExitTime { get; set; }
 
     #endregion
-
-    //#region Constructors
-    //public CreateApprovedVisitorRequest() => FirstName = string.Empty;
-    //#endregion
 }
