@@ -129,6 +129,71 @@ public class ResidentsController : ApiController
     }
     #endregion
 
+    #region CommunityResidentRequests     
+
+    //[HttpPost(ApiRoutes.ResidentRequests.CreateCommunityResidentRequest)]
+    //[ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
+    //[ProducesResponseType(StatusCodes.Status404NotFound)]
+    //public async Task<IActionResult> CreateCommunityResidentRequest([FromBody] CreateCommunityResidentRequestRequest? request) =>
+    //        await Result.Create(request, Errors.General.BadRequest)
+    //        .Map(value => new CreateCommunityResidentRequestCommand(
+    //            value.UnitId,
+    //            value.FirstName,
+    //            value.LastName,
+    //            value.Email,
+    //            value.ContactNumber,
+    //            value.PermanentAddress,
+    //            value.ResidentTypeId,
+    //            value.OccupancyStatusId))
+    //         .Bind(command => Mediator.Send(command))
+    //               .Match(Ok, BadRequest);
+
+    //[HttpGet(ApiRoutes.ResidentRequests.GetAllResidentRequests)]
+    //[ProducesResponseType(typeof(ResidentRequestListResponse), StatusCodes.Status200OK)]
+    //[ProducesResponseType(StatusCodes.Status404NotFound)]
+    //public async Task<IActionResult> GetAllResidentRequests(Guid apartmentId) =>
+    //await Result.Success(new GetAllResidentRequestsQuery(apartmentId))
+    //.Bind(query => Mediator.Send(query))
+    //.Match(Ok, NotFound);
+
+    //[HttpPut(ApiRoutes.ResidentRequests.UpdateRequestApproveStatus)]
+    //[ProducesResponseType(StatusCodes.Status404NotFound)]
+    //public async Task<IActionResult> UpdateRequestApproveStatus([FromBody] UpdateRequestApproveStatusRequest? request)
+    //{
+    //    var result = await Result.Create(request, Errors.General.BadRequest)
+    //        .Map(value => new UpdateRequestApproveStatusCommand(
+    //            value.Id))
+    //        .Bind(command => Mediator.Send(command));
+
+    //    if (result.IsSuccess)
+    //    {
+    //        return NoContent();
+    //    }
+    //    else
+    //    {
+    //        return BadRequest(result.Error);
+    //    }
+    //}
+
+    //[HttpPut(ApiRoutes.ResidentRequests.UpdateRequestRejectStatus)]
+    //[ProducesResponseType(StatusCodes.Status404NotFound)]
+    //public async Task<IActionResult> UpdateRequestRejectStatus([FromBody] UpdateRequestRejectStatusRequest? request)
+    //{
+    //    var result = await Result.Create(request, Errors.General.BadRequest)
+    //        .Map(value => new UpdateRequestRejectStatusCommand(
+    //            value.Id))
+    //        .Bind(command => Mediator.Send(command));
+
+    //    if (result.IsSuccess)
+    //    {
+    //        return NoContent();
+    //    }
+    //    else
+    //    {
+    //        return BadRequest(result.Error);
+    //    }
+    //}
+    #endregion
     #region OccupantTypes
 
     [HttpGet(ApiRoutes.OccupantTypes.GetAllOccupantTypes)]
