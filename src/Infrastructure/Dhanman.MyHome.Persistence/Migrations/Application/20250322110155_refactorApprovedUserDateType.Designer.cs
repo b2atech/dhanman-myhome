@@ -3,6 +3,7 @@ using System;
 using Dhanman.MyHome.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dhanman.MyHome.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250322110155_refactorApprovedUserDateType")]
+    partial class refactorApprovedUserDateType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -322,16 +325,16 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("timestamp")
                         .HasColumnName("deleted_on_utc");
 
-                    b.Property<DateOnly?>("EndDate")
+                    b.Property<DateTime?>("EndDate")
                         .IsRequired()
                         .HasColumnType("date")
                         .HasColumnName("end_date");
 
-                    b.Property<TimeOnly?>("EntryTime")
+                    b.Property<TimeSpan?>("EntryTime")
                         .HasColumnType("time")
                         .HasColumnName("entry_time");
 
-                    b.Property<TimeOnly?>("ExitTime")
+                    b.Property<TimeSpan?>("ExitTime")
                         .HasColumnType("time")
                         .HasColumnName("exit_time");
 
@@ -349,7 +352,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("timestamp")
                         .HasColumnName("modified_on_utc");
 
-                    b.Property<DateOnly?>("StartDate")
+                    b.Property<DateTime?>("StartDate")
                         .IsRequired()
                         .HasColumnType("date")
                         .HasColumnName("start_date");
@@ -2367,35 +2370,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("tickets", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Tickets.TicketServiceProviderOtp", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<DateTime>("ExpirationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("expiration_time");
-
-                    b.Property<string>("Otp")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("otp");
-
-                    b.Property<Guid>("TicketId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("ticket_id");
-
-                    b.HasKey("Id")
-                        .HasName("pk_ticket_service_provider_otps");
-
-                    b.HasIndex("TicketId")
-                        .HasDatabaseName("ix_ticket_service_provider_otps_ticket_id");
-
-                    b.ToTable("ticket_service_provider_otps", (string)null);
-                });
-
             modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.UnitServiceProviders.UnitServiceProvider", b =>
                 {
                     b.Property<int>("Id")
@@ -3146,16 +3120,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_service_provider_ticket_categories_ticket_category_ticket_c");
-                });
-
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Tickets.TicketServiceProviderOtp", b =>
-                {
-                    b.HasOne("Dhanman.MyHome.Domain.Entities.Tickets.Ticket", null)
-                        .WithMany()
-                        .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_ticket_service_provider_otps_tickets_ticket_id");
                 });
 
             modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Users.User", b =>
