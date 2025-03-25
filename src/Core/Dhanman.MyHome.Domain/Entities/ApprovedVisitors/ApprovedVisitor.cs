@@ -8,10 +8,10 @@ public class ApprovedVisitor : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #region Properties
     public int VisitorId { get; set; }
     public int VisitTypeId { get; set; }  // Either 'single' or 'recurring'
-    public DateTime? StartDate { get; set; }
-    public DateTime? EndDate { get; set; }
-    public TimeSpan? EntryTime { get; set; }
-    public TimeSpan? ExitTime { get; set; }
+    public DateOnly? StartDate { get; set; }
+    public DateOnly? EndDate { get; set; }
+    public TimeOnly? EntryTime { get; set; }
+    public TimeOnly? ExitTime { get; set; }
     #endregion
 
     #region Audit Properties
@@ -21,6 +21,16 @@ public class ApprovedVisitor : EntityInt, IAuditableEntity, ISoftDeletableEntity
     public Guid? ModifiedBy { get; set; }
     public DateTime? DeletedOnUtc { get; }
     public bool IsDeleted { get; set; }
+
+    public ApprovedVisitor(int visitorId, int visitTypeId, DateOnly? startDate, DateOnly? endDate, TimeOnly? entryTime, TimeOnly? exitTime)
+    {
+        VisitorId = visitorId;
+        VisitTypeId = visitTypeId;
+        StartDate = startDate;
+        EndDate = endDate;
+        EntryTime = entryTime;
+        ExitTime = exitTime;
+    }
     #endregion
 
 }

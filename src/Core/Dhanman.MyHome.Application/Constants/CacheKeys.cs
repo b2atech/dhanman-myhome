@@ -128,6 +128,15 @@ public static class CacheKeys
     }
     #endregion
 
+    #region ApprovedVisitors
+    public static class ApprovedVisitors
+    {
+        public const string CacheKeyPrefix = "approvedVisitors-{0}";
+
+        
+    }
+    #endregion
+
     #region Events
     public static class Events
     {

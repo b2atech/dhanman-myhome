@@ -16,13 +16,13 @@ internal sealed class ApprovedVisitorConfiguration : IEntityTypeConfiguration<Ap
 
         builder.Property(approvedVisitors => approvedVisitors.VisitTypeId).HasColumnName("visit_type_id").IsRequired();
 
-        builder.Property(approvedVisitors => approvedVisitors.StartDate).HasColumnName("start_date").IsRequired();
+        builder.Property(approvedVisitors => approvedVisitors.StartDate).HasColumnName("start_date").HasColumnType("date").IsRequired();
 
-        builder.Property(approvedVisitors => approvedVisitors.EndDate).HasColumnName("end_date").IsRequired();
+        builder.Property(approvedVisitors => approvedVisitors.EndDate).HasColumnName("end_date").HasColumnType("date").IsRequired();
 
-        builder.Property(approvedVisitors => approvedVisitors.EntryTime).HasColumnName("entry_time").IsRequired(false);
+        builder.Property(approvedVisitors => approvedVisitors.EntryTime).HasColumnName("entry_time").HasColumnType("time").IsRequired(false);
 
-        builder.Property(approvedVisitors => approvedVisitors.ExitTime).HasColumnName("exit_time").IsRequired(false);
+        builder.Property(approvedVisitors => approvedVisitors.ExitTime).HasColumnName("exit_time").HasColumnType("time").IsRequired(false);
 
         builder.Property(approvedVisitors => approvedVisitors.CreatedBy).HasColumnType("uuid");
 

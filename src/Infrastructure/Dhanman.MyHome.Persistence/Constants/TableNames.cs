@@ -128,5 +128,7 @@ internal static class TableNames
 
     internal const string VisitTypes = "visit_types";
 
+    internal const string ApprovedVisitorInfoById = "approved_visitor_info_by_id";
+
 }
 
