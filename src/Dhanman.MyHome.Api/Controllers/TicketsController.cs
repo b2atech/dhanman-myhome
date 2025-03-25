@@ -7,10 +7,13 @@ using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.TicketCategories;
 using Dhanman.MyHome.Application.Contracts.TicketPriorities;
 using Dhanman.MyHome.Application.Contracts.Tickets;
+using Dhanman.MyHome.Application.Contracts.TicketServiceProviderOtps;
 using Dhanman.MyHome.Application.Contracts.TicketStatuses;
 using Dhanman.MyHome.Application.Features.Tickets.Commands.CreateTicket;
 using Dhanman.MyHome.Application.Features.Tickets.Commands.UpdateTicket;
 using Dhanman.MyHome.Application.Features.Tickets.Queries;
+using Dhanman.MyHome.Application.Features.TicketServiceProviderOtps.Commands.CreateTicketServiceProviderOtp;
+using Dhanman.MyHome.Application.Features.TicketServiceProviderOtps.Queries;
 using Dhanman.MyHome.Application.Features.TicketStatuses.Commands.UpdateTicketNextStatus;
 using Dhanman.MyHome.Domain;
 using MediatR;
@@ -233,6 +236,38 @@ public class TicketsController : ApiController
             return BadRequest(result.Error);
         }
     }
+
+    #endregion
+
+
+    #region TicketServiceProviderOtps
+
+    [HttpPost(ApiRoutes.TicketServiceProviderOtp.CreateTicketServiceProviderOtp)]
+    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> CreateTicketServiceProviderOtp([FromBody] CreateTicketServiceProviderOtpRequest? request)
+    {
+        return await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new CreateTicketServiceProviderOtpCommand(
+                value.Otp,
+                value.ExpirationTime,
+                value.TicketId
+            ))
+            .Bind(command => Mediator.Send(command))
+            .Match(
+                result => Ok(result), 
+                BadRequest 
+            );
+    }
+
+
+    [HttpGet(ApiRoutes.TicketServiceProviderOtp.GetOtpByTicketId)]
+    [ProducesResponseType(typeof(TicketServiceProviderOtpResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetOtpByTicket(Guid ticketId) =>
+          await Result.Success(new GetOtpByTicketIdQuery(ticketId))
+          .Bind(query => Mediator.Send(query))
+          .Match(Ok, NotFound);
 
     #endregion
 }

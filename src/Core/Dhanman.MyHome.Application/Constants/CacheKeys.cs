@@ -307,6 +307,16 @@ public static class CacheKeys
         public const string ServiceProviderCategoryList = CacheKeyPrefix + "-list-{1}";
 
     }
+    #endregion
+
+    #region Tickets
+    public static class TicketServiceProviderOtps
+    {
+        public const string CacheKeyPrefix = "tickets-{0}";
+
+        public const string OtpByTicketId = CacheKeyPrefix + "-by-ticketId-{1}";
+
+    }
     #endregion  
 
 }

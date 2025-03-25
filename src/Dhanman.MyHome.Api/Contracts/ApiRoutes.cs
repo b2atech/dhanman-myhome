@@ -325,4 +325,13 @@ public static class ApiRoutes
         public const string UpdateTicketServiceProvider = apiVersion + "ticket-service-provider";
         public const string GetAllServiceProviderTicketCategories = apiVersion + "service-provider-ticket-categories";
     }
+
+    public static class TicketServiceProviderOtp
+    {
+        public const string CreateTicketServiceProviderOtp = apiVersion + "ticket-service-provider-otp";
+        public const string GetAllTickets = apiVersion + "tickets/{apartmentId:guid}";
+        public const string GetOtpByTicketId = apiVersion + "ticket-otp/{ticketId:guid}";
+        //public const string UpdateTicketServiceProvider = apiVersion + "ticket-service-provider";
+        //public const string GetAllServiceProviderTicketCategories = apiVersion + "service-provider-ticket-categories";
+    }
 }
