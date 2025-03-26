@@ -132,7 +132,7 @@ internal static class TableNames
 
     internal const string ApprovedVisitorInfoById = "approved_visitor_info_by_id";
 
-    internal const string CommunityUserDetails = "community_user_details";
+    internal const string MemberAdditionalDetails = "member_additional_details";
 
     internal const string MemberRequests = "community_resident_requests";
 
