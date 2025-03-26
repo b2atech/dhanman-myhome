@@ -125,12 +125,14 @@ internal static class TableNames
     internal const string ServiceProvidersTicketCategories = "service_providers_ticket_categories";
 
     internal const string TicketServiceProviderOtps = "ticket_service_provider_otps";
-    
+
     internal const string ApprovedVisitors = "approved_visitors";
 
     internal const string VisitTypes = "visit_types";
 
     internal const string ApprovedVisitorInfoById = "approved_visitor_info_by_id";
+
+    internal const string CommunityUserDetails = "community_user_details";
 
     internal const string MemberRequests = "community_resident_requests";
 
