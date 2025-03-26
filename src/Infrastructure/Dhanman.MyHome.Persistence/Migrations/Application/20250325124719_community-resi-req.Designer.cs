@@ -3,6 +3,7 @@ using System;
 using Dhanman.MyHome.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dhanman.MyHome.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250325124719_community-resi-req")]
+    partial class communityresireq
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -807,90 +810,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasName("pk_community_resident_requests");
 
                     b.ToTable("community_resident_requests", (string)null);
-                });
-
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.CommunityUserDetails.CommunityUserDetail", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<string>("AboutYourself")
-                        .HasColumnType("text")
-                        .HasColumnName("about_yourself");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uuid")
-                        .HasColumnName("created_by");
-
-                    b.Property<DateTime>("CreatedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("created_on_utc");
-
-                    b.Property<Guid?>("CurrentAddressId")
-                        .IsRequired()
-                        .HasColumnType("uuid")
-                        .HasColumnName("current_address_id");
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("date_of_birth");
-
-                    b.Property<DateTime?>("DeletedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("deleted_on_utc");
-
-                    b.Property<string>("Designation")
-                        .HasColumnType("text")
-                        .HasColumnName("designation");
-
-                    b.Property<char>("Gender")
-                        .HasColumnType("char")
-                        .HasColumnName("gender");
-
-                    b.Property<Guid>("HattyId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("hatty_id");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("is_deleted");
-
-                    b.Property<string>("MaritalStatus")
-                        .HasColumnType("text")
-                        .HasColumnName("marital_status");
-
-                    b.Property<string>("MemberType")
-                        .HasColumnType("text")
-                        .HasColumnName("member_type");
-
-                    b.Property<Guid?>("ModifiedBy")
-                        .HasColumnType("uuid")
-                        .HasColumnName("modified_by");
-
-                    b.Property<DateTime?>("ModifiedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("modified_on_utc");
-
-                    b.Property<int>("ResidentId")
-                        .HasColumnType("integer")
-                        .HasColumnName("resident_id");
-
-                    b.Property<Guid?>("SpouseHattyId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("spouse_hatty_id");
-
-                    b.Property<string>("SpouseName")
-                        .HasColumnType("text")
-                        .HasColumnName("spouse_name");
-
-                    b.HasKey("Id")
-                        .HasName("pk_community_user_details");
-
-                    b.ToTable("community_user_details", (string)null);
                 });
 
             modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Companies.Company", b =>

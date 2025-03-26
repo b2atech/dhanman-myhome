@@ -317,6 +317,16 @@ public static class CacheKeys
         public const string OtpByTicketId = CacheKeyPrefix + "-by-ticketId-{1}";
 
     }
-    #endregion  
+    #endregion
 
+    #region MemberRequests
+    public static class MemberRequests
+    {
+        public const string CacheKeyPrefix = "memberRequests-{0}";
+
+        public const string MemberRequestList = CacheKeyPrefix + "-list-{1}";
+
+        public const string MemberRequestById = CacheKeyPrefix + "-by-id-{1}";
+    }
+    #endregion  
 }

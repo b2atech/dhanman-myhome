@@ -76,6 +76,9 @@ public static class ApiRoutes
         public const string UpdateRequestApproveStatus = apiVersion + "request-approve-status";
 
         public const string UpdateRequestRejectStatus = apiVersion + "request-reject-status";
+
+        public const string CreateMemberRequest = apiVersion + "member-request";
+
     }
 
     public static class Vehicles

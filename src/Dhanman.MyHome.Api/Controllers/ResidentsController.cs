@@ -3,9 +3,11 @@ using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.MyHome.Application.Contracts.MemberRequests;
 using Dhanman.MyHome.Application.Contracts.OccupantTypes;
 using Dhanman.MyHome.Application.Contracts.ResidentRequests;
 using Dhanman.MyHome.Application.Contracts.Residents;
+using Dhanman.MyHome.Application.Features.MemberRequests.Commands.CreateMemberRequest;
 using Dhanman.MyHome.Application.Features.OccupantTypes.Queries;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.CreateResidentRequest;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.UpdateRequestApproveStatus;
@@ -127,6 +129,36 @@ public class ResidentsController : ApiController
             return BadRequest(result.Error);
         }
     }
+    #endregion
+
+    #region MemberRequests     
+
+    [HttpPost(ApiRoutes.ResidentRequests.CreateMemberRequest)]
+    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> CreateMemberRequest([FromBody] CreateMemberRequestRequest? request) =>
+            await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new CreateMemberRequestCommand(
+                 value.MemberType,
+                 value.UserName,
+                 value.Password,
+                 value.FirstName,
+                 value.LastName,
+                 value.HattyId,
+                 value.Email,
+                 value.MobileNumber,
+                 value.CompanyName,
+                 value.Designation,
+                 value.CurrentAddress,
+                 value.DateOfBirth,
+                 value.Gender,
+                 value.MaritalStatus,
+                 value.AboutYourSelf,
+                 value.SpouseName,
+                 value.SpouseHattyId))
+             .Bind(command => Mediator.Send(command))
+                   .Match(Ok, BadRequest);
+
     #endregion
 
     #region OccupantTypes

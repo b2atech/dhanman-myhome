@@ -134,5 +134,7 @@ internal static class TableNames
 
     internal const string CommunityUserDetails = "community_user_details";
 
+    internal const string MemberRequests = "community_resident_requests";
+
 }
 
