@@ -1,17 +1,17 @@
-﻿using Dhanman.MyHome.Domain.Entities.CommunityResidentRequests;
+﻿using Dhanman.MyHome.Domain.Entities.MemberRequests;
 
 namespace Dhanman.MyHome.Domain.Abstractions;
 
-public interface ICommunityResidentRequestRepository
+public interface IMemberRequestRepository
 {
     #region Methods
-    Task<CommunityResidentRequest?> GetBydIdIntAsync(int id);
+    Task<MemberRequest?> GetBydIdIntAsync(int id);
 
-    void Insert(CommunityResidentRequest communityResidentRequest);
+    void Insert(MemberRequest memberRequest);
 
-    void Delete(CommunityResidentRequest communityResidentRequest);
+    void Delete(MemberRequest memberRequest);
 
-    void Update(CommunityResidentRequest communityResidentRequest);
+    void Update(MemberRequest memberRequest);
 
     int GetTotalRecordsCount();
 

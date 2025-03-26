@@ -684,7 +684,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("cities", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.CommunityResidentRequests.CommunityResidentRequest", b =>
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.MemberRequests.MemberRequest", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

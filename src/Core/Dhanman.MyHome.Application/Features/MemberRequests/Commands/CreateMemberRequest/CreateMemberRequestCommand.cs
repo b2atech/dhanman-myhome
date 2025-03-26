@@ -3,9 +3,9 @@ using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.ServiceProviders;
 
-namespace Dhanman.MyHome.Application.Features.CommunityResidentRequests.Commands.CreateCommunityResidentRequest;
+namespace Dhanman.MyHome.Application.Features.MemberRequests.Commands.CreateMemberRequest;
 
-public class CreateCommunityResidentRequestCommand : ICommand<Result<EntityCreatedResponse>>
+public class CreateMemberRequestCommand : ICommand<Result<EntityCreatedResponse>>
 {
     #region Properties
     public string MemberType { get; set; }
@@ -28,7 +28,7 @@ public class CreateCommunityResidentRequestCommand : ICommand<Result<EntityCreat
     #endregion
 
     #region Constructors
-    public CreateCommunityResidentRequestCommand(string memberType, string userName, string password, string firstName, string lastName, Guid hattyId, string email, string mobileNumber, string companyName, string designation, Address currentAddress, DateTime dateOfBirth, char gender, string maritalStatus, string aboutYourSelf, string spouseName, Guid spouseHattyId)
+    public CreateMemberRequestCommand(string memberType, string userName, string password, string firstName, string lastName, Guid hattyId, string email, string mobileNumber, string companyName, string designation, Address currentAddress, DateTime dateOfBirth, char gender, string maritalStatus, string aboutYourSelf, string spouseName, Guid spouseHattyId)
     {
         MemberType = memberType;
         UserName = userName;

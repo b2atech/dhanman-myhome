@@ -319,14 +319,14 @@ public static class CacheKeys
     }
     #endregion
 
-    #region CommunityResidentRequests
-    public static class CommunityResidentRequests
+    #region MemberRequests
+    public static class MemberRequests
     {
-        public const string CacheKeyPrefix = "communityResidentRequests-{0}";
+        public const string CacheKeyPrefix = "memberRequests-{0}";
 
-        public const string CommunityResidentRequestList = CacheKeyPrefix + "-list-{1}";
+        public const string MemberRequestList = CacheKeyPrefix + "-list-{1}";
 
-        public const string CommunityResidentRequestById = CacheKeyPrefix + "-by-id-{1}";
+        public const string MemberRequestById = CacheKeyPrefix + "-by-id-{1}";
     }
     #endregion  
 }

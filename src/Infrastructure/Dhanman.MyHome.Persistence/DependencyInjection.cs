@@ -68,7 +68,7 @@ public static class DependencyInjection
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<IApprovedVisitorRepository, ApprovedVisitorRepository>();
             services.AddScoped<ITicketServiceProviderOtpRepository, TicketServiceProviderOtpRepository>();
-            services.AddScoped<ICommunityResidentRequestRepository, CommunityResidentRequestRepository>();
+            services.AddScoped<IMemberRequestRepository, MemberRequestRepository>();
         }
         return services;
     }
