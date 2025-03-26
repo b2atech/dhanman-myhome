@@ -36,6 +36,8 @@ internal sealed class ResidentRequestConfiguration : IEntityTypeConfiguration<Re
 
         builder.Property(residentRequests => residentRequests.OccupancyStatusId).HasColumnName("occupancy_status_id");
 
+        builder.Property(residentRequests => residentRequests.MemberAdditionalDetailsId).HasColumnName("member_additional_details_id");
+        
         builder.Property(residentRequests => residentRequests.CreatedBy).HasColumnType("uuid");
 
         builder.Property(residentRequests => residentRequests.ModifiedBy).HasColumnType("uuid");

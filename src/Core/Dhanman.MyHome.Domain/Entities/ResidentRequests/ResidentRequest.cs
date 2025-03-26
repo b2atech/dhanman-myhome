@@ -21,6 +21,8 @@ public class ResidentRequest : EntityInt, IAuditableEntity, ISoftDeletableEntity
 
     //Vacant , Residing , Let out to multiple tenants , Let out to one tenant, 
     public int OccupancyStatusId { get; set; }
+
+    public Guid MemberAdditionalDetailsId { get; set; }
     #endregion
 
     #region Audit Properties
@@ -51,6 +53,20 @@ public class ResidentRequest : EntityInt, IAuditableEntity, ISoftDeletableEntity
         ResidentTypeId = residentTypeId;
         OccupancyStatusId = occupancyStatusId;       
         CreatedOnUtc = DateTime.UtcNow;
+    }
+    public ResidentRequest(int id, Guid apartmentId, string firstName, string lastName, string email, string contactNumber, Guid permanentAddressId, int requestStatusId, int residentTypeId, int occupancyStatusId, Guid memberAdditionalDetailsId)
+    {
+        Id = id;
+        ApartmentId = apartmentId;
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+        ContactNumber = contactNumber;
+        PermanentAddressId = permanentAddressId;
+        RequestStatusId = requestStatusId;
+        ResidentTypeId = residentTypeId;
+        OccupancyStatusId = occupancyStatusId;
+        MemberAdditionalDetailsId = memberAdditionalDetailsId;
     }
     #endregion
 }
