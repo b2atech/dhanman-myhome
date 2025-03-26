@@ -3,6 +3,7 @@ using System;
 using Dhanman.MyHome.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dhanman.MyHome.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250325122947_communityUserDetailTable")]
+    partial class communityUserDetailTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -366,6 +369,84 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasName("pk_approved_visitors");
 
                     b.ToTable("approved_visitors", (string)null);
+                });
+
+            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.ApprovedVisitors.ApprovedVisitorInfoById", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApartmentName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("apartment_name");
+
+                    b.Property<string>("CityName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("city_name");
+
+                    b.Property<string>("Contact_Number")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("contact_number");
+
+                    b.Property<string>("CreatedByFirstName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("created_by_first_name");
+
+                    b.Property<string>("CreatedByLastName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("created_by_last_name");
+
+                    b.Property<DateOnly>("EndDate")
+                        .HasColumnType("date")
+                        .HasColumnName("end_date");
+
+                    b.Property<TimeOnly>("EntryTime")
+                        .HasColumnType("time without time zone")
+                        .HasColumnName("entry_time");
+
+                    b.Property<TimeOnly>("ExitTime")
+                        .HasColumnType("time without time zone")
+                        .HasColumnName("exit_time");
+
+                    b.Property<string>("First_Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("first_name");
+
+                    b.Property<string>("Last_Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("last_name");
+
+                    b.Property<DateOnly>("StartDate")
+                        .HasColumnType("date")
+                        .HasColumnName("start_date");
+
+                    b.Property<string>("UnitName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("unit_name");
+
+                    b.Property<int>("Visitor_Id")
+                        .HasColumnType("integer")
+                        .HasColumnName("visitor_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_approved_visitor_info_by_id");
+
+                    b.ToTable("approved_visitor_info_by_id", null, t =>
+                        {
+                            t.ExcludeFromMigrations();
+                        });
                 });
 
             modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.BookingFacilites.BookingFacilitie", b =>
