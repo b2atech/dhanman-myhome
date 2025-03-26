@@ -1,8 +1,8 @@
 ﻿using Dhanman.MyHome.Application.Contracts.ServiceProviders;
 
-namespace Dhanman.MyHome.Application.Contracts.CommunityResidentRequests;
+namespace Dhanman.MyHome.Application.Contracts.MemberRequests;
 
-public class CreateCommunityResidentRequestRequest
+public class CreateMemberRequestRequest
 {
     #region Properties 
     public string MemberType { get; set; }
@@ -26,6 +26,6 @@ public class CreateCommunityResidentRequestRequest
     #endregion
 
     #region Constructors
-    public CreateCommunityResidentRequestRequest() => FirstName = string.Empty;
+    public CreateMemberRequestRequest() => FirstName = string.Empty;
     #endregion
 }

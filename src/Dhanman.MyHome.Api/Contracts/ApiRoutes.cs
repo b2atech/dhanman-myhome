@@ -77,7 +77,7 @@ public static class ApiRoutes
 
         public const string UpdateRequestRejectStatus = apiVersion + "request-reject-status";
 
-        public const string CreateCommunityResidentRequest = apiVersion + "community-resident-request";
+        public const string CreateMemberRequest = apiVersion + "member-request";
 
     }
 

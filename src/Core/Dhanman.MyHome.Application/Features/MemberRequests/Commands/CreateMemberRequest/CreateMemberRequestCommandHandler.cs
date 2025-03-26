@@ -7,26 +7,26 @@ using Dhanman.MyHome.Application.Features.ResidentRequests.Events;
 using Dhanman.MyHome.Domain.Abstractions;
 using Dhanman.MyHome.Domain.Entities.Addresses;
 using Dhanman.MyHome.Domain.Entities.Cities;
-using Dhanman.MyHome.Domain.Entities.CommunityResidentRequests;
+using Dhanman.MyHome.Domain.Entities.MemberRequests;
 using Dhanman.MyHome.Domain.Entities.ResidentRequests;
 using MediatR;
-using CommunityResidentRequestAddress = Dhanman.MyHome.Application.Contracts.ServiceProviders.Address;
+using MemberRequestAddress = Dhanman.MyHome.Application.Contracts.ServiceProviders.Address;
 
-namespace Dhanman.MyHome.Application.Features.CommunityResidentRequests.Commands.CreateCommunityResidentRequest;
+namespace Dhanman.MyHome.Application.Features.MemberRequests.Commands.CreateMemberRequest;
 
-public class CreateCommunityResidentRequestCommandHandler : ICommandHandler<CreateCommunityResidentRequestCommand, Result<EntityCreatedResponse>>
+public class CreateMemberRequestCommandHandler : ICommandHandler<CreateMemberRequestCommand, Result<EntityCreatedResponse>>
 {
     #region Properties
-    private readonly ICommunityResidentRequestRepository _communityResidentRequestRepository;
+    private readonly IMemberRequestRepository _memberRequestRepository;
     private readonly IAddressRepository _addressRepository;
     private readonly IMediator _mediator;
     private readonly IApplicationDbContext _dbContext;
     #endregion
 
     #region Constructors
-    public CreateCommunityResidentRequestCommandHandler(ICommunityResidentRequestRepository communityResidentRequestRepository, IAddressRepository addressRepository, IMediator mediator, IApplicationDbContext dbContext)
+    public CreateMemberRequestCommandHandler(IMemberRequestRepository memberRequestRepository, IAddressRepository addressRepository, IMediator mediator, IApplicationDbContext dbContext)
     {
-        _communityResidentRequestRepository = communityResidentRequestRepository;
+        _memberRequestRepository = memberRequestRepository;
         _addressRepository = addressRepository;
         _mediator = mediator;
         _dbContext = dbContext;
@@ -35,7 +35,7 @@ public class CreateCommunityResidentRequestCommandHandler : ICommandHandler<Crea
     #endregion
 
     #region Methodes
-    public async Task<Result<EntityCreatedResponse>> Handle(CreateCommunityResidentRequestCommand request, CancellationToken cancellationToken)
+    public async Task<Result<EntityCreatedResponse>> Handle(CreateMemberRequestCommand request, CancellationToken cancellationToken)
     {
         Guid cityId = GetCityId(request.CurrentAddress.CityName, request.CurrentAddress.ZipCode, request.CurrentAddress.StateId);
         var permanentAddress = GetAddress(request.CurrentAddress, cityId);
@@ -43,10 +43,10 @@ public class CreateCommunityResidentRequestCommandHandler : ICommandHandler<Crea
         Guid addressId = permanentAddress.Id;
 
 
-        int nextresidentRequestId = _communityResidentRequestRepository.GetTotalRecordsCount() + 1;
+        int nextresidentRequestId = _memberRequestRepository.GetTotalRecordsCount() + 1;
         int requestStatusId = ResidentRequestStatus.PENDING_REQUEST;
 
-        var communityResidentRequest = new CommunityResidentRequest(nextresidentRequestId,
+        var memberRequest = new MemberRequest(nextresidentRequestId,
                                                                      request.MemberType,
                                                                      request.UserName,
                                                                      request.Password,
@@ -66,11 +66,11 @@ public class CreateCommunityResidentRequestCommandHandler : ICommandHandler<Crea
                                                                      request.SpouseHattyId,
                                                                      requestStatusId);                                                                                
 
-        _communityResidentRequestRepository.Insert(communityResidentRequest);
+        _memberRequestRepository.Insert(memberRequest);
 
-        await _mediator.Publish(new ResidentRequestCreatedEvent(communityResidentRequest.Id), cancellationToken);
+        await _mediator.Publish(new ResidentRequestCreatedEvent(memberRequest.Id), cancellationToken);
 
-        return Result.Success(new EntityCreatedResponse(communityResidentRequest.Id));
+        return Result.Success(new EntityCreatedResponse(memberRequest.Id));
     }
 
     private Guid GetCityId(string cityName, string zipCode, Guid stateId)
@@ -86,7 +86,7 @@ public class CreateCommunityResidentRequestCommandHandler : ICommandHandler<Crea
         return city.Id;
     }
 
-    private Address GetAddress(CommunityResidentRequestAddress address, Guid cityId)
+    private Address GetAddress(MemberRequestAddress address, Guid cityId)
     {
         return new Address(Guid.NewGuid(), address.CountryId, address.StateId, cityId, address.AddressLine1, address.AddressLine2, address.ZipCode);
     }

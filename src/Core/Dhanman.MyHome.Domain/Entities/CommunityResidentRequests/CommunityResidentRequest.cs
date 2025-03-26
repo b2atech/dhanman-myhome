@@ -1,9 +1,9 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Abstractions;
 using B2aTech.CrossCuttingConcern.Core.Primitives;
 
-namespace Dhanman.MyHome.Domain.Entities.CommunityResidentRequests;
+namespace Dhanman.MyHome.Domain.Entities.MemberRequests;
 
-public class CommunityResidentRequest : EntityInt, IAuditableEntity, ISoftDeletableEntity
+public class MemberRequest : EntityInt, IAuditableEntity, ISoftDeletableEntity
 {
     #region Properties   
     public string MemberType { get; set; }
@@ -41,7 +41,7 @@ public class CommunityResidentRequest : EntityInt, IAuditableEntity, ISoftDeleta
     #endregion
 
     #region Constructor 
-    public CommunityResidentRequest(int id, string memberType, string userName, string password, string firstName, string lastName, Guid hattyId, string email, string mobileNumber, string companyName, string designation, Guid currentAddressId, DateTime dateOfBirth, char gender, string maritalStatus, string aboutYourSelf, string spouseName, Guid spouseHattyId, int communityRequestStatusId)
+    public MemberRequest(int id, string memberType, string userName, string password, string firstName, string lastName, Guid hattyId, string email, string mobileNumber, string companyName, string designation, Guid currentAddressId, DateTime dateOfBirth, char gender, string maritalStatus, string aboutYourSelf, string spouseName, Guid spouseHattyId, int communityRequestStatusId)
     {
         Id = id; 
         MemberType = memberType;

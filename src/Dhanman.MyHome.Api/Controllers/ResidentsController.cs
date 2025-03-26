@@ -3,11 +3,11 @@ using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Common;
-using Dhanman.MyHome.Application.Contracts.CommunityResidentRequests;
+using Dhanman.MyHome.Application.Contracts.MemberRequests;
 using Dhanman.MyHome.Application.Contracts.OccupantTypes;
 using Dhanman.MyHome.Application.Contracts.ResidentRequests;
 using Dhanman.MyHome.Application.Contracts.Residents;
-using Dhanman.MyHome.Application.Features.CommunityResidentRequests.Commands.CreateCommunityResidentRequest;
+using Dhanman.MyHome.Application.Features.MemberRequests.Commands.CreateMemberRequest;
 using Dhanman.MyHome.Application.Features.OccupantTypes.Queries;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.CreateResidentRequest;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.UpdateRequestApproveStatus;
@@ -131,14 +131,14 @@ public class ResidentsController : ApiController
     }
     #endregion
 
-    #region CommunityResidentRequests     
+    #region MemberRequests     
 
-    [HttpPost(ApiRoutes.ResidentRequests.CreateCommunityResidentRequest)]
+    [HttpPost(ApiRoutes.ResidentRequests.CreateMemberRequest)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> CreateCommunityResidentRequest([FromBody] CreateCommunityResidentRequestRequest? request) =>
+    public async Task<IActionResult> CreateMemberRequest([FromBody] CreateMemberRequestRequest? request) =>
             await Result.Create(request, Errors.General.BadRequest)
-            .Map(value => new CreateCommunityResidentRequestCommand(
+            .Map(value => new CreateMemberRequestCommand(
                  value.MemberType,
                  value.UserName,
                  value.Password,
