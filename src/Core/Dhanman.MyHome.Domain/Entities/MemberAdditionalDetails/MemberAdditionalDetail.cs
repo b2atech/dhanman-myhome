@@ -29,7 +29,7 @@ public class MemberAdditionalDetail : Entity, IAuditableEntity, ISoftDeletableEn
     #endregion
 
     #region Constructors
-    public MemberAdditionalDetail(Guid id, string memberType, string userName, string password, string? companyName, string? designation, Guid hattyId, DateTime dateOfBirth, char gender, string maritalStatus, string? aboutYourself, string? spouseName, Guid? spouseHattyId, DateTime createdOnUtc, DateTime? modifiedOnUtc, DateTime? deletedOnUtc, bool isDeleted, Guid createdBy, Guid? modifiedBy)
+    public MemberAdditionalDetail(Guid id, string memberType, string userName, string password, string? companyName, string? designation, Guid hattyId, DateTime dateOfBirth, char gender, string maritalStatus, string? aboutYourself, string? spouseName, Guid? spouseHattyId)
     {
         Id = id;
         MemberType = memberType;
@@ -43,13 +43,7 @@ public class MemberAdditionalDetail : Entity, IAuditableEntity, ISoftDeletableEn
         MaritalStatus = maritalStatus;
         AboutYourself = aboutYourself;
         SpouseName = spouseName;
-        SpouseHattyId = spouseHattyId;
-        CreatedOnUtc = createdOnUtc;
-        ModifiedOnUtc = modifiedOnUtc;
-        DeletedOnUtc = deletedOnUtc;
-        IsDeleted = isDeleted;
-        CreatedBy = createdBy;
-        ModifiedBy = modifiedBy;
+        SpouseHattyId = spouseHattyId;        
     }
     #endregion
 

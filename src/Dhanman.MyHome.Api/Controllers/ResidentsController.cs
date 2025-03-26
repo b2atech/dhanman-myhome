@@ -138,24 +138,15 @@ public class ResidentsController : ApiController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> CreateMemberRequest([FromBody] CreateMemberRequestRequest? request) =>
             await Result.Create(request, Errors.General.BadRequest)
-            .Map(value => new CreateMemberRequestCommand(
-                 value.MemberType,
-                 value.UserName,
-                 value.Password,
+            .Map(value => new CreateMemberRequestCommand(  
+                 value.ApartmentId,
                  value.FirstName,
-                 value.LastName,
-                 value.HattyId,
+                 value.LastName,                
                  value.Email,
                  value.MobileNumber,
-                 value.CompanyName,
-                 value.Designation,
-                 value.CurrentAddress,
-                 value.DateOfBirth,
-                 value.Gender,
-                 value.MaritalStatus,
-                 value.AboutYourSelf,
-                 value.SpouseName,
-                 value.SpouseHattyId))
+                 value.MemberAdditionalDetails,
+                 value.CurrentAddress
+                 ))
              .Bind(command => Mediator.Send(command))
                    .Match(Ok, BadRequest);
 
