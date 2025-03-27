@@ -128,5 +128,19 @@ internal static class TableNames
 
     internal const string ResidentTokens = "resident_tokens";
 
+    internal const string ApprovedVisitors = "approved_visitors";
+
+    internal const string VisitorApprovals = "visitor_approvals";
+
+    internal const string VisitTypes = "visit_types";
+
+    internal const string ApprovedVisitorInfoById = "approved_visitor_info_by_id"; //// To Do //need to be removed
+
+    internal const string VisitorApprovalInfoById = "visitor_approval_info_by_id"; 
+
+    internal const string MemberAdditionalDetails = "member_additional_details";
+
+    internal const string MemberRequests = "community_resident_requests";
+
 }
 

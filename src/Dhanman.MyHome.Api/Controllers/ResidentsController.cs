@@ -3,9 +3,11 @@ using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.MyHome.Application.Contracts.MemberRequests;
 using Dhanman.MyHome.Application.Contracts.OccupantTypes;
 using Dhanman.MyHome.Application.Contracts.ResidentRequests;
 using Dhanman.MyHome.Application.Contracts.Residents;
+using Dhanman.MyHome.Application.Features.MemberRequests.Commands.CreateMemberRequest;
 using Dhanman.MyHome.Application.Features.OccupantTypes.Queries;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.CreateResidentRequest;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.UpdateRequestApproveStatus;
@@ -128,6 +130,8 @@ public class ResidentsController : ApiController
         }
     }
     #endregion
+
+  
 
     #region OccupantTypes
 

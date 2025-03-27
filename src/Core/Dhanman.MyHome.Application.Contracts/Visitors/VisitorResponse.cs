@@ -7,14 +7,14 @@ public sealed class VisitorResponse
     public int Id { get; }
     public string FirstName { get; }
     public string? LastName { get; }
-    public string Email { get; }
-    public string VisitingFrom { get; }
+    public string? Email { get; }
+    public string? VisitingFrom { get; }
     public string ContactNumber { get; }
     public int VisitorTypeId { get; }
     public string VisitorType { get; }
     public string? VehicleNumber { get; }
-    public int IdentityTypeId { get; }
-    public string IdentityNumber { get; }
+    public int? IdentityTypeId { get; }
+    public string? IdentityNumber { get; }
     public Guid CreatedBy { get; }
     public DateTime CreatedOnUtc { get; }
     public Guid? ModifiedBy { get; }
@@ -23,7 +23,7 @@ public sealed class VisitorResponse
     #endregion
 
     #region Constructor
-    public VisitorResponse(int id, string firstName, string? lastName, string email, string visitingFrom, string contactNumber, int visitorTypeId, string visitorType, string? vehicleNumber, int identityTypeId, string identityNumber, Guid createdBy, DateTime createdOnUtc, Guid? modifiedBy, DateTime? modifiedOnUtc)
+    public VisitorResponse(int id, string firstName, string? lastName, string? email, string? visitingFrom, string contactNumber, int visitorTypeId, string visitorType, string? vehicleNumber, int? identityTypeId, string? identityNumber, Guid createdBy, DateTime createdOnUtc, Guid? modifiedBy, DateTime? modifiedOnUtc)
     {
         Id = id;
         FirstName = firstName;

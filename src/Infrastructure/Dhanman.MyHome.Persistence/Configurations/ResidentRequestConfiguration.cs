@@ -12,13 +12,13 @@ internal sealed class ResidentRequestConfiguration : IEntityTypeConfiguration<Re
         builder.ToTable(TableNames.ResidentRequests);
         builder.HasKey(residentRequests => residentRequests.Id);        
 
-        builder.Property(residentRequests => residentRequests.ApartmentId).HasColumnName("apartment_id").IsRequired();
+        builder.Property(residentRequests => residentRequests.ApartmentId).HasColumnName("apartment_id");
 
-        builder.Property(residentRequests => residentRequests.BuildingId).HasColumnName("building_id").IsRequired();
+        builder.Property(residentRequests => residentRequests.BuildingId).HasColumnName("building_id");
 
-        builder.Property(residentRequests => residentRequests.FloorId).HasColumnName("floor_id").IsRequired();
+        builder.Property(residentRequests => residentRequests.FloorId).HasColumnName("floor_id");
 
-        builder.Property(residentRequests => residentRequests.UnitId).HasColumnName("unit_id").IsRequired();
+        builder.Property(residentRequests => residentRequests.UnitId).HasColumnName("unit_id");
 
         builder.Property(residentRequests => residentRequests.FirstName).HasColumnName("first_name").IsRequired();
 
@@ -32,10 +32,12 @@ internal sealed class ResidentRequestConfiguration : IEntityTypeConfiguration<Re
 
         builder.Property(residentRequests => residentRequests.RequestStatusId).HasColumnName("request_status_id").IsRequired();
 
-        builder.Property(residentRequests => residentRequests.ResidentTypeId).HasColumnName("resident_type_id").IsRequired();
+        builder.Property(residentRequests => residentRequests.ResidentTypeId).HasColumnName("resident_type_id");
 
-        builder.Property(residentRequests => residentRequests.OccupancyStatusId).HasColumnName("occupancy_status_id").IsRequired();
+        builder.Property(residentRequests => residentRequests.OccupancyStatusId).HasColumnName("occupancy_status_id");
 
+        builder.Property(residentRequests => residentRequests.MemberAdditionalDetailsId).HasColumnName("member_additional_details_id");
+        
         builder.Property(residentRequests => residentRequests.CreatedBy).HasColumnType("uuid");
 
         builder.Property(residentRequests => residentRequests.ModifiedBy).HasColumnType("uuid");

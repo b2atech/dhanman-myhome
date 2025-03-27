@@ -11,6 +11,13 @@ public static class ApiRoutes
         public const string Register = "authentication/register";
     }
 
+    public static class PublicApartments
+    {
+        public const string GetApartmentNames = apiVersion + "apartment-names";
+    }
+
+
+
     public static class Buildings
     {
         public const string CreateBuilding = apiVersion + "building";  
@@ -76,6 +83,9 @@ public static class ApiRoutes
         public const string UpdateRequestApproveStatus = apiVersion + "request-approve-status";
 
         public const string UpdateRequestRejectStatus = apiVersion + "request-reject-status";
+
+        public const string CreateMemberRequest = apiVersion + "member-request";
+
     }
 
     public static class Vehicles
@@ -164,6 +174,10 @@ public static class ApiRoutes
         public const string GetVisitorIdentityTypes = apiVersion + "visitor-identity-types";
 
         public const string UpdateVisitor = apiVersion + "visitor";
+
+        public const string CreateVisitorApproval = apiVersion + "visitor-approval";
+
+        public const string GetVisitorApprovalInfoById = apiVersion + "visitor-approval/{visitorApprovalId:int}";
     }
 
     public static class Events
