@@ -20,7 +20,7 @@ public class CreateVisitorApprovalCommand : ICommand<Result<EntityCreatedRespons
     public Guid CreatedBy { get; set; }
     #endregion
 
-    #region Constructor
+    #region Constructors
     public CreateVisitorApprovalCommand(Guid apartmentId, string firstName, string contactNumber, int visitorTypeId, int visitTypeId, DateOnly? startDate, DateOnly? endDate, TimeOnly? entryTime, TimeOnly? exitTime, Guid createdBy)
     {
         ApartmentId = apartmentId;
