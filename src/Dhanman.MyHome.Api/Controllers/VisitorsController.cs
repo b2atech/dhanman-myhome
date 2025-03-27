@@ -174,14 +174,16 @@ public class VisitorsController : ApiController
     public async Task<IActionResult> CreateVisitorApproval([FromBody] CreateVisitorApprovalRequest? request) =>
             await Result.Create(request, Errors.General.BadRequest)
             .Map(value => new CreateVisitorApprovalCommand(
+                value.ApartmentId,
                 value.FirstName,
                 value.ContactNumber,
-                value.VisitorId,
+                value.VisitTypeId,
                 value.VisitTypeId,
                 value.StartDate,
                 value.EndDate,
                 value.EntryTime,
-                value.ExitTime
+                value.ExitTime,
+                value.CreatedBy
                 ))
              .Bind(command => Mediator.Send(command))
                    .Match(Ok, BadRequest);

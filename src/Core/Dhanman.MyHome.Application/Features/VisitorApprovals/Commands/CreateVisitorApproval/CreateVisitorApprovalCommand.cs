@@ -7,9 +7,11 @@ namespace Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.CreateVi
 public class CreateVisitorApprovalCommand : ICommand<Result<EntityCreatedResponse>>
 {
     #region Properties
+    public int VisitorApproveId { get; set; }
     public Guid ApartmentId { get; set; }
     public string FirstName { get; set; }
     public string ContactNumber { get; set; }
+    public int VisitorTypeId { get; set; }
     public int VisitTypeId { get; set; }
     public DateOnly? StartDate { get; set; }
     public DateOnly? EndDate { get; set; }
@@ -19,11 +21,12 @@ public class CreateVisitorApprovalCommand : ICommand<Result<EntityCreatedRespons
     #endregion
 
     #region Constructor
-    public CreateVisitorApprovalCommand(Guid apartmentId, string firstName, string contactNumber, int visitTypeId, DateOnly? startDate, DateOnly? endDate, TimeOnly? entryTime, TimeOnly? exitTime, Guid createdBy)
+    public CreateVisitorApprovalCommand(Guid apartmentId, string firstName, string contactNumber, int visitorTypeId, int visitTypeId, DateOnly? startDate, DateOnly? endDate, TimeOnly? entryTime, TimeOnly? exitTime, Guid createdBy)
     {
         ApartmentId = apartmentId;
         FirstName = firstName;
         ContactNumber = contactNumber;
+        VisitorTypeId = visitorTypeId;
         VisitTypeId = visitTypeId;
         StartDate = startDate;
         EndDate = endDate;
@@ -31,6 +34,7 @@ public class CreateVisitorApprovalCommand : ICommand<Result<EntityCreatedRespons
         ExitTime = exitTime;
         CreatedBy = createdBy;
     }
+
     public CreateVisitorApprovalCommand() { }
     #endregion
 }
