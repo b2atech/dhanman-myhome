@@ -3,12 +3,8 @@ using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Apartments;
-using Dhanman.MyHome.Application.Contracts.TicketCatetories;
-using Dhanman.MyHome.Application.Contracts.TicketPriorities;
-using Dhanman.MyHome.Application.Contracts.TicketStatuses;
 using Dhanman.MyHome.Application.Features.Apartments.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dhanman.MyHome.Api.Controllers;
@@ -36,7 +32,6 @@ public class ApartmentsController : ApiController
     await Result.Success(new GetAllApartmentNamesQuery())
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
-
     #endregion
 
     

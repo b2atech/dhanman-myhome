@@ -174,6 +174,8 @@ public class VisitorsController : ApiController
     public async Task<IActionResult> CreateVisitorApproval([FromBody] CreateVisitorApprovalRequest? request) =>
             await Result.Create(request, Errors.General.BadRequest)
             .Map(value => new CreateVisitorApprovalCommand(
+                value.FirstName,
+                value.ContactNumber,
                 value.VisitorId,
                 value.VisitTypeId,
                 value.StartDate,
