@@ -34,6 +34,7 @@ public class SaveResidentTokenCommandHandler : ICommandHandler<SaveResidentToken
         }
         else
         {
+            residentToken.FCMToken = request.FCMToken;
             _residentTokenRepository.Update(residentToken);
         }
 
