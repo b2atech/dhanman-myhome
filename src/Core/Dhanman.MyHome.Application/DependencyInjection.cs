@@ -3,6 +3,7 @@ using Dhanman.MyHome.Application.Behaviors;
 using Dhanman.MyHome.Application.Caching;
 using Dhanman.MyHome.Application.Extentions;
 using Dhanman.MyHome.Application.ServiceClient;
+using Dhanman.MyHome.Application.Services;
 using MediatR;
 using MediatR.NotificationPublishers;
 using Microsoft.Extensions.Configuration;
@@ -32,6 +33,11 @@ public static class DependencyInjection
             client.BaseAddress = new Uri(configuration["ApiSettings:PurchaseServiceBaseAddress"]);
             client.DefaultRequestHeaders.Add("Accept", "application/json");
         });
+
+        var firebaseKeyPath = Path.Combine(AppContext.BaseDirectory, "serviceAccountKey.json");
+
+        services.AddHttpClient<IFirebaseService, FirebaseNotificationService>();
+        services.AddSingleton(new FirebaseAuth(firebaseKeyPath));
 
         services.AddMediatR(config =>
         {

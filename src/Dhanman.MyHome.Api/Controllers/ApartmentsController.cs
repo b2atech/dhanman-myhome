@@ -25,13 +25,14 @@ public class ApartmentsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
-    [HttpGet(ApiRoutes.Apartments.GetApartmentNames)]
-    [ProducesResponseType(typeof(ApartmentNameListResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllApartmentNames() =>
-    await Result.Success(new GetAllApartmentNamesQuery())
-    .Bind(query => Mediator.Send(query))
-    .Match(Ok, NotFound);
+    //[HttpGet(ApiRoutes.Apartments.GetApartmentNames)]
+    //[ProducesResponseType(typeof(ApartmentNameListResponse), StatusCodes.Status200OK)]
+    //[ProducesResponseType(StatusCodes.Status404NotFound)]
+    //public async Task<IActionResult> GetAllApartmentNames() =>
+    //await Result.Success(new GetAllApartmentNamesQuery())
+    //.Bind(query => Mediator.Send(query))
+    //.Match(Ok, NotFound);
+
     #endregion
 
     

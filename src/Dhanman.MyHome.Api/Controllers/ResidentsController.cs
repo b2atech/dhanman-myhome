@@ -29,23 +29,7 @@ public class ResidentsController : ApiController
 
     #region Residents  
 
-    [HttpPost(ApiRoutes.Residents.CreateResident)]
-    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> CreateResidentRequest([FromBody] CreateResidentRequest? request) =>
-            await Result.Create(request, Errors.General.BadRequest)
-            .Map(value => new CreateResidentCommand(
-                value.ApartmentId,
-                value.UnitId,
-                value.FirstName,
-                value.LastName,
-                value.Email,
-                value.ContactNumber,
-                value.PermanentAddress,
-                value.ResidentTypeId,
-                value.OccupancyStatusId))
-             .Bind(command => Mediator.Send(command))
-                   .Match(Ok, BadRequest);
+   
 
     [HttpGet(ApiRoutes.Residents.GetAllResidents)]
     [ProducesResponseType(typeof(ResidentListResponse), StatusCodes.Status200OK)]
@@ -131,26 +115,7 @@ public class ResidentsController : ApiController
     }
     #endregion
 
-    #region MemberRequests     
-
-    [HttpPost(ApiRoutes.ResidentRequests.CreateMemberRequest)]
-    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> CreateMemberRequest([FromBody] CreateMemberRequestRequest? request) =>
-            await Result.Create(request, Errors.General.BadRequest)
-            .Map(value => new CreateMemberRequestCommand(  
-                 value.ApartmentId,
-                 value.FirstName,
-                 value.LastName,                
-                 value.Email,
-                 value.MobileNumber,
-                 value.MemberAdditionalDetails,
-                 value.CurrentAddress
-                 ))
-             .Bind(command => Mediator.Send(command))
-                   .Match(Ok, BadRequest);
-
-    #endregion
+  
 
     #region OccupantTypes
 

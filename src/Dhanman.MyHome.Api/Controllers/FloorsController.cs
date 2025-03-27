@@ -30,14 +30,7 @@ public class FloorsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
-    [HttpGet(ApiRoutes.Floors.GetFloorNames)]
-    [ProducesResponseType(typeof(FloorNameListResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllFloorNames(Guid apartmentId, int buildingId) =>
-    await Result.Success(new GetAllFloorNamesQuery(apartmentId, buildingId))
-    .Bind(query => Mediator.Send(query))
-    .Match(Ok, NotFound);
-
+   
     [HttpGet(ApiRoutes.Floors.GetFloorById)]
     [ProducesResponseType(typeof(FloorResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
