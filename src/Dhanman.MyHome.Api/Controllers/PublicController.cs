@@ -3,10 +3,16 @@ using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Apartments;
+using Dhanman.MyHome.Application.Contracts.Buildings;
 using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.MyHome.Application.Contracts.Floors;
 using Dhanman.MyHome.Application.Contracts.MemberRequests;
+using Dhanman.MyHome.Application.Contracts.Units;
 using Dhanman.MyHome.Application.Features.Apartments.Queries;
+using Dhanman.MyHome.Application.Features.Buildings.Queries;
+using Dhanman.MyHome.Application.Features.Floors.Queries;
 using Dhanman.MyHome.Application.Features.MemberRequests.Commands.CreateMemberRequest;
+using Dhanman.MyHome.Application.Features.Units.Queries;
 using Dhanman.MyHome.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -56,4 +62,33 @@ public class PublicController : PublicApiController
                    .Match(Ok, BadRequest);
 
     #endregion
+
+
+
+    [HttpGet(ApiRoutes.Buildings.GetAllBuildingNames)]
+    [ProducesResponseType(typeof(BuildingNameListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllBuildingNames(Guid apartmentId) =>
+    await Result.Success(new GetAllBuildingNameQuery(apartmentId))
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
+
+    [HttpGet(ApiRoutes.Floors.GetFloorNames)]
+    [ProducesResponseType(typeof(FloorNameListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllFloorNames(Guid apartmentId, int buildingId) =>
+   await Result.Success(new GetAllFloorNamesQuery(apartmentId, buildingId))
+   .Bind(query => Mediator.Send(query))
+   .Match(Ok, NotFound);
+
+
+    [HttpGet(ApiRoutes.Units.GetAllUnitNames)]
+    [ProducesResponseType(typeof(UnitNameListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllUnitNames(Guid apartmentId, int buildingId, int floorId) =>
+   await Result.Success(new GetAllUnitNamesQuery(apartmentId, buildingId, floorId))
+   .Bind(query => Mediator.Send(query))
+   .Match(Ok, NotFound);
+
 }
