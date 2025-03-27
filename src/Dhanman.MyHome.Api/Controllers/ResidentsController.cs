@@ -113,9 +113,7 @@ public class ResidentsController : ApiController
             return BadRequest(result.Error);
         }
     }
-    #endregion
-
-  
+    #endregion     
 
     #region OccupantTypes
 
