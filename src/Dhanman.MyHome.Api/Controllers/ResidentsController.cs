@@ -131,26 +131,7 @@ public class ResidentsController : ApiController
     }
     #endregion
 
-    #region MemberRequests     
-
-    [HttpPost(ApiRoutes.ResidentRequests.CreateMemberRequest)]
-    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> CreateMemberRequest([FromBody] CreateMemberRequestRequest? request) =>
-            await Result.Create(request, Errors.General.BadRequest)
-            .Map(value => new CreateMemberRequestCommand(  
-                 value.ApartmentId,
-                 value.FirstName,
-                 value.LastName,                
-                 value.Email,
-                 value.MobileNumber,
-                 value.MemberAdditionalDetails,
-                 value.CurrentAddress
-                 ))
-             .Bind(command => Mediator.Send(command))
-                   .Match(Ok, BadRequest);
-
-    #endregion
+  
 
     #region OccupantTypes
 
