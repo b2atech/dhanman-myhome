@@ -7,11 +7,13 @@ using Dhanman.MyHome.Application.Contracts.Buildings;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.Floors;
 using Dhanman.MyHome.Application.Contracts.MemberRequests;
+using Dhanman.MyHome.Application.Contracts.Residents;
 using Dhanman.MyHome.Application.Contracts.Units;
 using Dhanman.MyHome.Application.Features.Apartments.Queries;
 using Dhanman.MyHome.Application.Features.Buildings.Queries;
 using Dhanman.MyHome.Application.Features.Floors.Queries;
 using Dhanman.MyHome.Application.Features.MemberRequests.Commands.CreateMemberRequest;
+using Dhanman.MyHome.Application.Features.Residents.Commands.CreateResident;
 using Dhanman.MyHome.Application.Features.Units.Queries;
 using Dhanman.MyHome.Domain;
 using MediatR;
@@ -91,4 +93,21 @@ public class PublicController : PublicApiController
    .Bind(query => Mediator.Send(query))
    .Match(Ok, NotFound);
 
+    [HttpPost(ApiRoutes.Residents.CreateResident)]
+    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> CreateResidentRequest([FromBody] CreateResidentRequest? request) =>
+           await Result.Create(request, Errors.General.BadRequest)
+           .Map(value => new CreateResidentCommand(
+               value.ApartmentId,
+               value.UnitId,
+               value.FirstName,
+               value.LastName,
+               value.Email,
+               value.ContactNumber,
+               value.PermanentAddress,
+               value.ResidentTypeId,
+               value.OccupancyStatusId))
+            .Bind(command => Mediator.Send(command))
+                  .Match(Ok, BadRequest);
 }
