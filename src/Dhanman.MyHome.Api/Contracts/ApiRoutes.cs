@@ -11,13 +11,6 @@ public static class ApiRoutes
         public const string Register = "authentication/register";
     }
 
-    public static class PublicApartments
-    {
-        public const string GetApartmentNames = apiVersion + "apartment-names";
-    }
-
-
-
     public static class Buildings
     {
         public const string CreateBuilding = apiVersion + "building";  
@@ -83,8 +76,6 @@ public static class ApiRoutes
         public const string UpdateRequestApproveStatus = apiVersion + "request-approve-status";
 
         public const string UpdateRequestRejectStatus = apiVersion + "request-reject-status";
-
-        public const string CreateMemberRequest = apiVersion + "member-request";
 
     }
 
@@ -350,5 +341,16 @@ public static class ApiRoutes
         public const string CreatePushNotification = apiVersion + "guest-notification";
 
         public const string CreateResidentToken = apiVersion + "resident-token";
+    }
+
+    public static class PublicApartments
+    {
+        public const string GetApartmentNames = apiVersion + "apartment-names";
+    }
+
+    public static class PublicMemberRequests
+    {
+        public const string CreateMemberRequest = apiVersion + "communities/{communityId:guid}/member-request";
+
     }
 }

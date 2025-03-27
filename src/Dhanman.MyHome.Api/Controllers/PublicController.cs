@@ -1,5 +1,4 @@
-﻿using B2aTech.CrossCuttingConcern.Abstractions;
-using B2aTech.CrossCuttingConcern.Core.Result;
+﻿using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Apartments;
@@ -26,7 +25,7 @@ public class PublicController : PublicApiController
     private readonly HttpClient _httpClient;
     private readonly IConfiguration _configuration;
 
-    public PublicController(HttpClient httpClient, IConfiguration configuration, IMediator mediator, IUserContextService userContextService) : base(mediator, userContextService)
+        public PublicController(HttpClient httpClient, IConfiguration configuration, IMediator mediator) : base(mediator)
     {
         _httpClient = httpClient;
         _configuration = configuration;
@@ -45,14 +44,12 @@ public class PublicController : PublicApiController
     #endregion
 
     #region MemberRequests     
-
-    [HttpPost(ApiRoutes.ResidentRequests.CreateMemberRequest)]
+    [HttpPost(ApiRoutes.PublicMemberRequests.CreateMemberRequest)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> CreateMemberRequest([FromBody] CreateMemberRequestRequest? request) =>
             await Result.Create(request, Errors.General.BadRequest)
-            .Map(value => new CreateMemberRequestCommand(
-                 value.ApartmentId,
+            .Map(value => new CreateMemberRequestCommand(                 
                  value.FirstName,
                  value.LastName,
                  value.Email,
