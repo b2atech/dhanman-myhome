@@ -1,36 +1,35 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
-using Dhanman.MyHome.Application.Contracts.ApprovedVisitors;
+using Dhanman.MyHome.Application.Contracts.VisitorApprovals;
 using Dhanman.MyHome.Domain;
-using Dhanman.MyHome.Domain.Entities.ApprovedVisitors;
+using Dhanman.MyHome.Domain.Entities.VisitorApprovals;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using Npgsql;
 
-namespace Dhanman.MyHome.Application.Features.ApprovedVisitors.Queries;
+namespace Dhanman.MyHome.Application.Features.VisitorApprovals.Queries;
 
-internal sealed class GetApprovedVisitorInfoQueryHandler : IQueryHandler<GetApprovedVisitorInfoQuery, Result<ApprovedInfoByIdResponse>>
+internal sealed class GetVisitorApprovalInfoByIdQueryHandler : IQueryHandler<GetVisitorApprovalInfoByIdQuery, Result<VisitorApprovalsInfoByIdResponse>>
 {
     #region Properties
     private readonly IApplicationDbContext _dbContext;
     #endregion
 
     #region Constructors
-    public GetApprovedVisitorInfoQueryHandler(IApplicationDbContext dbContext) => _dbContext = dbContext;
+    public GetVisitorApprovalInfoByIdQueryHandler(IApplicationDbContext dbContext) => _dbContext = dbContext;
     #endregion
 
     #region Methods
-    public async Task<Result<ApprovedInfoByIdResponse>> Handle(GetApprovedVisitorInfoQuery request, CancellationToken cancellationToken) =>
+    public async Task<Result<VisitorApprovalsInfoByIdResponse>> Handle(GetVisitorApprovalInfoByIdQuery request, CancellationToken cancellationToken) =>
             await Result.Success(request)
-                .Ensure(query => query.ApprovedVisitorId > 0, Errors.General.EntityNotFound)
+                .Ensure(query => query.VisitorApprovalId > 0, Errors.General.EntityNotFound)
                 .Bind(async query =>
                 {
-                    var customer = await _dbContext.SetInt<ApprovedVisitorInfoById>()
+                    var visitorApproval = await _dbContext.SetInt<VisitorApprovalInfoById>()
                     .FromSqlRaw("SELECT * FROM public.get_visitor_approval_info_by_approval_id(@approval_id)",
-                        new NpgsqlParameter("approval_id", request.ApprovedVisitorId))
+                        new NpgsqlParameter("approval_id", request.VisitorApprovalId))
                     .AsNoTracking()
-                    .Select(c => new ApprovedInfoByIdResponse(
+                    .Select(c => new VisitorApprovalsInfoByIdResponse(
                         c.Visitor_Id,
                         c.First_Name,
                         c.Last_Name ?? string.Empty,
@@ -47,13 +46,13 @@ internal sealed class GetApprovedVisitorInfoQueryHandler : IQueryHandler<GetAppr
                         ))
                     .FirstOrDefaultAsync(cancellationToken);
 
-                    if (customer == null)
+                    if (visitorApproval == null)
                     {
-                        return Result.Failure<ApprovedInfoByIdResponse>(Errors.General.EntityNotFound);
+                        return Result.Failure<VisitorApprovalsInfoByIdResponse>(Errors.General.EntityNotFound);
                     }
 
 
-                    return customer;
+                    return visitorApproval;
                 });
 
     #endregion

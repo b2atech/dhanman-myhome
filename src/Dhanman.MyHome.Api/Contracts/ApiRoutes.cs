@@ -168,9 +168,9 @@ public static class ApiRoutes
 
         public const string UpdateVisitor = apiVersion + "visitor";
 
-        public const string CreateApprovedVisitor = apiVersion + "approved-visitor";
+        public const string CreateVisitorApproval = apiVersion + "visitor-approval";
 
-        public const string GetApprovedVisitorInfoByApprovedId = apiVersion + "approved-visitor/{approvedVisitorId:int}";
+        public const string GetVisitorApprovalInfoById = apiVersion + "visitor-approval/{visitorApprovalId:int}";
     }
 
     public static class Events

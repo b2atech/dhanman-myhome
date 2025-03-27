@@ -1,6 +1,6 @@
-﻿namespace Dhanman.MyHome.Application.Contracts.ApprovedVisitors;
+﻿namespace Dhanman.MyHome.Application.Contracts.VisitorApprovals;
 
-public class CreateApprovedVisitorRequest
+public class CreateVisitorApprovalRequest
 {
     #region Properties
     public int VisitorId { get; set; }

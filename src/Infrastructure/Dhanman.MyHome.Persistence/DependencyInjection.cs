@@ -66,7 +66,7 @@ public static class DependencyInjection
             services.AddTransient<IVisitorUnitLogRepository, VisitorUnitLogRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<ITicketRepository, TicketRepository>();
-            services.AddScoped<IApprovedVisitorRepository, ApprovedVisitorRepository>();
+            services.AddScoped<IVisitorApprovalsRepository, VisitorApprovalsRepository>(); 
             services.AddScoped<ITicketServiceProviderOtpRepository, TicketServiceProviderOtpRepository>();
             services.AddScoped<IMemberAdditionalDetailRepository, MemberAdditionalDetailRepository>();
         }

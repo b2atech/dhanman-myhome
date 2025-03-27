@@ -2,19 +2,19 @@
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Common;
 
-namespace Dhanman.MyHome.Application.Features.ApprovedVisitors.Commands.CreateApprovedVisitor;
+namespace Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.CreateVisitorApproval;
 
-public class CreateApprovedVisitorCommand : ICommand<Result<EntityCreatedResponse>>
+public class CreateVisitorApprovalCommand : ICommand<Result<EntityCreatedResponse>>
 {
     #region Properties
     public int VisitorId { get; set; }
-    public int VisitTypeId { get; set; }  
+    public int VisitTypeId { get; set; }
     public DateOnly? StartDate { get; set; }
     public DateOnly? EndDate { get; set; }
     public TimeOnly? EntryTime { get; set; }
     public TimeOnly? ExitTime { get; set; }
 
-    public CreateApprovedVisitorCommand(int visitorId, int visitTypeId, DateOnly? startDate, DateOnly? endDate, TimeOnly? entryTime, TimeOnly? exitTime)
+    public CreateVisitorApprovalCommand(int visitorId, int visitTypeId, DateOnly? startDate, DateOnly? endDate, TimeOnly? entryTime, TimeOnly? exitTime)
     {
         VisitorId = visitorId;
         VisitTypeId = visitTypeId;
@@ -24,6 +24,6 @@ public class CreateApprovedVisitorCommand : ICommand<Result<EntityCreatedRespons
         ExitTime = exitTime;
     }
 
-    public CreateApprovedVisitorCommand() { }
+    public CreateVisitorApprovalCommand() { }
     #endregion
 }

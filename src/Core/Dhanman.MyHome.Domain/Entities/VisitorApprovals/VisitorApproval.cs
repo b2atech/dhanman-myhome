@@ -1,9 +1,9 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Abstractions;
 using B2aTech.CrossCuttingConcern.Core.Primitives;
 
-namespace Dhanman.MyHome.Domain.Entities.ApprovedVisitors;
+namespace Dhanman.MyHome.Domain.Entities.VisitorApprovals;
 
-public class ApprovedVisitor : EntityInt, IAuditableEntity, ISoftDeletableEntity
+public class VisitorApproval : EntityInt, IAuditableEntity, ISoftDeletableEntity
 {
     #region Properties
     public int VisitorId { get; set; }
@@ -22,7 +22,7 @@ public class ApprovedVisitor : EntityInt, IAuditableEntity, ISoftDeletableEntity
     public DateTime? DeletedOnUtc { get; }
     public bool IsDeleted { get; set; }
 
-    public ApprovedVisitor(int visitorId, int visitTypeId, DateOnly? startDate, DateOnly? endDate, TimeOnly? entryTime, TimeOnly? exitTime)
+    public VisitorApproval(int visitorId, int visitTypeId, DateOnly? startDate, DateOnly? endDate, TimeOnly? entryTime, TimeOnly? exitTime)
     {
         VisitorId = visitorId;
         VisitTypeId = visitTypeId;
@@ -32,5 +32,4 @@ public class ApprovedVisitor : EntityInt, IAuditableEntity, ISoftDeletableEntity
         ExitTime = exitTime;
     }
     #endregion
-
 }

@@ -1,6 +1,6 @@
-﻿namespace Dhanman.MyHome.Application.Contracts.ApprovedVisitors;
+﻿namespace Dhanman.MyHome.Application.Contracts.VisitorApprovals;
 
-public sealed class ApprovedInfoByIdResponse
+public sealed class VisitorApprovalsInfoByIdResponse
 {
     #region Properties
     public int Visitor_Id { get; }
@@ -21,7 +21,7 @@ public sealed class ApprovedInfoByIdResponse
 
     #region Constructors
 
-    public ApprovedInfoByIdResponse(int visitor_Id, string first_Name, string last_Name, string contact_Number, DateOnly startDate, DateOnly endDate, TimeOnly entryTime, TimeOnly exitTime, string createdByFirstName, string createdByLastName, string unitName, string apartmentName, string cityName)
+    public VisitorApprovalsInfoByIdResponse(int visitor_Id, string first_Name, string last_Name, string contact_Number, DateOnly startDate, DateOnly endDate, TimeOnly entryTime, TimeOnly exitTime, string createdByFirstName, string createdByLastName, string unitName, string apartmentName, string cityName)
     {
         Visitor_Id = visitor_Id;
         First_Name = first_Name;

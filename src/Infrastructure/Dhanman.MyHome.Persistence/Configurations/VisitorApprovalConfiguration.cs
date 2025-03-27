@@ -1,15 +1,15 @@
-﻿using Dhanman.MyHome.Domain.Entities.ApprovedVisitors;
-using Dhanman.MyHome.Persistence.Constants;
-using Microsoft.EntityFrameworkCore;
+﻿using Dhanman.MyHome.Persistence.Constants;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore;
+using Dhanman.MyHome.Domain.Entities.VisitorApprovals;
 
 namespace Dhanman.MyHome.Persistence.Configurations;
 
-internal sealed class ApprovedVisitorConfiguration : IEntityTypeConfiguration<ApprovedVisitor>
+internal sealed class VisitorApprovalConfiguration : IEntityTypeConfiguration<VisitorApproval>
 {
-    public void Configure(EntityTypeBuilder<ApprovedVisitor> builder)
+    public void Configure(EntityTypeBuilder<VisitorApproval> builder)
     {
-        builder.ToTable(TableNames.ApprovedVisitors);
+        builder.ToTable(TableNames.VisitorApprovals);
         builder.HasKey(approvedVisitors => approvedVisitors.Id);
 
         builder.Property(approvedVisitors => approvedVisitors.VisitorId).HasColumnName("visitor_id").IsRequired();

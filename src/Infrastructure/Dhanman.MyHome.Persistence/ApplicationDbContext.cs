@@ -3,7 +3,7 @@ using B2aTech.CrossCuttingConcern.Core.Abstractions;
 using B2aTech.CrossCuttingConcern.Core.Primitives;
 using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Domain.Abstractions;
-using Dhanman.MyHome.Domain.Entities.ApprovedVisitors;
+using Dhanman.MyHome.Domain.Entities.VisitorApprovals;
 using Dhanman.MyHome.Persistence.Constants;
 using Dhanman.MyHome.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -35,7 +35,7 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        modelBuilder.Entity<ApprovedVisitorInfoById>().ToTable(TableNames.ApprovedVisitorInfoById, t => t.ExcludeFromMigrations());
+        modelBuilder.Entity<VisitorApprovalInfoById>().ToTable(TableNames.VisitorApprovalInfoById, t => t.ExcludeFromMigrations());
         modelBuilder.ApplyUtcDateTimeConverter();
         base.OnModelCreating(modelBuilder);
 
