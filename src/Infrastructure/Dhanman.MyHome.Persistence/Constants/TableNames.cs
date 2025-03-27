@@ -132,7 +132,9 @@ internal static class TableNames
 
     internal const string VisitTypes = "visit_types";
 
-    internal const string ApprovedVisitorInfoById = "approved_visitor_info_by_id";
+    internal const string ApprovedVisitorInfoById = "approved_visitor_info_by_id"; //// To Do //need to be removed
+
+    internal const string VisitorApprovalInfoById = "visitor_approval_info_by_id"; 
 
     internal const string MemberAdditionalDetails = "member_additional_details";
 

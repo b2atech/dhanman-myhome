@@ -129,9 +129,9 @@ public static class CacheKeys
     #endregion
 
     #region ApprovedVisitors
-    public static class ApprovedVisitors
+    public static class VisitorApprovals
     {
-        public const string CacheKeyPrefix = "approvedVisitors-{0}";
+        public const string CacheKeyPrefix = "visitorApprovals-{0}";
 
         
     }

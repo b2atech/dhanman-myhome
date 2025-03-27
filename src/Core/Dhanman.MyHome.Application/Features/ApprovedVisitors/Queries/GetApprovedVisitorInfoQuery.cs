@@ -20,7 +20,7 @@ public class GetApprovedVisitorInfoQuery : ICacheableQuery<Result<ApprovedInfoBy
     #endregion
 
     #region Methodes
-    public string GetCacheKey() => string.Format(CacheKeys.ApprovedVisitors.CacheKeyPrefix, "approved-visitor-id", ApprovedVisitorId);
+    public string GetCacheKey() => string.Format(CacheKeys.VisitorApprovals.CacheKeyPrefix, "visitor-approval-id", ApprovedVisitorId);
     #endregion
 
 }
