@@ -344,4 +344,11 @@ public static class ApiRoutes
         //public const string UpdateTicketServiceProvider = apiVersion + "ticket-service-provider";
         //public const string GetAllServiceProviderTicketCategories = apiVersion + "service-provider-ticket-categories";
     }
+
+    public static class PushNotification
+    {
+        public const string CreatePushNotification = apiVersion + "guest-notification";
+
+        public const string CreateResidentToken = apiVersion + "resident-token";
+    }
 }

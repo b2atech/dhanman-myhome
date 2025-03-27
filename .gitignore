@@ -409,3 +409,4 @@ FodyWeavers.xsd
 /.vs/ProjectEvaluation/dhanman.myhome.metadata.v7.bin
 /.vs/ProjectEvaluation/dhanman.myhome.projects.v7.bin
 /.vs/Dhanman.MyHome/v17/HierarchyCache.v1.txt
+src/Dhanman.MyHome.Api/serviceAccountKey.json
