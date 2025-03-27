@@ -126,5 +126,7 @@ internal static class TableNames
 
     internal const string TicketServiceProviderOtps = "ticket_service_provider_otps";
 
+    internal const string ResidentTokens = "resident_tokens";
+
 }
 
