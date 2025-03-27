@@ -1,5 +1,4 @@
-﻿using B2aTech.CrossCuttingConcern.Abstractions;
-using B2aTech.CrossCuttingConcern.Core.Primitives;
+﻿using B2aTech.CrossCuttingConcern.Core.Primitives;
 using Dhanman.MyHome.Api.Contracts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -9,15 +8,13 @@ namespace Dhanman.MyHome.Api.Infrastructure;
 public abstract class PublicApiController : ControllerBase
 {
     #region Properties
-    protected IMediator Mediator { get; }
-    protected IUserContextService UserContextService { get; }
+    protected IMediator Mediator { get; }   
     #endregion
 
     #region Constructors
-    protected PublicApiController(IMediator mediator, IUserContextService userContextService)
+    protected PublicApiController(IMediator mediator) 
     {
-        Mediator = mediator;
-        UserContextService = userContextService;
+        Mediator = mediator;       
     }
     #endregion
 

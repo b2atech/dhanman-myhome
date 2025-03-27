@@ -53,11 +53,10 @@ public class ResidentRequest : EntityInt, IAuditableEntity, ISoftDeletableEntity
         ResidentTypeId = residentTypeId;
         OccupancyStatusId = occupancyStatusId;       
         CreatedOnUtc = DateTime.UtcNow;
-    }
-    public ResidentRequest(int id, Guid apartmentId, string firstName, string lastName, string email, string contactNumber, Guid permanentAddressId, int requestStatusId, int residentTypeId, int occupancyStatusId, Guid memberAdditionalDetailsId)
+    } 
+    public ResidentRequest(int id, string firstName, string lastName, string email, string contactNumber, Guid permanentAddressId, int requestStatusId, int residentTypeId, int occupancyStatusId, Guid memberAdditionalDetailsId)
     {
-        Id = id;
-        ApartmentId = apartmentId;
+        Id = id;     
         FirstName = firstName;
         LastName = lastName;
         Email = email;

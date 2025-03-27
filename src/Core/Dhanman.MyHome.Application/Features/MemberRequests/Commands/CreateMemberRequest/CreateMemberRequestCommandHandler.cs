@@ -3,7 +3,7 @@ using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Constants;
 using Dhanman.MyHome.Application.Contracts.Common;
-using Dhanman.MyHome.Application.Features.ResidentRequests.Events;
+using Dhanman.MyHome.Application.Features.MemberRequests.Events;
 using Dhanman.MyHome.Domain.Abstractions;
 using Dhanman.MyHome.Domain.Entities.Addresses;
 using Dhanman.MyHome.Domain.Entities.Cities;
@@ -40,10 +40,11 @@ public class CreateMemberRequestCommandHandler : ICommandHandler<CreateMemberReq
     #region Methodes
     public async Task<Result<EntityCreatedResponse>> Handle(CreateMemberRequestCommand request, CancellationToken cancellationToken)
     {
-        Guid cityId = GetCityId(request.CurrentAddress.CityName, request.CurrentAddress.ZipCode, request.CurrentAddress.StateId);
-        var permanentAddress = GetAddress(request.CurrentAddress, cityId);
-        _addressRepository.Insert(permanentAddress);
-        Guid addressId = permanentAddress.Id;
+        //Guid cityId = GetCityId(request.CurrentAddress.CityName, request.CurrentAddress.ZipCode, request.CurrentAddress.StateId);
+        //var currentAddress = GetAddress(request.CurrentAddress, cityId);
+        //_addressRepository.Insert(currentAddress);
+        //Guid addressId = currentAddress.Id;
+        Guid addressId = Guid.Empty; 
 
         var memberAdditionalDetails = GetMemberAdditionalDetails(request.MemberAdditionalDetails);
         _memberAdditionalDetailRepository.Insert(memberAdditionalDetails);
@@ -52,11 +53,11 @@ public class CreateMemberRequestCommandHandler : ICommandHandler<CreateMemberReq
         int nextresidentRequestId = _residentRequestRepository.GetTotalRecordsCount() + 1;
         int requestStatusId = ResidentRequestStatus.PENDING_REQUEST;
 
-        var residentRequest = new ResidentRequest(nextresidentRequestId, request.ApartmentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, addressId, requestStatusId,0, 0, memberAdditionalDetailsId);
+        var residentRequest = new ResidentRequest(nextresidentRequestId,  request.FirstName, request.LastName, request.Email, request.ContactNumber, addressId, requestStatusId, 1, 1, memberAdditionalDetailsId);
 
         _residentRequestRepository.Insert(residentRequest);
 
-        await _mediator.Publish(new ResidentRequestCreatedEvent(residentRequest.Id), cancellationToken);
+        await _mediator.Publish(new MemberRequestCreatedEvent(residentRequest.Id), cancellationToken);
 
         return Result.Success(new EntityCreatedResponse(residentRequest.Id));
     }
