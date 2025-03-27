@@ -168,11 +168,7 @@ public static class ApiRoutes
 
         public const string UpdateVisitor = apiVersion + "visitor";
 
-        public const string CreateApprovedVisitor = apiVersion + "approved-visitor"; // To Do //need to be removed
-
         public const string CreateVisitorApproval = apiVersion + "visitor-approval";
-
-        public const string GetApprovedVisitorInfoByApprovedId = apiVersion + "approved-visitor/{approvedVisitorId:int}"; // To Do //need to be removed
 
         public const string GetVisitorApprovalInfoById = apiVersion + "visitor-approval/{visitorApprovalId:int}";
     }

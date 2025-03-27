@@ -1,9 +1,7 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
-using Dhanman.MyHome.Application.Contracts.ApprovedVisitors;
 using Dhanman.MyHome.Application.Contracts.VisitorApprovals;
-using Dhanman.MyHome.Application.Features.ApprovedVisitors.Queries;
 using Dhanman.MyHome.Domain;
 using Dhanman.MyHome.Domain.Entities.VisitorApprovals;
 using Microsoft.EntityFrameworkCore;

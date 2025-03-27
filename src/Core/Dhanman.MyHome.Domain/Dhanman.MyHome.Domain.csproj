@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Dhanman.MyHome.Application.Contracts\Dhanman.MyHome.Application.Contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entities\ApprovedVisitors\" />
+  </ItemGroup>
+
 </Project>
