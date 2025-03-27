@@ -67,5 +67,15 @@ public class ResidentRequest : EntityInt, IAuditableEntity, ISoftDeletableEntity
         OccupancyStatusId = occupancyStatusId;
         MemberAdditionalDetailsId = memberAdditionalDetailsId;
     }
+
+    public ResidentRequest(int id, string firstName, string lastName, string email, string contactNumber, int requestStatusId)
+    {
+        Id = id;
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+        ContactNumber = contactNumber;      
+        RequestStatusId = requestStatusId;       
+    }
     #endregion
 }

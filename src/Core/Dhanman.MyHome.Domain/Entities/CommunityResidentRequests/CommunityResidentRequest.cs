@@ -6,6 +6,7 @@ namespace Dhanman.MyHome.Domain.Entities.MemberRequests;
 public class MemberRequest : EntityInt, IAuditableEntity, ISoftDeletableEntity
 {
     #region Properties   
+
     public string MemberType { get; set; }
     public string UserName { get; set; }
     public string Password { get; set; }

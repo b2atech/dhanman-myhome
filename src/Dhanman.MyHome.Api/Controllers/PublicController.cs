@@ -12,6 +12,7 @@ using Dhanman.MyHome.Application.Features.Apartments.Queries;
 using Dhanman.MyHome.Application.Features.Buildings.Queries;
 using Dhanman.MyHome.Application.Features.Floors.Queries;
 using Dhanman.MyHome.Application.Features.MemberRequests.Commands.CreateMemberRequest;
+using Dhanman.MyHome.Application.Features.MemberRequests.Queries;
 using Dhanman.MyHome.Application.Features.Residents.Commands.CreateResident;
 using Dhanman.MyHome.Application.Features.Units.Queries;
 using Dhanman.MyHome.Domain;
@@ -43,13 +44,13 @@ public class PublicController : PublicApiController
 
     #endregion
 
-    #region MemberRequests     
+    #region MemberRequests  
     [HttpPost(ApiRoutes.PublicMemberRequests.CreateMemberRequest)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> CreateMemberRequest([FromBody] CreateMemberRequestRequest? request) =>
             await Result.Create(request, Errors.General.BadRequest)
-            .Map(value => new CreateMemberRequestCommand(                 
+            .Map(value => new CreateMemberRequestCommand(
                  value.FirstName,
                  value.LastName,
                  value.Email,
@@ -60,6 +61,14 @@ public class PublicController : PublicApiController
              .Bind(command => Mediator.Send(command))
                    .Match(Ok, BadRequest);
 
+    [HttpGet(ApiRoutes.PublicMemberRequests.GetAllMemberRequests)]
+    [ProducesResponseType(typeof(MemberRequestListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllMemberRequests(Guid apartmentId) =>
+    await Result.Success(new GetAllMemberRequestsQuery(apartmentId))
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+    
     #endregion
 
 
