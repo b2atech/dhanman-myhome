@@ -11,6 +11,13 @@ public static class ApiRoutes
         public const string Register = "authentication/register";
     }
 
+    public static class PublicApartments
+    {
+        public const string GetApartmentNames = apiVersion + "apartment-names";
+    }
+
+
+
     public static class Buildings
     {
         public const string CreateBuilding = apiVersion + "building";  
