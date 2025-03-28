@@ -37,6 +37,8 @@ public class MemberAdditionalDetailConfiguration : IEntityTypeConfiguration<Memb
 
         builder.Property(memberAdditionalDetail => memberAdditionalDetail.SpouseHattyId).HasColumnName("spouse_hatty_id").IsRequired(false);
 
+        builder.Property(memberAdditionalDetail => memberAdditionalDetail.ResidentId).HasColumnName("resident_id"); 
+        
         builder.Property(memberAdditionalDetail => memberAdditionalDetail.CreatedOnUtc).HasColumnType("timestamp").IsRequired();
 
         builder.Property(memberAdditionalDetail => memberAdditionalDetail.ModifiedOnUtc).HasColumnType("timestamp").IsRequired(false);
