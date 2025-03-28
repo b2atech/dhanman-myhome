@@ -10,7 +10,7 @@ public class CreateResidentRequestRequest
     public string LastName { get; set; }
     public string Email { get; set; }
     public string ContactNumber { get; set; }
-    public Address PermanentAddress { get; set; }
+    public Address? PermanentAddress { get; set; }
     public int ResidentTypeId { get; set; }
     public int OccupancyStatusId { get; set; }
 

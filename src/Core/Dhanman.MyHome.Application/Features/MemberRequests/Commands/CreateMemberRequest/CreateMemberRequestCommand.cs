@@ -20,7 +20,7 @@ public class CreateMemberRequestCommand : ICommand<Result<EntityCreatedResponse>
 
     #region Constructors
    
-    public CreateMemberRequestCommand(Guid apartmentId, string firstName, string lastName, string email, string contactNumber, MemberAdditionalDetails memberAdditionalDetails, Address currentAddress)//, DateTime dateOfBirth, char gender, string maritalStatus, string aboutYourSelf, string spouseName, Guid spouseHattyId)
+    public CreateMemberRequestCommand(Guid apartmentId, string firstName, string lastName, string email, string contactNumber, MemberAdditionalDetails memberAdditionalDetails, Address currentAddress = null)//, DateTime dateOfBirth, char gender, string maritalStatus, string aboutYourSelf, string spouseName, Guid spouseHattyId)
     {
         ApartmentId = apartmentId;
         FirstName = firstName;
@@ -28,7 +28,7 @@ public class CreateMemberRequestCommand : ICommand<Result<EntityCreatedResponse>
         Email = email;
         ContactNumber = contactNumber;      
         MemberAdditionalDetails = memberAdditionalDetails;
-        CurrentAddress = currentAddress;       
+        CurrentAddress = currentAddress ?? null;       
     }    
     #endregion
 }

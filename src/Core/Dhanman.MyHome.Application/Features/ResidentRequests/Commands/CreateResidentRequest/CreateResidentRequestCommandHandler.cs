@@ -36,17 +36,32 @@ public class CreateResidentRequestCommandHandler : ICommandHandler<CreateResiden
     #region Methodes
     public async Task<Result<EntityCreatedResponse>> Handle(CreateResidentRequestCommand request, CancellationToken cancellationToken)
     {
-        Guid cityId = GetCityId(request.PermanentAddress.CityName, request.PermanentAddress.ZipCode, request.PermanentAddress.StateId);
-        var permanentAddress = GetAddress(request.PermanentAddress, cityId);
-        _addressRepository.Insert(permanentAddress);
-        Guid addressId  = permanentAddress.Id;
-        
+        Guid addressId = Guid.Empty; 
 
-        int nextresidentRequestId = _residentRequestRepository.GetTotalRecordsCount() + 1;
+        if (request.PermanentAddress != null)
+        {
+            Guid cityId = GetCityId(request.PermanentAddress.CityName, request.PermanentAddress.ZipCode, request.PermanentAddress.StateId);
+            var permanentAddress = GetAddress(request.PermanentAddress, cityId);
+            _addressRepository.Insert(permanentAddress);
+            addressId = permanentAddress.Id; 
+        }
+
+        int nextResidentRequestId = _residentRequestRepository.GetTotalRecordsCount() + 1;
         int requestStatusId = ResidentRequestStatus.PENDING_REQUEST;
 
-        var residentRequest = new ResidentRequest(nextresidentRequestId,  request.UnitId, request.FirstName, request.LastName, request.Email, request.ContactNumber, addressId, requestStatusId, request.ResidentTypeId, request.OccupancyStatusId);
-     
+        var residentRequest = new ResidentRequest(
+            nextResidentRequestId,
+            request.UnitId,
+            request.FirstName,
+            request.LastName,
+            request.Email,
+            request.ContactNumber,
+            addressId,
+            requestStatusId,
+            request.ResidentTypeId,
+            request.OccupancyStatusId
+        );
+
         _residentRequestRepository.Insert(residentRequest);
 
         await _mediator.Publish(new ResidentRequestCreatedEvent(residentRequest.Id), cancellationToken);
@@ -57,6 +72,7 @@ public class CreateResidentRequestCommandHandler : ICommandHandler<CreateResiden
     private Guid GetCityId(string cityName, string zipCode, Guid stateId)
     {
         string lowerCityName = cityName.ToLower();
+
         var city = _dbContext.Set<City>().FirstOrDefault(x => x.Name.ToLower() == lowerCityName && x.ZipCode == zipCode);
 
         if (city == null)
@@ -64,6 +80,7 @@ public class CreateResidentRequestCommandHandler : ICommandHandler<CreateResiden
             city = new City(Guid.NewGuid(), stateId, zipCode, cityName);
             _dbContext.Set<City>().Add(city);
         }
+
         return city.Id;
     }
 
