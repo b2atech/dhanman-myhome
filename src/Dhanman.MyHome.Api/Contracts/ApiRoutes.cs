@@ -350,7 +350,7 @@ public static class ApiRoutes
 
     public static class PublicMemberRequests
     {
-        public const string CreateMemberRequest = apiVersion + "communities/{communityId:guid}/member-request";
+        public const string CreateMemberRequest = apiVersion + "member-request";
         public const string GetAllMemberRequests = apiVersion + "communities/{apartmentId:guid}/member-requests";
 
     }

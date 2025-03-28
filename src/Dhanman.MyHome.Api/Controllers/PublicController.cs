@@ -51,6 +51,7 @@ public class PublicController : PublicApiController
     public async Task<IActionResult> CreateMemberRequest([FromBody] CreateMemberRequestRequest? request) =>
             await Result.Create(request, Errors.General.BadRequest)
             .Map(value => new CreateMemberRequestCommand(
+                 value.ApartmentId,
                  value.FirstName,
                  value.LastName,
                  value.Email,

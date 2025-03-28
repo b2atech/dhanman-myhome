@@ -53,7 +53,7 @@ public class CreateMemberRequestCommandHandler : ICommandHandler<CreateMemberReq
         int nextresidentRequestId = _residentRequestRepository.GetTotalRecordsCount() + 1;
         int requestStatusId = ResidentRequestStatus.PENDING_REQUEST;
 
-        var residentRequest = new ResidentRequest(nextresidentRequestId,  request.FirstName, request.LastName, request.Email, request.ContactNumber, addressId, requestStatusId, 1, 1, memberAdditionalDetailsId);
+        var residentRequest = new ResidentRequest(nextresidentRequestId, request.ApartmentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, addressId, requestStatusId, 1, 1, memberAdditionalDetailsId);
 
         _residentRequestRepository.Insert(residentRequest);
 
