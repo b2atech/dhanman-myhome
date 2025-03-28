@@ -6,6 +6,7 @@ using Dhanman.MyHome.Domain;
 using Dhanman.MyHome.Domain.Entities.Units;
 using Dhanman.MyHome.Domain.Entities.VisitorLogs;
 using Dhanman.MyHome.Domain.Entities.Visitors;
+using Dhanman.MyHome.Domain.Entities.VisitorStatuses;
 using Dhanman.MyHome.Domain.Entities.VisitorTypes;
 using Dhanman.MyHome.Domain.Entities.VisitorUnitLogs;
 using Microsoft.EntityFrameworkCore;
@@ -55,7 +56,11 @@ public class GetAllVisitorLogsQueryHandler : IQueryHandler<GetAllVisitorLogsQuer
                                                vl.VisitingFrom,
                                                vl.CurrentStatusId,
                                                vl.EntryTime,
-                                               vl.ExitTime)).ToListAsync(cancellationToken);
+                                               vl.ExitTime,
+                                               vl.VisitorStatusId,
+                                               (from vs in _dbContext.SetInt<VisitorStatus>()
+                                                where vs.Id == vl.VisitorStatusId
+                                                select vs.Name).FirstOrDefault())).ToListAsync(cancellationToken);
 
                   var listResponse = new VisitorLogListResponse(visitorLogs);
 

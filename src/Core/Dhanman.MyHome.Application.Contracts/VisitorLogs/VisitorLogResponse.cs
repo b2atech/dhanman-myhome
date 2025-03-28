@@ -13,11 +13,14 @@ public sealed class VisitorLogResponse
     public string VisitingFrom { get; set; }
     public int CurrentStatusId { get; set; }
     public DateTime? EntryTime { get; set; }
-    public DateTime? ExitTime { get; set; }     
+    public DateTime? ExitTime { get; set; }   
+    public int VisitorStatusId { get; set; }
+    public string VisitorStatusName { get; set; }
     #endregion
 
     #region Constructor 
-    public VisitorLogResponse(int id, int visitorId, string visitorName, int unitId, string unitName, int? visitorTypeId, string visitorTypeName, string visitingFrom, int currentStatusId, DateTime? entryTime, DateTime? exitTime)
+    public VisitorLogResponse(int id, int visitorId, string visitorName, int unitId, string unitName, int? visitorTypeId, string visitorTypeName, 
+        string visitingFrom, int currentStatusId, DateTime? entryTime, DateTime? exitTime, int visitorStatusId, string visitorStatusName)
     {
         Id = id;
         VisitorId = visitorId;
@@ -30,7 +33,8 @@ public sealed class VisitorLogResponse
         CurrentStatusId = currentStatusId;
         EntryTime = entryTime;
         ExitTime = exitTime;
-
+        VisitorStatusId = visitorStatusId;
+        VisitorStatusName = visitorStatusName;
     }    
     #endregion
 }

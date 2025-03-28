@@ -15,7 +15,8 @@ public class CreateVisitorLogRequest
 
 
     #region Constructor
-    public CreateVisitorLogRequest(int visitorId, List<int> visitingUnitIds, int? visitorTypeId, string visitingFrom, int currentStatusId, DateTime entryTime, DateTime? exitTime, int visitorStatusId)
+    public CreateVisitorLogRequest(int visitorId, List<int> visitingUnitIds, int? visitorTypeId, string visitingFrom, int currentStatusId, DateTime entryTime, 
+        DateTime? exitTime, int visitorStatusId)
     {       
         VisitorId = visitorId;
         VisitingUnitIds = visitingUnitIds;
@@ -24,6 +25,7 @@ public class CreateVisitorLogRequest
         CurrentStatusId = currentStatusId;
         EntryTime = entryTime;
         ExitTime = exitTime;
+        VisitorStatusId = visitorStatusId;
     }
 
     #endregion
