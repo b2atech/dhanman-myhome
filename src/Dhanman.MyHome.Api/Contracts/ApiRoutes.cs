@@ -352,6 +352,7 @@ public static class ApiRoutes
     {
         public const string CreateMemberRequest = apiVersion + "member-request";
         public const string GetAllMemberRequests = apiVersion + "communities/{apartmentId:guid}/member-requests";
+        public const string ApproveMemberRequest= apiVersion + "approve-member-request";
 
     }
 }
