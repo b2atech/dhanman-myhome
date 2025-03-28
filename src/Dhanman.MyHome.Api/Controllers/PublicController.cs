@@ -6,14 +6,14 @@ using Dhanman.MyHome.Application.Contracts.Buildings;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.Floors;
 using Dhanman.MyHome.Application.Contracts.MemberRequests;
-using Dhanman.MyHome.Application.Contracts.Residents;
+using Dhanman.MyHome.Application.Contracts.ResidentRequests;
 using Dhanman.MyHome.Application.Contracts.Units;
 using Dhanman.MyHome.Application.Features.Apartments.Queries;
 using Dhanman.MyHome.Application.Features.Buildings.Queries;
 using Dhanman.MyHome.Application.Features.Floors.Queries;
 using Dhanman.MyHome.Application.Features.MemberRequests.Commands.CreateMemberRequest;
 using Dhanman.MyHome.Application.Features.MemberRequests.Queries;
-using Dhanman.MyHome.Application.Features.Residents.Commands.CreateResident;
+using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.CreateResidentRequest;
 using Dhanman.MyHome.Application.Features.Units.Queries;
 using Dhanman.MyHome.Domain;
 using MediatR;
@@ -44,6 +44,25 @@ public class PublicController : PublicApiController
 
     #endregion
 
+    #region ResidentRequests  
+    [HttpPost(ApiRoutes.ResidentRequests.CreateResidentRequest)]
+    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> CreateResidentRequest([FromBody] CreateResidentRequestRequest? request) =>
+            await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new CreateResidentRequestCommand(
+                value.UnitId,
+                value.FirstName,
+                value.LastName,
+                value.Email,
+                value.ContactNumber,
+                value.PermanentAddress,
+                value.ResidentTypeId,
+                value.OccupancyStatusId))
+             .Bind(command => Mediator.Send(command))
+                   .Match(Ok, BadRequest);
+    #endregion
+
     #region MemberRequests  
     [HttpPost(ApiRoutes.PublicMemberRequests.CreateMemberRequest)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
@@ -60,20 +79,11 @@ public class PublicController : PublicApiController
                  value.CurrentAddress
                  ))
              .Bind(command => Mediator.Send(command))
-                   .Match(Ok, BadRequest);
+                   .Match(Ok, BadRequest);   
 
-    [HttpGet(ApiRoutes.PublicMemberRequests.GetAllMemberRequests)]
-    [ProducesResponseType(typeof(MemberRequestListResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllMemberRequests(Guid apartmentId) =>
-    await Result.Success(new GetAllMemberRequestsQuery(apartmentId))
-    .Bind(query => Mediator.Send(query))
-    .Match(Ok, NotFound);
-    
     #endregion
 
-
-
+    #region Building floor unit create resident 
     [HttpGet(ApiRoutes.Buildings.GetAllBuildingNames)]
     [ProducesResponseType(typeof(BuildingNameListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -99,22 +109,6 @@ public class PublicController : PublicApiController
    await Result.Success(new GetAllUnitNamesQuery(apartmentId, buildingId, floorId))
    .Bind(query => Mediator.Send(query))
    .Match(Ok, NotFound);
+    #endregion
 
-    [HttpPost(ApiRoutes.Residents.CreateResident)]
-    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> CreateResidentRequest([FromBody] CreateResidentRequest? request) =>
-           await Result.Create(request, Errors.General.BadRequest)
-           .Map(value => new CreateResidentCommand(
-               value.ApartmentId,
-               value.UnitId,
-               value.FirstName,
-               value.LastName,
-               value.Email,
-               value.ContactNumber,
-               value.PermanentAddress,
-               value.ResidentTypeId,
-               value.OccupancyStatusId))
-            .Bind(command => Mediator.Send(command))
-                  .Match(Ok, BadRequest);
 }
