@@ -14,10 +14,11 @@ public sealed class CreateVisitorLogCommand : ICommand<Result<EntityCreatedRespo
     public int CurrentStatusId { get; set; }
     public DateTime EntryTime { get; set; }
     public DateTime? ExitTime { get; set; }
+    public int VisitorStatusId { get; set; }
     #endregion
 
     #region Constructor
-    public CreateVisitorLogCommand(int visitorId, List<int> visitingUnitIds, int? visitorTypeId, string visitingFrom, int currentStatusId, DateTime entryTime, DateTime? exitTime)
+    public CreateVisitorLogCommand(int visitorId, List<int> visitingUnitIds, int? visitorTypeId, string visitingFrom, int currentStatusId, DateTime entryTime, DateTime? exitTime, int visitorStatusId)
     {        
         VisitorId = visitorId;
         VisitingUnitIds = visitingUnitIds;
@@ -26,6 +27,7 @@ public sealed class CreateVisitorLogCommand : ICommand<Result<EntityCreatedRespo
         CurrentStatusId = currentStatusId;
         EntryTime = entryTime;
         ExitTime = exitTime;
+        VisitorStatusId = visitorStatusId;
     }
 
     #endregion

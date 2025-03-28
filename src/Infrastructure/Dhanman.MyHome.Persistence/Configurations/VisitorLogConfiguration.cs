@@ -24,6 +24,8 @@ internal sealed class VisitorLogConfiguration : IEntityTypeConfiguration<Visitor
 
         builder.Property(visitorLogs => visitorLogs.ExitTime).HasColumnName("exit_time").IsRequired();
 
+        builder.Property(visitorLogs => visitorLogs.VisitorStatusId).HasColumnName("visitor_status_id").IsRequired();
+
         builder.Property(visitorLogs => visitorLogs.CreatedBy).HasColumnType("uuid");
 
         builder.Property(visitorLogs => visitorLogs.ModifiedBy).HasColumnType("uuid");

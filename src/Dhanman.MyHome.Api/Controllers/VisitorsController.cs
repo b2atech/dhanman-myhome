@@ -144,7 +144,8 @@ public class VisitorsController : ApiController
                 value.VisitingFrom,
                 value.CurrentStatusId,
                 value.EntryTime,
-                value.ExitTime))
+                value.ExitTime,
+                value.VisitorStatusId))
             .Bind(command => Mediator.Send(command))
            .Match(Ok, BadRequest);
     #endregion
