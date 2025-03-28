@@ -7,6 +7,7 @@ using Dhanman.MyHome.Application.Contracts.MemberRequests;
 using Dhanman.MyHome.Application.Contracts.OccupantTypes;
 using Dhanman.MyHome.Application.Contracts.ResidentRequests;
 using Dhanman.MyHome.Application.Contracts.Residents;
+using Dhanman.MyHome.Application.Features.MemberRequests.Commands.UpdateMemberApproveStatus;
 using Dhanman.MyHome.Application.Features.MemberRequests.Queries;
 using Dhanman.MyHome.Application.Features.OccupantTypes.Queries;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.UpdateRequestApproveStatus;
@@ -111,17 +112,36 @@ public class ResidentsController : ApiController
             return BadRequest(result.Error);
         }
     }
+    #endregion
 
-    [HttpGet(ApiRoutes.PublicMemberRequests.GetAllMemberRequests)]
+    #region MembertRequests  
+    [HttpGet(ApiRoutes.MemberRequests.GetAllMemberRequests)]
     [ProducesResponseType(typeof(MemberRequestListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAllMemberRequests(Guid apartmentId) =>
     await Result.Success(new GetAllMemberRequestsQuery(apartmentId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
+
+    [HttpPut(ApiRoutes.MemberRequests.ApproveMemberRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateMemberApproveStatus([FromBody] UpdateMemberApproveStatusRequest? request)
+    {
+        var result = await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new UpdateMemberApproveStatusCommand(
+                value.Id))
+            .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
     #endregion
-
-
 
     #region OccupantTypes
 

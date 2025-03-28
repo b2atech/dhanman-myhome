@@ -12,7 +12,6 @@ using Dhanman.MyHome.Application.Features.Apartments.Queries;
 using Dhanman.MyHome.Application.Features.Buildings.Queries;
 using Dhanman.MyHome.Application.Features.Floors.Queries;
 using Dhanman.MyHome.Application.Features.MemberRequests.Commands.CreateMemberRequest;
-using Dhanman.MyHome.Application.Features.MemberRequests.Queries;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Commands.CreateResidentRequest;
 using Dhanman.MyHome.Application.Features.Units.Queries;
 using Dhanman.MyHome.Domain;

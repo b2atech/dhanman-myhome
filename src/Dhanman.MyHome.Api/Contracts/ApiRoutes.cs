@@ -79,6 +79,11 @@ public static class ApiRoutes
 
     }
 
+    public static class MemberRequests
+    {
+        public const string GetAllMemberRequests = apiVersion + "communities/{apartmentId:guid}/member-requests";
+        public const string ApproveMemberRequest = apiVersion + "approve-member-request";         
+    }
     public static class Vehicles
     {
         public const string CreateVehicle = apiVersion + "vehicles";
@@ -351,8 +356,6 @@ public static class ApiRoutes
     public static class PublicMemberRequests
     {
         public const string CreateMemberRequest = apiVersion + "member-request";
-        public const string GetAllMemberRequests = apiVersion + "communities/{apartmentId:guid}/member-requests";
-        public const string ApproveMemberRequest= apiVersion + "approve-member-request";
 
     }
 }
