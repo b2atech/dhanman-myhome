@@ -13,8 +13,8 @@ public class MemberAdditionalDetails
     public char Gender { get; set; }
     public string MaritalStatus { get; set; }
     public string AboutYourSelf { get; set; }
-    public string SpouseName { get; set; }
-    public Guid SpouseHattyId { get; set; }
+    public string? SpouseName { get; set; }
+    public Guid? SpouseHattyId { get; set; }
 
     #endregion
 
