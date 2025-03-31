@@ -13,8 +13,6 @@ public class CreateVisitorRequest
     public string? VehicleNumber { get; set; }
     public int? IdentityTypeId { get; set; }
     public string? IdentityNumber { get; set; }
-    public DateTime? EntryTime { get; set; }
-    public DateTime? ExitTime { get; set; }
     #endregion
 
     #region Constructors

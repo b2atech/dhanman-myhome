@@ -3,6 +3,7 @@ using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Visitors;
 using Dhanman.MyHome.Domain;
+using Dhanman.MyHome.Domain.Entities.VisitorLogs;
 using Dhanman.MyHome.Domain.Entities.Visitors;
 using Dhanman.MyHome.Domain.Entities.VisitorTypes;
 using Microsoft.EntityFrameworkCore;

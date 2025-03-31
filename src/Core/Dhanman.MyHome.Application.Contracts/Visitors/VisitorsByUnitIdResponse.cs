@@ -11,12 +11,10 @@ public sealed class VisitorsByUnitIdResponse
     public string VisitorTypeName { get; set; }
     public int? ServiceProviderSubTypeId { get; set; }
     public string ServiceProviderSubTypeName { get; set; }
-    public DateTime? EntryTime { get; set; }
-    public DateTime? ExitTime { get; set; }
     #endregion
 
     #region Constructor 
-    public VisitorsByUnitIdResponse(int visitorId, string visitorName, int unitId, string unitName, int? visitorTypeId, string visitorTypeName, int? serviceProviderSubTypeId, string serviceProviderSubTypeName, DateTime? entryTime, DateTime? exitTime)
+    public VisitorsByUnitIdResponse(int visitorId, string visitorName, int unitId, string unitName, int? visitorTypeId, string visitorTypeName, int? serviceProviderSubTypeId, string serviceProviderSubTypeName)
     {        
         VisitorId = visitorId;
         VisitorName = visitorName;
@@ -26,8 +24,6 @@ public sealed class VisitorsByUnitIdResponse
         VisitorTypeName = visitorTypeName;
         ServiceProviderSubTypeId = serviceProviderSubTypeId;
         ServiceProviderSubTypeName = serviceProviderSubTypeName;
-        EntryTime = entryTime;
-        ExitTime = exitTime;
     }     
     #endregion
 }

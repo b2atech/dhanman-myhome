@@ -16,8 +16,6 @@ public class Visitor : EntityInt, IAuditableEntity, ISoftDeletableEntity
     public string? VehicleNumber { get; set; }
     public int? IdentityTypeId { get; set; }
     public string? IdentityNumber { get; set; }
-    public DateTime? EntryTime { get; set; }
-    public DateTime? ExitTime { get; set; }
     #endregion
 
     #region Audit Properties
@@ -35,7 +33,7 @@ public class Visitor : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public Visitor(int id, Guid apartmentId, string firstName, string? lastName, string? email, string? visitingFrom, string contactNumber, int visitorTypeId, string? vehicleNumber, int? identityTypeId, string? identityNumber, DateTime? entryTime, DateTime? exitTime)
+    public Visitor(int id, Guid apartmentId, string firstName, string? lastName, string? email, string? visitingFrom, string contactNumber, int visitorTypeId, string? vehicleNumber, int? identityTypeId, string? identityNumber)
     {
         Id = id;
         ApartmentId = apartmentId; 
@@ -48,8 +46,6 @@ public class Visitor : EntityInt, IAuditableEntity, ISoftDeletableEntity
         VehicleNumber = vehicleNumber;
         IdentityTypeId = identityTypeId;
         IdentityNumber = identityNumber;
-        EntryTime = entryTime;
-        ExitTime = exitTime;
     }
 
     #endregion

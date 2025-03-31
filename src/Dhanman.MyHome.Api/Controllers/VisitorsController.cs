@@ -59,9 +59,7 @@ public class VisitorsController : ApiController
              value.VisitorTypeId,
              value.VehicleNumber,
              value.IdentityTypeId,
-             value.IdentityNumber,
-             value.EntryTime,
-             value.ExitTime
+             value.IdentityNumber
          ))
          .Bind(command => Mediator.Send(command))
          .Match(Ok, BadRequest);

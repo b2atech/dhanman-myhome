@@ -50,9 +50,7 @@ public class GetVisitorsByUnitIdQueryHandler : IQueryHandler<GetVisitorsByUnitId
                                                     vt.Id,
                                                     vt.Name,
                                                     sps.Id,
-                                                    sps.Name,
-                                                    v.EntryTime,
-                                                    v.ExitTime
+                                                    sps.Name
                                                 )).ToListAsync(cancellationToken);
 
                   var listResponse = new VisitorsByUnitIdListResponse(visitorsbyUnitId);

@@ -17,13 +17,11 @@ public class CreateVisitorCommand : ICommand<Result<EntityCreatedResponse>>
     public string? VehicleNumber { get; set; }
     public int? IdentityTypeId { get; set; }
     public string? IdentityNumber { get; set; }
-    public DateTime? EntryTime { get; set; }
-    public DateTime? ExitTime { get; set; }
 
     #endregion
 
     #region Constructors
-    public CreateVisitorCommand(Guid apartmentId, string firstName, string? lastName, string? email, string? visitingFrom, string contactNumber, int visitorTypeId, string? vehicleNumber, int? identityTypeId, string? identityNumber, DateTime? entryTime, DateTime? exitTime)
+    public CreateVisitorCommand(Guid apartmentId, string firstName, string? lastName, string? email, string? visitingFrom, string contactNumber, int visitorTypeId, string? vehicleNumber, int? identityTypeId, string? identityNumber)
     {
         ApartmentId = apartmentId;
         FirstName = firstName;
@@ -35,8 +33,7 @@ public class CreateVisitorCommand : ICommand<Result<EntityCreatedResponse>>
         VehicleNumber = vehicleNumber;
         IdentityTypeId = identityTypeId;
         IdentityNumber = identityNumber;
-        EntryTime = entryTime;
-        ExitTime = exitTime;
+       
     }
     #endregion
 
