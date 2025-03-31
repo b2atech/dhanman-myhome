@@ -60,6 +60,8 @@ internal static class TableNames
 
     internal const string Visitors = "visitors";
 
+    internal const string VisitorContacts = "visitor_contacts";
+
     internal const string VisitorLogs = "visitor_logs";
 
     internal const string VisitorTypes = "visitor_types";
