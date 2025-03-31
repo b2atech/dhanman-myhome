@@ -11,6 +11,7 @@ using Dhanman.MyHome.Application.Features.VisitorApprovals.Queries;
 using Dhanman.MyHome.Application.Features.VisitorLogs.Commands.CreateVisitorLog;
 using Dhanman.MyHome.Application.Features.VisitorLogs.Queries;
 using Dhanman.MyHome.Application.Features.Visitors.Commands.CreateVisitor;
+using Dhanman.MyHome.Application.Features.Visitors.Commands.CreateVisitorAndLog;
 using Dhanman.MyHome.Application.Features.Visitors.Commands.DeleteVisitor;
 using Dhanman.MyHome.Application.Features.Visitors.Commands.UpdateVisitor;
 using Dhanman.MyHome.Application.Features.Visitors.Queries;
@@ -63,6 +64,29 @@ public class VisitorsController : ApiController
          ))
          .Bind(command => Mediator.Send(command))
          .Match(Ok, BadRequest);
+
+    [HttpPost(ApiRoutes.Visitors.CreateVisitorPending)]
+    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> CreateVisitorPending([FromBody] CreateVisitorPendingRequest? request) =>
+            await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new CreateVisitorPendingCommand(
+                value.ApartmentId,
+                value.FirstName,
+                value.LastName,
+                value.Email,
+                value.VisitingFrom,
+                value.ContactNumber,
+                value.VisitorTypeId,
+                value.CurrentStatusId,
+                value.VehicleNumber,
+                value.IdentityTypeId,
+                value.IdentityNumber,
+                value.CreatedBy
+                ))
+             .Bind(command => Mediator.Send(command))
+                   .Match(Ok, BadRequest);
+
 
     [HttpPut(ApiRoutes.Visitors.UpdateVisitor)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
