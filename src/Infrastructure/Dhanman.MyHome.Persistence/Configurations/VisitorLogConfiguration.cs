@@ -22,7 +22,7 @@ internal sealed class VisitorLogConfiguration : IEntityTypeConfiguration<Visitor
 
         builder.Property(visitorLogs => visitorLogs.EntryTime).HasColumnName("entry_time").IsRequired();
 
-        builder.Property(visitorLogs => visitorLogs.ExitTime).HasColumnName("exit_time").IsRequired();
+        builder.Property(visitorLogs => visitorLogs.ExitTime).HasColumnName("exit_time").IsRequired(false);
 
         builder.Property(visitorLogs => visitorLogs.VisitorStatusId).HasColumnName("visitor_status_id").IsRequired();
 

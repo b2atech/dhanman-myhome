@@ -9,6 +9,7 @@ using Dhanman.MyHome.Application.Contracts.Visitors;
 using Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.CreateVisitorApproval;
 using Dhanman.MyHome.Application.Features.VisitorApprovals.Queries;
 using Dhanman.MyHome.Application.Features.VisitorLogs.Commands.CreateVisitorLog;
+using Dhanman.MyHome.Application.Features.VisitorLogs.Commands.UpdateVisiotLog;
 using Dhanman.MyHome.Application.Features.VisitorLogs.Queries;
 using Dhanman.MyHome.Application.Features.Visitors.Commands.CreateVisitor;
 using Dhanman.MyHome.Application.Features.Visitors.Commands.DeleteVisitor;
@@ -146,6 +147,29 @@ public class VisitorsController : ApiController
                 value.VisitorStatusId))
             .Bind(command => Mediator.Send(command))
            .Match(Ok, BadRequest);
+
+    [HttpPut(ApiRoutes.Visitors.UpdateVisitorLog)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateVisitorLog([FromBody] UpdateVisitorLogRequest? request)
+    {
+        var result = await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new UpdateVisitorLogCommand(
+                 value.Id,
+                 value.CurrentStatusId,
+                 value.ExitTime,
+                 value.VisitorStatusId
+                ))
+            .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
     #endregion
 
     #region VisitorTypes Identity
