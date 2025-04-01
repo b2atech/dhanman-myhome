@@ -5,10 +5,10 @@ namespace Dhanman.MyHome.Domain.Entities.VisitorApprovals;
 public class VisitorApprovalInfoById : EntityInt
 {
     #region Properties
-    public int Visitor_Id { get; set; }
-    public string First_Name { get; set; }
-    public string Last_Name { get; set; }
-    public string Contact_Number { get; set; }
+    public int VisitorId { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string ContactNumber { get; set; }
     public DateOnly StartDate { get; set; }
     public DateOnly EndDate { get; set; }
     public TimeOnly EntryTime { get; set; }
