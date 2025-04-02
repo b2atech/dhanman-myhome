@@ -165,7 +165,6 @@ public class VisitorsController : ApiController
                 value.VisitingUnitIds,
                 value.VisitorTypeId,
                 value.VisitingFrom,
-                value.CurrentStatusId,
                 value.EntryTime,
                 value.ExitTime,
                 value.VisitorStatusId))
@@ -178,10 +177,7 @@ public class VisitorsController : ApiController
     {
         var result = await Result.Create(request, Errors.General.BadRequest)
             .Map(value => new UpdateVisitorLogCommand(
-                 value.Id,
-                 value.CurrentStatusId,
-                 value.ExitTime,
-                 value.VisitorStatusId
+                 value.Id
                 ))
             .Bind(command => Mediator.Send(command));
 

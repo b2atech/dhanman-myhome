@@ -8,19 +8,12 @@ public class UpdateVisitorLogCommand : ICommand<Result<EntityUpdatedResponse>>
 {
     #region Properties
     public int VisitorLogId { get; set; }
-    public int CurrentStatusId { get; set; }
-    public DateTime? ExitTime { get; set; }
-    public int VisitorStatusId { get; set; }
-
-    #endregion
+     #endregion
 
     #region Constructor
-    public UpdateVisitorLogCommand(int visitorLogId, int currentStatusId, DateTime? exitTime, int visitorStatusId)
+    public UpdateVisitorLogCommand(int visitorLogId)
     {
         VisitorLogId = visitorLogId;
-        CurrentStatusId = currentStatusId;
-        ExitTime = exitTime;
-        VisitorStatusId = visitorStatusId;
     }
 
     #endregion

@@ -10,7 +10,6 @@ public class VisitorLog : EntityInt, IAuditableEntity, ISoftDeletableEntity
     public int? VisitorTypeId { get; set; }
     public string VisitingFrom { get; set; }
     //checked-in, checked-out, pending approval
-    public int CurrentStatusId { get; set; }
     public DateTime EntryTime { get; set; }
     public DateTime? ExitTime { get; set; }
     public int VisitorStatusId { get; set; }
@@ -31,12 +30,11 @@ public class VisitorLog : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public VisitorLog(int id, int visitorId, int? visitorTypeId, string visitingFrom, int currentStatusId, DateTime entryTime, DateTime? exitTime, int visitorStatusId)
+    public VisitorLog(int id, int visitorId, int? visitorTypeId, string visitingFrom, DateTime entryTime, DateTime? exitTime, int visitorStatusId)
     {
         VisitorId = visitorId;
         VisitorTypeId = visitorTypeId;
         VisitingFrom = visitingFrom;
-        CurrentStatusId = currentStatusId;
         EntryTime = entryTime;
         ExitTime = exitTime;
         VisitorStatusId = visitorStatusId;

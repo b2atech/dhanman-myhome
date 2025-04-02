@@ -1,10 +1,12 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
+using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Features.VisitorLogs.Events;
-using Dhanman.MyHome.Domain.Abstractions;
-using Dhanman.MyHome.Domain.Exceptions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
+using NpgsqlTypes;
 
 namespace Dhanman.MyHome.Application.Features.VisitorLogs.Commands.UpdateVisiotLog;
 
@@ -12,41 +14,33 @@ public class UpdateVisitorLogCommandHandler : ICommandHandler<UpdateVisitorLogCo
 {
      #region Properties
 
-        private readonly IVisitorLogRepository _visitorLogRepository;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IMediator _mediator;
+        private readonly IApplicationDbContext _dbContext;
     #endregion
 
     #region Constructor
-    public UpdateVisitorLogCommandHandler(IVisitorLogRepository visitorLogRepository, IMediator mediator, IUnitOfWork unitOfWork)
+    public UpdateVisitorLogCommandHandler(IMediator mediator, IApplicationDbContext dbContext)
     {
-        _visitorLogRepository = visitorLogRepository;
         _mediator = mediator;
-        _unitOfWork = unitOfWork;
+        _dbContext = dbContext;
     }
     #endregion
 
     #region Methods
     public async Task<Result<EntityUpdatedResponse>>Handle(UpdateVisitorLogCommand request, CancellationToken cancellationToken)
     {
-        var existingVisitorLog = await _visitorLogRepository.GetByIntIdAsync(request.VisitorLogId);
-
-        if (existingVisitorLog == null)
+        var parameter = new[]
         {
-            throw new VisitorNotFoundException(request.VisitorLogId);
-        }
+            new NpgsqlParameter("p_visitor_log_id", NpgsqlDbType.Integer) { Value = request.VisitorLogId },
+        };
 
-        existingVisitorLog.CurrentStatusId = request.CurrentStatusId;
-        
-        existingVisitorLog.ExitTime = request.ExitTime;
-
-        existingVisitorLog.VisitorStatusId = request.VisitorStatusId;
-
-        _visitorLogRepository.Update(existingVisitorLog);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+       await _dbContext.Database.ExecuteSqlRawAsync(
+            "SELECT * FROM public.check_out(@p_visitor_log_id)",
+            parameter
+        );
 
         await _mediator.Publish(new VisitorLogUpdatedEvent(request.VisitorLogId), cancellationToken);
-        return Result.Success(new EntityUpdatedResponse(existingVisitorLog.Id));
+        return Result.Success(new EntityUpdatedResponse(request.VisitorLogId));
     }
 
     #endregion
