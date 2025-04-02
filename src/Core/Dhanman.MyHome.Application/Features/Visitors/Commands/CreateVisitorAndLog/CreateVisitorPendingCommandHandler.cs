@@ -41,12 +41,11 @@ public class CreateVisitorPendingCommandHandler : ICommandHandler<CreateVisitorP
             new NpgsqlParameter("p_identity_number", NpgsqlDbType.Text) { Value = request.IdentityNumber },
             new NpgsqlParameter("p_visitor_type_id", NpgsqlDbType.Integer) { Value = request.VisitorTypeId },
             new NpgsqlParameter("p_visiting_from", NpgsqlDbType.Text) { Value = request.VisitingFrom },
-            new NpgsqlParameter("p_current_status_id", NpgsqlDbType.Integer) { Value = request.CurrentStatusId },
             new NpgsqlParameter("p_created_by", NpgsqlDbType.Uuid) { Value = request.CreatedBy }
         };
 
         await _dbContext.Database.ExecuteSqlRawAsync(
-            "select * from public.save_visitor_and_pending(@p_apartment_id, @p_first_name, @p_last_name, @p_email, @p_contact_number, @p_vehicle_number, @p_identity_type_id, @p_identity_number, @p_visitor_type_id, @p_visiting_from, @p_current_status_id, @p_created_by)",
+            "select * from public.save_visitor_and_pending(@p_apartment_id, @p_first_name, @p_last_name, @p_email, @p_contact_number, @p_vehicle_number, @p_identity_type_id, @p_identity_number, @p_visitor_type_id, @p_visiting_from, @p_created_by)",
             parameters
         );
 

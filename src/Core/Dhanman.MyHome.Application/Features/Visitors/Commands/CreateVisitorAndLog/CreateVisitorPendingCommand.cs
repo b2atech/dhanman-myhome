@@ -15,7 +15,6 @@ public class CreateVisitorPendingCommand : ICommand<Result<EntityCreatedResponse
     public string? VisitingFrom { get; set; }
     public string ContactNumber { get; set; }
     public int VisitorTypeId { get; set; }
-    public int CurrentStatusId { get; set; }
     public string? VehicleNumber { get; set; }
     public int? IdentityTypeId { get; set; }
     public string? IdentityNumber { get; set; }
@@ -24,7 +23,7 @@ public class CreateVisitorPendingCommand : ICommand<Result<EntityCreatedResponse
     #endregion
 
     #region Constructors
-    public CreateVisitorPendingCommand(Guid apartmentId, string firstName, string? lastName, string? email, string? visitingFrom, string contactNumber, int visitorTypeId, int currentStatusId, string? vehicleNumber, int? identityTypeId, string? identityNumber, Guid createdBy)
+    public CreateVisitorPendingCommand(Guid apartmentId, string firstName, string? lastName, string? email, string? visitingFrom, string contactNumber, int visitorTypeId, string? vehicleNumber, int? identityTypeId, string? identityNumber, Guid createdBy)
     {
         ApartmentId = apartmentId;
         FirstName = firstName;
@@ -33,7 +32,6 @@ public class CreateVisitorPendingCommand : ICommand<Result<EntityCreatedResponse
         VisitingFrom = visitingFrom;
         ContactNumber = contactNumber;
         VisitorTypeId = visitorTypeId;
-        CurrentStatusId = currentStatusId;
         VehicleNumber = vehicleNumber;
         IdentityTypeId = identityTypeId;
         IdentityNumber = identityNumber;

@@ -13,15 +13,13 @@ using NpgsqlTypes;
 public class CreateVisitorApprovalCommandHandler : ICommandHandler<CreateVisitorApprovalCommand, Result<EntityCreatedResponse>>
 {
     #region PRoerties
-    private readonly IVisitorApprovalsRepository _visitorApprovalsRepository;
     private readonly IApplicationDbContext _dbContext;
     private readonly IMediator _mediator;
     #endregion
 
     #region Construcor
-    public CreateVisitorApprovalCommandHandler(IVisitorApprovalsRepository visitorApprovalsRepository, IApplicationDbContext dbContext, IMediator mediator)
+    public CreateVisitorApprovalCommandHandler( IApplicationDbContext dbContext, IMediator mediator)
     {
-        _visitorApprovalsRepository = visitorApprovalsRepository;
         _dbContext = dbContext;
         _mediator = mediator;
     }
