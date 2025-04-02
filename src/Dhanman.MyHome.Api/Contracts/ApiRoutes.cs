@@ -159,9 +159,13 @@ public static class ApiRoutes
 
         public const string DeleteVisitorById = apiVersion + "visitor/{id:int}";
 
-        public const string CreateVisitorLog = apiVersion + "visitor-log";
+        public const string CreateVisitorLog = apiVersion + "check-in";
 
-        public const string GetAllVisitorLogs = apiVersion + "apartments/{apartmentId:guid}/visitors/{visitorId:int}/visitorTypeIds/{visitorTypeId:int}/visitorLogs";
+        public const string UpdateVisitorLog = apiVersion + "check-out";
+
+        public const string GetAllVisitorLogs = apiVersion + "apartments/{apartmentId:guid}/dates/{date:dateTime}/visitorLogs";
+
+        public const string GetSingleVisitorLogs = apiVersion + "apartments/{apartmentId:guid}/visitors/{visitorId:int}/visitorTypeIds/{visitorTypeId:int}/visitorLogs";
 
         public const string GetVisitorsByUnitId = apiVersion + "apartments/{apartmentId:guid}/units/{unitId:int}/visitorsByUnitId";
 

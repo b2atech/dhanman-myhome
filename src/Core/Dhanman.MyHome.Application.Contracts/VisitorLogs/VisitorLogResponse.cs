@@ -11,7 +11,6 @@ public sealed class VisitorLogResponse
     public int? VisitorTypeId { get; set; }
     public string VisitorTypeName { get; set; }
     public string VisitingFrom { get; set; }
-    public int CurrentStatusId { get; set; }
     public DateTime? EntryTime { get; set; }
     public DateTime? ExitTime { get; set; }   
     public int VisitorStatusId { get; set; }
@@ -20,7 +19,7 @@ public sealed class VisitorLogResponse
 
     #region Constructor 
     public VisitorLogResponse(int id, int visitorId, string visitorName, int unitId, string unitName, int? visitorTypeId, string visitorTypeName, 
-        string visitingFrom, int currentStatusId, DateTime? entryTime, DateTime? exitTime, int visitorStatusId, string visitorStatusName)
+        string visitingFrom, DateTime? entryTime, DateTime? exitTime, int visitorStatusId, string visitorStatusName)
     {
         Id = id;
         VisitorId = visitorId;
@@ -30,7 +29,6 @@ public sealed class VisitorLogResponse
         VisitorTypeId = visitorTypeId;
         VisitorTypeName = visitorTypeName;
         VisitingFrom = visitingFrom;
-        CurrentStatusId = currentStatusId;
         EntryTime = entryTime;
         ExitTime = exitTime;
         VisitorStatusId = visitorStatusId;

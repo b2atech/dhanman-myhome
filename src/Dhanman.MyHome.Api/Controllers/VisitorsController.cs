@@ -9,6 +9,7 @@ using Dhanman.MyHome.Application.Contracts.Visitors;
 using Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.CreateVisitorApproval;
 using Dhanman.MyHome.Application.Features.VisitorApprovals.Queries;
 using Dhanman.MyHome.Application.Features.VisitorLogs.Commands.CreateVisitorLog;
+using Dhanman.MyHome.Application.Features.VisitorLogs.Commands.UpdateVisiotLog;
 using Dhanman.MyHome.Application.Features.VisitorLogs.Queries;
 using Dhanman.MyHome.Application.Features.Visitors.Commands.CreateVisitor;
 using Dhanman.MyHome.Application.Features.Visitors.Commands.CreateVisitorAndLog;
@@ -78,7 +79,6 @@ public class VisitorsController : ApiController
                 value.VisitingFrom,
                 value.ContactNumber,
                 value.VisitorTypeId,
-                value.CurrentStatusId,
                 value.VehicleNumber,
                 value.IdentityTypeId,
                 value.IdentityNumber,
@@ -147,10 +147,18 @@ public class VisitorsController : ApiController
     #region VisitorLogs 
 
     [HttpGet(ApiRoutes.Visitors.GetAllVisitorLogs)]
+    [ProducesResponseType(typeof(AllVisitorLogListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllVisitorLogs(Guid apartmentId,DateTime date) =>
+   await Result.Success(new GetAllVisitorLogsQuery(apartmentId, date))
+   .Bind(query => Mediator.Send(query))
+   .Match(Ok, NotFound);
+
+    [HttpGet(ApiRoutes.Visitors.GetSingleVisitorLogs)]
     [ProducesResponseType(typeof(VisitorLogListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllVisitorLogs(Guid apartmentId, int visitorId, int visitorTypeId) =>
-    await Result.Success(new GetAllVisitorLogsQuery(apartmentId, visitorId, visitorTypeId))
+    public async Task<IActionResult> GetSingleVisitorLogs(Guid apartmentId, int visitorId, int visitorTypeId) =>
+    await Result.Success(new GetSingleVisitorLogsQuery(apartmentId, visitorId, visitorTypeId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
@@ -164,12 +172,31 @@ public class VisitorsController : ApiController
                 value.VisitingUnitIds,
                 value.VisitorTypeId,
                 value.VisitingFrom,
-                value.CurrentStatusId,
                 value.EntryTime,
                 value.ExitTime,
                 value.VisitorStatusId))
             .Bind(command => Mediator.Send(command))
            .Match(Ok, BadRequest);
+
+    [HttpPut(ApiRoutes.Visitors.UpdateVisitorLog)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateVisitorLog([FromBody] UpdateVisitorLogRequest? request)
+    {
+        var result = await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new UpdateVisitorLogCommand(
+                 value.Id
+                ))
+            .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
     #endregion
 
     #region VisitorTypes Identity

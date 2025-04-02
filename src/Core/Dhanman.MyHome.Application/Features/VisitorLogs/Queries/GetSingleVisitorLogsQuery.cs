@@ -5,18 +5,20 @@ using Dhanman.MyHome.Application.Contracts.VisitorLogs;
 
 namespace Dhanman.MyHome.Application.Features.VisitorLogs.Queries;
 
-public class GetAllVisitorLogsQuery : ICacheableQuery<Result<AllVisitorLogListResponse>>
+public class GetSingleVisitorLogsQuery : ICacheableQuery<Result<VisitorLogListResponse>>
 {
     #region Properties  
     public Guid ApartmentId { get; set; }
-    public DateTime Date { get; set; }
+    public int VisitorId { get; set; }
+    public int VisitorTypeId { get; set; }
     #endregion
 
     #region Constructors
-    public GetAllVisitorLogsQuery(Guid apartmentId, DateTime date)
+    public GetSingleVisitorLogsQuery(Guid apartmentId, int visitorId, int visitorTypeId)
     {
         ApartmentId = apartmentId;
-        Date = date;
+        VisitorId = visitorId;
+        VisitorTypeId = visitorTypeId;
     }
     #endregion
 

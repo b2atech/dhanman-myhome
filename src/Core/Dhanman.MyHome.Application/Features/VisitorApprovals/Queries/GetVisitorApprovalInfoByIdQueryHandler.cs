@@ -30,10 +30,10 @@ internal sealed class GetVisitorApprovalInfoByIdQueryHandler : IQueryHandler<Get
                         new NpgsqlParameter("approval_id", request.VisitorApprovalId))
                     .AsNoTracking()
                     .Select(c => new VisitorApprovalsInfoByIdResponse(
-                        c.Visitor_Id,
-                        c.First_Name,
-                        c.Last_Name ?? string.Empty,
-                        c.Contact_Number ?? string.Empty,
+                        c.VisitorId,
+                        c.FirstName,
+                        c.LastName ?? string.Empty,
+                        c.ContactNumber ?? string.Empty,
                         c.StartDate,
                         c.EndDate,
                         c.EntryTime,

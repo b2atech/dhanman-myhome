@@ -3,10 +3,10 @@
 public sealed class VisitorApprovalsInfoByIdResponse
 {
     #region Properties
-    public int Visitor_Id { get; }
-    public string First_Name { get; }
-    public string Last_Name { get; }
-    public string Contact_Number { get; }
+    public int VisitorId { get; }
+    public string FirstName { get; }
+    public string LastName { get; }
+    public string ContactNumber { get; }
     public DateOnly StartDate { get; }
     public DateOnly EndDate { get; }
     public TimeOnly EntryTime { get; }
@@ -23,10 +23,10 @@ public sealed class VisitorApprovalsInfoByIdResponse
 
     public VisitorApprovalsInfoByIdResponse(int visitor_Id, string first_Name, string last_Name, string contact_Number, DateOnly startDate, DateOnly endDate, TimeOnly entryTime, TimeOnly exitTime, string createdByFirstName, string createdByLastName, string unitName, string apartmentName, string cityName)
     {
-        Visitor_Id = visitor_Id;
-        First_Name = first_Name;
-        Last_Name = last_Name;
-        Contact_Number = contact_Number;
+        VisitorId = visitor_Id;
+        FirstName = first_Name;
+        LastName = last_Name;
+        ContactNumber = contact_Number;
         StartDate = startDate;
         EndDate = endDate;
         EntryTime = entryTime;
