@@ -147,10 +147,18 @@ public class VisitorsController : ApiController
     #region VisitorLogs 
 
     [HttpGet(ApiRoutes.Visitors.GetAllVisitorLogs)]
+    [ProducesResponseType(typeof(AllVisitorLogListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllVisitorLogs(Guid apartmentId,DateTime date) =>
+   await Result.Success(new GetAllVisitorLogsQuery(apartmentId, date))
+   .Bind(query => Mediator.Send(query))
+   .Match(Ok, NotFound);
+
+    [HttpGet(ApiRoutes.Visitors.GetSingleVisitorLogs)]
     [ProducesResponseType(typeof(VisitorLogListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllVisitorLogs(Guid apartmentId, int visitorId, int visitorTypeId) =>
-    await Result.Success(new GetAllVisitorLogsQuery(apartmentId, visitorId, visitorTypeId))
+    public async Task<IActionResult> GetSingleVisitorLogs(Guid apartmentId, int visitorId, int visitorTypeId) =>
+    await Result.Success(new GetSingleVisitorLogsQuery(apartmentId, visitorId, visitorTypeId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 

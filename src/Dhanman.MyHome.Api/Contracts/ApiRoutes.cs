@@ -163,7 +163,9 @@ public static class ApiRoutes
 
         public const string UpdateVisitorLog = apiVersion + "check-out";
 
-        public const string GetAllVisitorLogs = apiVersion + "apartments/{apartmentId:guid}/visitors/{visitorId:int}/visitorTypeIds/{visitorTypeId:int}/visitorLogs";
+        public const string GetAllVisitorLogs = apiVersion + "apartments/{apartmentId:guid}/dates/{date:dateTime}/visitorLogs";
+
+        public const string GetSingleVisitorLogs = apiVersion + "apartments/{apartmentId:guid}/visitors/{visitorId:int}/visitorTypeIds/{visitorTypeId:int}/visitorLogs";
 
         public const string GetVisitorsByUnitId = apiVersion + "apartments/{apartmentId:guid}/units/{unitId:int}/visitorsByUnitId";
 

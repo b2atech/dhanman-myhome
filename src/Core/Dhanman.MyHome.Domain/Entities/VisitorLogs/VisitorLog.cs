@@ -6,7 +6,7 @@ namespace Dhanman.MyHome.Domain.Entities.VisitorLogs;
 public class VisitorLog : EntityInt, IAuditableEntity, ISoftDeletableEntity
 {
     #region Properties
-    public int VisitorId { get; set; }    
+    public int VisitorId { get; set; }
     public int? VisitorTypeId { get; set; }
     public string VisitingFrom { get; set; }
     //checked-in, checked-out, pending approval
