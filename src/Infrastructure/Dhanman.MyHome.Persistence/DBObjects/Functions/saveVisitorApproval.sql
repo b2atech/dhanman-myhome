@@ -1,4 +1,4 @@
-﻿-- FUNCTION: public.save_visitor_and_approval(uuid, text, text, integer, integer, date, date, time without time zone, time without time zone, uuid)
+-- FUNCTION: public.save_visitor_and_approval(uuid, text, text, integer, integer, date, date, time without time zone, time without time zone, uuid)
 
 -- DROP FUNCTION IF EXISTS public.save_visitor_and_approval(uuid, text, text, integer, integer, date, date, time without time zone, time without time zone, uuid);
 
