@@ -66,6 +66,8 @@ internal static class TableNames
 
     internal const string VisitorTypes = "visitor_types";
 
+    internal const string MultiUnitVisits = "multi_unit_visits";
+
     internal const string Addresses = "addresses";
 
     internal const string Banks = "banks";
@@ -133,6 +135,8 @@ internal static class TableNames
     internal const string ApprovedVisitors = "approved_visitors";
 
     internal const string VisitorApprovals = "visitor_approvals";
+
+    internal const string GuestApprovals = "guest_approvals";
 
     internal const string VisitTypes = "visit_types";
 

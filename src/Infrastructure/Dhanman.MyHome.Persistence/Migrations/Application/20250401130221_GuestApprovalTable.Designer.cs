@@ -3,6 +3,7 @@ using System;
 using Dhanman.MyHome.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dhanman.MyHome.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250401130221_GuestApprovalTable")]
+    partial class GuestApprovalTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3374,6 +3377,10 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("timestamp")
                         .HasColumnName("created_on_utc");
 
+                    b.Property<int>("CurrentStatusId")
+                        .HasColumnType("integer")
+                        .HasColumnName("current_status_id");
+
                     b.Property<DateTime?>("DeletedOnUtc")
                         .HasColumnType("timestamp")
                         .HasColumnName("deleted_on_utc");
@@ -3383,6 +3390,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnName("entry_time");
 
                     b.Property<DateTime?>("ExitTime")
+                        .IsRequired()
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("exit_time");
 
