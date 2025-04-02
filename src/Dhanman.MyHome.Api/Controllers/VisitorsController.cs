@@ -79,7 +79,6 @@ public class VisitorsController : ApiController
                 value.VisitingFrom,
                 value.ContactNumber,
                 value.VisitorTypeId,
-                value.CurrentStatusId,
                 value.VehicleNumber,
                 value.IdentityTypeId,
                 value.IdentityNumber,
