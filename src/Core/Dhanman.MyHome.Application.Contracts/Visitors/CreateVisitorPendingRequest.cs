@@ -10,7 +10,6 @@ public class CreateVisitorPendingRequest
     public string? VisitingFrom { get; set; }
     public string ContactNumber { get; set; }
     public int VisitorTypeId { get; set; }
-    public int CurrentStatusId { get; set; }
     public string? VehicleNumber { get; set; }
     public int? IdentityTypeId { get; set; }
     public string? IdentityNumber { get; set; }
