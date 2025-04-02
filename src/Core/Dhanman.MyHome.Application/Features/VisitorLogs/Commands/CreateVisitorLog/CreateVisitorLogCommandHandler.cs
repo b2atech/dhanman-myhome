@@ -52,7 +52,7 @@ public class CreateVisitorLogCommandHandler : ICommandHandler<CreateVisitorLogCo
     private VisitorLog CreateVisitorLogEntity(CreateVisitorLogCommand visitorLog)
     {
         int nextVisitorLogId = _visitorLogRepository.GetTotalRecordsCount() + 1;
-        return new VisitorLog(nextVisitorLogId, visitorLog.VisitorId, visitorLog.VisitorTypeId, visitorLog.VisitingFrom, visitorLog.CurrentStatusId, visitorLog.EntryTime, visitorLog.ExitTime, visitorLog.VisitorStatusId);
+        return new VisitorLog(nextVisitorLogId, visitorLog.VisitorId, visitorLog.VisitorTypeId, visitorLog.VisitingFrom, visitorLog.EntryTime, visitorLog.ExitTime, visitorLog.VisitorStatusId);
     }   
     #endregion
 }

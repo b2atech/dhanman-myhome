@@ -54,7 +54,6 @@ public class GetAllVisitorLogsQueryHandler : IQueryHandler<GetAllVisitorLogsQuer
                                                 where vt.Id == vl.VisitorTypeId
                                                 select vt.Name).FirstOrDefault(),
                                                vl.VisitingFrom,
-                                               vl.CurrentStatusId,
                                                vl.EntryTime,
                                                vl.ExitTime,
                                                vl.VisitorStatusId,

@@ -159,7 +159,9 @@ public static class ApiRoutes
 
         public const string DeleteVisitorById = apiVersion + "visitor/{id:int}";
 
-        public const string CreateVisitorLog = apiVersion + "visitor-log";
+        public const string CreateVisitorLog = apiVersion + "check-in";
+
+        public const string UpdateVisitorLog = apiVersion + "check-out";
 
         public const string GetAllVisitorLogs = apiVersion + "apartments/{apartmentId:guid}/visitors/{visitorId:int}/visitorTypeIds/{visitorTypeId:int}/visitorLogs";
 
