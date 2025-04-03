@@ -16,6 +16,8 @@ using Dhanman.MyHome.Domain.Entities.Users;
 using Dhanman.MyHome.Domain.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using static Dhanman.MyHome.Domain.Errors;
 using Unit = Dhanman.MyHome.Domain.Entities.Units.Unit;
 
 namespace Dhanman.MyHome.Application.Features.MemberRequests.Commands.UpdateMemberApproveStatus;
@@ -35,13 +37,15 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
     private readonly IMediator _mediator;
     private readonly IUserContextService _userContextService;
     private readonly IApplicationDbContext _dbContext;
+    private readonly ILogger<UpdateMemberApproveStatusCommandHandler> _logger;
+    private readonly ISMSService _smsService; 
     #endregion
 
     #region Constructors
     public UpdateMemberApproveStatusCommandHandler(IUnitRepository unitRepository, ICommonServiceClient commonServiceClient, ISalesServiceClient salesServiceClient, IPurchaseServiceClient purchaseServiceClient,
                                                    IResidentRequestRepository residentRequestRepository, IResidentRepository residentRepository, IResidentUnitRepository residentUnitRepository,
                                                    IUserRepository userRepository, IMemberAdditionalDetailRepository memberAdditionalDetailRepository, IMediator mediator, IUserContextService userContextService,
-                                                   IApplicationDbContext dbContext)
+                                                   IApplicationDbContext dbContext, ISMSService smsService, ILogger<UpdateMemberApproveStatusCommandHandler> logger)
     {
         _unitRepository = unitRepository;
         _commonServiceClient = commonServiceClient;
@@ -55,6 +59,10 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
         _mediator = mediator;
         _userContextService = userContextService;
         _dbContext = dbContext;
+        _smsService = smsService;
+        _smsService = smsService;
+        _logger = logger;
+        //_emailService = emailService;
     }
     #endregion
 
@@ -101,7 +109,7 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
         var residentUnit = new ResidentUnit(newResidentUnitId, unit.Id, newResidentId);
         _residentUnitRepository.Insert(residentUnit);
 
-        var user = new User(newUserId, residentRequest.ApartmentId, new Domain.Entities.Users.FirstName(residentRequest.FirstName), new LastName(residentRequest.LastName), new Email(residentRequest.Email), new ContactNumber(residentRequest.ContactNumber), residentRequest.ResidentTypeId == (int)ResidentType.OWNER);
+        var user = new User(newUserId, residentRequest.ApartmentId, new Domain.Entities.Users.FirstName(residentRequest.FirstName), new Domain.Entities.Users.LastName(residentRequest.LastName), new Domain.Entities.Users.Email(residentRequest.Email), new ContactNumber(residentRequest.ContactNumber), residentRequest.ResidentTypeId == (int)ResidentType.OWNER);
         _userRepository.Insert(user);
 
         var userDto = new UserDto(newUserId, residentRequest.ApartmentId, user.FirstName, user.LastName, user.Email, user.ContactNumber);
@@ -118,11 +126,44 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
             _memberAdditionalDetailRepository.Update(memberDetail);
         }
 
+      //  try
+      //  {
+            var success = await _smsService.SendSMS(
+                recipient: "pranitkhamkar629@gmail.com", // Or use the hardcoded email for testing
+                welcomeMessage: $"Hi {residentRequest.FirstName}, your membership has been approved. Welcome to our community!");
+
+            if (success)
+            {
+                _logger.LogInformation("✅ Welcome email successfully sent to {Email}", "pranitkhamkar629@gmail.com");
+            }
+            else
+            {
+                _logger.LogWarning("⚠ Failed to send welcome email to {Email}.", "pranitkhamkar629@gmail.com");
+            }
+
+     //   }
+
+        //catch (Exception ex)
+        //{
+        //    _logger.LogError(ex, "❌ Exception occurred while sending welcome email to {Email}", "pranitkhamkar629@gmail.com");
+        //}
+
+
+
+        // Send SMS using the recipient's email
+        //await _sMSService.SendSMS(recipient.Email, request.Body);
+
+        //await _emailService.SendEmailAsync(
+        //to: residentRequest.Email,
+        //    subject: "Welcome to the Community!",
+        //    body: $"Hi {residentRequest.FirstName},<br/><br/>Your membership has been approved. Welcome to the community!",
+        //    isHtml: true);
+
         await _mediator.Publish(new MemberRequestUpdatedEvent(residentRequest.Id), cancellationToken);
 
         return Result.Success(new EntityUpdatedResponse(residentRequest.Id));
     }
     #endregion
-    
+
 
 }
