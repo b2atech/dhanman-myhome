@@ -52,6 +52,14 @@ public static class DependencyInjection
 
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehaviour<,>));
 
+        services.AddScoped<ISMSService, WelcomeSMSService>();
+
+       // services.Configure<SmtpSettings>(configuration.GetSection("SmtpSettings"));
+
+      //  services.AddScoped<IEmailService, EmailService>();
+      //  services.AddScoped<IEmailTemplateService, EmailTemplateService>();
+
+
         return services;
     }
 }
