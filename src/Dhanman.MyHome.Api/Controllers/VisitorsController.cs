@@ -8,7 +8,9 @@ using Dhanman.MyHome.Application.Contracts.VisitorLogs;
 using Dhanman.MyHome.Application.Contracts.Visitors;
 using Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.CreateVisitorApproval;
 using Dhanman.MyHome.Application.Features.VisitorApprovals.Queries;
+using Dhanman.MyHome.Application.Features.VisitorLogs.Commands.ApproveVisitorLog;
 using Dhanman.MyHome.Application.Features.VisitorLogs.Commands.CreateVisitorLog;
+using Dhanman.MyHome.Application.Features.VisitorLogs.Commands.RejectVisitorLog;
 using Dhanman.MyHome.Application.Features.VisitorLogs.Commands.UpdateVisiotLog;
 using Dhanman.MyHome.Application.Features.VisitorLogs.Queries;
 using Dhanman.MyHome.Application.Features.Visitors.Commands.CreateVisitor;
@@ -184,6 +186,44 @@ public class VisitorsController : ApiController
     {
         var result = await Result.Create(request, Errors.General.BadRequest)
             .Map(value => new UpdateVisitorLogCommand(
+                 value.Id
+                ))
+            .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
+    [HttpPut(ApiRoutes.Visitors.ApproveVisitorLog)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ApproveVisitorLog([FromBody] ApproveVisitorLogRequest? request)
+    {
+        var result = await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new ApproveVisitorLogCommand(
+                 value.Id
+                ))
+            .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
+    [HttpPut(ApiRoutes.Visitors.RejectVisitorLog)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> RejectVisitorLog([FromBody] RejectVisitorLogRequest? request)
+    {
+        var result = await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new RejectVisitorLogCommand(
                  value.Id
                 ))
             .Bind(command => Mediator.Send(command));
