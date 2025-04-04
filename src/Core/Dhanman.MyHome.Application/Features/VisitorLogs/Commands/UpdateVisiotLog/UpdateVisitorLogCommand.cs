@@ -7,15 +7,14 @@ namespace Dhanman.MyHome.Application.Features.VisitorLogs.Commands.UpdateVisiotL
 public class UpdateVisitorLogCommand : ICommand<Result<EntityUpdatedResponse>>
 {
     #region Properties
-    public int VisitorLogId { get; set; }
-     #endregion
+    public List<int> VisitorLogIds { get; set; }
+    #endregion
 
     #region Constructor
-    public UpdateVisitorLogCommand(int visitorLogId)
+    public UpdateVisitorLogCommand(List<int> visitorLogIds)
     {
-        VisitorLogId = visitorLogId;
+        VisitorLogIds = visitorLogIds;
     }
-
     #endregion
 
 }
