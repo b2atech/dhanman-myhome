@@ -29,14 +29,14 @@ public class UpdateVisitorLogCommandHandler : ICommandHandler<UpdateVisitorLogCo
     #region Methods
   public async Task<Result<EntityUpdatedResponse>> Handle(UpdateVisitorLogCommand request, CancellationToken cancellationToken)
 {
-    var parameter = new NpgsqlParameter
-    {
-        ParameterName = "p_visitor_log_ids",
-        NpgsqlDbType = NpgsqlDbType.Array | NpgsqlDbType.Integer,
-        Value = request.VisitorLogIds.ToArray()
-    };
+        var parameter = new NpgsqlParameter
+        {
+            ParameterName = "p_visitor_log_ids",
+            NpgsqlDbType = NpgsqlDbType.Array | NpgsqlDbType.Integer,
+            Value = request.VisitorLogIds.ToArray()
+        };
 
-    await _dbContext.Database.ExecuteSqlRawAsync(
+        await _dbContext.Database.ExecuteSqlRawAsync(
         "SELECT * FROM public.check_out(@p_visitor_log_ids)",
         parameter
     );
@@ -47,8 +47,8 @@ public class UpdateVisitorLogCommandHandler : ICommandHandler<UpdateVisitorLogCo
         await _mediator.Publish(new VisitorLogUpdatedEvent(id), cancellationToken);
     }
 
-    return Result.Success(new EntityUpdatedResponse(request.VisitorLogIds.First()));
-}
+        return Result.Success(new EntityUpdatedResponse(request.VisitorLogIds[0]));
+    }
 
     #endregion
 }
