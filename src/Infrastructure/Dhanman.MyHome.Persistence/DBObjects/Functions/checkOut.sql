@@ -1,28 +1,26 @@
--- FUNCTION: public.check_out(integer)
+-- FUNCTION: public.check_out(integer[])
 
--- DROP FUNCTION IF EXISTS public.check_out(integer);
-
+-- DROP FUNCTION IF EXISTS public.check_out(integer[]);
 CREATE OR REPLACE FUNCTION public.check_out(
-	p_visitor_log_id integer)
-    RETURNS visitor_logs
+	p_visitor_log_ids integer[])
+    RETURNS SETOF visitor_logs 
     LANGUAGE 'plpgsql'
     COST 100
     VOLATILE PARALLEL UNSAFE
+    ROWS 1000
+
 AS $BODY$
-DECLARE
-    updated_log visitor_logs;
 BEGIN
+    RETURN QUERY
     UPDATE public.visitor_logs
     SET
         exit_time = (NOW() AT TIME ZONE 'UTC') AT TIME ZONE 'Asia/Kolkata',
         visitor_status_id = 4,
         modified_on_utc = (NOW() AT TIME ZONE 'UTC') AT TIME ZONE 'Asia/Kolkata'
-    WHERE id = p_visitor_log_id
-    RETURNING * INTO updated_log;
-
-    RETURN updated_log;
+    WHERE id = ANY(p_visitor_log_ids)
+    RETURNING *;
 END;
 $BODY$;
 
-ALTER FUNCTION public.check_out(integer)
+ALTER FUNCTION public.check_out(integer[])
     OWNER TO devdhanman;

@@ -164,7 +164,7 @@ public class VisitorsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
-    [HttpPost(ApiRoutes.Visitors.CreateVisitorLog)]
+    [HttpPost(ApiRoutes.Visitors.CheckInVisitorLog)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> CreateVisitorLog([FromBody] CreateVisitorLogRequest? request) =>
@@ -179,14 +179,18 @@ public class VisitorsController : ApiController
                 value.VisitorStatusId))
             .Bind(command => Mediator.Send(command))
            .Match(Ok, BadRequest);
-
-    [HttpPut(ApiRoutes.Visitors.UpdateVisitorLog)]
+    /// <summary>
+    /// Check-Out Visitor/ Update the visitor taking multiple Ids.
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    [HttpPut(ApiRoutes.Visitors.CheckOutVisitorLog)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateVisitorLog([FromBody] UpdateVisitorLogRequest? request)
     {
         var result = await Result.Create(request, Errors.General.BadRequest)
             .Map(value => new UpdateVisitorLogCommand(
-                 value.Id
+                 value.Ids
                 ))
             .Bind(command => Mediator.Send(command));
 
@@ -199,6 +203,11 @@ public class VisitorsController : ApiController
             return BadRequest(result.Error);
         }
     }
+    /// <summary>
+    /// Approve Visitor 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     [HttpPut(ApiRoutes.Visitors.ApproveVisitorLog)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> ApproveVisitorLog([FromBody] ApproveVisitorLogRequest? request)
@@ -218,6 +227,11 @@ public class VisitorsController : ApiController
             return BadRequest(result.Error);
         }
     }
+    /// <summary>
+    /// Reject Visitor
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     [HttpPut(ApiRoutes.Visitors.RejectVisitorLog)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> RejectVisitorLog([FromBody] RejectVisitorLogRequest? request)

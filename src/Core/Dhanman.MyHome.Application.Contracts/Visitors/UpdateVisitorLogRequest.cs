@@ -3,13 +3,13 @@
 public sealed class UpdateVisitorLogRequest
 {
     #region Proeprties
-    public int Id { get; set; }
+    public List<int> Ids { get; set; }
     #endregion
 
     #region Contrunctor
-    public UpdateVisitorLogRequest(int id)
+    public UpdateVisitorLogRequest(List<int> ids)
     {
-        Id = id;
+        Ids = ids;
     }
 
     #endregion
