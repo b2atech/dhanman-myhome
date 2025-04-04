@@ -28,7 +28,8 @@ public class ComminicationController : ApiController
          await Result.Create(request, Errors.General.BadRequest)
         .Map(value => new SendPushNotificationCommand(
                value.ResidentId,
-               value.GuestName ))
+               value.GuestName,
+               value.GuestId))
            .Bind(command => Mediator.Send(command))
           .Match(Ok, BadRequest);
 

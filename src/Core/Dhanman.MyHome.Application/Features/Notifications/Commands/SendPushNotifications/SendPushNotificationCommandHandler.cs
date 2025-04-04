@@ -37,7 +37,7 @@ public class SendPushNotificationCommandHandler : ICommandHandler<SendPushNotifi
             residentToken.FCMToken,
             "Guest Approval Needed",
             $"Guest {request.GuestName} is at the gate.",
-            new { guestId = 1234 }
+            new { guestId = request.GuestId }
         );
 
         return Unit.Value;
