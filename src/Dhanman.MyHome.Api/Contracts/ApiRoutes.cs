@@ -163,6 +163,10 @@ public static class ApiRoutes
 
         public const string UpdateVisitorLog = apiVersion + "check-out";
 
+        public const string ApproveVisitorLog = apiVersion + "approve";
+
+        public const string RejectVisitorLog = apiVersion + "reject";
+
         public const string GetAllVisitorLogs = apiVersion + "apartments/{apartmentId:guid}/dates/{date:dateTime}/visitorLogs";
 
         public const string GetSingleVisitorLogs = apiVersion + "apartments/{apartmentId:guid}/visitors/{visitorId:int}/visitorTypeIds/{visitorTypeId:int}/visitorLogs";
