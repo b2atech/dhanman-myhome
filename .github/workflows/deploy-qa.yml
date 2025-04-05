@@ -40,9 +40,9 @@ jobs:
       - name: Restart QA App
         uses: appleboy/ssh-action@v0.1.10
         with:
-          host: ${{ secrets.DROPLET_HOST }}
-          username: ${{ secrets.DROPLET_USER }}
-          key: ${{ secrets.DROPLET_SSH_KEY }}
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USER }}
+          key: ${{ secrets.DO_SSH_KEY }}
           script: |
             export ConnectionStrings__CommunityDb="${{ secrets.COMMUNITY_DB_CONNECTION }}"
             export ConnectionStrings__PermissionsDb="${{ secrets.PERMISSIONS_DB_CONNECTION }}"
