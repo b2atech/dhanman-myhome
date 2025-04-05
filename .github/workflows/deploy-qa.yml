@@ -31,9 +31,9 @@ jobs:
       - name: Upload to QA Droplet
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: ${{ secrets.DROPLET_HOST }}
-          username: ${{ secrets.DROPLET_USER }}
-          key: ${{ secrets.DROPLET_SSH_KEY }}
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USER }}
+          key: ${{ secrets.DO_SSH_KEY }}
           source: "publish/*"
           target: "/var/www/qa/dhanman-community"
 
