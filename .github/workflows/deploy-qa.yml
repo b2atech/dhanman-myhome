@@ -47,4 +47,5 @@ jobs:
             export ConnectionStrings__CommunityDb="${{ secrets.COMMUNITY_DB_CONNECTION }}"
             export ConnectionStrings__PermissionsDb="${{ secrets.PERMISSIONS_DB_CONNECTION }}"
             export DOTNET_ENVIRONMENT=qa
-            sudo systemctl restart yourapp.service
+            sudo systemctl restart dhanman-community-qa
+            sudo systemctl status dhanman-community-qa --no-pager
