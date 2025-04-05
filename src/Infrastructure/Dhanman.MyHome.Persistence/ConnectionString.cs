@@ -5,7 +5,7 @@ public sealed class ConnectionString
     /// <summary>
     /// The connection strings key.
     /// </summary>
-    public const string SettingsKey = "MyHomeDb";
+    public const string SettingsKey = "CommunityDb";
     public const string PermissionDBKey = "PermissionsDb";
 
     /// <summary>
