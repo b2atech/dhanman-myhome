@@ -36,6 +36,7 @@ jobs:
           key: ${{ secrets.DO_SSH_KEY }}
           source: "publish/*"
           target: "/var/www/qa/dhanman-community"
+          strip_components: 1
 
       - name: Restart QA App
         uses: appleboy/ssh-action@v0.1.10
