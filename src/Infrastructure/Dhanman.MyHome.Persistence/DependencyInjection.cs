@@ -16,9 +16,22 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        if (configuration == null)
+            throw new Exception("Configuration is null in AddPersistence.");
+
+        
         if (configuration != null)
         {
-            string connectionString = configuration.GetConnectionString(ConnectionString.SettingsKey);
+            string key = ConnectionString.SettingsKey;
+            string connectionString = configuration.GetConnectionString(key);
+
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                Console.WriteLine($"[ERROR] Connection string for key '{key}' is missing.");
+                Console.WriteLine($"[DEBUG] DOTNET_ENVIRONMENT: {configuration["DOTNET_ENVIRONMENT"]}");
+                Console.WriteLine($"[DEBUG] Raw config value: {configuration["ConnectionStrings:" + key]}");
+                throw new Exception($"Missing or empty connection string: '{key}'");
+            }
 
             services.AddSingleton(new ConnectionString(connectionString));
 
