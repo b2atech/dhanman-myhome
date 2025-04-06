@@ -112,7 +112,7 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 
 // Swagger UI only in non-production environments
-if (!app.Environment.IsProduction())
+//if (!app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI(c =>
