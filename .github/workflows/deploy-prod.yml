@@ -10,7 +10,7 @@ jobs:
       name: prod
 
     env:
-      DOTNET_ENVIRONMENT: prod
+      DOTNET_ENVIRONMENT: production
       DO_HOST: ${{ secrets.DO_HOST }}
       DO_USER: ${{ secrets.DO_USER }}
       DO_SSH_KEY: ${{ secrets.DO_SSH_KEY }}
@@ -46,5 +46,5 @@ jobs:
           script: |
             export ConnectionStrings__CommunityDb="${{ secrets.COMMUNITY_DB_CONNECTION }}"
             export ConnectionStrings__PermissionsDb="${{ secrets.PERMISSIONS_DB_CONNECTION }}"
-            export DOTNET_ENVIRONMENT=prod
+            export DOTNET_ENVIRONMENT=production
             sudo systemctl restart dhanman-community-prod
