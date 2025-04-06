@@ -31,20 +31,22 @@ jobs:
       - name: Upload to QA Droplet
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: ${{ secrets.DROPLET_HOST }}
-          username: ${{ secrets.DROPLET_USER }}
-          key: ${{ secrets.DROPLET_SSH_KEY }}
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USER }}
+          key: ${{ secrets.DO_SSH_KEY }}
           source: "publish/*"
           target: "/var/www/qa/dhanman-community"
+          strip_components: 1
 
       - name: Restart QA App
         uses: appleboy/ssh-action@v0.1.10
         with:
-          host: ${{ secrets.DROPLET_HOST }}
-          username: ${{ secrets.DROPLET_USER }}
-          key: ${{ secrets.DROPLET_SSH_KEY }}
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USER }}
+          key: ${{ secrets.DO_SSH_KEY }}
           script: |
             export ConnectionStrings__CommunityDb="${{ secrets.COMMUNITY_DB_CONNECTION }}"
             export ConnectionStrings__PermissionsDb="${{ secrets.PERMISSIONS_DB_CONNECTION }}"
             export DOTNET_ENVIRONMENT=qa
-            sudo systemctl restart yourapp.service
+            sudo systemctl restart dhanman-community-qa
+            sudo systemctl status dhanman-community-qa --no-pager
