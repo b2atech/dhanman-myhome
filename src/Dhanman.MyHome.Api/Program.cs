@@ -5,6 +5,7 @@ using Dhanman.MyHome.Api;
 using Dhanman.MyHome.Api.Middleware;
 using Dhanman.MyHome.Application;
 using Dhanman.MyHome.Persistence;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -84,7 +85,7 @@ builder.Services.Configure<GzipCompressionProviderOptions>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Community", Version = "v1" });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
@@ -117,7 +118,12 @@ var app = builder.Build();
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Community");
+        if (app.Environment.IsProduction())
+            c.InjectJavascript("/swagger/custom.prod.js");
+        else
+            c.InjectJavascript("/swagger/custom.qa.js");
+        c.InjectStylesheet("/swagger/SwaggerHeader.css");
         c.OAuthClientId(builder.Configuration["Auth0:ClientId"]);
         c.OAuthAppName("Demo API - Swagger");
         c.OAuthUsePkce();
@@ -129,6 +135,7 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 app.UseResponseCompression();
 app.UseHttpsRedirection();
 app.UseRouting();
+app.UseStaticFiles();
 app.UseCors(DhanManSpecificOrigins);
 app.UseAuthentication();
 app.UseAuthorization();

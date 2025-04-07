@@ -1,0 +1,26 @@
+﻿/* swagger ui customization */
+body.swagger-section #header {
+    background-color: white;
+    background: url(your-new-logo.png) no-repeat;
+    background-position-x: 250px;
+    height: 50px;
+}
+
+    body.swagger-section #header .swagger-ui-wrap #logo {
+        display: none;
+    }
+
+
+/*.swagger-ui .topbar::after {
+    content: "QA";
+    background-color: #ffc107;*/ /* Yellow for QA */
+    /*color: #000;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 5px;
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 14px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}*/
