@@ -27,7 +27,7 @@ public class GetAllVisitorLogsQueryHandler : IQueryHandler<GetAllVisitorLogsQuer
               .Bind(async query =>
               {
                   var allVisitorlogs = await _dbContext.SetInt<AllVisitorLog>()
-                     .FromSqlRaw("SELECT * FROM public.get_all_visitor_logs(@ApartmentId, @LogDate)",
+                     .FromSqlRaw("SELECT * FROM public.get_visitor_multiple_unit_logs(@ApartmentId, @LogDate)",
                          new NpgsqlParameter("@ApartmentId", request.ApartmentId),
                          new NpgsqlParameter("@LogDate", request.Date)
                          )
