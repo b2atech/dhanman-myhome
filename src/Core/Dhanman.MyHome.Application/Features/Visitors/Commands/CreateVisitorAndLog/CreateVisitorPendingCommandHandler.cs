@@ -34,7 +34,7 @@ public class CreateVisitorPendingCommandHandler : ICommandHandler<CreateVisitorP
         await connection.OpenAsync(cancellationToken);
 
         await using var command = connection.CreateCommand();
-        command.CommandText = "SELECT public.save_visitor_and_pending(@p_apartment_id, @p_first_name, @p_last_name, @p_email, @p_contact_number, @p_vehicle_number, @p_identity_type_id, @p_identity_number, @p_visitor_type_id, @p_visiting_from, @p_created_by)";
+        command.CommandText = "SELECT public.save_visitor_and_pending(@p_apartment_id, @p_first_name, @p_last_name, @p_email, @p_contact_number, @p_vehicle_number, @p_identity_type_id, @p_identity_number, @p_visitor_type_id, @p_visiting_from, @p_unit_id, @p_created_by)";
         command.CommandType = System.Data.CommandType.Text;
 
         command.Parameters.Add(new NpgsqlParameter("p_apartment_id", NpgsqlDbType.Uuid) { Value = request.ApartmentId });
@@ -47,6 +47,7 @@ public class CreateVisitorPendingCommandHandler : ICommandHandler<CreateVisitorP
         command.Parameters.Add(new NpgsqlParameter("p_identity_number", NpgsqlDbType.Text) { Value = request.IdentityNumber });
         command.Parameters.Add(new NpgsqlParameter("p_visitor_type_id", NpgsqlDbType.Integer) { Value = request.VisitorTypeId });
         command.Parameters.Add(new NpgsqlParameter("p_visiting_from", NpgsqlDbType.Text) { Value = request.VisitingFrom });
+        command.Parameters.Add(new NpgsqlParameter("p_unit_id", NpgsqlDbType.Integer) { Value = request.UnitId });
         command.Parameters.Add(new NpgsqlParameter("p_created_by", NpgsqlDbType.Uuid) { Value = request.CreatedBy });
 
         var result = await command.ExecuteScalarAsync(cancellationToken);
