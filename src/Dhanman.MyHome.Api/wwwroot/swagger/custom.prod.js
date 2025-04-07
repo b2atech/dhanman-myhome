@@ -1,4 +1,5 @@
 ﻿console.log('custom.prod.js loaded'); // sanity check
+document.title = "Community - PROD"; // ✅ Set custom page title
 
 (function insertBadgeWhenReady() {
     const h2 = document.querySelector('.swagger-ui .title');

@@ -1,4 +1,6 @@
 ﻿console.log('custom.qa.js loaded'); // sanity check
+document.title = "Community - QA"; // ✅ Set custom page title
+
 (function insertBadgeWhenReady() {
     const h2 = document.querySelector('.swagger-ui .title');
 
