@@ -13,6 +13,7 @@ public class CreateVisitorPendingRequest
     public string? VehicleNumber { get; set; }
     public int? IdentityTypeId { get; set; }
     public string? IdentityNumber { get; set; }
+    public int UnitId { get; set; }
     public Guid CreatedBy { get; set; }
     #endregion
 }
