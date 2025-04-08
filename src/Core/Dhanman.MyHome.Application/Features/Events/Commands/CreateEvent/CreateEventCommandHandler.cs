@@ -28,8 +28,6 @@ public class CreateEventCommandHandler : ICommandHandler<CreateEventCommand, Res
     #region Methods
     public async Task<Result<EntityCreatedResponse>> Handle(CreateEventCommand request, CancellationToken cancellationToken)
     {
-
-
         var eventRequest = new Event(request.Id, request.Title, request.Description,request.AllDay,request.Color,request.TextColor, request.ReservationByUnitId, request.ReservationDate, request.Start, request.End, request.Pourpose, request.StatusId, request.BookingFacilitiesId);
 
         _eventRepository.Insert(eventRequest);
@@ -37,9 +35,6 @@ public class CreateEventCommandHandler : ICommandHandler<CreateEventCommand, Res
         await _mediator.Publish(new EventCreatedEvent(eventRequest.Id), cancellationToken);
 
         return Result.Success(new EntityCreatedResponse(eventRequest.Id));
-
-
-
     }
 
     #endregion
