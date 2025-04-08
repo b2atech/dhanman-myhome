@@ -282,7 +282,7 @@ public class VisitorsController : ApiController
                 value.ApartmentId,
                 value.FirstName,
                 value.ContactNumber,
-                value.VisitTypeId,
+                value.VisitorTypeId,
                 value.VisitTypeId,
                 value.StartDate,
                 value.EndDate,
