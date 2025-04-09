@@ -7,8 +7,8 @@ public class VisitorVehicles : EntityInt, IAuditableEntity, ISoftDeletableEntity
 {
     #region Properties
     public int VisitorLogId { get; set; }
-    public string VehicleNumber { get; set; }
-    public string VehicleType { get; set; } //e.g. Car, Bike, Traveler, Tanker
+    public string? VehicleNumber { get; set; }
+    public string? VehicleType { get; set; } //e.g. Car, Bike, Traveler, Tanker
     #endregion
 
     #region Audit Properties
@@ -26,7 +26,7 @@ public class VisitorVehicles : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public VisitorVehicles(int visitorLogId, string vehicleNumber, string vehicleType)
+    public VisitorVehicles(int visitorLogId, string? vehicleNumber, string? vehicleType)
     {
         VisitorLogId = visitorLogId;
         VehicleNumber = vehicleNumber;
