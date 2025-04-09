@@ -9,6 +9,7 @@ using Dhanman.MyHome.Application.Contracts;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Features.MemberRequests.Events;
 using Dhanman.MyHome.Domain.Abstractions;
+using Dhanman.MyHome.Domain.Entities.Apartments;
 using Dhanman.MyHome.Domain.Entities.MemberAdditionalDetails;
 using Dhanman.MyHome.Domain.Entities.Residents;
 using Dhanman.MyHome.Domain.Entities.ResidentUnits;
@@ -16,6 +17,7 @@ using Dhanman.MyHome.Domain.Entities.Users;
 using Dhanman.MyHome.Domain.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Unit = Dhanman.MyHome.Domain.Entities.Units.Unit;
 
 namespace Dhanman.MyHome.Application.Features.MemberRequests.Commands.UpdateMemberApproveStatus;
@@ -35,13 +37,15 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
     private readonly IMediator _mediator;
     private readonly IUserContextService _userContextService;
     private readonly IApplicationDbContext _dbContext;
+    private readonly IEmailService _emailService;
+    private readonly ILogger<UpdateMemberApproveStatusCommandHandler> _logger;
     #endregion
 
     #region Constructors
     public UpdateMemberApproveStatusCommandHandler(IUnitRepository unitRepository, ICommonServiceClient commonServiceClient, ISalesServiceClient salesServiceClient, IPurchaseServiceClient purchaseServiceClient,
                                                    IResidentRequestRepository residentRequestRepository, IResidentRepository residentRepository, IResidentUnitRepository residentUnitRepository,
                                                    IUserRepository userRepository, IMemberAdditionalDetailRepository memberAdditionalDetailRepository, IMediator mediator, IUserContextService userContextService,
-                                                   IApplicationDbContext dbContext)
+                                                   IApplicationDbContext dbContext, IEmailService emailService, ILogger<UpdateMemberApproveStatusCommandHandler> logger)
     {
         _unitRepository = unitRepository;
         _commonServiceClient = commonServiceClient;
@@ -55,6 +59,8 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
         _mediator = mediator;
         _userContextService = userContextService;
         _dbContext = dbContext;
+        _emailService = emailService;
+        _logger = logger;
     }
     #endregion
 
@@ -67,6 +73,11 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
         {
             throw new RequestIdNotFoundException(request.Id);
         }
+
+        // Fetch the apartment (company) name using ApartmentId
+        string apartmentName = await _dbContext.Set<Apartment>()
+                              .Where(p => p.Id == residentRequest.ApartmentId)
+                              .Select(p => p.Name).FirstOrDefaultAsync();
 
         int lastUnitId = await _unitRepository.GetLastUnitIdAsync();
         int newUnitId = lastUnitId + 1;
@@ -119,6 +130,29 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
         }
 
         await _mediator.Publish(new MemberRequestUpdatedEvent(residentRequest.Id), cancellationToken);
+
+        // Send welcome email to the new resident
+        if (!string.IsNullOrWhiteSpace(residentRequest.Email))
+        {
+            var subject = $@"Welcome to {apartmentName}!";
+            var body = $@"
+        <p>Dear {residentRequest.FirstName} {residentRequest.LastName},</p>
+        <p>Welcome to the <strong>{apartmentName}</strong> community! We're excited to have you here.</p>
+        <p>Your journey with us begins now, and we're here to ensure you have a seamless and enjoyable experience. You can now log in to your personalized dashboard to manage all your activities, track updates, and stay connected with your community.</p>
+        <p>If you have any questions, require assistance, or simply need more information, our dedicated team is always here for you. Please feel free to reach out at any time, and we'll be happy to help!</p>
+        <p>We encourage you to explore our features and make the most of everything we offer.</p>
+        <p>Warm regards,<br/>The {apartmentName} Team</p>
+    ";
+
+            var emailResult = await _emailService.SendEmailAsync(residentRequest.Email, subject, body, isHtml: true);
+
+            if (!emailResult.IsSuccess)
+            {
+                _logger.LogError("Failed to send welcome email to {Email}. Reason: {Reason}", residentRequest.Email, emailResult.Error?.Message ?? "Unknown error");
+            }
+        }
+
+
 
         return Result.Success(new EntityUpdatedResponse(residentRequest.Id));
     }

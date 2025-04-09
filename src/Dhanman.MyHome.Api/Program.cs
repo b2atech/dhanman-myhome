@@ -1,11 +1,10 @@
-using Azure.Identity;
 using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Services;
 using B2aTech.CrossCuttingConcern.UserContext;
 using Dhanman.MyHome.Api;
 using Dhanman.MyHome.Api.Middleware;
 using Dhanman.MyHome.Application;
 using Dhanman.MyHome.Persistence;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -39,12 +38,15 @@ builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHeaderPropagation(options => options.Headers.Add("correlation-id"));
 builder.Services.AddScoped<IUserContextService, UserContextService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddPermissionService(builder.Configuration);
 builder.Services.AddAuthentication(builder.Configuration, "");
 builder.Services.AddCustomAuthorization();
 builder.Services.AddApplication(builder.Configuration);
+builder.Services.AddTemplateService(builder.Configuration, builder.Configuration["ConnectionStrings:CommonDb"]);
+
 
 builder.Services.AddApiVersioning(config =>
 {
