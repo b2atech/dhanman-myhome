@@ -3,6 +3,7 @@ using System;
 using Dhanman.MyHome.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dhanman.MyHome.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250409092647_VisitorVehiclesCreate")]
+    partial class VisitorVehiclesCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3167,10 +3170,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CompanyName")
-                        .HasColumnType("text")
-                        .HasColumnName("company_name");
-
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("uuid")
                         .HasColumnName("created_by");
@@ -3214,10 +3213,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("date")
                         .HasColumnName("start_date");
-
-                    b.Property<string>("VehicleNumber")
-                        .HasColumnType("text")
-                        .HasColumnName("vehicle_number");
 
                     b.Property<int>("VisitTypeId")
                         .HasColumnType("integer")
@@ -3632,10 +3627,12 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnName("modified_on_utc");
 
                     b.Property<string>("VehicleNumber")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("visitor_number");
 
                     b.Property<string>("VehicleType")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("vehicle_type");
 

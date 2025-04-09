@@ -288,6 +288,8 @@ public class VisitorsController : ApiController
                 value.EndDate,
                 value.EntryTime,
                 value.ExitTime,
+                value.VehicleNumber,
+                value.CompanyName,
                 value.CreatedBy
                 ))
              .Bind(command => Mediator.Send(command))

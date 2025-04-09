@@ -24,6 +24,10 @@ internal sealed class VisitorApprovalConfiguration : IEntityTypeConfiguration<Vi
 
         builder.Property(approvedVisitors => approvedVisitors.ExitTime).HasColumnName("exit_time").HasColumnType("time").IsRequired(false);
 
+        builder.Property(approvedVisitors => approvedVisitors.VehicleNumber).HasColumnName("vehicle_number").IsRequired(false);
+
+        builder.Property(approvedVisitors => approvedVisitors.CompanyName).HasColumnName("company_name").IsRequired(false);
+
         builder.Property(approvedVisitors => approvedVisitors.CreatedBy).HasColumnType("uuid");
 
         builder.Property(approvedVisitors => approvedVisitors.ModifiedBy).HasColumnType("uuid").IsRequired(false);

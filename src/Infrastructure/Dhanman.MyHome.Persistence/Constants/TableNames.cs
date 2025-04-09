@@ -150,5 +150,7 @@ internal static class TableNames
 
     internal const string MemberRequests = "community_resident_requests";
 
+    internal const string VisitorVehicles = "visitor_vehicles";
+
 }
 

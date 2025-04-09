@@ -1,6 +1,6 @@
--- FUNCTION: public.save_visitor_and_approval(uuid, text, text, integer, integer, date, date, time without time zone, time without time zone, uuid)
+-- FUNCTION: public.save_visitor_and_approval(uuid, text, text, integer, integer, date, date, time without time zone, time without time zone, text, text, uuid)
 
--- DROP FUNCTION IF EXISTS public.save_visitor_and_approval(uuid, text, text, integer, integer, date, date, time without time zone, time without time zone, uuid);
+-- DROP FUNCTION IF EXISTS public.save_visitor_and_approval(uuid, text, text, integer, integer, date, date, time without time zone, time without time zone, text, text, uuid);
 
 CREATE OR REPLACE FUNCTION public.save_visitor_and_approval(
 	p_apartment_id uuid,
@@ -12,6 +12,8 @@ CREATE OR REPLACE FUNCTION public.save_visitor_and_approval(
 	p_end_date date,
 	p_entry_time time without time zone,
 	p_exit_time time without time zone,
+	p_vehicle_number text,
+	p_company_name text,
 	p_created_by uuid)
     RETURNS void
     LANGUAGE 'plpgsql'
@@ -58,21 +60,25 @@ BEGIN
         end_date,
         entry_time,
         exit_time,
+		vehicle_number,
+		company_name,
         created_on_utc,
         created_by
     )
     VALUES (
         v_visitor_id,
         p_visit_type_id,
-        p_start_date,
-        p_end_date,
-        p_entry_time,
-        p_exit_time,
+        COALESCE(p_start_date, NULL),  -- Handle NULL for start_date
+        COALESCE(p_end_date, NULL),    -- Handle NULL for end_date
+        COALESCE(p_entry_time, NULL),  -- Handle NULL for entry_time
+        COALESCE(p_exit_time, NULL),   -- Handle NULL for exit_time
+        COALESCE(p_vehicle_number, NULL), -- Handle NULL for vehicle_number
+        COALESCE(p_company_name, NULL),   -- Handle NULL for company_name
         NOW(),
         p_created_by
     );
 END;
 $BODY$;
-
-ALTER FUNCTION public.save_visitor_and_approval(uuid, text, text, integer, integer, date, date, time without time zone, time without time zone, uuid)
-    OWNER TO devdhanman;
+SELECT * FROM public.visitor_approvals
+ALTER FUNCTION public.save_visitor_and_approval(uuid, text, text, integer, integer, date, date, time without time zone, time without time zone, text, text, uuid)
+    OWNER TO doadmin;

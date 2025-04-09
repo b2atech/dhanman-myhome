@@ -17,11 +17,14 @@ public class CreateVisitorApprovalCommand : ICommand<Result<EntityCreatedRespons
     public DateOnly? EndDate { get; set; }
     public TimeOnly? EntryTime { get; set; }
     public TimeOnly? ExitTime { get; set; }
+    public string? VehicleNumber { get; set; }
+    public string? CompanyName { get; set; }
     public Guid CreatedBy { get; set; }
     #endregion
 
     #region Constructors
-    public CreateVisitorApprovalCommand(Guid apartmentId, string firstName, string contactNumber, int visitorTypeId, int visitTypeId, DateOnly? startDate, DateOnly? endDate, TimeOnly? entryTime, TimeOnly? exitTime, Guid createdBy)
+    public CreateVisitorApprovalCommand(Guid apartmentId, string firstName, string contactNumber, int visitorTypeId, int visitTypeId,
+        DateOnly? startDate, DateOnly? endDate, TimeOnly? entryTime, TimeOnly? exitTime, string? vehicleNumber, string? companyName, Guid createdBy)
     {
         ApartmentId = apartmentId;
         FirstName = firstName;
@@ -32,6 +35,8 @@ public class CreateVisitorApprovalCommand : ICommand<Result<EntityCreatedRespons
         EndDate = endDate;
         EntryTime = entryTime;
         ExitTime = exitTime;
+        VehicleNumber = vehicleNumber;
+        CompanyName = companyName;
         CreatedBy = createdBy;
     }
 
