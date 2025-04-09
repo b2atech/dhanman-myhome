@@ -21,7 +21,9 @@ public class VisitorApproval : EntityInt, IAuditableEntity, ISoftDeletableEntity
     public Guid? ModifiedBy { get; set; }
     public DateTime? DeletedOnUtc { get; }
     public bool IsDeleted { get; set; }
+    #endregion
 
+    #region Constructor
     public VisitorApproval(int visitorId, int visitTypeId, DateOnly? startDate, DateOnly? endDate, TimeOnly? entryTime, TimeOnly? exitTime)
     {
         VisitorId = visitorId;
