@@ -12,6 +12,8 @@ public class CreateVisitorApprovalRequest
     public DateOnly? EndDate { get; set; }
     public TimeOnly? EntryTime { get; set; }
     public TimeOnly? ExitTime { get; set; }
+    public string? VehicleNumber { get; set; }
+    public string? CompanyName { get; set; }
     public Guid CreatedBy { get; set; }
     #endregion
 }

@@ -12,6 +12,8 @@ public class VisitorApproval : EntityInt, IAuditableEntity, ISoftDeletableEntity
     public DateOnly? EndDate { get; set; }
     public TimeOnly? EntryTime { get; set; }
     public TimeOnly? ExitTime { get; set; }
+    public string? VehicleNumber { get; set; }
+    public string? CompanyName { get; set; }
     #endregion
 
     #region Audit Properties
@@ -24,7 +26,7 @@ public class VisitorApproval : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public VisitorApproval(int visitorId, int visitTypeId, DateOnly? startDate, DateOnly? endDate, TimeOnly? entryTime, TimeOnly? exitTime)
+    public VisitorApproval(int visitorId, int visitTypeId, DateOnly? startDate, DateOnly? endDate, TimeOnly? entryTime, TimeOnly? exitTime, string? vehicleNumber, string? companyName)
     {
         VisitorId = visitorId;
         VisitTypeId = visitTypeId;
@@ -32,6 +34,8 @@ public class VisitorApproval : EntityInt, IAuditableEntity, ISoftDeletableEntity
         EndDate = endDate;
         EntryTime = entryTime;
         ExitTime = exitTime;
+        VehicleNumber = vehicleNumber;
+        CompanyName = companyName;
     }
     #endregion
 }
