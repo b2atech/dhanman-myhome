@@ -147,10 +147,11 @@ internal static class TableNames
     internal const string MemberAdditionalDetails = "member_additional_details";
 
     internal const string MemberRequests = "community_resident_requests";
-
+  
     internal const string Calendars = "calendars";
 
     internal const string EventParticipants = "event_participants";
 
+    internal const string VisitorVehicles = "visitor_vehicles";
 }
 
