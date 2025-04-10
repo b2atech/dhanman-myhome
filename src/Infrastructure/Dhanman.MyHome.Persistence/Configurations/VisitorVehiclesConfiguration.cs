@@ -14,7 +14,7 @@ internal sealed class VisitorVehiclesConfiguration : IEntityTypeConfiguration<Vi
 
         builder.Property(visitorVehicles => visitorVehicles.VisitorLogId).HasColumnName("visitor_log_id").IsRequired();
 
-        builder.Property(visitorVehicles => visitorVehicles.VehicleNumber).HasColumnName("visitor_number").IsRequired(false);
+        builder.Property(visitorVehicles => visitorVehicles.VehicleNumber).HasColumnName("vehicle_number").IsRequired(false);
 
         builder.Property(visitorVehicles => visitorVehicles.VehicleType).HasColumnName("vehicle_type").IsRequired(false);
 

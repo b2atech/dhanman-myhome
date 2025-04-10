@@ -86,7 +86,7 @@ public static class ApiRoutes
     }
     public static class Vehicles
     {
-        public const string CreateVehicle = apiVersion + "vehicles";
+        public const string CreateVisitorVehicle = apiVersion + "visitor-vehicles";
 
         public const string GetAllVehicles = apiVersion + "vehicles";
 
