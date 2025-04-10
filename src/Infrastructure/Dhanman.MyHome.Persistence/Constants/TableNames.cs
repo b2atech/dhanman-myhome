@@ -1,6 +1,4 @@
-﻿using Dhanman.MyHome.Domain.Entities.TicketStatuses;
-
-namespace Dhanman.MyHome.Persistence.Constants;
+﻿namespace Dhanman.MyHome.Persistence.Constants;
 
 internal static class TableNames
 {
@@ -80,7 +78,7 @@ internal static class TableNames
 
     internal const string Events = "events";
 
-    internal const string BookingsFacilities = "bookings_facilities";
+    internal const string FacilityBookings = "facility_bookings  ";
 
     internal const string EventStatus = "event_status";
 
@@ -149,6 +147,10 @@ internal static class TableNames
     internal const string MemberAdditionalDetails = "member_additional_details";
 
     internal const string MemberRequests = "community_resident_requests";
+
+    internal const string Calendars = "calendars";
+
+    internal const string EventParticipants = "event_participants";
 
 }
 

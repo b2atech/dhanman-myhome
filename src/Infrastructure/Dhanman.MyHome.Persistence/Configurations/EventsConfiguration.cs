@@ -12,47 +12,71 @@ internal sealed class EventsConfiguration : IEntityTypeConfiguration<Event>
     public void Configure(EntityTypeBuilder<Event> builder)
     {
         builder.ToTable(TableNames.Events);
-        builder.HasKey(events => events.Id);
 
-        builder.Property(events => events.Title).HasColumnName("title").IsRequired();
+        builder.HasKey(eventEntity => eventEntity.Id);
 
-        builder.Property(events => events.Description).HasColumnName("description").IsRequired();
+        builder.Property(eventEntity => eventEntity.CompanyId)
+            .HasColumnType("uuid") 
+            .IsRequired();
 
-        builder.Property(events => events.AllDay).HasColumnName("all_day").IsRequired();
+        builder.Property(eventEntity => eventEntity.CalenderId)
+            .HasColumnType("uuid")
+            .IsRequired();
 
-        builder.Property(events => events.Color).HasColumnName("color").IsRequired();
+        builder.Property(eventEntity => eventEntity.Title)
+            .HasColumnName("title")
+            .IsRequired();
 
-        builder.Property(events => events.TextColor).HasColumnName("text_color").IsRequired();
+        builder.Property(eventEntity => eventEntity.Description)
+            .HasColumnName("description"); 
 
-        builder.Property(events => events.ReserverdByUnitId).HasColumnName("reserved_by_unit_id").IsRequired();
+        builder.Property(eventEntity => eventEntity.EventTypeId)
+            .HasColumnName("event_type_id") 
+            .IsRequired();
 
-        builder.Property(events => events.ReservationDate).HasColumnName("reservation_date").IsRequired();
+        builder.Property(eventEntity => eventEntity.StartTime)
+            .HasColumnName("start_time")
+            .IsRequired();
 
-        builder.Property(events => events.Start).HasColumnName("start").IsRequired();
+        builder.Property(eventEntity => eventEntity.EndTime)
+            .HasColumnName("end_time")
+            .IsRequired();
 
-        builder.Property(events => events.End).HasColumnName("end").IsRequired();
+        builder.Property(eventEntity => eventEntity.IsRecurring)
+            .HasColumnName("is_recurring")
+            .IsRequired();
 
-        builder.Property(events => events.Pourpose).HasColumnName("purpose").IsRequired();
+        builder.Property(eventEntity => eventEntity.RecurrenceRuleId)
+            .HasColumnName("recurrence_rule_id"); 
 
-        builder.Property(events => events.StatusId).HasColumnName("status_id").IsRequired();
+        builder.Property(eventEntity => eventEntity.Color)
+            .HasColumnName("color");
 
-        builder.Property(events => events.BookingFacilitiesId).HasColumnName("booking_facilities_id").IsRequired();
+        builder.Property(eventEntity => eventEntity.TextColor)
+            .HasColumnName("text_color");
 
-        builder.Property(events => events.CompanyId).HasColumnName("company_id");
+        builder.Property(eventEntity => eventEntity.CreatedBy)
+            .HasColumnType("uuid")
+            .IsRequired();
 
-        builder.Property(events => events.CreatedBy).HasColumnType("uuid");
+        builder.Property(eventEntity => eventEntity.ModifiedBy)
+            .HasColumnType("uuid");
 
-        builder.Property(events => events.ModifiedBy).HasColumnType("uuid");
+        builder.Property(eventEntity => eventEntity.CreatedOnUtc)
+            .HasColumnType("timestamp")
+            .IsRequired();
 
-        builder.Property(events => events.CreatedOnUtc).HasColumnType("timestamp").IsRequired();
+        builder.Property(eventEntity => eventEntity.ModifiedOnUtc)
+            .HasColumnType("timestamp");
 
-        builder.Property(events => events.ModifiedOnUtc).HasColumnType("timestamp").IsRequired(false);
+        builder.Property(eventEntity => eventEntity.DeletedOnUtc)
+            .HasColumnType("timestamp"); 
 
-        builder.Property(events => events.DeletedOnUtc).HasColumnType("timestamp").IsRequired(false);
+        builder.Property(eventEntity => eventEntity.IsDeleted)
+            .HasDefaultValue(false)
+            .IsRequired();
 
-        builder.Property(events => events.IsDeleted).HasDefaultValue(false).IsRequired();
-
-        builder.HasQueryFilter(events => !events.IsDeleted);
+        builder.HasQueryFilter(eventEntity => !eventEntity.IsDeleted);
     }
 
     #endregion

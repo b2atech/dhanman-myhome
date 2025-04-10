@@ -3,7 +3,7 @@ using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.BookingFacilites;
 using Dhanman.MyHome.Domain;
-using Dhanman.MyHome.Domain.Entities.BookingFacilites;
+using Dhanman.MyHome.Domain.Entities.FacilityBookings;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dhanman.MyHome.Application.Features.BookingFacilities.Queries;
@@ -25,7 +25,7 @@ internal class GetAllBookingFacilitesQueryHandler : IQueryHandler<GetAllBookingF
               .Ensure(query => query != null, Errors.General.EntityNotFound)
               .Bind(async query =>
               {
-                  var residents = await _dbContext.SetInt<BookingFacilitie>()
+                  var residents = await _dbContext.SetInt<FacilityBooking>()
                   .AsNoTracking()
                   .Select(e => new BookingFacilitesResponse(
                           e.Id,
