@@ -27,20 +27,21 @@ public class GetAllEventsQueryHandler : IQueryHandler<GetAllEventsQuery, Result<
               {
                   var residents = await _dbContext.Set<Event>()
                   .AsNoTracking()
-                  .Where(e => e.BookingFacilitiesId == query.BookingFacilitiesId && e.CompanyId == query.CompanyId)
-                  .Select(e => new EventResponse(
-                          e.Id,
-                          e.Title,
-                          e.Description,
-                          e.AllDay,
-                          e.Color,
-                          e.TextColor,
-                          e.ReserverdByUnitId,
-                          e.ReservationDate,
-                          e.Start,
-                          e.End,
-                          e.Pourpose,
-                          e.StatusId))
+                  .Where(e => e.CompanyId == query.CompanyId)
+                  .Select(e=> new EventResponse())
+                  //.Select(e => new EventResponse(
+                  //        e.Id,
+                  //        e.Title,
+                  //        e.Description,
+                  //        e.AllDay,
+                  //        e.Color,
+                  //        e.TextColor,
+                  //        e.ReserverdByUnitId,
+                  //        e.ReservationDate,
+                  //        e.Start,
+                  //        e.End,
+                  //        e.Pourpose,
+                  //        e.StatusId))
                   .ToListAsync(cancellationToken);
 
                   var listResponse = new EventListResponse(residents);

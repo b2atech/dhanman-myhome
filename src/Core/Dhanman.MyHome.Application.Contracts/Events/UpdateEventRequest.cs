@@ -1,8 +1,9 @@
-﻿namespace Dhanman.MyHome.Application.Contracts.Residents;
+﻿namespace Dhanman.MyHome.Application.Contracts.Events;
 
-public class CreateEventRequest
+public class UpdateEventRequest
 {
     #region Properties    
+    public Guid Id { get; set; }
     public Guid CompanyId { get; set; }
     public Guid CalendarId { get; set; }
     public string Title { get; set; }
@@ -14,10 +15,9 @@ public class CreateEventRequest
     public int RecurrenceRuleId { get; set; }
     public string Color { get; set; }
     public string TextColor { get; set; }
-
     #endregion
 
     #region Constructors
-    public CreateEventRequest() => Title = string.Empty;
+    public UpdateEventRequest() => Title = string.Empty;
     #endregion
 }

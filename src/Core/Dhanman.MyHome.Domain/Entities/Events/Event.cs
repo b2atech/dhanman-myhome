@@ -5,43 +5,45 @@ namespace Dhanman.MyHome.Domain.Entities.Events;
 
 public class Event : Entity, IAuditableEntity, ISoftDeletableEntity
 {
-    public Guid Id { get; set; }
+    #region Properties
+    public Guid CompanyId { get; set; }
+    public Guid CalenderId { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
-    public bool AllDay { get; set; }
+    public int EventTypeId { get; set; }
+    public DateTime StartTime { get; set; }
+    public DateTime EndTime { get; set; }
+    public bool IsRecurring { get; set; }
+    public int RecurrenceRuleId { get; set; }
     public string Color { get; set; }
     public string TextColor { get; set; }
-    public int ReserverdByUnitId { get; set; }
-    public DateTime ReservationDate { get; set; }
-    public string Start { get; set; }
-    public string End { get; set; }
-    public string Pourpose { get; set; }
-    public int StatusId { get; set; }
-    public int BookingFacilitiesId { get; set; }
-    public Guid CompanyId { get; set; }
     public DateTime CreatedOnUtc { get; }
     public DateTime? ModifiedOnUtc { get; set; }
     public DateTime? DeletedOnUtc { get; }
     public bool IsDeleted { get; }
     public Guid CreatedBy { get; protected set; }
     public Guid? ModifiedBy { get; protected set; }
+    #endregion
 
-    public Event(Guid id, string title, string description, bool allDay, string color, string textColor, int reserverdByUnitId, DateTime reservationDate, string start, string end, string pourpose, int statusId, int bookingFacilitiesId)
+    #region Constructor
+    public Event()
+    {
+        
+    }
+    public Event(Guid id, Guid companyId, Guid calenderId, string title, string description, int eventTypeId, DateTime startTime, DateTime endTime, bool isRecurring, int recurrenceRuleId, string color, string textColor)
     {
         Id = id;
+        CompanyId = companyId;
+        CalenderId = calenderId;
         Title = title;
         Description = description;
-        AllDay = allDay;
+        EventTypeId = eventTypeId;
+        StartTime = startTime;
+        EndTime = endTime;
+        IsRecurring = isRecurring;
+        RecurrenceRuleId = recurrenceRuleId;
         Color = color;
         TextColor = textColor;
-        ReserverdByUnitId = reserverdByUnitId;
-        ReservationDate = reservationDate;
-        Start = start;
-        End = end;
-        Pourpose = pourpose;
-        StatusId = statusId;
-        BookingFacilitiesId = bookingFacilitiesId;
-
     }
-
+    #endregion
 }

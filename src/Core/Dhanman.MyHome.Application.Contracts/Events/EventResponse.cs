@@ -1,39 +1,51 @@
-﻿namespace Dhanman.MyHome.Application.Contracts.Events;
+﻿using Dhanman.MyHome.Application.Contracts.Common;
 
-public class EventResponse
+namespace Dhanman.MyHome.Application.Contracts.Events;
+
+public class EventResponse : AuditableEntity
 {
-    public Guid Id { get; }
-    public string Title { get; }
-    public string Description { get; }
-    public bool AllDay { get; }
-    public string Color { get; }
-    public string TextColor { get; }
-    public int ReservationByUnitId { get; }
-    public DateTime ReservationDate { get; }
-    public string Start { get; }
-    public string End { get; }
-    public string Pourpose { get; }
-    public int StatusId { get; }
-    public DateTime CreatedOnUtc { get; }
-    public DateTime? ModifiedOnUtc { get; }
-    public DateTime? DeletedOnUtc { get; }
-    public bool IsDeleted { get; }
-    public Guid CreatedBy { get; }
-    public Guid? ModifiedBy { get; }
+    #region Propertries
+    public Guid Id { get; set; }
+    public Guid CompanyId { get; set; }
+    public Guid CalendarId { get; set; }
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public int EventTypeId { get; set; }
+    public DateTime StartTime { get; set; }
+    public DateTime EndTime { get; set; }
+    public bool IsRecurring { get; set; }
+    public string RecurrenceRule { get; set; }
+    public string Color { get; set; }
+    public string TextColor { get; set; }
+    #endregion
 
-    public EventResponse(Guid id, string title, string description, bool allDay, string color, string textColor, int unitId, DateTime reservationDate, string start, string end, string pourpose, int statusId)
+    #region Constructors
+    public EventResponse() { }
+
+    public EventResponse(Guid id, Guid companyId, Guid calendarId, string title, string description, int eventTypeId, DateTime startTime, DateTime endTime, bool isRecurring, string recurrenceRule, string color, string textColor, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy)
+        : this(id, companyId, calendarId, title, description, eventTypeId, startTime, endTime, isRecurring, recurrenceRule, color, textColor)
+    {
+        CreatedBy = createdBy;
+        ModifiedBy = modifiedBy;
+        CreatedOnUtc = createdOnUtc;
+        ModifiedOnUtc = modifiedOnUtc;
+    }
+
+    public EventResponse(Guid id, Guid companyId, Guid calendarId, string title, string description, int eventTypeId, DateTime startTime, DateTime endTime, bool isRecurring, string recurrenceRule, string color, string textColor)
     {
         Id = id;
+        CompanyId = companyId;
+        CalendarId = calendarId;
         Title = title;
         Description = description;
-        AllDay = allDay;
+        EventTypeId = eventTypeId;
+        StartTime = startTime;
+        EndTime = endTime;
+        IsRecurring = isRecurring;
+        RecurrenceRule = recurrenceRule;
         Color = color;
         TextColor = textColor;
-        ReservationByUnitId = unitId;
-        ReservationDate = reservationDate;
-        Start = start;
-        End = end;
-        Pourpose = pourpose;
-        StatusId = statusId;        
     }
+
+    #endregion
 }

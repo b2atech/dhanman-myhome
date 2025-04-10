@@ -145,6 +145,8 @@ public static class CacheKeys
         public const string EventList = CacheKeyPrefix + "-list-{1}";
 
         public const string EventById = CacheKeyPrefix + "-by-id-{1}";
+
+        public const string CalenderEvents = CacheKeyPrefix + "-by-id-{1}";
     }
     #endregion
 
