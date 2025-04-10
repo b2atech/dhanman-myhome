@@ -67,4 +67,5 @@ public class UpdateEventCommandHandler : ICommandHandler<UpdateEventCommand, Res
     }
 
     #endregion
+
 }
