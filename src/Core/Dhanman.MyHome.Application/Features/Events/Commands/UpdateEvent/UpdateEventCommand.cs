@@ -2,9 +2,8 @@
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Common;
 
-namespace Dhanman.MyHome.Application.Features.Events.Commands.CreateEvent;
-
-public class CreateEventCommand : ICommand<Result<EntityCreatedResponse>>
+namespace Dhanman.MyHome.Application.Features.Events.Commands.UpdateEvent;
+public class UpdateEventCommand : ICommand<Result<EntityUpdatedResponse>>
 {
     #region Properties
     public Guid Id { get; set; }
@@ -22,7 +21,7 @@ public class CreateEventCommand : ICommand<Result<EntityCreatedResponse>>
     #endregion
 
     #region Constructors
-    public CreateEventCommand(Guid id, Guid companyId, Guid calendarId, string title, string description, int eventTypeId, DateTime startTime, DateTime endTime, bool isRecurring, int recurrenceRuleId, string color, string textColor)
+    public UpdateEventCommand(Guid id, Guid companyId, Guid calendarId, string title, string description, int eventTypeId, DateTime startTime, DateTime endTime, bool isRecurring, int recurrenceRuleId, string color, string textColor)
     {
         Id = id;
         CompanyId = companyId;

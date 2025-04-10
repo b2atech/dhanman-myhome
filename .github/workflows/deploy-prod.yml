@@ -11,6 +11,8 @@ jobs:
 
     env:
       DOTNET_ENVIRONMENT: production
+      ConnectionStrings__CommunityDb: ${{ secrets.COMMUNITY_DB_CONNECTION }}
+      ConnectionStrings__PermissionsDb: ${{ secrets.PERMISSIONS_DB_CONNECTION }}
       DO_HOST: ${{ secrets.DO_HOST }}
       DO_USER: ${{ secrets.DO_USER }}
       DO_SSH_KEY: ${{ secrets.DO_SSH_KEY }}

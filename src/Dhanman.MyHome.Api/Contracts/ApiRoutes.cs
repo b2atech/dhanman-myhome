@@ -188,8 +188,11 @@ public static class ApiRoutes
     public static class Events
     {
         public const string GetAllEvents = apiVersion + "companies/{companyId:guid}/booking-facilities/{bookingFacilitiesId:int}/events";
-
-        public const string CreateEvents = apiVersion + "events";
+        public const string GetEvent = apiVersion + "events/{id:guid}";
+        public const string CreateEvent = apiVersion + "events";
+        public const string UpdateEvent = apiVersion + "events";
+        public const string DeleteEvent = apiVersion + "events/{id:guid}";
+        public const string GetCalendarEvents = apiVersion + "calendars/{calendarId:guid}/events";
     }
 
     public static class BokkingFacilities

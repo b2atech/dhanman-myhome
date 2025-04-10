@@ -11,9 +11,12 @@ jobs:
     environment: qa
 
     env:
+      DOTNET_ENVIRONMENT: qa
       ConnectionStrings__CommunityDb: ${{ secrets.COMMUNITY_DB_CONNECTION }}
       ConnectionStrings__PermissionsDb: ${{ secrets.PERMISSIONS_DB_CONNECTION }}
-      DOTNET_ENVIRONMENT: qa
+      DO_HOST: ${{ secrets.DO_HOST }}
+      DO_USER: ${{ secrets.DO_USER }}
+      DO_SSH_KEY: ${{ secrets.DO_SSH_KEY }}
 
     steps:
       - name: Checkout

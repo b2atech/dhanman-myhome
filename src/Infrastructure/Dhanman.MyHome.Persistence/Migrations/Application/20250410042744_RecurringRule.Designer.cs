@@ -3,6 +3,7 @@ using System;
 using Dhanman.MyHome.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dhanman.MyHome.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250410042744_RecurringRule")]
+    partial class RecurringRule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3268,10 +3271,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CompanyName")
-                        .HasColumnType("text")
-                        .HasColumnName("company_name");
-
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("uuid")
                         .HasColumnName("created_by");
@@ -3315,10 +3314,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("date")
                         .HasColumnName("start_date");
-
-                    b.Property<string>("VehicleNumber")
-                        .HasColumnType("text")
-                        .HasColumnName("vehicle_number");
 
                     b.Property<int>("VisitTypeId")
                         .HasColumnType("integer")
@@ -3695,59 +3690,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasName("pk_visitor_unit_logs");
 
                     b.ToTable("visitor_unit_logs", (string)null);
-                });
-
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.VisitorVehicles.VisitorVehicles", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uuid")
-                        .HasColumnName("created_by");
-
-                    b.Property<DateTime>("CreatedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("created_on_utc");
-
-                    b.Property<DateTime?>("DeletedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("deleted_on_utc");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("is_deleted");
-
-                    b.Property<Guid?>("ModifiedBy")
-                        .HasColumnType("uuid")
-                        .HasColumnName("modified_by");
-
-                    b.Property<DateTime?>("ModifiedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("modified_on_utc");
-
-                    b.Property<string>("VehicleNumber")
-                        .HasColumnType("text")
-                        .HasColumnName("vehicle_number");
-
-                    b.Property<string>("VehicleType")
-                        .HasColumnType("text")
-                        .HasColumnName("vehicle_type");
-
-                    b.Property<int>("VisitorLogId")
-                        .HasColumnType("integer")
-                        .HasColumnName("visitor_log_id");
-
-                    b.HasKey("Id")
-                        .HasName("pk_visitor_vehicles");
-
-                    b.ToTable("visitor_vehicles", (string)null);
                 });
 
             modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Visitors.Visitor", b =>
