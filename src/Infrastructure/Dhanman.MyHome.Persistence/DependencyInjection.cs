@@ -22,16 +22,20 @@ public static class DependencyInjection
         
         if (configuration != null)
         {
-            string key = ConnectionString.SettingsKey;
-            string connectionString = configuration.GetConnectionString(key);
+            var connectionString = Environment.GetEnvironmentVariable(ConnectionString.SettingsKey)
+                     ?? configuration.GetConnectionString(ConnectionString.SettingsKey);
 
-            if (string.IsNullOrWhiteSpace(connectionString))
-            {
-                Console.WriteLine($"[ERROR] Connection string for key '{key}' is missing.");
-                Console.WriteLine($"[DEBUG] DOTNET_ENVIRONMENT: {configuration["DOTNET_ENVIRONMENT"]}");
-                Console.WriteLine($"[DEBUG] Raw config value: {configuration["ConnectionStrings:" + key]}");
-                throw new Exception($"Missing or empty connection string: '{key}'");
-            }
+
+            //string key = ConnectionString.SettingsKey;
+            // string connectionString = configuration.GetConnectionString(key);
+
+            //if (string.IsNullOrWhiteSpace(connectionString))
+            //{
+            //    Console.WriteLine($"[ERROR] Connection string for key '{key}' is missing.");
+            //    Console.WriteLine($"[DEBUG] DOTNET_ENVIRONMENT: {configuration["DOTNET_ENVIRONMENT"]}");
+            //    Console.WriteLine($"[DEBUG] Raw config value: {configuration["ConnectionStrings:" + key]}");
+            //    throw new Exception($"Missing or empty connection string: '{key}'");
+            //}
 
             services.AddSingleton(new ConnectionString(connectionString));
 
