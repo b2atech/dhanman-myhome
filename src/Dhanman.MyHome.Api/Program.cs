@@ -132,7 +132,7 @@ var app = builder.Build();
         c.OAuthUsePkce();
     });
 }
-
+app.MapHealthChecks("/health");
 // Configure middleware
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 app.UseResponseCompression();
