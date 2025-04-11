@@ -15,7 +15,8 @@ public static class AuthorizationExtensions
     {
         if (configuration != null)
         {
-            string connectionString = configuration.GetConnectionString(ConnectionString.PermissionDBKey);
+            var connectionString = Environment.GetEnvironmentVariable(ConnectionString.PermissionDBKey)
+                     ?? configuration.GetConnectionString(ConnectionString.PermissionDBKey);
 
             if (connectionString.Length > 0)
             {
