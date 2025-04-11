@@ -46,6 +46,7 @@ builder.Services.AddAuthentication(builder.Configuration, "");
 builder.Services.AddCustomAuthorization();
 builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddTemplateService(builder.Configuration, builder.Configuration["ConnectionStrings:CommonDb"]);
+builder.Services.AddHealthChecks();
 
 
 builder.Services.AddApiVersioning(config =>
