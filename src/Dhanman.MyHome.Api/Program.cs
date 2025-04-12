@@ -46,6 +46,7 @@ builder.Services.AddAuthentication(builder.Configuration, "");
 builder.Services.AddCustomAuthorization();
 builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddTemplateService(builder.Configuration, builder.Configuration["ConnectionStrings:CommonDb"]);
+builder.Services.AddHealthChecks();
 
 
 builder.Services.AddApiVersioning(config =>
@@ -131,7 +132,7 @@ var app = builder.Build();
         c.OAuthUsePkce();
     });
 }
-
+app.MapHealthChecks("/health");
 // Configure middleware
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 app.UseResponseCompression();
