@@ -180,9 +180,12 @@ public static class ApiRoutes
         public const string UpdateVisitor = apiVersion + "visitor";
 
         public const string CreateVisitorApproval = apiVersion + "visitor-approval";
+
         public const string CreateVisitorPending = apiVersion + "visitor-pending";
 
         public const string GetVisitorApprovalInfoById = apiVersion + "visitor-approval/{visitorApprovalId:int}";
+
+        public const string UpdateVisitorApproval = apiVersion + "visitor-approval";
     }
 
     public static class Events

@@ -7,6 +7,7 @@ using Dhanman.MyHome.Application.Contracts.VisitorApprovals;
 using Dhanman.MyHome.Application.Contracts.VisitorLogs;
 using Dhanman.MyHome.Application.Contracts.Visitors;
 using Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.CreateVisitorApproval;
+using Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.UpdateVisitorApproval;
 using Dhanman.MyHome.Application.Features.VisitorApprovals.Queries;
 using Dhanman.MyHome.Application.Features.VisitorLogs.Commands.ApproveVisitorLog;
 using Dhanman.MyHome.Application.Features.VisitorLogs.Commands.CreateVisitorLog;
@@ -302,5 +303,33 @@ public class VisitorsController : ApiController
     await Result.Success(new GetVisitorApprovalInfoByIdQuery(visitorApprovalId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
+
+    [HttpPut(ApiRoutes.Visitors.UpdateVisitorApproval)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateVisitorApproval([FromBody] UpadateVisitorApproveRequest? request)
+    {
+        var result = await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new UpdateVisitorApproveCommand(
+                 value.Id,
+                 value.VisitTypeId,
+                 value.StartDate,
+                 value.EndDate,
+                 value.EntryTime,
+                 value.ExitTime,
+                 value.VehicleNumber,
+                 value.CompanyName,
+                 value.CreatedBy
+                ))
+            .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
     #endregion
 }
