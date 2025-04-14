@@ -6,13 +6,11 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: prod
 
     env:
       DOTNET_ENVIRONMENT: production
-      ConnectionStrings__CommunityDb: ${{ secrets.COMMUNITY_DB_CONNECTION }}
-      ConnectionStrings__PermissionsDb: ${{ secrets.PERMISSIONS_DB_CONNECTION }}
+      ConnectionStrings__CommunityDb: ${{ secrets.CONNECTIONSTRINGS__COMMUNITYDB_PROD }}
+      ConnectionStrings__PermissionsDb: ${{ secrets.CONNECTIONSTRINGS__PERMISSIONSDB_PROD }}
       DO_HOST: ${{ secrets.DO_HOST }}
       DO_USER: ${{ secrets.DO_USER }}
       DO_SSH_KEY: ${{ secrets.DO_SSH_KEY }}
@@ -32,9 +30,9 @@ jobs:
       - name: Upload to PROD
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: ${{ env.DO_HOST }}
-          username: ${{ env.DO_USER }}
-          key: ${{ env.DO_SSH_KEY }}
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USER }}
+          key: ${{ secrets.DO_SSH_KEY }}
           source: "publish/*"
           target: "/var/www/prod/dhanman-community"
           strip_components: 1
@@ -42,11 +40,12 @@ jobs:
       - name: Restart PROD Service
         uses: appleboy/ssh-action@v0.1.10
         with:
-          host: ${{ env.DO_HOST }}
-          username: ${{ env.DO_USER }}
-          key: ${{ env.DO_SSH_KEY }}
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USER }}
+          key: ${{ secrets.DO_SSH_KEY }}
           script: |
-            export ConnectionStrings__CommunityDb="${{ secrets.COMMUNITY_DB_CONNECTION }}"
-            export ConnectionStrings__PermissionsDb="${{ secrets.PERMISSIONS_DB_CONNECTION }}"
+            export ConnectionStrings__CommunityDb="${{ secrets.CONNECTIONSTRINGS__COMMUNITYDB_PROD }}"
+            export ConnectionStrings__PermissionsDb="${{ secrets.CONNECTIONSTRINGS__PERMISSIONSDB_PROD }}"
             export DOTNET_ENVIRONMENT=production
             sudo systemctl restart dhanman-community-prod
+            sudo systemctl status dhanman-community-prod --no-pager
