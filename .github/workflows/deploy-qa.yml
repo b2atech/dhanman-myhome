@@ -8,12 +8,11 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: qa
 
     env:
       DOTNET_ENVIRONMENT: qa
-      ConnectionStrings__CommunityDb: ${{ secrets.COMMUNITY_DB_CONNECTION }}
-      ConnectionStrings__PermissionsDb: ${{ secrets.PERMISSIONS_DB_CONNECTION }}
+      ConnectionStrings__CommunityDb: ${{ secrets.CONNECTIONSTRINGS__COMMUNITYDB_QA }}
+      ConnectionStrings__PermissionsDb: ${{ secrets.CONNECTIONSTRINGS__PERMISSIONSDB_QA }}
       DO_HOST: ${{ secrets.DO_HOST }}
       DO_USER: ${{ secrets.DO_USER }}
       DO_SSH_KEY: ${{ secrets.DO_SSH_KEY }}
@@ -48,8 +47,8 @@ jobs:
           username: ${{ secrets.DO_USER }}
           key: ${{ secrets.DO_SSH_KEY }}
           script: |
-            export ConnectionStrings__CommunityDb="${{ secrets.COMMUNITY_DB_CONNECTION }}"
-            export ConnectionStrings__PermissionsDb="${{ secrets.PERMISSIONS_DB_CONNECTION }}"
+            export ConnectionStrings__CommunityDb="${{ secrets.CONNECTIONSTRINGS__COMMUNITYDB_QA }}"
+            export ConnectionStrings__PermissionsDb="${{ secrets.CONNECTIONSTRINGS__PERMISSIONSDB_QA }}"
             export DOTNET_ENVIRONMENT=qa
             sudo systemctl restart dhanman-community-qa
             sudo systemctl status dhanman-community-qa --no-pager
