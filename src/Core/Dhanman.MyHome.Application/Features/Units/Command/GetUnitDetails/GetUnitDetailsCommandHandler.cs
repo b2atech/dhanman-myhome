@@ -47,7 +47,6 @@ public sealed class GetUnitDetailsCommandHandler : ICommandHandler<GetUnitDetail
                 e.Id,
                 e.Name,
                 e.CustomerId,
-                e.AccountId,
                 Convert.ToDecimal(e.Area),
                 Convert.ToDecimal(e.BHKType)
             ))
