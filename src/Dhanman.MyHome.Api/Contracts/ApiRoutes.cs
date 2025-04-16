@@ -373,4 +373,12 @@ public static class ApiRoutes
         public const string CreateMemberRequest = apiVersion + "member-request";
 
     }
+
+    public static class Permissions
+    {
+        public const string ClearAllPermissionsCache = apiVersion + "users/clear-all-permissions-cache";
+
+        public const string ClearUserPermissionsCache = apiVersion + "users/clear-user-permissions-cache/{userId}/{organizationId}";
+
+    }
 }
