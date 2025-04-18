@@ -44,7 +44,7 @@ public class GetEventByIdQueryHandler : IQueryHandler<GetEventByIdQuery, Result<
               });
     }
 
-    private string GetRecurringRule(int recurringRuleId)
+    private static string GetRecurringRule(int recurringRuleId)
     {
         switch (recurringRuleId)
         {
