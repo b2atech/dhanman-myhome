@@ -3,6 +3,7 @@ using System;
 using Dhanman.MyHome.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dhanman.MyHome.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250418114452_communityCalenderTable1")]
+    partial class communityCalenderTable1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,8 +151,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("text")
                         .HasColumnName("address_line2");
 
-                    b.Property<Guid?>("CityId")
-                        .IsRequired()
+                    b.Property<Guid>("CityId")
                         .HasColumnType("uuid")
                         .HasColumnName("city_id");
 
@@ -978,6 +980,11 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("calender_id");
 
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("color");
+
                     b.Property<Guid>("CompanyId")
                         .HasColumnType("uuid")
                         .HasColumnName("company_id");
@@ -1196,8 +1203,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("apartment_id");
 
-                    b.Property<int?>("BuildingId")
-                        .IsRequired()
+                    b.Property<int>("BuildingId")
                         .HasColumnType("integer")
                         .HasColumnName("building_id");
 
@@ -2112,8 +2118,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("entry_time");
 
-                    b.Property<DateTime?>("ExitTime")
-                        .IsRequired()
+                    b.Property<DateTime>("ExitTime")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("exit_time");
 
@@ -2135,8 +2140,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("service_provider_id");
 
-                    b.Property<int?>("VisitPurposeId")
-                        .IsRequired()
+                    b.Property<int>("VisitPurposeId")
                         .HasColumnType("integer")
                         .HasColumnName("visit_purpose_id");
 
@@ -3321,8 +3325,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("timestamp")
                         .HasColumnName("deleted_on_utc");
 
-                    b.Property<DateOnly?>("EndDate")
-                        .IsRequired()
+                    b.Property<DateOnly>("EndDate")
                         .HasColumnType("date")
                         .HasColumnName("end_date");
 
@@ -3348,8 +3351,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("timestamp")
                         .HasColumnName("modified_on_utc");
 
-                    b.Property<DateOnly?>("StartDate")
-                        .IsRequired()
+                    b.Property<DateOnly>("StartDate")
                         .HasColumnType("date")
                         .HasColumnName("start_date");
 
@@ -3628,8 +3630,7 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("visitor_status_id");
 
-                    b.Property<int?>("VisitorTypeId")
-                        .IsRequired()
+                    b.Property<int>("VisitorTypeId")
                         .HasColumnType("integer")
                         .HasColumnName("visitor_type_id");
 
