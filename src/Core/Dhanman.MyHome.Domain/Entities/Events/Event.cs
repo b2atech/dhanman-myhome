@@ -7,7 +7,7 @@ public class Event : Entity, IAuditableEntity, ISoftDeletableEntity
 {
     #region Properties
     public Guid CompanyId { get; set; }
-    public Guid CalenderId { get; set; }
+    public int CommunityCalenderId { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
     public DateTime StartTime { get; set; }
@@ -27,11 +27,11 @@ public class Event : Entity, IAuditableEntity, ISoftDeletableEntity
     {
         
     }
-    public Event(Guid id, Guid companyId, Guid calenderId, string title, string description, DateTime startTime, DateTime endTime, bool isRecurring, int recurrenceRuleId)
+    public Event(Guid id, Guid companyId, int communityCalenderId, string title, string description, DateTime startTime, DateTime endTime, bool isRecurring, int recurrenceRuleId)
     {
         Id = id;
         CompanyId = companyId;
-        CalenderId = calenderId;
+        CommunityCalenderId = communityCalenderId;
         Title = title;
         Description = description;
         StartTime = startTime;

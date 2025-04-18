@@ -195,7 +195,7 @@ public static class ApiRoutes
         public const string CreateEvent = apiVersion + "events";
         public const string UpdateEvent = apiVersion + "events";
         public const string DeleteEvent = apiVersion + "events/{id:guid}";
-        public const string GetCalendarEvents = apiVersion + "calendars/{calendarId:guid}/events";
+        public const string GetCalendarEvents = apiVersion + "calendars/{communityCalenderId:int}/events";
     }
 
     public static class BokkingFacilities

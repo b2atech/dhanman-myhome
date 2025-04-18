@@ -19,8 +19,8 @@ internal sealed class EventsConfiguration : IEntityTypeConfiguration<Event>
             .HasColumnType("uuid") 
             .IsRequired();
 
-        builder.Property(eventEntity => eventEntity.CalenderId)
-            .HasColumnType("uuid")
+        builder.Property(eventEntity => eventEntity.CommunityCalenderId)
+            .HasColumnName("community_calender_id")
             .IsRequired();
 
         builder.Property(eventEntity => eventEntity.Title)

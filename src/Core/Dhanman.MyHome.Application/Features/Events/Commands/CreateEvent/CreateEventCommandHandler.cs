@@ -33,7 +33,7 @@ public class CreateEventCommandHandler : ICommandHandler<CreateEventCommand, Res
         var eventEntity = new Event(
                 request.Id,
                 request.CompanyId,
-                request.CalendarId,
+                request.CommunityCalenderId,
                 request.Title,
                 request.Description,
                 request.StartTime,
@@ -121,7 +121,7 @@ public class CreateEventCommandHandler : ICommandHandler<CreateEventCommand, Res
         var recurringEvent = new Event(
             Guid.NewGuid(),
             request.CompanyId,
-            request.CalendarId,
+            request.CommunityCalenderId,
             request.Title,
             request.Description,
             startDate,

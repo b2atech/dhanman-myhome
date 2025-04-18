@@ -5,6 +5,7 @@ using Dhanman.MyHome.Application.Contracts.Events;
 using Dhanman.MyHome.Domain;
 using Dhanman.MyHome.Domain.Entities.Events;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Dhanman.MyHome.Application.Features.Events.Queries;
 
@@ -30,7 +31,7 @@ public class GetCalendarEventsQueryHandler : IQueryHandler<GetCalendarEventsQuer
             {
                 var eventsQuery = _dbContext.Set<Event>()
                     .AsNoTracking()
-                    .Where(e => e.CalenderId == request.CalendarId);
+                    .Where(e => e.CommunityCalenderId == request.CommunityCalenderId);
 
                 switch (request.View.ToLower())
                 {
@@ -69,7 +70,7 @@ public class GetCalendarEventsQueryHandler : IQueryHandler<GetCalendarEventsQuer
                     .Select(e => new EventResponse(
                         e.Id,
                         e.CompanyId,
-                        e.CalenderId,
+                        e.CommunityCalenderId,
                         e.Title,
                         e.Description,
                         e.StartTime,
@@ -85,7 +86,7 @@ public class GetCalendarEventsQueryHandler : IQueryHandler<GetCalendarEventsQuer
     #endregion
 
     #region Helper Method to Get Recurrence Rule
-    private string GetRecurringRule(int recurringRuleId)
+    private static string GetRecurringRule(int recurringRuleId)
     {
         switch (recurringRuleId)
         {
