@@ -36,13 +36,10 @@ public class UpdateEventCommandHandler : ICommandHandler<UpdateEventCommand, Res
                 request.CalendarId,
                 request.Title,
                 request.Description,
-                request.EventTypeId,
                 request.StartTime,
                 request.EndTime,
                 request.IsRecurring,
-                request.RecurrenceRuleId,
-                request.Color,
-                request.TextColor
+                request.RecurrenceRuleId
             );
             _eventRepository.Insert(existingEvent);
         }
@@ -51,13 +48,10 @@ public class UpdateEventCommandHandler : ICommandHandler<UpdateEventCommand, Res
             existingEvent.CalenderId = request.CalendarId;
             existingEvent.Title = request.Title;
             existingEvent.Description = request.Description;
-            existingEvent.EventTypeId = request.EventTypeId;
             existingEvent.StartTime = request.StartTime;
             existingEvent.EndTime = request.EndTime;
             existingEvent.IsRecurring = request.IsRecurring;
             existingEvent.RecurrenceRuleId = request.RecurrenceRuleId;
-            existingEvent.Color = request.Color;
-            existingEvent.TextColor = request.TextColor;
 
             _eventRepository.Update(existingEvent);
         }

@@ -36,13 +36,10 @@ public class CreateEventCommandHandler : ICommandHandler<CreateEventCommand, Res
                 request.CalendarId,
                 request.Title,
                 request.Description,
-                request.EventTypeId,
                 request.StartTime,
                 request.EndTime,
                 request.IsRecurring,
-                request.RecurrenceRuleId,
-                request.Color,
-                request.TextColor
+                request.RecurrenceRuleId
         );
         _eventRepository.Insert(eventEntity);
 
@@ -127,13 +124,10 @@ public class CreateEventCommandHandler : ICommandHandler<CreateEventCommand, Res
             request.CalendarId,
             request.Title,
             request.Description,
-            request.EventTypeId,
             startDate,
             endDate,
             request.IsRecurring,
-            request.RecurrenceRuleId,
-            request.Color,
-            request.TextColor
+            request.RecurrenceRuleId
         );
 
         events.Add(recurringEvent);
