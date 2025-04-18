@@ -32,7 +32,7 @@ public class GetEventByIdQueryHandler : IQueryHandler<GetEventByIdQuery, Result<
                   .Select(e => new EventResponse(
                           e.Id,
                           e.CompanyId,
-                          e.CalenderId,
+                          e.CommunityCalenderId,
                           e.Title,
                           e.Description,
                           e.StartTime,

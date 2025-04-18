@@ -9,33 +9,27 @@ public class CreateEventCommand : ICommand<Result<EntityCreatedResponse>>
     #region Properties
     public Guid Id { get; set; }
     public Guid CompanyId { get; set; }
-    public Guid CalendarId { get; set; }
+    public int CommunityCalenderId { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
-    public int EventTypeId { get; set; }
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
     public bool IsRecurring { get; set; }
     public int RecurrenceRuleId { get; set; }
-    public string Color { get; set; }
-    public string TextColor { get; set; }
     #endregion
 
     #region Constructors
-    public CreateEventCommand(Guid id, Guid companyId, Guid calendarId, string title, string description, int eventTypeId, DateTime startTime, DateTime endTime, bool isRecurring, int recurrenceRuleId, string color, string textColor)
+    public CreateEventCommand(Guid id, Guid companyId, int communityCalenderId, string title, string description,  DateTime startTime, DateTime endTime, bool isRecurring, int recurrenceRuleId)
     {
         Id = id;
         CompanyId = companyId;
-        CalendarId = calendarId;
+        CommunityCalenderId = communityCalenderId;
         Title = title;
         Description = description;
-        EventTypeId = eventTypeId;
         StartTime = startTime;
         EndTime = endTime;
         IsRecurring = isRecurring;
         RecurrenceRuleId = recurrenceRuleId;
-        Color = color;
-        TextColor = textColor;
     }
     #endregion
 }

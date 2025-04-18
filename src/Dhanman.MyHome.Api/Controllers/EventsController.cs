@@ -50,16 +50,13 @@ public class EventsController : ApiController
            .Map(value => new CreateEventCommand(
                Guid.NewGuid(),
                value.CompanyId,
-               value.CalendarId,
+               value.CommunityCalenderId,
                value.Title,
                value.Description,
-               value.EventTypeId,
                value.StartTime,
                value.EndTime,
                value.IsRecurring,
-               value.RecurrenceRuleId,
-               value.Color,
-               value.TextColor
+               value.RecurrenceRuleId
                ))
             .Bind(command => Mediator.Send(command))
                   .Match(Ok, BadRequest);
@@ -72,16 +69,13 @@ public class EventsController : ApiController
            .Map(value => new UpdateEventCommand(
                value.Id,
                value.CompanyId,
-               value.CalendarId,
+               value.CommunityCalenderId,
                value.Title,
                value.Description,
-               value.EventTypeId,
                value.StartTime,
                value.EndTime,
                value.IsRecurring,
-               value.RecurrenceRuleId,
-               value.Color,
-               value.TextColor
+               value.RecurrenceRuleId
                ))
             .Bind(command => Mediator.Send(command))
                   .Match(Ok, BadRequest);
@@ -107,8 +101,8 @@ public class EventsController : ApiController
     [HttpGet(ApiRoutes.Events.GetCalendarEvents)]
     [ProducesResponseType(typeof(EventListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetCalenderEvent(Guid calendarId, [FromQuery] string view, [FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate) =>
-    await Result.Success(new GetCalendarEventsQuery(calendarId,view,startDate,endDate))
+    public async Task<IActionResult> GetCalenderEvent(int communityCalenderId, [FromQuery] string view, [FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate) =>
+    await Result.Success(new GetCalendarEventsQuery(communityCalenderId, view,startDate,endDate))
    .Bind(query => Mediator.Send(query))
    .Match(Ok, NotFound);
     #endregion
