@@ -30,10 +30,6 @@ internal sealed class EventsConfiguration : IEntityTypeConfiguration<Event>
         builder.Property(eventEntity => eventEntity.Description)
             .HasColumnName("description"); 
 
-        builder.Property(eventEntity => eventEntity.EventTypeId)
-            .HasColumnName("event_type_id") 
-            .IsRequired();
-
         builder.Property(eventEntity => eventEntity.StartTime)
             .HasColumnName("start_time")
             .IsRequired();
@@ -48,12 +44,6 @@ internal sealed class EventsConfiguration : IEntityTypeConfiguration<Event>
 
         builder.Property(eventEntity => eventEntity.RecurrenceRuleId)
             .HasColumnName("recurrence_rule_id"); 
-
-        builder.Property(eventEntity => eventEntity.Color)
-            .HasColumnName("color");
-
-        builder.Property(eventEntity => eventEntity.TextColor)
-            .HasColumnName("text_color");
 
         builder.Property(eventEntity => eventEntity.CreatedBy)
             .HasColumnType("uuid")

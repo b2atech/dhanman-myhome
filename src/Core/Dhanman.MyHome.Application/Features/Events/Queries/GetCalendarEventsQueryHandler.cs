@@ -72,13 +72,10 @@ public class GetCalendarEventsQueryHandler : IQueryHandler<GetCalendarEventsQuer
                         e.CalenderId,
                         e.Title,
                         e.Description,
-                        e.EventTypeId,
                         e.StartTime,
                         e.EndTime,
                         e.IsRecurring,
-                        GetRecurringRule(e.RecurrenceRuleId),
-                        e.Color,
-                        e.TextColor
+                        GetRecurringRule(e.RecurrenceRuleId)
                     ))
                     .ToListAsync(cancellationToken);
 
