@@ -153,5 +153,7 @@ internal static class TableNames
     internal const string EventParticipants = "event_participants";
 
     internal const string VisitorVehicles = "visitor_vehicles";
+
+    internal const string CommunityCalenders = "community_calenders";
 }
 
