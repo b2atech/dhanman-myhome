@@ -31,16 +31,17 @@ public class GetCalendarEventsQueryHandler : IQueryHandler<GetCalendarEventsQuer
             {
                 var eventsQuery = _dbContext.Set<Event>()
                     .AsNoTracking()
-                    .Where(e => e.CommunityCalenderId == request.CommunityCalenderId);
+                    .Where(e => request.CommunityCalenderIds.Contains(e.CommunityCalenderId));
 
                 switch (request.View.ToLower())
                 {
-                    case "month":
+
+                    case "day":
                         if (request.StartDate.HasValue)
                         {
-                            var startOfMonth = new DateTime(request.StartDate.Value.Year, request.StartDate.Value.Month, 1);
-                            var endOfMonth = startOfMonth.AddMonths(1).AddDays(-1);
-                            eventsQuery = eventsQuery.Where(e => e.StartTime >= startOfMonth && e.StartTime <= endOfMonth);
+                            var startOfDay = request.StartDate.Value.Date;
+                            var endOfDay = startOfDay.AddDays(1).AddSeconds(-1);
+                            eventsQuery = eventsQuery.Where(e => e.StartTime >= startOfDay && e.StartTime <= endOfDay);
                         }
                         break;
 
@@ -53,12 +54,12 @@ public class GetCalendarEventsQueryHandler : IQueryHandler<GetCalendarEventsQuer
                         }
                         break;
 
-                    case "day":
+                    case "month":
                         if (request.StartDate.HasValue)
                         {
-                            var startOfDay = request.StartDate.Value.Date;
-                            var endOfDay = startOfDay.AddDays(1).AddSeconds(-1);
-                            eventsQuery = eventsQuery.Where(e => e.StartTime >= startOfDay && e.StartTime <= endOfDay);
+                            var startOfMonth = new DateTime(request.StartDate.Value.Year, request.StartDate.Value.Month, 1);
+                            var endOfMonth = startOfMonth.AddMonths(1).AddDays(-1);
+                            eventsQuery = eventsQuery.Where(e => e.StartTime >= startOfMonth && e.StartTime <= endOfMonth);
                         }
                         break;
 

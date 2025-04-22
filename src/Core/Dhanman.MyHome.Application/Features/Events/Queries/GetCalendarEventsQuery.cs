@@ -8,16 +8,16 @@ namespace Dhanman.MyHome.Application.Features.Events.Queries;
 public class GetCalendarEventsQuery : ICacheableQuery<Result<EventListResponse>>
 {
     #region Properties
-    public int CommunityCalenderId { get; set; }
+    public List<int> CommunityCalenderIds { get; set; }
     public string View { get; set; }
     public DateTime? StartDate { get; set; }
     public DateTime? EndDate { get; set; }
     #endregion
 
     #region Constructor
-    public GetCalendarEventsQuery(int communityCalenderId, string view, DateTime? startDate, DateTime? endDate)
+    public GetCalendarEventsQuery(List<int> communityCalenderIds, string view, DateTime? startDate, DateTime? endDate)
     {
-        CommunityCalenderId = communityCalenderId;
+        CommunityCalenderIds = communityCalenderIds;
         View = view;
         StartDate = startDate;
         EndDate = endDate;
@@ -25,6 +25,6 @@ public class GetCalendarEventsQuery : ICacheableQuery<Result<EventListResponse>>
     #endregion
 
     #region Methods
-    public string GetCacheKey() => string.Format(CacheKeys.Events.EventList, "user", CommunityCalenderId);
+    public string GetCacheKey() => string.Format(CacheKeys.Events.EventList, "user", CommunityCalenderIds);
     #endregion
 }
