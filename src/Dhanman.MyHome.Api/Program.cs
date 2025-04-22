@@ -97,6 +97,13 @@ builder.Services.AddSwaggerGen(c =>
         Type = SecuritySchemeType.ApiKey,
         Scheme = "Bearer"
     });
+    c.AddSecurityDefinition("x-organization-id", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Name = "x-organization-id",
+        Type = SecuritySchemeType.ApiKey,
+        Description = "Organization ID header"
+    });
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -109,6 +116,17 @@ builder.Services.AddSwaggerGen(c =>
                 }
             },
             new string[] { }
+             },
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "x-organization-id"
+                }
+            },
+            Array.Empty<string>()
         }
     });
 });
