@@ -7,6 +7,7 @@ using Dhanman.MyHome.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Dhanman.MyHome.Persistence;
 
@@ -16,6 +17,8 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        var logger = services.BuildServiceProvider().GetRequiredService<ILogger<ApplicationDbContext>>();
+
         if (configuration == null)
             throw new Exception("Configuration is null in AddPersistence.");
 
@@ -45,7 +48,9 @@ public static class DependencyInjection
                     options
                         .UseNpgsql(connectionString)
                         .UseSnakeCaseNamingConvention()
-                        .EnableSensitiveDataLogging());
+                        .EnableSensitiveDataLogging()
+                    // Adapt ILogger to Action<string> for EF Core logging
+                    .LogTo(log => logger.LogInformation(log), LogLevel.Information)); // Use Action<string> here
             }
 
             services.AddTransient<IDateTime, MachineDateTime>();
