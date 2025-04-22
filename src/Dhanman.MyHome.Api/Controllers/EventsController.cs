@@ -30,7 +30,7 @@ public class EventsController : ApiController
     [ProducesResponseType(typeof(EventResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAllEventts(Guid companyId, int bookingFacilitiesId) =>
-    await Result.Success(new GetAllEventsQuery(companyId, bookingFacilitiesId))
+    await Result.Success(new GetAllEventsQuery(companyId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
