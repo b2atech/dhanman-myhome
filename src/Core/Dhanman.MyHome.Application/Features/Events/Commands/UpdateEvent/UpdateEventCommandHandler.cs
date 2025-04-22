@@ -39,7 +39,9 @@ public class UpdateEventCommandHandler : ICommandHandler<UpdateEventCommand, Res
                 request.StartTime,
                 request.EndTime,
                 request.IsRecurring,
-                request.RecurrenceRuleId
+                request.RecurrenceRule,
+                request.RecurrenceRuleId,
+                request.RecurrenceEndDate
             );
             _eventRepository.Insert(existingEvent);
         }
@@ -51,7 +53,9 @@ public class UpdateEventCommandHandler : ICommandHandler<UpdateEventCommand, Res
             existingEvent.StartTime = request.StartTime;
             existingEvent.EndTime = request.EndTime;
             existingEvent.IsRecurring = request.IsRecurring;
+            existingEvent.RecurrenceRule = request.RecurrenceRule;
             existingEvent.RecurrenceRuleId = request.RecurrenceRuleId;
+            existingEvent.RecurrenceEndDate = request.RecurrenceEndDate;
 
             _eventRepository.Update(existingEvent);
         }

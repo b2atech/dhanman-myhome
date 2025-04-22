@@ -56,7 +56,9 @@ public class EventsController : ApiController
                value.StartTime,
                value.EndTime,
                value.IsRecurring,
-               value.RecurrenceRuleId
+               value.RecurrenceRule,
+               value.RecurrenceRuleId,
+               value.RecurrenceEndDate
                ))
             .Bind(command => Mediator.Send(command))
                   .Match(Ok, BadRequest);
@@ -75,7 +77,9 @@ public class EventsController : ApiController
                value.StartTime,
                value.EndTime,
                value.IsRecurring,
-               value.RecurrenceRuleId
+               value.RecurrenceRule,
+               value.RecurrenceRuleId,
+               value.RecurrenceEndDate
                ))
             .Bind(command => Mediator.Send(command))
                   .Match(Ok, BadRequest);

@@ -42,8 +42,14 @@ internal sealed class EventsConfiguration : IEntityTypeConfiguration<Event>
             .HasColumnName("is_recurring")
             .IsRequired();
 
+        builder.Property(eventEntity => eventEntity.RecurrenceRule)
+           .HasColumnName("recurrence_rule").IsRequired(false);
+
         builder.Property(eventEntity => eventEntity.RecurrenceRuleId)
-            .HasColumnName("recurrence_rule_id"); 
+            .HasColumnName("recurrence_rule_id");
+
+        builder.Property(eventEntity => eventEntity.RecurrenceEndDate)
+            .HasColumnType("timestamp");
 
         builder.Property(eventEntity => eventEntity.CreatedBy)
             .HasColumnType("uuid")

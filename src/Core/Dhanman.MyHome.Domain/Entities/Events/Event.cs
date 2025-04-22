@@ -13,7 +13,9 @@ public class Event : Entity, IAuditableEntity, ISoftDeletableEntity
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
     public bool IsRecurring { get; set; }
+    public string RecurrenceRule { get; set; }
     public int RecurrenceRuleId { get; set; }
+    public DateTime RecurrenceEndDate { get; set; }
     public DateTime CreatedOnUtc { get; }
     public DateTime? ModifiedOnUtc { get; set; }
     public DateTime? DeletedOnUtc { get; }
@@ -27,7 +29,8 @@ public class Event : Entity, IAuditableEntity, ISoftDeletableEntity
     {
         
     }
-    public Event(Guid id, Guid companyId, int communityCalenderId, string title, string description, DateTime startTime, DateTime endTime, bool isRecurring, int recurrenceRuleId)
+
+    public Event( Guid id,Guid companyId, int communityCalenderId, string title, string description, DateTime startTime, DateTime endTime, bool isRecurring, string recurrenceRule, int recurrenceRuleId, DateTime recurrenceEndDate)
     {
         Id = id;
         CompanyId = companyId;
@@ -37,7 +40,9 @@ public class Event : Entity, IAuditableEntity, ISoftDeletableEntity
         StartTime = startTime;
         EndTime = endTime;
         IsRecurring = isRecurring;
+        RecurrenceRule = recurrenceRule;
         RecurrenceRuleId = recurrenceRuleId;
+        RecurrenceEndDate = recurrenceEndDate;
     }
     #endregion
 }

@@ -76,7 +76,9 @@ public class GetCalendarEventsQueryHandler : IQueryHandler<GetCalendarEventsQuer
                         e.StartTime,
                         e.EndTime,
                         e.IsRecurring,
-                        GetRecurringRule(e.RecurrenceRuleId)
+                        e.RecurrenceRule,
+                        e.RecurrenceRuleId,
+                        e.RecurrenceEndDate
                     ))
                     .ToListAsync(cancellationToken);
 
@@ -85,19 +87,5 @@ public class GetCalendarEventsQueryHandler : IQueryHandler<GetCalendarEventsQuer
     }
     #endregion
 
-    #region Helper Method to Get Recurrence Rule
-    private static string GetRecurringRule(int recurringRuleId)
-    {
-        switch (recurringRuleId)
-        {
-            case 0: return "DAILY";
-            case 1: return "WEEKLY";
-            case 2: return "MONTHLY";
-            case 3: return "QUARTERLY";
-            case 4: return "HALF_YEARLY";
-            case 5: return "YEARLY";
-            default: return "Invalid Recurrence Rule";
-        }
-    }
-    #endregion
+  
 }

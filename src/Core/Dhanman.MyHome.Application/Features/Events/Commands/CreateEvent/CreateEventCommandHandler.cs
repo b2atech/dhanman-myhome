@@ -1,7 +1,6 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
-using Dhanman.MyHome.Application.Constants.Enums;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Features.Events.Events;
 using Dhanman.MyHome.Domain.Abstractions;
@@ -39,98 +38,15 @@ public class CreateEventCommandHandler : ICommandHandler<CreateEventCommand, Res
                 request.StartTime,
                 request.EndTime,
                 request.IsRecurring,
-                request.RecurrenceRuleId
+                request.RecurrenceRule,
+                request.RecurrenceRuleId,
+                request.RecurrenceEndDate
         );
-        _eventRepository.Insert(eventEntity);
 
-        if (request.IsRecurring)
-        {
-            var recurringEvents = GenerateRecurringEvents(request, eventEntity.Id, cancellationToken);
-            _dbContext.Set<Event>().AddRangeAsync(recurringEvents);
-        }
+        _eventRepository.Insert(eventEntity);
 
         await _mediator.Publish(new EventCreatedEvent(eventEntity.Id), cancellationToken);
         return Result.Success(new EntityCreatedResponse(eventEntity.Id));
-    }
-
-    #endregion
-
-    #region Helper Method to Generate Recurring Events
-    private List<Event> GenerateRecurringEvents(CreateEventCommand request, Guid eventId, CancellationToken cancellationToken)
-    {
-        List<Event> events = new List<Event>();
-        DateTime startDate = request.StartTime;
-        DateTime endDate = request.EndTime;
-
-        int numberOfOccurrences = request.RecurrenceRuleId switch
-        {
-            (int)RecurringRule.DAILY => 182,
-            (int)RecurringRule.WEEKLY => 26,
-            (int)RecurringRule.MONTHLY => 6,
-            (int)RecurringRule.QUARTERLY => 2,
-            _ => 0 
-        };
-
-        switch (request.RecurrenceRuleId)
-        {
-            case (int)RecurringRule.DAILY:
-                for (int i = 1; i <= numberOfOccurrences; i++)
-                {
-                    startDate = startDate.AddDays(1);  
-                    endDate = endDate.AddDays(1);
-                    AddRecurringEvent(events, request, startDate, endDate);
-                }
-            break;
-
-            case (int)RecurringRule.WEEKLY:
-                for (int i = 1; i <= numberOfOccurrences; i++)
-                {
-                    startDate = startDate.AddDays(7);
-                    endDate = endDate.AddDays(7);
-                    AddRecurringEvent(events, request, startDate, endDate);
-                }
-            break;
-
-            case (int)RecurringRule.MONTHLY:
-                for (int i = 1; i <= numberOfOccurrences; i++)
-                {
-                    startDate = startDate.AddMonths(1);
-                    endDate = endDate.AddMonths(1);
-                    AddRecurringEvent(events, request, startDate, endDate);
-                }
-            break;
-
-            case (int)RecurringRule.QUARTERLY:
-                for (int i = 1; i <= numberOfOccurrences; i++)
-                {
-                    startDate = startDate.AddMonths(3);
-                    endDate = endDate.AddMonths(3);
-                    AddRecurringEvent(events, request, startDate, endDate);
-                }
-            break;
-
-            default:
-                break;
-        }
-
-        return events;
-    }
-
-    private void AddRecurringEvent(List<Event> events, CreateEventCommand request, DateTime startDate, DateTime endDate)
-    {
-        var recurringEvent = new Event(
-            Guid.NewGuid(),
-            request.CompanyId,
-            request.CommunityCalenderId,
-            request.Title,
-            request.Description,
-            startDate,
-            endDate,
-            request.IsRecurring,
-            request.RecurrenceRuleId
-        );
-
-        events.Add(recurringEvent);
     }
 
     #endregion

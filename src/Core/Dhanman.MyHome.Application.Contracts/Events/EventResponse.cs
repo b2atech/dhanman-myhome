@@ -1,8 +1,6 @@
-﻿using Dhanman.MyHome.Application.Contracts.Common;
+﻿namespace Dhanman.MyHome.Application.Contracts.Events;
 
-namespace Dhanman.MyHome.Application.Contracts.Events;
-
-public class EventResponse : AuditableEntity
+public class EventResponse
 {
     #region Propertries
     public Guid Id { get; set; }
@@ -14,21 +12,15 @@ public class EventResponse : AuditableEntity
     public DateTime EndTime { get; set; }
     public bool IsRecurring { get; set; }
     public string RecurrenceRule { get; set; }
+    public int RecurrenceRuleId { get; set; }
+    public DateTime RecurrenceEndDate { get; set; }
+
     #endregion
 
     #region Constructors
     public EventResponse() { }
 
-    public EventResponse(Guid id, Guid companyId, int communityCalenderId, string title, string description, DateTime startTime, DateTime endTime, bool isRecurring, string recurrenceRule, DateTime createdOnUtc, DateTime? modifiedOnUtc, Guid createdBy, Guid? modifiedBy)
-        : this(id, companyId, communityCalenderId, title, description, startTime, endTime, isRecurring, recurrenceRule)
-    {
-        CreatedBy = createdBy;
-        ModifiedBy = modifiedBy;
-        CreatedOnUtc = createdOnUtc;
-        ModifiedOnUtc = modifiedOnUtc;
-    }
-
-    public EventResponse(Guid id, Guid companyId, int communityCalenderId, string title, string description, DateTime startTime, DateTime endTime, bool isRecurring, string recurrenceRule)
+    public EventResponse(Guid id, Guid companyId, int communityCalenderId, string title, string description, DateTime startTime, DateTime endTime, bool isRecurring, string recurrenceRule, int recurrenceRuleId, DateTime recurrenceEndDate)
     {
         Id = id;
         CompanyId = companyId;
@@ -39,7 +31,8 @@ public class EventResponse : AuditableEntity
         EndTime = endTime;
         IsRecurring = isRecurring;
         RecurrenceRule = recurrenceRule;
+        RecurrenceRuleId = recurrenceRuleId;
+        RecurrenceEndDate = recurrenceEndDate;
     }
-
     #endregion
 }
