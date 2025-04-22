@@ -190,7 +190,7 @@ public static class ApiRoutes
 
     public static class Events
     {
-        public const string GetAllEvents = apiVersion + "companies/{companyId:guid}/booking-facilities/{bookingFacilitiesId:int}/events";
+        public const string GetAllEvents = apiVersion + "companies/{companyId:guid}/events";
         public const string GetEvent = apiVersion + "events/{id:guid}";
         public const string CreateEvent = apiVersion + "events";
         public const string UpdateEvent = apiVersion + "events";
