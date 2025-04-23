@@ -106,8 +106,8 @@ public class EventsController : ApiController
     [HttpGet(ApiRoutes.Events.GetCalendarEvents)]
     [ProducesResponseType(typeof(EventListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetCalenderEvent([FromQuery] List<int> communityCalenderIds, [FromQuery] string view, [FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate) =>
-    await Result.Success(new GetCalendarEventsQuery(communityCalenderIds, view,startDate,endDate))
+    public async Task<IActionResult> GetCalenderEvent([FromQuery] List<int> communityCalenderIds,[FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate) =>
+    await Result.Success(new GetCalendarEventsQuery(communityCalenderIds,startDate,endDate))
    .Bind(query => Mediator.Send(query))
    .Match(Ok, NotFound);
     #endregion
@@ -122,6 +122,4 @@ public class EventsController : ApiController
     .Match(Ok, NotFound);
 
     #endregion
-
-
 }

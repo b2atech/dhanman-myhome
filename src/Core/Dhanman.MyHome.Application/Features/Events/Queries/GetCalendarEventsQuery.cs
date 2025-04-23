@@ -9,16 +9,15 @@ public class GetCalendarEventsQuery : ICacheableQuery<Result<EventListResponse>>
 {
     #region Properties
     public List<int> CommunityCalenderIds { get; set; }
-    public string View { get; set; }
     public DateTime? StartDate { get; set; }
     public DateTime? EndDate { get; set; }
     #endregion
 
     #region Constructor
-    public GetCalendarEventsQuery(List<int> communityCalenderIds, string view, DateTime? startDate, DateTime? endDate)
+    public GetCalendarEventsQuery(List<int> communityCalenderIds, DateTime? startDate, DateTime? endDate)
     {
         CommunityCalenderIds = communityCalenderIds;
-        View = view;
+
         StartDate = startDate;
         EndDate = endDate;
     }

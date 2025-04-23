@@ -33,40 +33,6 @@ public class GetCalendarEventsQueryHandler : IQueryHandler<GetCalendarEventsQuer
                     .AsNoTracking()
                     .Where(e => request.CommunityCalenderIds.Contains(e.CommunityCalenderId));
 
-                switch (request.View.ToLower())
-                {
-
-                    case "day":
-                        if (request.StartDate.HasValue)
-                        {
-                            var startOfDay = request.StartDate.Value.Date;
-                            var endOfDay = startOfDay.AddDays(1).AddSeconds(-1);
-                            eventsQuery = eventsQuery.Where(e => e.StartTime >= startOfDay && e.StartTime <= endOfDay);
-                        }
-                        break;
-
-                    case "week":
-                        if (request.StartDate.HasValue)
-                        {
-                            var startOfWeek = request.StartDate.Value.AddDays(-(int)request.StartDate.Value.DayOfWeek);
-                            var endOfWeek = startOfWeek.AddDays(7).AddDays(-1);
-                            eventsQuery = eventsQuery.Where(e => e.StartTime >= startOfWeek && e.StartTime <= endOfWeek);
-                        }
-                        break;
-
-                    case "month":
-                        if (request.StartDate.HasValue)
-                        {
-                            var startOfMonth = new DateTime(request.StartDate.Value.Year, request.StartDate.Value.Month, 1);
-                            var endOfMonth = startOfMonth.AddMonths(1).AddDays(-1);
-                            eventsQuery = eventsQuery.Where(e => e.StartTime >= startOfMonth && e.StartTime <= endOfMonth);
-                        }
-                        break;
-
-                    case "list":
-                        break;
-                }
-
                 var events = await eventsQuery
                     .Select(e => new EventResponse(
                         e.Id,
