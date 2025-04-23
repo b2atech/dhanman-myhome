@@ -330,5 +330,15 @@ public static class CacheKeys
 
         public const string MemberRequestById = CacheKeyPrefix + "-by-id-{1}";
     }
-    #endregion  
+    #endregion
+
+    #region CommunityCalenders
+    public static class CommunityCalenders
+    {
+        public const string CacheKeyPrefix = "communityCalenders-{0}";
+
+        public const string CommunityCalenderList = CacheKeyPrefix + "-list-{1}";
+
+    }
+    #endregion
 }

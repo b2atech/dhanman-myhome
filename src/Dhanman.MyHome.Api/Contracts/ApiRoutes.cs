@@ -27,6 +27,12 @@ public static class ApiRoutes
 
     }
 
+    public static class CommunityCalenders
+    {
+        public const string GetAllCommunityCalenderNames = apiVersion + "community-calenders";
+
+    }
+
     public static class Units
     {
         public const string CreateUnit = apiVersion + "unit";
