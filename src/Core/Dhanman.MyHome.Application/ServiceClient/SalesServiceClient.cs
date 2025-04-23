@@ -72,6 +72,12 @@ public class SalesServiceClient : ServiceClientBase, ISalesServiceClient
 
     public async Task<string> GetDataFromSalesServiceAsync(string endpoint)
     {
+        var orgId = GetOrganizationId();
+        if (!string.IsNullOrEmpty(orgId))
+        {
+            _httpClient.DefaultRequestHeaders.Add("x-organization-id", orgId);
+        }
+
         var token = GetBearerToken();
         if (!string.IsNullOrEmpty(token))
         {

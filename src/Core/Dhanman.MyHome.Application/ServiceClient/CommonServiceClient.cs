@@ -72,6 +72,12 @@ public class CommonServiceClient : ServiceClientBase, ICommonServiceClient
 
     public async Task<string> GetDataFromCommonServiceAsync(string endpoint)
     {
+        var orgId = GetOrganizationId();
+        if (!string.IsNullOrEmpty(orgId))
+        {
+            _httpClient.DefaultRequestHeaders.Add("x-organization-id", orgId);
+        }
+
         var token = GetBearerToken();
         if (!string.IsNullOrEmpty(token))
         {

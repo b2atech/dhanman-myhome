@@ -72,6 +72,12 @@ public class PurchaseServiceClient : ServiceClientBase, IPurchaseServiceClient
 
     public async Task<string> GetDataFromPurchaseServiceAsync(string endpoint)
     {
+        var orgId = GetOrganizationId();
+        if (!string.IsNullOrEmpty(orgId))
+        {
+            _httpClient.DefaultRequestHeaders.Add("x-organization-id", orgId);
+        }
+
         var token = GetBearerToken();
         if (!string.IsNullOrEmpty(token))
         {
