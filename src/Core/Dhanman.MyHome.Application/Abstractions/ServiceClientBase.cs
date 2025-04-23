@@ -14,6 +14,19 @@ public class ServiceClientBase
     }
 
     #region Methods
+
+    public string GetOrganizationId()
+    {
+        var context = _httpContextAccessor?.HttpContext;
+
+        if (context != null && context.Request.Headers.TryGetValue("x-organization-id", out var orgId))
+        {
+            return orgId.FirstOrDefault();
+        }
+
+        return string.Empty;
+    }
+
     public string GetBearerToken()
     {
         var authorizationHeader = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString();

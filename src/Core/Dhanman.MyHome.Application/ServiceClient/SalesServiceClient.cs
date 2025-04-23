@@ -39,6 +39,12 @@ public class SalesServiceClient : ServiceClientBase, ISalesServiceClient
         HttpRequestMessage request = new HttpRequestMessage(method, url);
         request.Headers.Add("accept", "text/plain");
 
+        var orgId = GetOrganizationId();
+        if (!string.IsNullOrEmpty(orgId))
+        {
+            request.Headers.Add("x-organization-id", orgId);
+        }
+
         var token = GetBearerToken();
         if (!string.IsNullOrEmpty(token))
         {
