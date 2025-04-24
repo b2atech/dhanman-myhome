@@ -49,7 +49,7 @@ internal sealed class EventsConfiguration : IEntityTypeConfiguration<Event>
             .HasColumnName("recurrence_rule_id");
 
         builder.Property(eventEntity => eventEntity.RecurrenceEndDate)
-            .HasColumnType("timestamp");
+            .HasColumnType("timestamp").IsRequired(false); 
 
         builder.Property(eventEntity => eventEntity.CreatedBy)
             .HasColumnType("uuid")
