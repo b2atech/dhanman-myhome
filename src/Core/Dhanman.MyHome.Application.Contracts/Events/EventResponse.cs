@@ -13,14 +13,14 @@ public class EventResponse
     public bool IsRecurring { get; set; }
     public string RecurrenceRule { get; set; }
     public int RecurrenceRuleId { get; set; }
-    public DateTime RecurrenceEndDate { get; set; }
+    public DateTime? RecurrenceEndDate { get; set; }
 
     #endregion
 
     #region Constructors
     public EventResponse() { }
 
-    public EventResponse(Guid id, Guid companyId, int communityCalenderId, string title, string description, DateTime startTime, DateTime endTime, bool isRecurring, string recurrenceRule, int recurrenceRuleId, DateTime recurrenceEndDate)
+    public EventResponse(Guid id, Guid companyId, int communityCalenderId, string title, string description, DateTime startTime, DateTime endTime, bool isRecurring, string recurrenceRule, int recurrenceRuleId, DateTime? recurrenceEndDate)
     {
         Id = id;
         CompanyId = companyId;

@@ -12,7 +12,7 @@ public class CreateEventRequest
     public bool IsRecurring { get; set; }
     public string RecurrenceRule { get; set; }
     public int RecurrenceRuleId { get; set; }
-    public DateTime RecurrenceEndDate { get; set; }
+    public DateTime? RecurrenceEndDate { get; set; }
     #endregion
 
     #region Constructors
