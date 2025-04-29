@@ -1,5 +1,6 @@
 using B2aTech.CrossCuttingConcern.Abstractions;
 using B2aTech.CrossCuttingConcern.Services;
+using B2aTech.CrossCuttingConcern.Settings;
 using B2aTech.CrossCuttingConcern.UserContext;
 using Dhanman.MyHome.Api;
 using Dhanman.MyHome.Api.Middleware;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using System.Configuration;
 using System.IO.Compression;
 
 var DhanManSpecificOrigins = "_dhanmanAllowSpecificOrigins";
@@ -45,7 +47,7 @@ builder.Services.AddPermissionService(builder.Configuration);
 builder.Services.AddAuthentication(builder.Configuration, "");
 builder.Services.AddCustomAuthorization();
 builder.Services.AddApplication(builder.Configuration);
-builder.Services.AddTemplateService(builder.Configuration, builder.Configuration["ConnectionStrings:CommonDb"]);
+builder.Services.AddTemplateService(builder.Configuration);
 builder.Services.AddHealthChecks();
 
 

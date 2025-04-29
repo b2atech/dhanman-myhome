@@ -7,6 +7,7 @@ public sealed class ConnectionString
     /// </summary>
     public const string SettingsKey = "CommunityDb";
     public const string PermissionDBKey = "PermissionsDb";
+    public const string TemplateDBKey = "TemplateDb";
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ConnectionString"/> class.

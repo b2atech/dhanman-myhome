@@ -1,4 +1,5 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
+using B2aTech.CrossCuttingConcern.Services;
 using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Constants;
@@ -23,16 +24,19 @@ public class CreateMemberRequestCommandHandler : ICommandHandler<CreateMemberReq
     private readonly IAddressRepository _addressRepository;
     private readonly IMediator _mediator;
     private readonly IApplicationDbContext _dbContext;
+    private readonly TemplatedEmailService _templatedEmailService;
+
     #endregion
 
     #region Constructors
-    public CreateMemberRequestCommandHandler(IResidentRequestRepository residentRequestRepository, IMemberAdditionalDetailRepository memberAdditionalDetailRepository, IAddressRepository addressRepository, IMediator mediator, IApplicationDbContext dbContext)
+    public CreateMemberRequestCommandHandler(IResidentRequestRepository residentRequestRepository, IMemberAdditionalDetailRepository memberAdditionalDetailRepository, IAddressRepository addressRepository, IMediator mediator, IApplicationDbContext dbContext , TemplatedEmailService templatedEmailService)
     {
         _residentRequestRepository = residentRequestRepository;
         _memberAdditionalDetailRepository = memberAdditionalDetailRepository;
         _addressRepository = addressRepository;
         _mediator = mediator;
         _dbContext = dbContext;
+        _templatedEmailService = templatedEmailService;
 
     }
     #endregion
@@ -56,12 +60,21 @@ public class CreateMemberRequestCommandHandler : ICommandHandler<CreateMemberReq
         var residentRequest = new ResidentRequest(nextresidentRequestId, request.ApartmentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, addressId, requestStatusId, 1, 1, memberAdditionalDetailsId);
 
         _residentRequestRepository.Insert(residentRequest);
-
+        await SendMemberRequestConfirmation(request);
         await _mediator.Publish(new MemberRequestCreatedEvent(residentRequest.Id), cancellationToken);
-
+        
         return Result.Success(new EntityCreatedResponse(residentRequest.Id));
     }
+    public async Task SendMemberRequestConfirmation(CreateMemberRequestCommand request)
+    {
+        var placeholders = new Dictionary<string, string>
+        {
+            ["member_first_name"] = request.FirstName,
+            ["member_last_name"] = request.LastName
+        };
 
+        await _templatedEmailService.SendAsync(2, request.Email, placeholders);
+    }
     private Guid GetCityId(string cityName, string zipCode, Guid stateId)
     {
         string lowerCityName = cityName.ToLower();
