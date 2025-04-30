@@ -13,6 +13,7 @@ jobs:
       DOTNET_ENVIRONMENT: qa
       ConnectionStrings__CommunityDb: ${{ secrets.CONNECTIONSTRINGS__COMMUNITYDB_QA }}
       ConnectionStrings__PermissionsDb: ${{ secrets.CONNECTIONSTRINGS__PERMISSIONSDB_QA }}
+      ConnectionStrings__TemplatesDb: ${{ secrets.CONNECTIONSTRINGS__TEMPLATESDB_QA }}
       DO_HOST: ${{ secrets.DO_HOST }}
       DO_USER: ${{ secrets.DO_USER }}
       DO_SSH_KEY: ${{ secrets.DO_SSH_KEY }}
@@ -49,6 +50,7 @@ jobs:
           script: |
             export ConnectionStrings__CommunityDb="${{ secrets.CONNECTIONSTRINGS__COMMUNITYDB_QA }}"
             export ConnectionStrings__PermissionsDb="${{ secrets.CONNECTIONSTRINGS__PERMISSIONSDB_QA }}"
+            export ConnectionStrings__TemplatesDb="${{ secrets.CONNECTIONSTRINGS__TEMPLATESDB_QA }}"
             export DOTNET_ENVIRONMENT=qa
             sudo systemctl restart dhanman-community-qa
             sudo systemctl status dhanman-community-qa --no-pager
