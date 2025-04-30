@@ -1,6 +1,5 @@
 using B2aTech.CrossCuttingConcern.Abstractions;
 using B2aTech.CrossCuttingConcern.Services;
-using B2aTech.CrossCuttingConcern.Settings;
 using B2aTech.CrossCuttingConcern.UserContext;
 using Dhanman.MyHome.Api;
 using Dhanman.MyHome.Api.Middleware;
@@ -10,8 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.OpenApi.Models;
+using Prometheus;
 using Serilog;
-using System.Configuration;
 using System.IO.Compression;
 
 var DhanManSpecificOrigins = "_dhanmanAllowSpecificOrigins";
@@ -135,8 +134,6 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// Swagger UI only in non-production environments
-//if (!app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI(c =>
@@ -162,7 +159,18 @@ app.UseStaticFiles();
 app.UseCors(DhanManSpecificOrigins);
 app.UseAuthentication();
 app.UseAuthorization();
+
+// Metrics Middleware
+app.UseHttpMetrics(); // <-- Add this to start capturing metrics
+
+// Error Handling
 app.UseMiddleware<ExceptionHandlerMiddleware>();
-app.UseEndpoints(endpoints => endpoints.MapControllers());
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapMetrics();
+});
+
 
 app.Run();
