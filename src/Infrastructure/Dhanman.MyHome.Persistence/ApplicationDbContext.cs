@@ -5,6 +5,7 @@ using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Domain.Abstractions;
 using Dhanman.MyHome.Domain.Entities.VisitorApprovals;
 using Dhanman.MyHome.Domain.Entities.VisitorLogs;
+using Dhanman.MyHome.Domain.Entities.Visitors;
 using Dhanman.MyHome.Persistence.Constants;
 using Dhanman.MyHome.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +39,7 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         modelBuilder.Entity<VisitorApprovalInfoById>().ToTable(TableNames.VisitorApprovalInfoById, t => t.ExcludeFromMigrations());
         modelBuilder.Entity<AllVisitorLog>().ToTable(TableNames.AllVisitorLog, t => t.ExcludeFromMigrations());
+        modelBuilder.Entity<VisitorDbDto>().ToTable(TableNames.VisitorDbDto, t => t.ExcludeFromMigrations());
         modelBuilder.ApplyUtcDateTimeConverter();
         base.OnModelCreating(modelBuilder);
 
