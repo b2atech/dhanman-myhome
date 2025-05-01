@@ -55,7 +55,9 @@ public sealed class GetUnitDetailsCommandHandler : ICommandHandler<GetUnitDetail
                 e.Name,
                 e.CustomerId,
                 Convert.ToDecimal(e.Area),
-                Convert.ToDecimal(e.BHKType)
+                Convert.ToDecimal(e.BHKType),
+                e.BuildingId,
+                e.OccupancyTypeId
             ))
             .ToListAsync(cancellationToken);
 
