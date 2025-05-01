@@ -43,6 +43,7 @@ public class UnitsController : ApiController
     public async Task<IActionResult> GetAllUnitDetails([FromBody] GetUnitDetailRequest? request) =>
     await Result.Create(request, Errors.General.BadRequest)
                 .Map(value => new GetUnitDetailsCommand(
+                    value.ApartmentId,
                     value.BuildingIds,
                     value.OccupancyIds
                   ))
