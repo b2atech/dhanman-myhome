@@ -35,7 +35,7 @@ public class HardDeleteOrganizationCommandHandler : ICommandHandler<HardDeleteOr
     public async Task<Result<EntityDeletedResponse>> Handle(HardDeleteOrganizationCommand request, CancellationToken cancellationToken)
     {
         await _dbContext.Database.ExecuteSqlRawAsync(
-                   "CALL public.hard_delete_organization(@p_org_id)",
+                   "CALL public.hard_delete_org_community(@p_org_id)",
 
                new NpgsqlParameter("p_org_id", NpgsqlDbType.Uuid) { Value = request.OrganizationId }
            );
