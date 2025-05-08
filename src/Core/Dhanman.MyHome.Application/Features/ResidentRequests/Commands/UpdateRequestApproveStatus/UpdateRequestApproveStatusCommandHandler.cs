@@ -18,15 +18,17 @@ public class UpdateRequestApproveStatusCommandHandler : ICommandHandler<UpdateRe
     private readonly IResidentRepository _residentRepository;
     private readonly IResidentUnitRepository _residentUnitRepository;
     private readonly IMediator _mediator;
+    private readonly IUnitOfWork _unitOfWork;
     #endregion
 
     #region Constructors
-    public UpdateRequestApproveStatusCommandHandler(IResidentRequestRepository residentRequestRepository, IResidentRepository residentRepository, IResidentUnitRepository residentUnitRepository, IMediator mediator)
+    public UpdateRequestApproveStatusCommandHandler(IResidentRequestRepository residentRequestRepository, IResidentRepository residentRepository, IResidentUnitRepository residentUnitRepository, IMediator mediator, IUnitOfWork unitOfWork)
     {
         _residentRequestRepository = residentRequestRepository;
         _residentRepository = residentRepository;
         _residentUnitRepository = residentUnitRepository;
         _mediator = mediator;
+        _unitOfWork = unitOfWork;
     }
     #endregion
 
@@ -43,12 +45,14 @@ public class UpdateRequestApproveStatusCommandHandler : ICommandHandler<UpdateRe
         updateRequestApproveStatus.RequestStatusId = ResidentRequestStatus.APPROVED;
         _residentRequestRepository.Update(updateRequestApproveStatus);
 
-        int nextresidentId = _residentRepository.GetTotalRecordsCount() + 1;
-        var resident = new Resident(nextresidentId, updateRequestApproveStatus.ApartmentId, updateRequestApproveStatus.FirstName, updateRequestApproveStatus.LastName, updateRequestApproveStatus.Email, updateRequestApproveStatus.ContactNumber, updateRequestApproveStatus.PermanentAddressId, updateRequestApproveStatus.ResidentTypeId, updateRequestApproveStatus.OccupancyStatusId);
+        //int nextresidentId = _residentRepository.GetTotalRecordsCount() + 1;
+        var resident = new Resident(updateRequestApproveStatus.ApartmentId, updateRequestApproveStatus.FirstName, updateRequestApproveStatus.LastName, updateRequestApproveStatus.Email, updateRequestApproveStatus.ContactNumber, updateRequestApproveStatus.PermanentAddressId, updateRequestApproveStatus.ResidentTypeId, updateRequestApproveStatus.OccupancyStatusId);
         _residentRepository.Insert(resident);
 
-        int nextresidentUnitId = _residentUnitRepository.GetTotalRecordsCount() + 1;
-        var residentUnit = new ResidentUnit(nextresidentUnitId, updateRequestApproveStatus.UnitId, nextresidentId);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        
+        //int nextresidentUnitId = _residentUnitRepository.GetTotalRecordsCount() + 1;
+        var residentUnit = new ResidentUnit(updateRequestApproveStatus.UnitId, resident.Id);
         _residentUnitRepository.Insert(residentUnit);
 
         await _mediator.Publish(new ResidentRequestUpdatedEvent(updateRequestApproveStatus.Id), cancellationToken);
