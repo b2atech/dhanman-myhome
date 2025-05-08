@@ -13,6 +13,7 @@ using Dhanman.MyHome.Domain.Entities.Residents;
 using Dhanman.MyHome.Domain.Entities.ResidentUnits;
 using Dhanman.MyHome.Domain.Entities.Users;
 using MediatR;
+using System.Threading.Tasks;
 using ResidentAddress = Dhanman.MyHome.Application.Contracts.ServiceProviders.Address;
 
 namespace Dhanman.MyHome.Application.Features.Residents.Commands.CreateResident;
@@ -28,11 +29,12 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
     private readonly IPurchaseServiceClient _purchaseServiceClient;
     private readonly ICommonServiceClient _commonServiceClient;
     private readonly IMediator _mediator;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IApplicationDbContext _dbContext;
     #endregion
 
     #region Constructors
-    public CreateResidentCommandHandler(IResidentRepository residentRepository, IAddressRepository addressRepository, IResidentUnitRepository residentUnitRepository, IUserRepository userRepository, ICommonServiceClient commonServiceClient, ISalesServiceClient salesServiceClient, IPurchaseServiceClient purchaseServiceClient, IMediator mediator, IApplicationDbContext dbContext)
+    public CreateResidentCommandHandler(IResidentRepository residentRepository, IAddressRepository addressRepository, IResidentUnitRepository residentUnitRepository, IUserRepository userRepository, ICommonServiceClient commonServiceClient, ISalesServiceClient salesServiceClient, IPurchaseServiceClient purchaseServiceClient, IMediator mediator, IApplicationDbContext dbContext, IUnitOfWork unitOfWork)
     {
         _residentRepository = residentRepository;
         _addressRepository = addressRepository;
@@ -43,6 +45,7 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
         _salesServiceClient = salesServiceClient;
         _mediator = mediator;
         _dbContext = dbContext;
+        _unitOfWork = unitOfWork;
     }
     #endregion
 
@@ -54,8 +57,8 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
 
         if (resident != null)
         {
-            var residentUnitId = _residentUnitRepository.GetTotalRecordsCount() + 1;
-            residentUnit = new ResidentUnit(residentUnitId , request.UnitId, resident.Id);
+           // var residentUnitId = _residentUnitRepository.GetTotalRecordsCount() + 1;
+            residentUnit = new ResidentUnit(request.UnitId, resident.Id);
             _residentUnitRepository.Insert(residentUnit);
         }
         else
@@ -63,21 +66,21 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
             Guid? permanentAddressId = null;
             if (request.PermanentAddress != null)
             {
-                Guid cityId = GetCityId(request.PermanentAddress.CityName, request.PermanentAddress.ZipCode, request.PermanentAddress.StateId);
+                Guid cityId = await GetCityId(request.PermanentAddress.CityName, request.PermanentAddress.ZipCode, request.PermanentAddress.StateId);
 
                  var permanentAddress = GetAddress(request.PermanentAddress, cityId);
                 _addressRepository.Insert(permanentAddress);
                 permanentAddressId = permanentAddress.Id;
             }
 
-            int nextresidentId = _residentRepository.GetTotalRecordsCount() + 1;
 
             Guid newUserId = Guid.NewGuid();
 
-            resident = new Resident(nextresidentId, request.ApartmentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, permanentAddressId, newUserId, request.ResidentTypeId, request.OccupancyStatusId);
+            resident = new Resident(request.ApartmentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, permanentAddressId, newUserId, request.ResidentTypeId, request.OccupancyStatusId);
             _residentRepository.Insert(resident);
+            await _unitOfWork.SaveChangesAsync();
 
-            
+
             var firstName = new Domain.Entities.Users.FirstName(request.FirstName);
             var lastName = new LastName(request.LastName);
             var email = new Email(request.Email);
@@ -94,9 +97,8 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
             await _salesServiceClient.CreateUserAsync(user);
             await _purchaseServiceClient.CreateUserAsync(user);
 
-            int nextresidentUnitId = _residentUnitRepository.GetTotalRecordsCount() + 1;
 
-            residentUnit = new ResidentUnit(nextresidentUnitId, request.UnitId, resident.Id); 
+            residentUnit = new ResidentUnit(request.UnitId, resident.Id); 
             _residentUnitRepository.Insert(residentUnit);
         }
 
@@ -105,7 +107,7 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
         return Result.Success(new EntityCreatedResponse(resident.Id));
     }
 
-    private Guid GetCityId(string cityName, string zipCode, Guid stateId)
+    private async Task<Guid> GetCityId(string cityName, string zipCode, Guid stateId)
     {
         string lowerCityName = cityName.ToLower();
         var city = _dbContext.Set<City>().FirstOrDefault(x => x.Name.ToLower() == lowerCityName && x.ZipCode == zipCode);
@@ -114,6 +116,7 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
         {
             city = new City(Guid.NewGuid(), stateId, zipCode, cityName);
             _dbContext.Set<City>().Add(city);
+            await _unitOfWork.SaveChangesAsync();
         }
         return city.Id;
     }
