@@ -8,10 +8,15 @@ public class GetAllUnitsQuery : ICacheableQuery<Result<UnitListResponse>>
 {
     #region Properties 
     public Guid ApartmentId { get; }
+    public bool IsGetForAllOrganization { get; }
     #endregion
 
     #region Constructors
-    public GetAllUnitsQuery(Guid apartmentId) => ApartmentId = apartmentId;
+    public GetAllUnitsQuery(Guid apartmentId, bool isGetForAllOrganization)
+    {
+        ApartmentId = apartmentId;
+        IsGetForAllOrganization = isGetForAllOrganization;
+    }
     #endregion
 
     #region Methods
