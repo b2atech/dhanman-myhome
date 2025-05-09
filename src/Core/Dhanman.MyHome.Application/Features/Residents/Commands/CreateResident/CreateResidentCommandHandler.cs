@@ -97,6 +97,15 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
             await _salesServiceClient.CreateUserAsync(user);
             await _purchaseServiceClient.CreateUserAsync(user);
 
+            //TODO
+            // this ensure no duplicate entry in DB but multiple calls
+            //bool alreadyExists = _residentUnitRepository.Exists(resident.Id, request.UnitId);
+
+            //if (!alreadyExists)
+            //{
+            //    residentUnit = new ResidentUnit(request.UnitId, resident.Id);
+            //    _residentUnitRepository.Insert(residentUnit);
+            //}
 
             residentUnit = new ResidentUnit(request.UnitId, resident.Id); 
             _residentUnitRepository.Insert(residentUnit);

@@ -24,7 +24,7 @@ public class User : Entity, IAuditableEntity, ISoftDeletableEntity
         Ensure.NotEmpty(id, "The identifier is required.", nameof(id));
         Ensure.NotEmpty(id, "The identifier is required.", nameof(companyId));
         Ensure.NotEmpty(firstName, "The first name is required.", nameof(firstName));
-        Ensure.NotEmpty(lastName, "The last name is required.", nameof(lastName));
+       // Ensure.NotEmpty(lastName, "The last name is required.", nameof(lastName));
         Ensure.NotEmpty(email, "The email is required.", nameof(email));
         Ensure.NotEmpty(contactNumber, "The contact number is required.", nameof(contactNumber));
 
