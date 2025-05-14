@@ -52,6 +52,18 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
     #region Methodes
     public async Task<Result<EntityCreatedResponse>> Handle(CreateResidentCommand request, CancellationToken cancellationToken)
     {
+        var existingUserResult = await _commonServiceClient.GetUserByEmailOrPhoneAsync(request.Email, request.ContactNumber);
+
+
+        Guid newUserId;
+        if (existingUserResult != null)
+        {
+            newUserId = existingUserResult.Id;
+        }
+        else
+        {
+            newUserId = Guid.NewGuid();
+        }
         ResidentUnit residentUnit;
         Resident resident = _residentRepository.GetByEmail(request.Email, request.ApartmentId);
 
@@ -74,9 +86,6 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
                 permanentAddressId = permanentAddress.Id;
             }
 
-
-            Guid newUserId = Guid.NewGuid();
-                        
             int lastResidentId = await _residentRepository.GetLastResidentIdAsync();
             int newResidentId = lastResidentId + 1;
             resident = new Resident(newResidentId, request.ApartmentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, permanentAddressId, newUserId, request.ResidentTypeId, request.OccupancyStatusId);
@@ -85,8 +94,8 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
 
 
             var firstName = new Domain.Entities.Users.FirstName(request.FirstName);
-            var lastName = new LastName(request.LastName);
-            var email = new Email(request.Email);
+            var lastName = new Domain.Entities.Users.LastName(request.LastName);
+            var email = new Domain.Entities.Users.Email(request.Email);
             var contactNumber = new ContactNumber(request.ContactNumber);
 
 
