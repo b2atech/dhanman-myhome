@@ -13,7 +13,6 @@ using Dhanman.MyHome.Domain.Entities.Residents;
 using Dhanman.MyHome.Domain.Entities.ResidentUnits;
 using Dhanman.MyHome.Domain.Entities.Users;
 using MediatR;
-using System.Threading.Tasks;
 using ResidentAddress = Dhanman.MyHome.Application.Contracts.ServiceProviders.Address;
 
 namespace Dhanman.MyHome.Application.Features.Residents.Commands.CreateResident;
@@ -52,6 +51,19 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
     #region Methodes
     public async Task<Result<EntityCreatedResponse>> Handle(CreateResidentCommand request, CancellationToken cancellationToken)
     {
+        var existingUserResult = await _commonServiceClient.GetUserByEmailOrPhoneAsync(request.Email, request.ContactNumber);
+
+
+        Guid newUserId;
+        if (existingUserResult != null)
+        {
+            newUserId = existingUserResult.Id;
+        }
+        else
+        {
+            newUserId = Guid.NewGuid();
+        }
+
         ResidentUnit residentUnit;
         Resident resident = _residentRepository.GetByEmail(request.Email, request.ApartmentId);
 
@@ -73,8 +85,7 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
                 permanentAddressId = permanentAddress.Id;
             }
 
-
-            Guid newUserId = Guid.NewGuid();
+            
 
             resident = new Resident(request.ApartmentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, permanentAddressId, newUserId, request.ResidentTypeId, request.OccupancyStatusId);
             _residentRepository.Insert(resident);
@@ -82,8 +93,8 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
 
 
             var firstName = new Domain.Entities.Users.FirstName(request.FirstName);
-            var lastName = new LastName(request.LastName);
-            var email = new Email(request.Email);
+            var lastName = new Domain.Entities.Users.LastName(request.LastName);
+            var email = new Domain.Entities.Users.Email(request.Email);
             var contactNumber = new ContactNumber(request.ContactNumber);
 
 
