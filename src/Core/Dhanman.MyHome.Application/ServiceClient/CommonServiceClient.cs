@@ -88,7 +88,6 @@ public class CommonServiceClient : ServiceClientBase, ICommonServiceClient
         var response = await _httpClient.GetAsync(endpoint);
         if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
             return null;
-        //response.EnsureSuccessStatusCode();
         return await response.Content.ReadAsStringAsync();
     }
 
