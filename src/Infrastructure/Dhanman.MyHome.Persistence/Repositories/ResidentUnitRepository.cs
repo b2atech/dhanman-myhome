@@ -30,8 +30,13 @@ public class ResidentUnitRepository : IResidentUnitRepository
         throw new NotImplementedException();
     }
 
-    public DbSet<ResidentUnit> ResidentUnit => _dbContext.SetInt<ResidentUnit>();    
-    public int GetTotalRecordsCount() => ResidentUnit.Count();
+    public DbSet<ResidentUnit> ResidentUnit => _dbContext.SetInt<ResidentUnit>();
+    public async Task<int> GetLastResidentIdAsync()
+    {
+        return await _dbContext.SetInt<ResidentUnit>().
+            IgnoreQueryFilters()
+            .MaxAsync(b => b.Id);
+    }
     public List<ResidentUnit> GetByResidentId(int residentId)
     {
         var units = _dbContext.SetInt<ResidentUnit>().Where(u => u.ResidentId == residentId).ToList();

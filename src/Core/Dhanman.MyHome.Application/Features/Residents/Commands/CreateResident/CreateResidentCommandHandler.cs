@@ -56,9 +56,10 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
         Resident resident = _residentRepository.GetByEmail(request.Email, request.ApartmentId);
 
         if (resident != null)
-        {
-           // var residentUnitId = _residentUnitRepository.GetTotalRecordsCount() + 1;
-            residentUnit = new ResidentUnit(request.UnitId, resident.Id);
+        {            
+            int lastResidentUnitId = await _residentUnitRepository.GetLastResidentIdAsync();
+            int newResidentUnitId = lastResidentUnitId + 1;
+            residentUnit = new ResidentUnit(newResidentUnitId, request.UnitId, resident.Id);
             _residentUnitRepository.Insert(residentUnit);
         }
         else
@@ -75,8 +76,10 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
 
 
             Guid newUserId = Guid.NewGuid();
-
-            resident = new Resident(request.ApartmentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, permanentAddressId, newUserId, request.ResidentTypeId, request.OccupancyStatusId);
+                        
+            int lastResidentId = await _residentRepository.GetLastResidentIdAsync();
+            int newResidentId = lastResidentId + 1;
+            resident = new Resident(newResidentId, request.ApartmentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, permanentAddressId, newUserId, request.ResidentTypeId, request.OccupancyStatusId);
             _residentRepository.Insert(resident);
             await _unitOfWork.SaveChangesAsync();
 
@@ -105,9 +108,10 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
             //{
             //    residentUnit = new ResidentUnit(request.UnitId, resident.Id);
             //    _residentUnitRepository.Insert(residentUnit);
-            //}
-
-            residentUnit = new ResidentUnit(request.UnitId, resident.Id); 
+            //}            
+            int lastResidentUnitId = await _residentUnitRepository.GetLastResidentIdAsync();
+            int newResidentUnitId = lastResidentUnitId + 1;
+            residentUnit = new ResidentUnit(newResidentUnitId, request.UnitId, resident.Id); 
             _residentUnitRepository.Insert(residentUnit);
         }
 

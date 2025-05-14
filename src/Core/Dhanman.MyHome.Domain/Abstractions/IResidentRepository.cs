@@ -12,8 +12,7 @@ public interface IResidentRepository
     void Delete(Resident resident);
 
     void Update(Resident resident);
-
-    int GetTotalRecordsCount();
+    Task<int> GetLastResidentIdAsync();
 
     Resident? GetByEmail(string email, Guid ApartmentId);
 

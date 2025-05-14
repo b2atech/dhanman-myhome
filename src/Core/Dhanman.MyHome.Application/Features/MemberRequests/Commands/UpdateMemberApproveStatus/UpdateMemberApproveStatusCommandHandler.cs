@@ -101,15 +101,17 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
         residentRequest.RequestStatusId = ResidentRequestStatus.APPROVED;
         residentRequest.UnitId = unit.Id;
         _residentRequestRepository.Update(residentRequest);
-
-        int newResidentId = _residentRepository.GetTotalRecordsCount() + 1;
+       
+        int lastResidentId = await _residentRepository.GetLastResidentIdAsync();
+        int newResidentId = lastResidentId + 1;
         Guid newUserId = Guid.NewGuid();
 
-        var resident = new Resident(residentRequest.ApartmentId, residentRequest.FirstName, residentRequest.LastName, residentRequest.Email, residentRequest.ContactNumber, residentRequest.PermanentAddressId, newUserId, residentRequest.ResidentTypeId, residentRequest.OccupancyStatusId);
+        var resident = new Resident(newResidentId, residentRequest.ApartmentId, residentRequest.FirstName, residentRequest.LastName, residentRequest.Email, residentRequest.ContactNumber, residentRequest.PermanentAddressId, newUserId, residentRequest.ResidentTypeId, residentRequest.OccupancyStatusId);
         _residentRepository.Insert(resident);
 
-        //int newResidentUnitId = _residentUnitRepository.GetTotalRecordsCount() + 1;
-        var residentUnit = new ResidentUnit( unit.Id, newResidentId);
+        int lastResidentUnitId = await _residentUnitRepository.GetLastResidentIdAsync();           
+        int newResidentUnitId = lastResidentUnitId + 1;
+        var residentUnit = new ResidentUnit(newResidentUnitId, unit.Id, resident.Id);
         _residentUnitRepository.Insert(residentUnit);
 
         var user = new User(newUserId, residentRequest.ApartmentId, new Domain.Entities.Users.FirstName(residentRequest.FirstName), new LastName(residentRequest.LastName), new Email(residentRequest.Email), new ContactNumber(residentRequest.ContactNumber), residentRequest.ResidentTypeId == (int)ResidentType.OWNER);
