@@ -387,4 +387,11 @@ public static class ApiRoutes
         public const string ClearUserPermissionsCache = apiVersion + "users/clear-user-permissions-cache/{userId}/{organizationId}";
 
     }
+
+    public static class CommitteeMembers
+    {
+        public const string GetAllCommitteeMembers = apiVersion + "apartments/{apartmentId:guid}/committee-members";
+      
+
+    }
 }

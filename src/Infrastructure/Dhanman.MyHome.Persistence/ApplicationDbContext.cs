@@ -3,6 +3,7 @@ using B2aTech.CrossCuttingConcern.Core.Abstractions;
 using B2aTech.CrossCuttingConcern.Core.Primitives;
 using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Domain.Abstractions;
+using Dhanman.MyHome.Domain.Entities.CommitteeMembers;
 using Dhanman.MyHome.Domain.Entities.VisitorApprovals;
 using Dhanman.MyHome.Domain.Entities.VisitorLogs;
 using Dhanman.MyHome.Domain.Entities.Visitors;
@@ -40,6 +41,7 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
         modelBuilder.Entity<VisitorApprovalInfoById>().ToTable(TableNames.VisitorApprovalInfoById, t => t.ExcludeFromMigrations());
         modelBuilder.Entity<AllVisitorLog>().ToTable(TableNames.AllVisitorLog, t => t.ExcludeFromMigrations());
         modelBuilder.Entity<VisitorDbDto>().ToTable(TableNames.VisitorDbDto, t => t.ExcludeFromMigrations());
+        modelBuilder.Entity<CommitteeMemberDto>().ToTable(TableNames.CommitteeMemberDto, t => t.ExcludeFromMigrations());
         modelBuilder.ApplyUtcDateTimeConverter();
         base.OnModelCreating(modelBuilder);
 
