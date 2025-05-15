@@ -53,7 +53,7 @@ public class CreateResidentRequestCommandHandler : ICommandHandler<CreateResiden
         int requestStatusId = ResidentRequestStatus.PENDING_REQUEST;
 
         var residentRequest = new ResidentRequest(
-          //  nextResidentRequestId,
+            request.ApartmentId,
             request.UnitId,
             request.FirstName,
             request.LastName,
