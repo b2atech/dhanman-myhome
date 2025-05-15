@@ -71,6 +71,18 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
     {
         var residentRequest = await _residentRequestRepository.GetBydIdIntAsync(request.Id);
 
+        var existingUserResult = await _commonServiceClient.GetUserByEmailOrPhoneAsync(residentRequest.Email, residentRequest.ContactNumber);
+
+        Guid newUserId;
+        if (existingUserResult != null)
+        {
+            newUserId = existingUserResult.Id;
+        }
+        else
+        {
+            newUserId = Guid.NewGuid();
+        }
+
         if (residentRequest == null)
         {
             throw new RequestIdNotFoundException(request.Id);
@@ -82,7 +94,7 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
 
         string unitName = $"{residentRequest.FirstName ?? string.Empty} {residentRequest.LastName ?? string.Empty}".Trim();
 
-        var unit = new Unit(unitName, 117, 193, 1, 1, 1, 1, 1, 1, 1, "1.0", "1.1", residentRequest.ApartmentId, Guid.NewGuid());
+        var unit = new Unit(unitName, 117, 193, 1, 1, 1, 1, 1, 1, 1, "1.0", "1.1", residentRequest.ApartmentId, newUserId);
         _unitRepository.Insert(unit);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
@@ -100,21 +112,6 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
         residentRequest.RequestStatusId = ResidentRequestStatus.APPROVED;
         residentRequest.UnitId = unit.Id;
         _residentRequestRepository.Update(residentRequest);
-
-
-        var existingUserResult = await _commonServiceClient.GetUserByEmailOrPhoneAsync(residentRequest.Email, residentRequest.ContactNumber);
-
-        Guid newUserId;
-        if (existingUserResult != null)
-        {
-            newUserId = existingUserResult.Id;
-        }
-        else
-        {
-            newUserId = Guid.NewGuid();
-        }
-
-
 
         var resident = new Resident(residentRequest.ApartmentId, residentRequest.FirstName, residentRequest.LastName, residentRequest.Email, residentRequest.ContactNumber, residentRequest.PermanentAddressId, newUserId, residentRequest.ResidentTypeId, residentRequest.OccupancyStatusId);
         _residentRepository.Insert(resident);
@@ -144,7 +141,7 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
         await _mediator.Publish(new MemberRequestUpdatedEvent(residentRequest.Id), cancellationToken);
 
         // Send welcome email to the new resident
-        if (!string.IsNullOrWhiteSpace(residentRequest.Email))
+        if (!string.IsNullOrWhiteSpace(residentRequest.Email))       
         {
             var subject = $@"Welcome to {apartmentName}!";
             var body = $@"

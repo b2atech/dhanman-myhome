@@ -46,18 +46,7 @@ public class CreateMemberRequestCommandHandler : ICommandHandler<CreateMemberReq
     #region Methodes
     public async Task<Result<EntityCreatedResponse>> Handle(CreateMemberRequestCommand request, CancellationToken cancellationToken)
     {
-        //Guid cityId = GetCityId(request.CurrentAddress.CityName, request.CurrentAddress.ZipCode, request.CurrentAddress.StateId);
-        //var currentAddress = GetAddress(request.CurrentAddress, cityId);
-        //_addressRepository.Insert(currentAddress);
-        //Guid addressId = currentAddress.Id;
-
-
-        //if (request.CurrentAddress == null)
-        //    throw new ArgumentNullException(nameof(request.CurrentAddress), "CurrentAddress cannot be null.");
-
-
         Guid addressId = Guid.Empty;
-
 
         var memberAdditionalDetails = GetMemberAdditionalDetails(request.MemberAdditionalDetails);
         _memberAdditionalDetailRepository.Insert(memberAdditionalDetails);
