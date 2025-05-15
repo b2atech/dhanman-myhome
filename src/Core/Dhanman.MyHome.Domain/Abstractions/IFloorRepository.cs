@@ -9,7 +9,7 @@ public interface IFloorRepository
     void Insert(Floor floor);
     void Update(Floor floor);
     void Delete(Floor floor);
-    Task<int> GetLastFloorIdAsync();
+   // Task<int> GetLastFloorIdAsync();
 
     #endregion
 }

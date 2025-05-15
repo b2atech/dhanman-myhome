@@ -41,22 +41,24 @@ public class UpdateRequestApproveStatusCommandHandler : ICommandHandler<UpdateRe
         {
             throw new RequestIdNotFoundException(request.Id);
         }
-        
+
         updateRequestApproveStatus.RequestStatusId = ResidentRequestStatus.APPROVED;
         _residentRequestRepository.Update(updateRequestApproveStatus);
 
-        int lastResidentId = await _residentRepository.GetLastResidentIdAsync();
-        int newResidentId = lastResidentId + 1;        
-        var resident = new Resident(newResidentId, updateRequestApproveStatus.ApartmentId, updateRequestApproveStatus.FirstName, updateRequestApproveStatus.LastName, updateRequestApproveStatus.Email, updateRequestApproveStatus.ContactNumber, updateRequestApproveStatus.PermanentAddressId, updateRequestApproveStatus.ResidentTypeId, updateRequestApproveStatus.OccupancyStatusId);
+        //int lastResidentId = await _residentRepository.GetLastResidentIdAsync();
+       // int newResidentId = lastResidentId + 1;
+        var resident = new Resident(updateRequestApproveStatus.ApartmentId, updateRequestApproveStatus.FirstName, updateRequestApproveStatus.LastName, updateRequestApproveStatus.Email, updateRequestApproveStatus.ContactNumber, updateRequestApproveStatus.PermanentAddressId, updateRequestApproveStatus.ResidentTypeId, updateRequestApproveStatus.OccupancyStatusId);
         _residentRepository.Insert(resident);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-               
-        int lastResidentUnitId = await _residentUnitRepository.GetLastResidentIdAsync();
-        int newResidentUnitId = lastResidentUnitId + 1;
-        var residentUnit = new ResidentUnit(newResidentUnitId, updateRequestApproveStatus.UnitId, resident.Id);
+
+        //int lastResidentUnitId = await _residentUnitRepository.GetLastResidentIdAsync();
+       // int newResidentUnitId = lastResidentUnitId + 1;
+
+        var residentUnit = new ResidentUnit( updateRequestApproveStatus.UnitId, resident.Id);
         _residentUnitRepository.Insert(residentUnit);
 
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
         await _mediator.Publish(new ResidentRequestUpdatedEvent(updateRequestApproveStatus.Id), cancellationToken);
         return Result.Success(new EntityUpdatedResponse(updateRequestApproveStatus.Id));
     }

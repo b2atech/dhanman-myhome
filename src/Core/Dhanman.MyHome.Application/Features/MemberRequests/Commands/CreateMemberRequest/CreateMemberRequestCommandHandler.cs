@@ -25,16 +25,18 @@ public class CreateMemberRequestCommandHandler : ICommandHandler<CreateMemberReq
     private readonly IMediator _mediator;
     private readonly IApplicationDbContext _dbContext;
     private readonly TemplatedEmailService _templatedEmailService;
+    private readonly IUnitOfWork _unitOfWork;
 
     #endregion
 
     #region Constructors
-    public CreateMemberRequestCommandHandler(IResidentRequestRepository residentRequestRepository, IMemberAdditionalDetailRepository memberAdditionalDetailRepository, IAddressRepository addressRepository, IMediator mediator, IApplicationDbContext dbContext , TemplatedEmailService templatedEmailService)
+    public CreateMemberRequestCommandHandler(IResidentRequestRepository residentRequestRepository, IMemberAdditionalDetailRepository memberAdditionalDetailRepository, IAddressRepository addressRepository, IMediator mediator, IApplicationDbContext dbContext , TemplatedEmailService templatedEmailService,IUnitOfWork unitOfWork)
     {
         _residentRequestRepository = residentRequestRepository;
         _memberAdditionalDetailRepository = memberAdditionalDetailRepository;
         _addressRepository = addressRepository;
         _mediator = mediator;
+        _unitOfWork = unitOfWork;
         _dbContext = dbContext;
         _templatedEmailService = templatedEmailService;
 
@@ -48,19 +50,28 @@ public class CreateMemberRequestCommandHandler : ICommandHandler<CreateMemberReq
         //var currentAddress = GetAddress(request.CurrentAddress, cityId);
         //_addressRepository.Insert(currentAddress);
         //Guid addressId = currentAddress.Id;
-        Guid addressId = Guid.Empty; 
+
+
+        //if (request.CurrentAddress == null)
+        //    throw new ArgumentNullException(nameof(request.CurrentAddress), "CurrentAddress cannot be null.");
+
+
+        Guid addressId = Guid.Empty;
+
 
         var memberAdditionalDetails = GetMemberAdditionalDetails(request.MemberAdditionalDetails);
         _memberAdditionalDetailRepository.Insert(memberAdditionalDetails);
         Guid memberAdditionalDetailsId = memberAdditionalDetails.Id;
         
-        int nextresidentRequestId = _residentRequestRepository.GetTotalRecordsCount() + 1;
+       // int nextresidentRequestId = _residentRequestRepository.GetTotalRecordsCount() + 1;
         int requestStatusId = ResidentRequestStatus.PENDING_REQUEST;
 
-        var residentRequest = new ResidentRequest(nextresidentRequestId, request.ApartmentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, addressId, requestStatusId, 1, 1, memberAdditionalDetailsId);
+        var residentRequest = new ResidentRequest(request.ApartmentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, addressId, requestStatusId, 1, 1, memberAdditionalDetailsId);
 
         _residentRequestRepository.Insert(residentRequest);
-        await SendMemberRequestConfirmation(request);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        //await SendMemberRequestConfirmation(request);
         await _mediator.Publish(new MemberRequestCreatedEvent(residentRequest.Id), cancellationToken);
         
         return Result.Success(new EntityCreatedResponse(residentRequest.Id));

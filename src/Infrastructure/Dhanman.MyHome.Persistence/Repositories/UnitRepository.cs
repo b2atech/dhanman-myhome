@@ -23,7 +23,7 @@ internal sealed class UnitRepository : IUnitRepository
     public void Insert(Unit unit) => _dbContext.InsertInt(unit);
     public void Delete(Unit unit) => _dbContext.RemoveInt(unit);
     public void Update(Unit unit) => _dbContext?.UpdateInt(unit);
-    public int GetTotalRecordsCount() => Unit.Count();
+    //public int GetTotalRecordsCount() => Unit.Count();
 
     public async Task<bool> IsFlatValidAsync(string name)
     {

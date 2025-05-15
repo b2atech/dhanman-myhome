@@ -20,14 +20,14 @@ public class FloorRepository : IFloorRepository
 
     public Task<Floor?> GetByIntIdAsync(int id) => _dbContext.GetBydIdIntAsync<Floor>(id);
 
-    public async Task<int> GetLastFloorIdAsync()
-    {
-        return await _dbContext.SetInt<Floor>()
-            .IgnoreQueryFilters()
-            .OrderByDescending(b => b.Id)
-            .Select(b => b.Id)
-            .FirstOrDefaultAsync();
-    }
+    //public async Task<int> GetLastFloorIdAsync()
+    //{
+    //    return await _dbContext.SetInt<Floor>()
+    //        .IgnoreQueryFilters()
+    //        .OrderByDescending(b => b.Id)
+    //        .Select(b => b.Id)
+    //        .FirstOrDefaultAsync();
+    //}
 
     public void Insert(Floor floor) => _dbContext.InsertInt(floor);
 

@@ -18,16 +18,18 @@ public class CreateServiceProviderCommandHandler : ICommandHandler<CreateService
     private readonly IServiceProviderRepository _serviceProviderRepository;
     private readonly IAddressRepository _addressRepository;
     private readonly IMediator _mediator;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IApplicationDbContext _dbContext;
     #endregion
 
     #region Constructors
-    public CreateServiceProviderCommandHandler(IServiceProviderRepository serviceProviderRepository, IAddressRepository addressRepository, IMediator mediator, IApplicationDbContext dbContext)
+    public CreateServiceProviderCommandHandler(IServiceProviderRepository serviceProviderRepository, IAddressRepository addressRepository, IMediator mediator, IApplicationDbContext dbContext, IUnitOfWork unitOfWork)
     {
         _serviceProviderRepository = serviceProviderRepository;
         _addressRepository = addressRepository;
         _mediator = mediator;
         _dbContext = dbContext;
+        _unitOfWork = unitOfWork;
     }
     #endregion
 
@@ -54,11 +56,10 @@ public class CreateServiceProviderCommandHandler : ICommandHandler<CreateService
         var presentAddress = CreateAddressEntity(request.PresentAddress, presCityId);
         _addressRepository.Insert(presentAddress);
 
-        int nextServiceProviderId = _serviceProviderRepository.GetTotalRecordsCount() + 1;
-
-        var serviceProvider = new ServiceProvider(nextServiceProviderId, request.FirstName, request.LastName, request.Email, request.VisitingFrom, request.ContactNumber, permanentAddress.Id, presentAddress.Id, request.ServiceProviderTypeId, request.ServiceProviderSubTypeId, request.VehicleNumber, request.IdentityTypeId, request.IdentityNumber, request.ValidityDate, request.PoliceVerificationStatus, request.IsHireable, request.IsVisible, request.IsFrequentVisitor, request.ApartmentId, request.Pin);
+        var serviceProvider = new ServiceProvider( request.FirstName, request.LastName, request.Email, request.VisitingFrom, request.ContactNumber, permanentAddress.Id, presentAddress.Id, request.ServiceProviderTypeId, request.ServiceProviderSubTypeId, request.VehicleNumber, request.IdentityTypeId, request.IdentityNumber, request.ValidityDate, request.PoliceVerificationStatus, request.IsHireable, request.IsVisible, request.IsFrequentVisitor, request.ApartmentId, request.Pin);
 
         _serviceProviderRepository.Insert(serviceProvider);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         await _mediator.Publish(new ServiceProviderCreatedEvent(serviceProvider.Id), cancellationToken);
 

@@ -9,6 +9,6 @@ public interface IVisitorLogRepository
     void Insert(VisitorLog visitorLog);
     void Update(VisitorLog visitorLog);
     void Delete(VisitorLog visitorLog);
-    int GetTotalRecordsCount();
+    //int GetTotalRecordsCount();
     #endregion
 }

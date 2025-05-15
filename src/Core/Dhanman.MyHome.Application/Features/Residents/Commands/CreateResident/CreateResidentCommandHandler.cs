@@ -69,10 +69,12 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
 
         if (resident != null)
         {            
-            int lastResidentUnitId = await _residentUnitRepository.GetLastResidentIdAsync();
-            int newResidentUnitId = lastResidentUnitId + 1;
-            residentUnit = new ResidentUnit(newResidentUnitId, request.UnitId, resident.Id);
+            //int lastResidentUnitId = await _residentUnitRepository.GetLastResidentIdAsync();
+            //int newResidentUnitId = lastResidentUnitId + 1;
+
+            residentUnit = new ResidentUnit(request.UnitId, resident.Id);
             _residentUnitRepository.Insert(residentUnit);
+            await _unitOfWork.SaveChangesAsync();
         }
         else
         {
@@ -86,9 +88,10 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
                 permanentAddressId = permanentAddress.Id;
             }
 
-            int lastResidentId = await _residentRepository.GetLastResidentIdAsync();
-            int newResidentId = lastResidentId + 1;
-            resident = new Resident(newResidentId, request.ApartmentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, permanentAddressId, newUserId, request.ResidentTypeId, request.OccupancyStatusId);
+         //   int lastResidentId = await _residentRepository.GetLastResidentIdAsync();
+         //   int newResidentId = lastResidentId + 1;
+
+            resident = new Resident(request.ApartmentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, permanentAddressId, newUserId, request.ResidentTypeId, request.OccupancyStatusId);
             _residentRepository.Insert(resident);
             await _unitOfWork.SaveChangesAsync();
 
@@ -118,10 +121,12 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
             //    residentUnit = new ResidentUnit(request.UnitId, resident.Id);
             //    _residentUnitRepository.Insert(residentUnit);
             //}            
-            int lastResidentUnitId = await _residentUnitRepository.GetLastResidentIdAsync();
-            int newResidentUnitId = lastResidentUnitId + 1;
-            residentUnit = new ResidentUnit(newResidentUnitId, request.UnitId, resident.Id); 
+
+           // int lastResidentUnitId = await _residentUnitRepository.GetLastResidentIdAsync();
+           // int newResidentUnitId = lastResidentUnitId + 1;
+            residentUnit = new ResidentUnit(request.UnitId, resident.Id); 
             _residentUnitRepository.Insert(residentUnit);
+            await _unitOfWork.SaveChangesAsync();
         }
 
         await _mediator.Publish(new ResidentCreatedEvent(resident.Id), cancellationToken);

@@ -22,12 +22,12 @@ internal sealed class ResidentRepository : IResidentRepository
     public void Insert(Resident resident) => _dbContext.InsertInt(resident);
     public void Delete(Resident resident) => _dbContext.RemoveInt(resident);
     public void Update(Resident resident) => _dbContext?.UpdateInt(resident);
-    public async Task<int> GetLastResidentIdAsync()
-    {
-        return await _dbContext.SetInt<Resident>().
-            IgnoreQueryFilters()
-            .MaxAsync(b => b.Id);
-    }
+    //public async Task<int> GetLastResidentIdAsync()
+    //{
+    //    return await _dbContext.SetInt<Resident>().
+    //        IgnoreQueryFilters()
+    //        .MaxAsync(b => b.Id);
+    //}
 
     public Resident? GetByEmail(string email, Guid apartmentId)
     {

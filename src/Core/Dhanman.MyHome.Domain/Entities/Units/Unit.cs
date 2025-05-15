@@ -44,11 +44,31 @@ public class Unit : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public Unit(int id,string name, int buildingId, int floorId, int unitTypeId,
-        int occupantTypeId, int occupancyTypeId,decimal area, decimal bhkType, int phoneExtention,
+    public Unit(int id, string name, int buildingId, int floorId, int unitTypeId,
+        int occupantTypeId, int occupancyTypeId, decimal area, decimal bhkType, int phoneExtention,
         int eIntercom, string latitude, string longitude, Guid apartmentId, Guid customerId)
     {
         Id = id;
+        Name = name;
+        BuildingId = buildingId;
+        FloorId = floorId;
+        UnitTypeId = unitTypeId;
+        OccupantTypeId = occupantTypeId;
+        OccupancyTypeId = occupancyTypeId;
+        Area = area;
+        BHKType = bhkType;
+        PhoneExtention = phoneExtention;
+        EIntercom = eIntercom;
+        Latitude = latitude;
+        Longitude = longitude;
+        ApartmentId = apartmentId;
+        CustomerId = customerId;
+    }
+
+    public Unit(string name, int buildingId, int floorId, int unitTypeId,
+        int occupantTypeId, int occupancyTypeId, decimal area, decimal bhkType, int phoneExtention,
+        int eIntercom, string latitude, string longitude, Guid apartmentId, Guid customerId)
+    {
         Name = name;
         BuildingId = buildingId;
         FloorId = floorId;

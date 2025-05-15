@@ -9,7 +9,7 @@ public interface IGateRepository
     void Insert(Gate gate);
     void Update(Gate gate);
     void Delete(Gate gate);
-    Task<int> GetLastGateIdAsync();
+   // Task<int> GetLastGateIdAsync();
 
     #endregion
 }

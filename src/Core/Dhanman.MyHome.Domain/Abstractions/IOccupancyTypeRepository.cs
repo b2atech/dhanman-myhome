@@ -14,7 +14,7 @@ public interface IOccupancyTypeRepository
 
     void Update(OccupancyType occupancyType);
 
-    int GetTotalRecordsCount();
+    //int GetTotalRecordsCount();
 
     #endregion
 }

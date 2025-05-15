@@ -25,16 +25,17 @@ namespace Dhanman.MyHome.Application.Features.MemberRequests.Commands.UpdateMemb
 public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMemberApproveStatusCommand, Result<EntityUpdatedResponse>>
 {
     #region Properties
-    private readonly IUnitRepository _unitRepository;    
+    private readonly IUnitRepository _unitRepository;
     private readonly ICommonServiceClient _commonServiceClient;
     private readonly ISalesServiceClient _salesServiceClient;
     private readonly IPurchaseServiceClient _purchaseServiceClient;
     private readonly IResidentRequestRepository _residentRequestRepository;
     private readonly IResidentRepository _residentRepository;
     private readonly IResidentUnitRepository _residentUnitRepository;
-    private readonly IUserRepository _userRepository;  
+    private readonly IUserRepository _userRepository;
     private readonly IMemberAdditionalDetailRepository _memberAdditionalDetailRepository;
     private readonly IMediator _mediator;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IUserContextService _userContextService;
     private readonly IApplicationDbContext _dbContext;
     private readonly IEmailService _emailService;
@@ -45,7 +46,7 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
     public UpdateMemberApproveStatusCommandHandler(IUnitRepository unitRepository, ICommonServiceClient commonServiceClient, ISalesServiceClient salesServiceClient, IPurchaseServiceClient purchaseServiceClient,
                                                    IResidentRequestRepository residentRequestRepository, IResidentRepository residentRepository, IResidentUnitRepository residentUnitRepository,
                                                    IUserRepository userRepository, IMemberAdditionalDetailRepository memberAdditionalDetailRepository, IMediator mediator, IUserContextService userContextService,
-                                                   IApplicationDbContext dbContext, IEmailService emailService, ILogger<UpdateMemberApproveStatusCommandHandler> logger)
+                                                   IApplicationDbContext dbContext, IEmailService emailService, ILogger<UpdateMemberApproveStatusCommandHandler> logger, IUnitOfWork unitOfWork)
     {
         _unitRepository = unitRepository;
         _commonServiceClient = commonServiceClient;
@@ -61,6 +62,7 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
         _dbContext = dbContext;
         _emailService = emailService;
         _logger = logger;
+        _unitOfWork = unitOfWork;
     }
     #endregion
 
@@ -74,18 +76,15 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
             throw new RequestIdNotFoundException(request.Id);
         }
 
-        // Fetch the apartment (company) name using ApartmentId
         string apartmentName = await _dbContext.Set<Apartment>()
                               .Where(p => p.Id == residentRequest.ApartmentId)
                               .Select(p => p.Name).FirstOrDefaultAsync();
 
-        int lastUnitId = await _unitRepository.GetLastUnitIdAsync();
-        int newUnitId = lastUnitId + 1;
-
         string unitName = $"{residentRequest.FirstName ?? string.Empty} {residentRequest.LastName ?? string.Empty}".Trim();
 
-        var unit = new Unit(newUnitId, unitName, 117, 193, 1, 1, 1, 1, 1, 1, 1, "1.0", "1.1", residentRequest.ApartmentId, Guid.NewGuid());
+        var unit = new Unit(unitName, 117, 193, 1, 1, 1, 1, 1, 1, 1, "1.0", "1.1", residentRequest.ApartmentId, Guid.NewGuid());
         _unitRepository.Insert(unit);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         var customerDto = new Contracts.CustomerDto
         {
@@ -101,18 +100,29 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
         residentRequest.RequestStatusId = ResidentRequestStatus.APPROVED;
         residentRequest.UnitId = unit.Id;
         _residentRequestRepository.Update(residentRequest);
-       
-        int lastResidentId = await _residentRepository.GetLastResidentIdAsync();
-        int newResidentId = lastResidentId + 1;
-        Guid newUserId = Guid.NewGuid();
 
-        var resident = new Resident(newResidentId, residentRequest.ApartmentId, residentRequest.FirstName, residentRequest.LastName, residentRequest.Email, residentRequest.ContactNumber, residentRequest.PermanentAddressId, newUserId, residentRequest.ResidentTypeId, residentRequest.OccupancyStatusId);
+
+        var existingUserResult = await _commonServiceClient.GetUserByEmailOrPhoneAsync(residentRequest.Email, residentRequest.ContactNumber);
+
+        Guid newUserId;
+        if (existingUserResult != null)
+        {
+            newUserId = existingUserResult.Id;
+        }
+        else
+        {
+            newUserId = Guid.NewGuid();
+        }
+
+
+
+        var resident = new Resident(residentRequest.ApartmentId, residentRequest.FirstName, residentRequest.LastName, residentRequest.Email, residentRequest.ContactNumber, residentRequest.PermanentAddressId, newUserId, residentRequest.ResidentTypeId, residentRequest.OccupancyStatusId);
         _residentRepository.Insert(resident);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        int lastResidentUnitId = await _residentUnitRepository.GetLastResidentIdAsync();           
-        int newResidentUnitId = lastResidentUnitId + 1;
-        var residentUnit = new ResidentUnit(newResidentUnitId, unit.Id, resident.Id);
+        var residentUnit = new ResidentUnit(unit.Id, resident.Id);
         _residentUnitRepository.Insert(residentUnit);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         var user = new User(newUserId, residentRequest.ApartmentId, new Domain.Entities.Users.FirstName(residentRequest.FirstName), new LastName(residentRequest.LastName), new Email(residentRequest.Email), new ContactNumber(residentRequest.ContactNumber), residentRequest.ResidentTypeId == (int)ResidentType.OWNER);
         _userRepository.Insert(user);
@@ -127,7 +137,7 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
 
         if (memberDetail != null)
         {
-            memberDetail.ResidentId = newResidentId;
+            memberDetail.ResidentId = resident.Id;
             _memberAdditionalDetailRepository.Update(memberDetail);
         }
 
@@ -159,6 +169,6 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
         return Result.Success(new EntityUpdatedResponse(residentRequest.Id));
     }
     #endregion
-    
+
 
 }

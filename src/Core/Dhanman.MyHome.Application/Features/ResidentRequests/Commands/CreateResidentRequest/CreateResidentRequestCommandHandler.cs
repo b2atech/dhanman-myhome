@@ -9,6 +9,7 @@ using Dhanman.MyHome.Domain.Entities.Addresses;
 using Dhanman.MyHome.Domain.Entities.Cities;
 using Dhanman.MyHome.Domain.Entities.ResidentRequests;
 using MediatR;
+using System.Threading.Tasks;
 using ResidentRequestAddress = Dhanman.MyHome.Application.Contracts.ServiceProviders.Address;
 
 namespace Dhanman.MyHome.Application.Features.ResidentRequests.Commands.CreateResidentRequest;
@@ -19,17 +20,18 @@ public class CreateResidentRequestCommandHandler : ICommandHandler<CreateResiden
     private readonly IResidentRequestRepository _residentRequestRepository;
     private readonly IAddressRepository _addressRepository;
     private readonly IMediator _mediator;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IApplicationDbContext _dbContext;
     #endregion
 
     #region Constructors
-    public CreateResidentRequestCommandHandler(IResidentRequestRepository residentRequestRepository, IAddressRepository addressRepository, IMediator mediator, IApplicationDbContext dbContext)
+    public CreateResidentRequestCommandHandler(IResidentRequestRepository residentRequestRepository, IAddressRepository addressRepository, IMediator mediator, IApplicationDbContext dbContext, IUnitOfWork unitOfWork)
     {
         _residentRequestRepository = residentRequestRepository;
         _addressRepository = addressRepository;
         _mediator = mediator;
         _dbContext = dbContext;
-
+        _unitOfWork = unitOfWork;
     }
     #endregion
 
@@ -40,17 +42,18 @@ public class CreateResidentRequestCommandHandler : ICommandHandler<CreateResiden
 
         if (request.PermanentAddress != null)
         {
-            Guid cityId = GetCityId(request.PermanentAddress.CityName, request.PermanentAddress.ZipCode, request.PermanentAddress.StateId);
+            Guid cityId = await GetCityId(request.PermanentAddress.CityName, request.PermanentAddress.ZipCode, request.PermanentAddress.StateId);
             var permanentAddress = GetAddress(request.PermanentAddress, cityId);
             _addressRepository.Insert(permanentAddress);
             addressId = permanentAddress.Id; 
         }
 
-        int nextResidentRequestId = _residentRequestRepository.GetTotalRecordsCount() + 1;
+       // int nextResidentRequestId = _residentRequestRepository.GetTotalRecordsCount() + 1;
+
         int requestStatusId = ResidentRequestStatus.PENDING_REQUEST;
 
         var residentRequest = new ResidentRequest(
-            nextResidentRequestId,
+          //  nextResidentRequestId,
             request.UnitId,
             request.FirstName,
             request.LastName,
@@ -64,12 +67,14 @@ public class CreateResidentRequestCommandHandler : ICommandHandler<CreateResiden
 
         _residentRequestRepository.Insert(residentRequest);
 
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+
         await _mediator.Publish(new ResidentRequestCreatedEvent(residentRequest.Id), cancellationToken);
 
         return Result.Success(new EntityCreatedResponse(residentRequest.Id));
     }
 
-    private Guid GetCityId(string cityName, string zipCode, Guid stateId)
+    private async Task<Guid> GetCityId(string cityName, string zipCode, Guid stateId)
     {
         string lowerCityName = cityName.ToLower();
 
@@ -79,6 +84,7 @@ public class CreateResidentRequestCommandHandler : ICommandHandler<CreateResiden
         {
             city = new City(Guid.NewGuid(), stateId, zipCode, cityName);
             _dbContext.Set<City>().Add(city);
+            await _unitOfWork.SaveChangesAsync();
         }
 
         return city.Id;
