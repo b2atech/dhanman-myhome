@@ -58,7 +58,9 @@ public class CommonServiceClient : ServiceClientBase, ICommonServiceClient
         try
         {
             HttpResponseMessage response = await _httpClient.SendAsync(request);
-            response.EnsureSuccessStatusCode();
+            //response.EnsureSuccessStatusCode();
+            //if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            //return null;
             return await response.Content.ReadAsStringAsync();
         }
         catch (HttpRequestException e)

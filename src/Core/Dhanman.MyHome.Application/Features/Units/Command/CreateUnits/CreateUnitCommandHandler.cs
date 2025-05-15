@@ -18,26 +18,28 @@ namespace Dhanman.MyHome.Application.Features.Units.Command.CreateUnits
         private readonly ICommonServiceClient _commonServiceClient;
         private readonly ISalesServiceClient _salesServiceClient;
         private readonly IUserContextService _userContextService;
+        private readonly IUnitOfWork _unitOfWork;
         #endregion
 
         #region Constructor
-        public CreateUnitCommandHandler(IUnitRepository unitRepository, IMediator mediator, ICommonServiceClient commonServiceClient, ISalesServiceClient salesServiceClient, IUserContextService userContextService)
+        public CreateUnitCommandHandler(IUnitRepository unitRepository, IMediator mediator, ICommonServiceClient commonServiceClient, ISalesServiceClient salesServiceClient, IUserContextService userContextService, IUnitOfWork unitOfWork)
         {
             _unitRepository = unitRepository;
             _mediator = mediator;
             _commonServiceClient = commonServiceClient;
             _salesServiceClient = salesServiceClient; 
             _userContextService = userContextService;
+            _unitOfWork = unitOfWork;
         }
         #endregion
 
         #region Methods
         public async Task<Result<EntityCreatedResponse>> Handle(CreateUnitCommand request, CancellationToken cancellationToken)
         {
-            int lastId = await _unitRepository.GetLastUnitIdAsync();
-            int newId = lastId + 1;
+            //int lastId = await _unitRepository.GetLastUnitIdAsync();
+            //int newId = lastId + 1;
 
-            var unit = new Unit(newId, 
+            var unit = new Unit(
                    request.Name, 
                    request.BuildingId,
                    request.FloorId,
@@ -54,7 +56,9 @@ namespace Dhanman.MyHome.Application.Features.Units.Command.CreateUnits
                    Guid.NewGuid()
                     );
 
-            _unitRepository.Insert( unit );
+            _unitRepository.Insert(unit);
+
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             await _commonServiceClient.CreateCustomerAsync(new Contracts.CustomerDto() { Id = unit.CustomerId, Name = request.Name, CompanyId = request.ApartmentId, CreatedBy = _userContextService.GetCurrentUserId() });
             await _salesServiceClient.CreateCustomerAsync(new Contracts.CustomerDto() { Id = unit.CustomerId, Name = request.Name, CompanyId = request.ApartmentId, CreatedBy = _userContextService.GetCurrentUserId() });
