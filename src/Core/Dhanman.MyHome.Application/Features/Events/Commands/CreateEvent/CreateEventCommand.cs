@@ -11,6 +11,7 @@ public class CreateEventCommand : ICommand<Result<EntityCreatedResponse>>
     public Guid CompanyId { get; set; }
     public int CommunityCalenderId { get; set; }
     public string Title { get; set; }
+    public int EventTypeId { get; set; }
     public string Description { get; set; }
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
@@ -21,12 +22,13 @@ public class CreateEventCommand : ICommand<Result<EntityCreatedResponse>>
     #endregion
 
     #region Constructors
-    public CreateEventCommand(Guid id, Guid companyId, int communityCalenderId, string title, string description, DateTime startTime, DateTime endTime, bool isRecurring, string recurrenceRule, int recurrenceRuleId, DateTime? recurrenceEndDate)
+    public CreateEventCommand(Guid id, Guid companyId, int communityCalenderId, string title, int eventTypeId, string description, DateTime startTime, DateTime endTime, bool isRecurring, string recurrenceRule, int recurrenceRuleId, DateTime? recurrenceEndDate)
     {
         Id = id;
         CompanyId = companyId;
         CommunityCalenderId = communityCalenderId;
         Title = title;
+        EventTypeId = eventTypeId;
         Description = description;
         StartTime = startTime;
         EndTime = endTime;

@@ -35,6 +35,7 @@ public class UpdateEventCommandHandler : ICommandHandler<UpdateEventCommand, Res
                 request.CompanyId,
                 request.CommunityCalenderId,
                 request.Title,
+                request.EventTypeId,
                 request.Description,
                 request.StartTime,
                 request.EndTime,
@@ -49,6 +50,7 @@ public class UpdateEventCommandHandler : ICommandHandler<UpdateEventCommand, Res
         {
             existingEvent.CommunityCalenderId = request.CommunityCalenderId;
             existingEvent.Title = request.Title;
+            existingEvent.EventTypeId = request.EventTypeId;
             existingEvent.Description = request.Description;
             existingEvent.StartTime = request.StartTime;
             existingEvent.EndTime = request.EndTime;

@@ -4,6 +4,7 @@ using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Events;
 using Dhanman.MyHome.Domain;
 using Dhanman.MyHome.Domain.Entities.Events;
+using Dhanman.MyHome.Domain.Entities.EventTypes;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dhanman.MyHome.Application.Features.Events.Queries;
@@ -25,26 +26,31 @@ public class GetAllEventsQueryHandler : IQueryHandler<GetAllEventsQuery, Result<
               .Ensure(query => query != null, Errors.General.EntityNotFound)
               .Bind(async query =>
               {
-                  var residents = await _dbContext.Set<Event>()
-                  .AsNoTracking()
-                  .Where(e => e.CompanyId == query.CompanyId)
-                  .Select(e => new EventResponse(
-                          e.Id,
-                          e.CompanyId,
-                          e.CommunityCalenderId,
-                          e.Title,
-                          e.Description,
-                          e.StartTime,
-                          e.EndTime,
-                          e.IsRecurring,
-                          e.RecurrenceRule,
-                          e.RecurrenceRuleId,
-                          e.RecurrenceEndDate))
-                  .ToListAsync(cancellationToken);
-                  var listResponse = new EventListResponse(residents);
+                  var events = await (
+                                            from e in _dbContext.Set<Event>()
+                                            join et in _dbContext.SetInt<EventType>()
+                                         on e.EventTypeId equals et.Id
+                                            where e.CompanyId == query.CompanyId
+                                            select new EventResponse(
+                                                   e.Id,
+                                                   e.CompanyId,
+                                                   e.CommunityCalenderId,
+                                                   e.Title,
+                                                   e.EventTypeId,
+                                                   et.Name,
+                                                   e.Description,
+                                                   e.StartTime,
+                                                   e.EndTime,
+                                                   e.IsRecurring,
+                                                   e.RecurrenceRule,
+                                                   e.RecurrenceRuleId,
+                                                   e.RecurrenceEndDate
+                                                                       )
+                                            ).ToListAsync(cancellationToken);
+                  var listResponse = new EventListResponse(events);
                   return listResponse;
               });
     }
 
-  #endregion
+    #endregion
 }

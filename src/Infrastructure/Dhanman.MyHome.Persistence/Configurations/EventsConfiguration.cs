@@ -27,6 +27,10 @@ internal sealed class EventsConfiguration : IEntityTypeConfiguration<Event>
             .HasColumnName("title")
             .IsRequired();
 
+        builder.Property(eventEntity => eventEntity.EventTypeId)
+            .HasColumnName("event_type_id")
+            .IsRequired();
+
         builder.Property(eventEntity => eventEntity.Description)
             .HasColumnName("description"); 
 

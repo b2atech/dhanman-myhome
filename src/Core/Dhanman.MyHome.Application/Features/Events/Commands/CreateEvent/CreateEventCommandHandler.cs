@@ -34,6 +34,7 @@ public class CreateEventCommandHandler : ICommandHandler<CreateEventCommand, Res
                 request.CompanyId,
                 request.CommunityCalenderId,
                 request.Title,
+                request.EventTypeId,
                 request.Description,
                 request.StartTime,
                 request.EndTime,
