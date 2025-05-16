@@ -10,6 +10,6 @@ public interface IBuildingRepository
     void Insert(Building building);
     void Update(Building building);
     void Delete(Building building);
-    Task<int> GetLastBuildingIdAsync();
+    //Task<int> GetLastBuildingIdAsync();
     #endregion
 }

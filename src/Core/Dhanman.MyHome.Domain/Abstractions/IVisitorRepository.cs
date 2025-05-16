@@ -9,6 +9,6 @@ public interface IVisitorRepository
     void Insert(Visitor visitor);
     void Update(Visitor visitor);
     void Delete(Visitor visitor);
-    Task<int> GetLastVisitorIdAsync();
+   // Task<int> GetLastVisitorIdAsync();
     #endregion
 }

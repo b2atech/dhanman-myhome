@@ -26,9 +26,9 @@ public class Building : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public Building(int id, string name, int buildingTypeId, Guid apartmentId, int totalUnits)
+    public Building(string name, int buildingTypeId, Guid apartmentId, int totalUnits)
     {
-        Id = id;
+        //Id = id;
         ApartmentId = apartmentId;
         Name = name;
         BuildingTypeId = buildingTypeId;

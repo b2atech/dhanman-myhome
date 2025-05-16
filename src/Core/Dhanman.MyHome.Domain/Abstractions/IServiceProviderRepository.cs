@@ -13,7 +13,7 @@ public interface IServiceProviderRepository
 
     void Update(ServiceProvider serviceProvider);
 
-    int GetTotalRecordsCount();
+   // int GetTotalRecordsCount();
 
     #endregion
 

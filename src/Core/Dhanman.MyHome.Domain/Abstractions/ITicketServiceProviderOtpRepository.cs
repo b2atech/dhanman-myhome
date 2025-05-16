@@ -13,7 +13,7 @@ public interface ITicketServiceProviderOtpRepository
 
     void Update(TicketServiceProviderOtp unit);
 
-    int GetTotalRecordsCount();
+    //int GetTotalRecordsCount();
 
     Task<bool> IsFlatValidAsync(string name);
     #endregion

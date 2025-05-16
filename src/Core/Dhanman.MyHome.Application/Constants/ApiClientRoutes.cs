@@ -11,5 +11,7 @@ public class ApiClientRoutes
     public static class User
     {
         public const string CreateUser = "users";
+
+        public const string GetUserByEmailOrPhone = "users/by-email-or-phone";
     }
 }

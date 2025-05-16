@@ -13,7 +13,7 @@ public interface IOccupantTypeRepository
 
     void Update(OccupantType occupantType);
 
-    int GetTotalRecordsCount();
+    //int GetTotalRecordsCount();
 
     #endregion
 }

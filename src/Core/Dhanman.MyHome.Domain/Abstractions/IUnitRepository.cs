@@ -13,7 +13,7 @@ public interface IUnitRepository
 
     void Update(Unit unit);
 
-    int GetTotalRecordsCount();
+    //int GetTotalRecordsCount();
 
     Task<bool> IsFlatValidAsync(string name);
     Task<int> GetLastUnitIdAsync();

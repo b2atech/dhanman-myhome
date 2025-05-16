@@ -27,9 +27,9 @@ public class Floor : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public Floor(int id, string name, Guid apartmentId, int buildingId, int totalUnits)
+    public Floor(string name, Guid apartmentId, int buildingId, int totalUnits)
     {
-        Id = id;
+       // Id = id;
         Name = name;
         ApartmentId = apartmentId;
         BuildingId = buildingId;

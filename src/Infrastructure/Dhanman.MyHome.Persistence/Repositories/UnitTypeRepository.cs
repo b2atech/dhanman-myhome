@@ -29,7 +29,7 @@ internal class UnitTypeRepository: IUnitTypeRepository
     public void Insert(UnitType unitType) => _dbContext.InsertInt(unitType);
     public void Delete(UnitType unitType) => _dbContext.RemoveInt(unitType);
     public void Update(UnitType unitType) => _dbContext?.UpdateInt(unitType);
-    public int GetTotalRecordsCount() => UnitType.Count();
+    //public int GetTotalRecordsCount() => UnitType.Count();
 
     #endregion
 }

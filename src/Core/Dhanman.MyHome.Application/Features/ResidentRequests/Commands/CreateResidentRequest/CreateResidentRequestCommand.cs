@@ -8,7 +8,7 @@ namespace Dhanman.MyHome.Application.Features.ResidentRequests.Commands.CreateRe
 public class CreateResidentRequestCommand : ICommand<Result<EntityCreatedResponse>>
 {
     #region Properties
-    public int Id { get; set; }   
+    public Guid ApartmentId { get; set; }
     public int UnitId { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
@@ -20,8 +20,9 @@ public class CreateResidentRequestCommand : ICommand<Result<EntityCreatedRespons
     #endregion
 
     #region Constructors
-    public CreateResidentRequestCommand(int unitId, string firstName, string lastName, string email, string contactNumber, Address permanentAddress,  int residentTypeId, int occupancyStatusId)
-    {       
+    public CreateResidentRequestCommand(Guid apartmentId, int unitId, string firstName, string lastName, string email, string contactNumber, Address permanentAddress,  int residentTypeId, int occupancyStatusId)
+    {
+        ApartmentId = apartmentId;
         UnitId = unitId;
         FirstName = firstName;
         LastName = lastName;
@@ -32,7 +33,6 @@ public class CreateResidentRequestCommand : ICommand<Result<EntityCreatedRespons
         OccupancyStatusId = occupancyStatusId;     
        
     }
-
 
     public CreateResidentRequestCommand() { }
 

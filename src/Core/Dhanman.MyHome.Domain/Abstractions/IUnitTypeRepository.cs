@@ -13,7 +13,7 @@ public interface IUnitTypeRepository
 
     void Update(UnitType unitType);
 
-    int GetTotalRecordsCount();
+    //int GetTotalRecordsCount();
 
     #endregion
 }

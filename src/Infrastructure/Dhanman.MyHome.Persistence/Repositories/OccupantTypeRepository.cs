@@ -29,7 +29,7 @@ internal class OccupantTypeRepository : IOccupantTypeRepository
     public void Insert(OccupantType occupantType) => _dbContext.InsertInt(occupantType);
     public void Delete(OccupantType occupantType) => _dbContext.RemoveInt(occupantType);
     public void Update(OccupantType occupantType) => _dbContext?.UpdateInt(occupantType);
-    public int GetTotalRecordsCount() => OccupantType.Count();
+    //public int GetTotalRecordsCount() => OccupantType.Count();
 
     #endregion
 }

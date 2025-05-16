@@ -14,24 +14,25 @@ public class CreateBuildingCommandHandler : ICommandHandler<CreateBuildingComman
     #region Properties
     private readonly IBuildingRepository _buildingRepository;
     private readonly IMediator _mediator;
+    private readonly IUnitOfWork _unitOfWork;
     #endregion
 
     #region Constructors
-    public CreateBuildingCommandHandler(IBuildingRepository buildingRepository, IMediator mediator)
+    public CreateBuildingCommandHandler(IBuildingRepository buildingRepository, IMediator mediator, IUnitOfWork unitOfWork)
     {
         _buildingRepository = buildingRepository;
         _mediator = mediator;
+        _unitOfWork = unitOfWork;
     }
     #endregion
 
     #region Methods
     public async Task<Result<EntityCreatedResponse>> Handle(CreateBuildingCommand request, CancellationToken cancellationToken)
     {
-        int lastId = await _buildingRepository.GetLastBuildingIdAsync();
-        int newId = lastId + 1;
+        //int lastId = await _buildingRepository.GetLastBuildingIdAsync();
+       // int newId = lastId + 1;
 
         var building = new Building(
-            newId,
             request.Name,
             request.BuildingTypeId,
             request.ApartmentId,
@@ -39,6 +40,7 @@ public class CreateBuildingCommandHandler : ICommandHandler<CreateBuildingComman
         );
 
         _buildingRepository.Insert(building);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
         await _mediator.Publish(new BuildingCreatedEvent(building.Id), cancellationToken);
         return Result.Success(new EntityCreatedResponse(building.Id));
     }

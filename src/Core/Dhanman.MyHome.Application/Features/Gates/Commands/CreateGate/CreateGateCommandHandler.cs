@@ -27,11 +27,11 @@ public class CreateGateCommandHandler : ICommandHandler<CreateGateCommand, Resul
     #region Methods
     public async Task<Result<EntityCreatedResponse>> Handle(CreateGateCommand request, CancellationToken cancellationToken)
     {
-        int lastId = await _gateRepository.GetLastGateIdAsync();
-        int newId = lastId + 1;
+      //  int lastId = await _gateRepository.GetLastGateIdAsync();
+      //  int newId = lastId + 1;
 
         var gate = new Gate(
-            newId,
+       //     newId,
             request.Name,
             request.ApartmentId,
             request.BuildingId,

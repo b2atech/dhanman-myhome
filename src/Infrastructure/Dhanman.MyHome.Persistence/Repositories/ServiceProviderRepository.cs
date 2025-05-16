@@ -69,7 +69,7 @@ internal sealed class ServiceProviderRepository : IServiceProviderRepository
 
     public void Delete(ServiceProvider serviceProvider) => _dbContext.RemoveInt(serviceProvider);
     public void Update(ServiceProvider serviceProvider) => _dbContext?.UpdateInt(serviceProvider);
-    public int GetTotalRecordsCount() => ServiceProvider.Count();
+   // public int GetTotalRecordsCount() => ServiceProvider.Count();
 
     #endregion
 }

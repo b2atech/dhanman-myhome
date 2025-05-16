@@ -13,24 +13,26 @@ public class CreateFloorCommandHandler : ICommandHandler<CreateFloorCommand, Res
     #region Properties
     private readonly IFloorRepository _floorRepository;
     private readonly IMediator _mediator;
+    private readonly IUnitOfWork _unitOfWork;
     #endregion
 
     #region Constructors
-    public CreateFloorCommandHandler(IFloorRepository floorRepository, IMediator mediator)
+    public CreateFloorCommandHandler(IFloorRepository floorRepository, IMediator mediator, IUnitOfWork unitOfWork)
     {
         _floorRepository = floorRepository;
         _mediator = mediator;
+        _unitOfWork = unitOfWork;
     }
     #endregion
 
     #region Methods
     public async Task<Result<EntityCreatedResponse>> Handle(CreateFloorCommand request, CancellationToken cancellationToken)
     {
-        int lastId = await _floorRepository.GetLastFloorIdAsync();
-        int newId = lastId + 1;
+       // int lastId = await _floorRepository.GetLastFloorIdAsync();
+       // int newId = lastId + 1;
 
         var floor = new Floor(
-            newId,
+         //   newId,
             request.Name,
             request.ApartmentId,
             request.BuildingId,
@@ -38,6 +40,7 @@ public class CreateFloorCommandHandler : ICommandHandler<CreateFloorCommand, Res
         );
 
         _floorRepository.Insert(floor);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
         await _mediator.Publish(new BuildingCreatedEvent(floor.Id), cancellationToken);
         return Result.Success(new EntityCreatedResponse(floor.Id));
     }

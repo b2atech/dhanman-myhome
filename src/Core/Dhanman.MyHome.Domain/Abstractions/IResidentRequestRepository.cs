@@ -13,7 +13,7 @@ public interface IResidentRequestRepository
 
     void Update(ResidentRequest residentRequest);
 
-    int GetTotalRecordsCount();
+    //int GetTotalRecordsCount();
 
     #endregion
 

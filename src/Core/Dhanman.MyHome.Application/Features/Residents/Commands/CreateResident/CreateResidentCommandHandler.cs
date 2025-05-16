@@ -52,15 +52,29 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
     #region Methodes
     public async Task<Result<EntityCreatedResponse>> Handle(CreateResidentCommand request, CancellationToken cancellationToken)
     {
+        var existingUserResult = await _commonServiceClient.GetUserByEmailOrPhoneAsync(request.Email, request.ContactNumber);
+
+
+        Guid newUserId;
+        if (existingUserResult != null)
+        {
+            newUserId = existingUserResult.Id;
+        }
+        else
+        {
+            newUserId = Guid.NewGuid();
+        }
         ResidentUnit residentUnit;
         Resident resident = _residentRepository.GetByEmail(request.Email, request.ApartmentId);
 
         if (resident != null)
         {            
-            int lastResidentUnitId = await _residentUnitRepository.GetLastResidentIdAsync();
-            int newResidentUnitId = lastResidentUnitId + 1;
-            residentUnit = new ResidentUnit(newResidentUnitId, request.UnitId, resident.Id);
+            //int lastResidentUnitId = await _residentUnitRepository.GetLastResidentIdAsync();
+            //int newResidentUnitId = lastResidentUnitId + 1;
+
+            residentUnit = new ResidentUnit(request.UnitId, resident.Id);
             _residentUnitRepository.Insert(residentUnit);
+            await _unitOfWork.SaveChangesAsync();
         }
         else
         {
@@ -74,19 +88,17 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
                 permanentAddressId = permanentAddress.Id;
             }
 
+         //   int lastResidentId = await _residentRepository.GetLastResidentIdAsync();
+         //   int newResidentId = lastResidentId + 1;
 
-            Guid newUserId = Guid.NewGuid();
-                        
-            int lastResidentId = await _residentRepository.GetLastResidentIdAsync();
-            int newResidentId = lastResidentId + 1;
-            resident = new Resident(newResidentId, request.ApartmentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, permanentAddressId, newUserId, request.ResidentTypeId, request.OccupancyStatusId);
+            resident = new Resident(request.ApartmentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, permanentAddressId, newUserId, request.ResidentTypeId, request.OccupancyStatusId);
             _residentRepository.Insert(resident);
             await _unitOfWork.SaveChangesAsync();
 
 
             var firstName = new Domain.Entities.Users.FirstName(request.FirstName);
-            var lastName = new LastName(request.LastName);
-            var email = new Email(request.Email);
+            var lastName = new Domain.Entities.Users.LastName(request.LastName);
+            var email = new Domain.Entities.Users.Email(request.Email);
             var contactNumber = new ContactNumber(request.ContactNumber);
 
 
@@ -109,10 +121,12 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
             //    residentUnit = new ResidentUnit(request.UnitId, resident.Id);
             //    _residentUnitRepository.Insert(residentUnit);
             //}            
-            int lastResidentUnitId = await _residentUnitRepository.GetLastResidentIdAsync();
-            int newResidentUnitId = lastResidentUnitId + 1;
-            residentUnit = new ResidentUnit(newResidentUnitId, request.UnitId, resident.Id); 
+
+           // int lastResidentUnitId = await _residentUnitRepository.GetLastResidentIdAsync();
+           // int newResidentUnitId = lastResidentUnitId + 1;
+            residentUnit = new ResidentUnit(request.UnitId, resident.Id); 
             _residentUnitRepository.Insert(residentUnit);
+            await _unitOfWork.SaveChangesAsync();
         }
 
         await _mediator.Publish(new ResidentCreatedEvent(resident.Id), cancellationToken);
