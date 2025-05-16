@@ -394,4 +394,12 @@ public static class ApiRoutes
       
 
     }
+
+    #region MeetingParticipants
+    public static class MeetingParticipants
+    {
+        public const string UpdateMeetingParticipant = apiVersion + "participants";
+        public const string GetAllMeetingParticipants = apiVersion + "occurrences/{occurrenceId:int}/participants";
+    }
+    #endregion
 }

@@ -5,12 +5,16 @@ using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.BookingFacilites;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.Events;
+using Dhanman.MyHome.Application.Contracts.MeetingParticipants;
 using Dhanman.MyHome.Application.Contracts.Residents;
+using Dhanman.MyHome.Application.Contracts.Users;
 using Dhanman.MyHome.Application.Features.BookingFacilities.Queries;
 using Dhanman.MyHome.Application.Features.Events.Commands.CreateEvent;
 using Dhanman.MyHome.Application.Features.Events.Commands.DeleteCommand;
 using Dhanman.MyHome.Application.Features.Events.Commands.UpdateEvent;
 using Dhanman.MyHome.Application.Features.Events.Queries;
+using Dhanman.MyHome.Application.Features.MeetingParticipants.Commands.UpdateMeetingParticipant;
+using Dhanman.MyHome.Application.Features.MeetingParticipants.Queries;
 using Dhanman.MyHome.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -120,6 +124,39 @@ public class EventsController : ApiController
     await Result.Success(new GetAllBookingFacilitesQuery())
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
+
+    #endregion
+
+    #region Meeting Participants
+    [HttpPut(ApiRoutes.MeetingParticipants.UpdateMeetingParticipant)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateMeetingParticipant([FromBody] UpdateMeetingParticipantRequest? request)
+    {
+        var result = await Result.Create(request, Errors.General.BadRequest)
+          .Map(value => new UpdateMeetingParticipantCommand(
+              value.OccurrenceId,
+              value.UserIds,
+              value.Role
+          ))
+          .Bind(command => Mediator.Send(command));
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
+
+
+    [HttpGet(ApiRoutes.MeetingParticipants.GetAllMeetingParticipants)]
+    [ProducesResponseType(typeof(UserNameListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllMeetingParticipants(int occurrenceId) =>
+       await Result.Success(new GetAllMeetingParticipantsQuery(occurrenceId))
+       .Bind(query => Mediator.Send(query))
+       .Match(Ok, NotFound);
 
     #endregion
 }
