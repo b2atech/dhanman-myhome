@@ -27,7 +27,7 @@ public class VisitorLogRepository : IVisitorLogRepository
     public void Delete(VisitorLog visitorLog) => _dbContext.RemoveInt(visitorLog);
 
     public DbSet<VisitorLog> VisitorLog => _dbContext.SetInt<VisitorLog>();
-    public int GetTotalRecordsCount() => VisitorLog.Count();
+    //public int GetTotalRecordsCount() => VisitorLog.Count();
 
     #endregion
 

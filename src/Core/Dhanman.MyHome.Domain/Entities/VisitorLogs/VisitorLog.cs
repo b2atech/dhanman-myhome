@@ -30,7 +30,7 @@ public class VisitorLog : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public VisitorLog(int id, int visitorId, int? visitorTypeId, string visitingFrom, DateTime entryTime, DateTime? exitTime, int visitorStatusId)
+    public VisitorLog(int visitorId, int? visitorTypeId, string visitingFrom, DateTime entryTime, DateTime? exitTime, int visitorStatusId)
     {
         VisitorId = visitorId;
         VisitorTypeId = visitorTypeId;

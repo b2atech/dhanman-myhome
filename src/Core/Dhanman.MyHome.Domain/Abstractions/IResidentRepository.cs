@@ -12,7 +12,7 @@ public interface IResidentRepository
     void Delete(Resident resident);
 
     void Update(Resident resident);
-    Task<int> GetLastResidentIdAsync();
+    //Task<int> GetLastResidentIdAsync();
 
     Resident? GetByEmail(string email, Guid ApartmentId);
 

@@ -13,9 +13,9 @@ public interface IResidentUnitRepository
 
     void Update(ResidentUnit residentUnit);
 
-    Task<int> GetLastResidentUnitIdAsync();
-    Task<int> GetLastResidentIdAsync();
-    List<ResidentUnit> GetByResidentId(int residentId);
+    //Task<int> GetLastResidentUnitIdAsync();
+    //Task<int> GetLastResidentIdAsync();
+    //List<ResidentUnit> GetByResidentId(int residentId);
     #endregion
 
 }

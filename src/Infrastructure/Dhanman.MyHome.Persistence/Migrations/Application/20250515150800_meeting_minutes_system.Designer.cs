@@ -3,6 +3,7 @@ using System;
 using Dhanman.MyHome.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dhanman.MyHome.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250515150800_meeting_minutes_system")]
+    partial class meeting_minutes_system
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -539,71 +542,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasName("pk_cities");
 
                     b.ToTable("cities", (string)null);
-                });
-
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.CommitteeMembers.CommitteeMember", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<Guid>("ApartmentId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("apartment_id");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uuid")
-                        .HasColumnName("created_by");
-
-                    b.Property<DateTime>("CreatedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("created_on_utc");
-
-                    b.Property<DateTime?>("DeletedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("deleted_on_utc");
-
-                    b.Property<DateTime>("EffectiveEndDate")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("effective_end_date");
-
-                    b.Property<DateTime>("EffectiveStartDate")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("effective_start_date");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("is_deleted");
-
-                    b.Property<Guid?>("ModifiedBy")
-                        .HasColumnType("uuid")
-                        .HasColumnName("modified_by");
-
-                    b.Property<DateTime?>("ModifiedOnUtc")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("modified_on_utc");
-
-                    b.Property<int>("PortfolioId")
-                        .HasColumnType("integer")
-                        .HasColumnName("portfolio_id");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("integer")
-                        .HasColumnName("role_id");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("Id")
-                        .HasName("pk_committee_members");
-
-                    b.ToTable("committee_members", (string)null);
                 });
 
             modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.CommunityCalenders.CommunityCalender", b =>
@@ -2094,34 +2032,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasName("pk_pins");
 
                     b.ToTable("pins", (string)null);
-                });
-
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.Portfolios.Portfolio", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<Guid>("ApartmentId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("apartment_id");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text")
-                        .HasColumnName("description");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.HasKey("Id")
-                        .HasName("pk_portfolios");
-
-                    b.ToTable("portfolios", (string)null);
                 });
 
             modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.ResidentRequests.ResidentRequest", b =>

@@ -27,9 +27,10 @@ public class Resident : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public Resident(int id, Guid apartmentId, string firstName, string lastName, string email, string contactNumber, Guid? permanentAddressId, Guid userId, int residentTypeId, int occupancyStatusId)
+   
+
+    public Resident(Guid apartmentId, string firstName, string lastName, string email, string contactNumber, Guid? permanentAddressId, Guid userId, int residentTypeId, int occupancyStatusId)
     {
-        Id = id;
         ApartmentId = apartmentId;
         FirstName = firstName;
         LastName = lastName;
@@ -37,19 +38,6 @@ public class Resident : EntityInt, IAuditableEntity, ISoftDeletableEntity
         ContactNumber = contactNumber;
         PermanentAddressId = permanentAddressId;
         UserId = userId;
-        ResidentTypeId = residentTypeId;
-        OccupancyStatusId = occupancyStatusId;       
-    }
-
-    public Resident(int id, Guid apartmentId, string firstName, string lastName, string email, string contactNumber, Guid? permanentAddressId, int residentTypeId, int occupancyStatusId)
-    {
-        Id = id; 
-        ApartmentId = apartmentId;
-        FirstName = firstName;
-        LastName = lastName;
-        Email = email;
-        ContactNumber = contactNumber;
-        PermanentAddressId = permanentAddressId;
         ResidentTypeId = residentTypeId;
         OccupancyStatusId = occupancyStatusId;
     }

@@ -21,14 +21,14 @@ public class BuildingRepository : IBuildingRepository
     public void Insert(Building building) => _dbContext.InsertInt(building);
 
     Task<Building?> IBuildingRepository.GetByIntIdAsync(int id) => _dbContext.GetBydIdIntAsync<Building>(id);
-    public async Task<int> GetLastBuildingIdAsync()
-    {
-        return await _dbContext.SetInt<Building>()
-            .IgnoreQueryFilters()
-            .OrderByDescending(b => b.Id)
-            .Select(b => b.Id)
-            .FirstOrDefaultAsync();
-    }
+    //public async Task<int> GetLastBuildingIdAsync()
+    //{
+    //    return await _dbContext.SetInt<Building>()
+    //        .IgnoreQueryFilters()
+    //        .OrderByDescending(b => b.Id)
+    //        .Select(b => b.Id)
+    //        .FirstOrDefaultAsync();
+    //}
 
     public void Update(Building building) => _dbContext.UpdateInt(building);
 

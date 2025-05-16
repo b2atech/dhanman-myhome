@@ -10,6 +10,6 @@ public interface IVisitorUnitLogRepository
     void Update(VisitorUnitLog visitorUnitLog);
     void Delete(VisitorUnitLog visitorUnitLog);
 
-    int GetTotalRecordsCount();
+   // int GetTotalRecordsCount();
     #endregion
 }

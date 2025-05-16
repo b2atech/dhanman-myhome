@@ -56,9 +56,9 @@ public class ServiceProvider : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public ServiceProvider(int id, string firstName, string? lastName, string? email, string visitingFrom, string contactNumber, Guid permanentAddressId, Guid presentAddressId, int serviceProviderTypeId, int serviceProviderSubTypeId, string? vehicleNumber, int identityTypeId, string identityNumber, DateTime validityDate, bool policeverificationStatus, bool isHireable, bool isVisible, bool isFrequentVisitor, Guid apartmentId, string pin)
+    public ServiceProvider( string firstName, string? lastName, string? email, string visitingFrom, string contactNumber, Guid permanentAddressId, Guid presentAddressId, int serviceProviderTypeId, int serviceProviderSubTypeId, string? vehicleNumber, int identityTypeId, string identityNumber, DateTime validityDate, bool policeverificationStatus, bool isHireable, bool isVisible, bool isFrequentVisitor, Guid apartmentId, string pin)
     {
-        Id = id;
+        //Id = id;
         FirstName = firstName;
         LastName = lastName;
         Email = email;

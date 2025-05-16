@@ -1,6 +1,7 @@
 ﻿using Dhanman.MyHome.Application.Abstractions;
 using Dhanman.MyHome.Application.Constants;
 using Dhanman.MyHome.Application.Contracts;
+using Dhanman.MyHome.Application.Contracts.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -57,7 +58,9 @@ public class CommonServiceClient : ServiceClientBase, ICommonServiceClient
         try
         {
             HttpResponseMessage response = await _httpClient.SendAsync(request);
-            response.EnsureSuccessStatusCode();
+            //response.EnsureSuccessStatusCode();
+            //if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            //return null;
             return await response.Content.ReadAsStringAsync();
         }
         catch (HttpRequestException e)
@@ -85,7 +88,8 @@ public class CommonServiceClient : ServiceClientBase, ICommonServiceClient
         }
 
         var response = await _httpClient.GetAsync(endpoint);
-        response.EnsureSuccessStatusCode();
+        if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            return null;
         return await response.Content.ReadAsStringAsync();
     }
 
@@ -139,6 +143,26 @@ public class CommonServiceClient : ServiceClientBase, ICommonServiceClient
         return response;
     }
 
+    public async Task<UserIdResponse> GetUserByEmailOrPhoneAsync(string? email, string? phoneNo)
+    {
+        string url = $"{_commonBaseUrl}{ApiClientRoutes.User.GetUserByEmailOrPhone}?email={email}&phoneNo={phoneNo}";
+
+        try
+        {
+            string json = await GetDataFromCommonServiceAsync(url);
+
+            if (string.IsNullOrWhiteSpace(json) || json == "null")
+                return null;
+
+            return JsonConvert.DeserializeObject<UserIdResponse>(json);
+        }
+        catch (HttpRequestException ex)
+        {
+            Console.WriteLine($"Request URL: {url}");
+            Console.WriteLine($"HTTP Request Exception: {ex.Message}");
+            throw;
+        }
+    }
     #endregion
 
 }

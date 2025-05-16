@@ -51,10 +51,10 @@ namespace Dhanman.MyHome.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public int GetTotalRecordsCount()
-        {
-            throw new NotImplementedException();
-        }
+        //public int GetTotalRecordsCount()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public void Insert(TicketServiceProviderOtp ticket) => _dbContext.Insert(ticket);
         public void Update(TicketServiceProviderOtp ticket) => _dbContext.Update(ticket);

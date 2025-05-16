@@ -50,6 +50,7 @@ public class PublicController : PublicApiController
     public async Task<IActionResult> CreateResidentRequest([FromBody] CreateResidentRequestRequest? request) =>
             await Result.Create(request, Errors.General.BadRequest)
             .Map(value => new CreateResidentRequestCommand(
+                value.ApartmentId,
                 value.UnitId,
                 value.FirstName,
                 value.LastName,

@@ -24,7 +24,7 @@ internal sealed class ResidentRequestRepository : IResidentRequestRepository
     public void Delete(ResidentRequest residentRequest) => _dbContext.RemoveInt(residentRequest);
 
     public void Update(ResidentRequest residentRequest) => _dbContext?.UpdateInt(residentRequest);
-    public int GetTotalRecordsCount() => ResidentRequest.Count();
+    //public int GetTotalRecordsCount() => ResidentRequest.Count();
 
     #endregion
 }

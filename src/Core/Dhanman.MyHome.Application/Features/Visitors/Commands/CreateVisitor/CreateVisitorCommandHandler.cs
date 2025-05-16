@@ -13,25 +13,26 @@ public class CreateVisitorCommandHandler : ICommandHandler<CreateVisitorCommand,
     #region Properties
     private readonly IVisitorRepository _visitorRepository;
     private readonly IMediator _mediator;
+    private readonly IUnitOfWork _unitOfWork;
     #endregion
 
     #region Constructors
-    public CreateVisitorCommandHandler(IVisitorRepository visitorRepository, IMediator mediator)
+    public CreateVisitorCommandHandler(IVisitorRepository visitorRepository, IMediator mediator, IUnitOfWork unitOfWork)
     {
         _visitorRepository = visitorRepository;
         _mediator = mediator;
+        _unitOfWork = unitOfWork;
     }
     #endregion
 
     #region Methodes
     public async Task<Result<EntityCreatedResponse>> Handle(CreateVisitorCommand request, CancellationToken cancellationToken)
     {
-        int lastId = await _visitorRepository.GetLastVisitorIdAsync();
-        int newId = lastId + 1;
+      //  int lastId = await _visitorRepository.GetLastVisitorIdAsync();
+      //  int newId = lastId + 1;
 
         var visitor = new Visitor
         (
-            newId,
             request.ApartmentId,
             request.FirstName,
             request.LastName,
@@ -44,6 +45,7 @@ public class CreateVisitorCommandHandler : ICommandHandler<CreateVisitorCommand,
             request.IdentityNumber
             );
         _visitorRepository.Insert(visitor);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
         await _mediator.Publish(new VisitorCreatedEvent(visitor.Id), cancellationToken);
         return Result.Success(new EntityCreatedResponse(visitor.Id));
     }

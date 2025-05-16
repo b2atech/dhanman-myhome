@@ -20,14 +20,14 @@ public class GateRepository : IGateRepository
 
     public Task<Gate?> GetByIntIdAsync(int id) => _dbContext.GetBydIdIntAsync<Gate>(id);
 
-    public async Task<int> GetLastGateIdAsync()
-    {
-        return await _dbContext.SetInt<Gate>()
-            .IgnoreQueryFilters()
-            .OrderByDescending(g => g.Id)
-            .Select(g => g.Id)
-            .FirstOrDefaultAsync();
-    }
+    //public async Task<int> GetLastGateIdAsync()
+    //{
+    //    return await _dbContext.SetInt<Gate>()
+    //        .IgnoreQueryFilters()
+    //        .OrderByDescending(g => g.Id)
+    //        .Select(g => g.Id)
+    //        .FirstOrDefaultAsync();
+    //}
 
     public void Insert(Gate gate) => _dbContext.InsertInt(gate);
 

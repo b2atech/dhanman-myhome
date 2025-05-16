@@ -25,23 +25,23 @@ public class ResidentUnitRepository : IResidentUnitRepository
 
     public Task<ResidentUnit?> GetBydIdIntAsync(int id) => _dbContext.GetBydIdIntAsync<ResidentUnit>(id);
 
-    public Task<int> GetLastResidentUnitIdAsync()
-    {
-        throw new NotImplementedException();
-    }
+    //public Task<int> GetLastResidentUnitIdAsync()
+    //{
+    //    throw new NotImplementedException();
+    //}
 
     public DbSet<ResidentUnit> ResidentUnit => _dbContext.SetInt<ResidentUnit>();
-    public async Task<int> GetLastResidentIdAsync()
-    {
-        return await _dbContext.SetInt<ResidentUnit>().
-            IgnoreQueryFilters()
-            .MaxAsync(b => b.Id);
-    }
-    public List<ResidentUnit> GetByResidentId(int residentId)
-    {
-        var units = _dbContext.SetInt<ResidentUnit>().Where(u => u.ResidentId == residentId).ToList();
-        return units;
-    }
+    //public async Task<int> GetLastResidentIdAsync()
+    //{
+    //    return await _dbContext.SetInt<ResidentUnit>().
+    //        IgnoreQueryFilters()
+    //        .MaxAsync(b => b.Id);
+    //}
+    //public List<ResidentUnit> GetByResidentId(int residentId)
+    //{
+    //    var units = _dbContext.SetInt<ResidentUnit>().Where(u => u.ResidentId == residentId).ToList();
+    //    return units;
+    //}
 
     #endregion
 }

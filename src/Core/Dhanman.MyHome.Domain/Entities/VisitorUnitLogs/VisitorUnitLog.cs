@@ -12,9 +12,8 @@ public class VisitorUnitLog : EntityInt, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public VisitorUnitLog(int id, int visitorLogId, int unitId)
+    public VisitorUnitLog( int visitorLogId, int unitId)
     {
-        Id = id;
         VisitorLogId = visitorLogId;
         UnitId = unitId;
     }

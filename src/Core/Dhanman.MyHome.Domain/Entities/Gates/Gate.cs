@@ -34,7 +34,7 @@ public class Gate : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public Gate(int id, string name, Guid apartmentId, int? buildingId, int gateTypeId,
+    public Gate(string name, Guid apartmentId, int? buildingId, int gateTypeId,
         bool isUsedForIn,
         bool isUsedForOut,
         bool isAllUsersAllowed,
@@ -42,7 +42,7 @@ public class Gate : EntityInt, IAuditableEntity, ISoftDeletableEntity
         bool isStaffAllowed,
         bool isVendorAllowed)
     {
-        Id = id;
+    //    Id = id;
         Name = name;
         ApartmentId = apartmentId;
         BuildingId = buildingId;
