@@ -20,15 +20,15 @@ public class VisitorRepository : IVisitorRepository
 
     public Task<Visitor?> GetByIntIdAsync(int id) => _dbContext.GetBydIdIntAsync<Visitor>(id);
 
-    public async Task<int> GetLastVisitorIdAsync()
-    {
-        return await _dbContext.SetInt<Visitor>()
-            .IgnoreQueryFilters()
-            //.OrderByDescending(g => g.Id)
-            //.Select(g => g.Id)
-            //.FirstOrDefaultAsync();
-            .MaxAsync(b => b.Id);
-    }
+    //public async Task<int> GetLastVisitorIdAsync()
+    //{
+    //    return await _dbContext.SetInt<Visitor>()
+    //        .IgnoreQueryFilters()
+    //        //.OrderByDescending(g => g.Id)
+    //        //.Select(g => g.Id)
+    //        //.FirstOrDefaultAsync();
+    //        .MaxAsync(b => b.Id);
+    //}
 
     public void Insert(Visitor visitor) => _dbContext.InsertInt(visitor);
 
