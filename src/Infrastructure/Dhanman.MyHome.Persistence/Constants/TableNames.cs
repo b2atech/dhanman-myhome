@@ -80,6 +80,8 @@ internal static class TableNames
 
     internal const string Events = "events";
 
+    internal const string EventTypes = "event_types";
+
     internal const string FacilityBookings = "facility_bookings  ";
 
     internal const string EventStatus = "event_status";
