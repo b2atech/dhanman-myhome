@@ -6,7 +6,7 @@ namespace Dhanman.MyHome.Domain.Entities.MeetingActionItems;
 public class MeetingActionItem : EntityInt, IAuditableEntity, ISoftDeletableEntity
 {
     #region Properties
-    public Guid OccurrenceId { get; set; }        // FK to event_occurrences
+    public int OccurrenceId { get; set; }        // FK to event_occurrences
     public string ActionDescription { get; set; } // Description of the action item
     public Guid AssignedToUserId { get; set; }    // FK to users
     public DateTime DueDate { get; set; }         // Due date for the action
@@ -23,7 +23,7 @@ public class MeetingActionItem : EntityInt, IAuditableEntity, ISoftDeletableEnti
     #endregion
 
     #region Constructor
-    public MeetingActionItem(Guid occurrenceId, string actionDescription, Guid assignedToUserId, DateTime dueDate, string status)
+    public MeetingActionItem(int occurrenceId, string actionDescription, Guid assignedToUserId, DateTime dueDate, string status)
     {
         OccurrenceId = occurrenceId;
         ActionDescription = actionDescription;
