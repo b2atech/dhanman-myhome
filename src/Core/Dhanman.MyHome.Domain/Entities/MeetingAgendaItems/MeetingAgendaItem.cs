@@ -5,7 +5,7 @@ namespace Dhanman.MyHome.Domain.Entities.MeetingAgendaItems;
 public class MeetingAgendaItem : EntityInt, IAuditableEntity, ISoftDeletableEntity
 {
     #region Properties
-    public Guid OccurrenceId { get; set; }  // FK to event_occurrences
+    public int OccurrenceId { get; set; }  // FK to event_occurrences
     public string ItemText { get; set; }    // Rich text agenda item
     public int OrderNo { get; set; }        // Order number for sorting
     #endregion
@@ -20,7 +20,7 @@ public class MeetingAgendaItem : EntityInt, IAuditableEntity, ISoftDeletableEnti
     #endregion
 
     #region Constructor
-    public MeetingAgendaItem(int id, Guid occurrenceId, string itemText, int orderNo)
+    public MeetingAgendaItem(int id, int occurrenceId, string itemText, int orderNo)
     {
         Id = id;
         OccurrenceId = occurrenceId;

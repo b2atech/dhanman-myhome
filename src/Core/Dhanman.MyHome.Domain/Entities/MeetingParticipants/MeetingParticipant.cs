@@ -6,7 +6,7 @@ namespace Dhanman.MyHome.Domain.Entities.MeetingParticipants;
 public class MeetingParticipant : EntityInt, IAuditableEntity, ISoftDeletableEntity
 {
     #region Properties
-    public Guid OccurrenceId { get; set; }  // FK to event_occurrences
+    public int OccurrenceId { get; set; }  // FK to event_occurrences
     public Guid UserId { get; set; }        // FK to users
     public string Role { get; set; }        // Chairperson, Member, Guest, etc.
     #endregion
@@ -21,7 +21,7 @@ public class MeetingParticipant : EntityInt, IAuditableEntity, ISoftDeletableEnt
     #endregion
 
     #region Constructor
-    public MeetingParticipant(int id, Guid occurrenceId, Guid userId, string role)
+    public MeetingParticipant(int id, int occurrenceId, Guid userId, string role)
     {
         Id = id;
         OccurrenceId = occurrenceId;
