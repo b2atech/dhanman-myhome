@@ -157,6 +157,12 @@ internal static class TableNames
     internal const string VisitorVehicles = "visitor_vehicles";
 
     internal const string CommunityCalenders = "community_calenders";
+
+    internal const string CommitteeMembers = "committee_members";
+
+    internal const string Portfolios = "portfolios";
+
+    internal const string CommitteeMemberDto = "committee_member_dto";
     internal const string EventOccurrences = "event_occurrences";
     internal const string MeetingParticipants = "meeting_participants";
     internal const string MeetingAgendaItems = "meeting_agenda_items";
