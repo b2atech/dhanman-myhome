@@ -6,6 +6,7 @@ using Dhanman.MyHome.Domain.Entities.Events;
 using Dhanman.MyHome.Domain;
 using Microsoft.EntityFrameworkCore;
 using Dhanman.MyHome.Application.Constants.Enums;
+using Dhanman.MyHome.Domain.Entities.EventTypes;
 
 
 namespace Dhanman.MyHome.Application.Features.Events.Queries;
@@ -22,29 +23,34 @@ public class GetEventByIdQueryHandler : IQueryHandler<GetEventByIdQuery, Result<
     #region Methods
     public async Task<Result<EventResponse>> Handle(GetEventByIdQuery request, CancellationToken cancellationToken)
     {
-            return await Result.Success(request)
-              .Ensure(query => query != null, Errors.General.EntityNotFound)
-              .Bind(async query =>
-              {
-                return await _dbContext.Set<Event>()
-                  .AsNoTracking()
-                  .Where(e => e.Id == query.Id)
-                  .Select(e => new EventResponse(
-                          e.Id,
-                          e.CompanyId,
-                          e.CommunityCalenderId,
-                          e.Title,
-                          e.Description,
-                          e.StartTime,
-                          e.EndTime,
-                          e.IsRecurring,
-                            e.RecurrenceRule,
-                            e.RecurrenceRuleId,
-                            e.RecurrenceEndDate
-                         ))
-                  .FirstOrDefaultAsync(cancellationToken);
-              });
-    }
+        return await Result.Success(request)
+          .Ensure(query => query != null, Errors.General.EntityNotFound)
+          .Bind(async query =>
+          {
+              var result = await (
+                                from e in _dbContext.Set<Event>().AsNoTracking()
+                                join et in _dbContext.SetInt<EventType>() on e.EventTypeId equals et.Id
+                                where e.Id == query.Id
+                                select new EventResponse(
+                                                e.Id,
+                                                e.CompanyId,
+                                                e.CommunityCalenderId,
+                                                e.Title,
+                                                e.EventTypeId,
+                                                et.Name,              // EventTypeName from joined table
+                                                e.Description,
+                                                e.StartTime,
+                                                e.EndTime,
+                                                e.IsRecurring,
+                                                e.RecurrenceRule,
+                                                e.RecurrenceRuleId,
+                                                e.RecurrenceEndDate
+                                                        )
+                                ).FirstOrDefaultAsync(cancellationToken);
 
+              return result;
+          }
+          );
+    }
     #endregion
 }
