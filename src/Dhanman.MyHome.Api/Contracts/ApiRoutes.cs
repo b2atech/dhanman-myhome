@@ -391,7 +391,12 @@ public static class ApiRoutes
     public static class CommitteeMembers
     {
         public const string GetAllCommitteeMembers = apiVersion + "apartments/{apartmentId:guid}/committee-members";
-      
+
+        public const string GetAllCommitteeMemberNames = apiVersion + "apartments/{apartmentId:guid}/committee-member-names";
+
+        public const string CreateCommitteeMember = apiVersion + "committee-member";
+
+
 
     }
 

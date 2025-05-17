@@ -93,6 +93,7 @@ public static class DependencyInjection
             services.AddScoped<IResidentTokenRepository, ResidentTokenRepository>();
             services.AddScoped<IMemberAdditionalDetailRepository, MemberAdditionalDetailRepository>();
             services.AddScoped<IMeetingParticipantRepository, MeetingParticipantRepository>();
+            services.AddScoped<ICommitteeMemberRepository, CommitteeMemberRepository>();
         }
         return services;
     }

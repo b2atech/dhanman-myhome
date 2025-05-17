@@ -11,7 +11,6 @@ public class CommitteeMember : EntityInt, IAuditableEntity, ISoftDeletableEntity
     public DateTime EffectiveEndDate { get; set; }
     public int RoleId { get; set; }
     public int PortfolioId { get; set; }
-
     public DateTime CreatedOnUtc { get; }
     public DateTime? ModifiedOnUtc { get; }
     public DateTime? DeletedOnUtc { get; }
@@ -21,9 +20,8 @@ public class CommitteeMember : EntityInt, IAuditableEntity, ISoftDeletableEntity
 
     public CommitteeMember() { }
 
-    public CommitteeMember(int id, Guid userId,Guid apartmentId, DateTime effectiveStartDate, DateTime effectiveEndDate, int roleId, int portfolioId, Guid createdBy)
+    public CommitteeMember(Guid userId,Guid apartmentId, DateTime effectiveStartDate, DateTime effectiveEndDate, int roleId, int portfolioId,Guid createdBy)
     {
-        Id = id;
         UserId = userId;
         ApartmentId = apartmentId;
         EffectiveStartDate = effectiveStartDate;

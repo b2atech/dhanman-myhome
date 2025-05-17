@@ -41,7 +41,7 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
         modelBuilder.Entity<VisitorApprovalInfoById>().ToTable(TableNames.VisitorApprovalInfoById, t => t.ExcludeFromMigrations());
         modelBuilder.Entity<AllVisitorLog>().ToTable(TableNames.AllVisitorLog, t => t.ExcludeFromMigrations());
         modelBuilder.Entity<VisitorDbDto>().ToTable(TableNames.VisitorDbDto, t => t.ExcludeFromMigrations());
-        modelBuilder.Entity<CommitteeMemberDto>().ToTable(TableNames.CommitteeMemberDto, t => t.ExcludeFromMigrations());
+        modelBuilder.Entity<CommitteeAllMemberDto>().ToTable(TableNames.CommitteeMemberDto, t => t.ExcludeFromMigrations());
         modelBuilder.ApplyUtcDateTimeConverter();
         base.OnModelCreating(modelBuilder);
 
