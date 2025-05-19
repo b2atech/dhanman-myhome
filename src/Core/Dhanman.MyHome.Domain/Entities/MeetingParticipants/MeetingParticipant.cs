@@ -8,7 +8,7 @@ public class MeetingParticipant : EntityInt, IAuditableEntity, ISoftDeletableEnt
     #region Properties
     public int OccurrenceId { get; set; }  // FK to event_occurrences
     public Guid UserId { get; set; }        // FK to users
-    public string Role { get; set; }        // Chairperson, Member, Guest, etc.
+    public string? Role { get; set; }        // Chairperson, Member, Guest, etc.
     #endregion
     
     #region Audit Properties
@@ -21,7 +21,7 @@ public class MeetingParticipant : EntityInt, IAuditableEntity, ISoftDeletableEnt
     #endregion
 
     #region Constructor
-    public MeetingParticipant(int id, int occurrenceId, Guid userId, string role)
+    public MeetingParticipant(int id, int occurrenceId, Guid userId, string? role)
     {
         Id = id;
         OccurrenceId = occurrenceId;

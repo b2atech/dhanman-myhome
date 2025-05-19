@@ -8,9 +8,9 @@ public class MeetingActionItem : EntityInt, IAuditableEntity, ISoftDeletableEnti
     #region Properties
     public int OccurrenceId { get; set; }        // FK to event_occurrences
     public string ActionDescription { get; set; } // Description of the action item
-    public Guid AssignedToUserId { get; set; }    // FK to users
-    public DateTime DueDate { get; set; }         // Due date for the action
-    public string Status { get; set; }             // Open, In Progress, Done  
+    public Guid? AssignedToUserId { get; set; }    // FK to users
+    public DateTime? DueDate { get; set; }         // Due date for the action
+    public string? Status { get; set; }             // Open, In Progress, Done  
     #endregion
 
     #region Audit Properties
@@ -23,7 +23,7 @@ public class MeetingActionItem : EntityInt, IAuditableEntity, ISoftDeletableEnti
     #endregion
 
     #region Constructor
-    public MeetingActionItem(int occurrenceId, string actionDescription, Guid assignedToUserId, DateTime dueDate, string status)
+    public MeetingActionItem(int occurrenceId, string actionDescription, Guid? assignedToUserId, DateTime? dueDate, string? status)
     {
         OccurrenceId = occurrenceId;
         ActionDescription = actionDescription;
