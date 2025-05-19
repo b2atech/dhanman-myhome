@@ -38,6 +38,7 @@ public sealed class GetCommitteeAllMembersByApartmentQueryHandler
                 var response = rawResult.Select(e => new CommitteeAllMemberResponse(
                     e.Id,
                     e.UserId,
+                    e.MemberName,
                     e.EffectiveStartDate,
                     e.EffectiveEndDate,
                     e.RoleId,

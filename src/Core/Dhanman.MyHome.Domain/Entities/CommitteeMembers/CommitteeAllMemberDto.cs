@@ -6,6 +6,9 @@ public sealed class CommitteeAllMemberDto : EntityInt
     [Column("user_id")]
     public Guid UserId { get; set; }
 
+    [Column("member_name")]
+    public string MemberName { get; set; }
+
     [Column("effective_start_date")]
     public DateTime EffectiveStartDate { get; set; }
 
@@ -29,6 +32,7 @@ public sealed class CommitteeAllMemberDto : EntityInt
     public CommitteeAllMemberDto(
         int id,
         Guid userId,
+        string memberName,
         DateTime effectiveStartDate,
         DateTime effectiveEndDate,
         int roleId,
@@ -38,6 +42,7 @@ public sealed class CommitteeAllMemberDto : EntityInt
     {
         Id = id;
         UserId = userId;
+        MemberName = memberName;
         EffectiveStartDate = effectiveStartDate;
         EffectiveEndDate = effectiveEndDate;
         RoleId = roleId;
