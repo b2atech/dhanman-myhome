@@ -209,6 +209,22 @@ public static class ApiRoutes
         public const string GetAllBokkingFacilities = apiVersion + "booking-facilities";
     }
 
+    public static class EventOccurrences
+    {
+        public const string CreateEventOccurrence = apiVersion + "event-occurrences";
+
+        public const string UpdateEventOccurrence = apiVersion + "event-occurrences";
+
+        public const string DeleteEventOccurrenceById = apiVersion + "event-occurrence/{id:int}";
+
+        public const string GetEventOccurrence = apiVersion + "event-occurrence/{id:int}";
+    }
+
+    public static class MeetingAgendaItems
+    {
+        public const string CreateMeetingAgendaItem = apiVersion + "meeting-agenda-items";
+    }
+
     public static class ServiceProviders
     {
         public const string CreateServiceProvider = apiVersion + "service-providers";

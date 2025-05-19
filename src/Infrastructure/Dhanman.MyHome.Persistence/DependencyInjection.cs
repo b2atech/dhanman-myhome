@@ -94,6 +94,8 @@ public static class DependencyInjection
             services.AddScoped<IMemberAdditionalDetailRepository, MemberAdditionalDetailRepository>();
             services.AddScoped<IMeetingParticipantRepository, MeetingParticipantRepository>();
             services.AddScoped<ICommitteeMemberRepository, CommitteeMemberRepository>();
+            services.AddScoped<IMeetingAgendaItemRepository, MeetingAgendaItemRepository>();
+            services.AddScoped<IEventOccurrenceRepository, EventOccurrenceRepository>();
         }
         return services;
     }

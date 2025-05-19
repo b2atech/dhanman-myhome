@@ -20,9 +20,8 @@ public class MeetingAgendaItem : EntityInt, IAuditableEntity, ISoftDeletableEnti
     #endregion
 
     #region Constructor
-    public MeetingAgendaItem(int id, int occurrenceId, string itemText, int orderNo)
+    public MeetingAgendaItem(int occurrenceId, string itemText, int orderNo)
     {
-        Id = id;
         OccurrenceId = occurrenceId;
         ItemText = itemText;
         OrderNo = orderNo;
