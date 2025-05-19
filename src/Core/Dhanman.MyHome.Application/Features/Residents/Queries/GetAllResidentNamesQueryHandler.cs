@@ -31,7 +31,8 @@ public class GetAllResidentNamesQueryHandler : IQueryHandler<GetAllResidentNames
                   .Select(e => new ResidentNameResponse(
                           e.Id,                           
                           e.FirstName,
-                          e.LastName))
+                          e.LastName,
+                          e.UserId))
                   .ToListAsync(cancellationToken);
 
                   var listResponse = new ResidentNameListResponse(residents);
