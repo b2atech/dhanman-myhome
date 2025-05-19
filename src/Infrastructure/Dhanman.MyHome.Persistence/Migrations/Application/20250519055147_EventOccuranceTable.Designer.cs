@@ -3,6 +3,7 @@ using System;
 using Dhanman.MyHome.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dhanman.MyHome.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250519055147_EventOccuranceTable")]
+    partial class EventOccuranceTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1062,10 +1065,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("event_id");
 
-                    b.Property<int>("EventOccurrenceStatusId")
-                        .HasColumnType("integer")
-                        .HasColumnName("EventOccurrenceStatusId");
-
                     b.Property<bool>("GeneratedFromRecurrence")
                         .HasColumnType("boolean")
                         .HasColumnName("generated_from_recurrence");
@@ -1099,6 +1098,11 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("start_time");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("status");
 
                     b.HasKey("Id")
                         .HasName("pk_event_occurrences");

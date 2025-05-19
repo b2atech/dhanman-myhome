@@ -11,7 +11,7 @@ public class EventOccurrence : EntityInt, IAuditableEntity, ISoftDeletableEntity
     public DateTime StartTime { get; set; }        // Timestamp
     public DateTime EndTime { get; set; }          // Timestamp
     public bool GeneratedFromRecurrence { get; set; }
-    public string Status { get; set; }              // Scheduled, Completed, Cancelled
+    public int EventOccurrenceStatusId { get; set; }              // Scheduled, Completed, Cancelled
     public string? RecordingUrl { get; set; }       // Optional
     public string? Notes { get; set; }              // Rich text notes
     #endregion
@@ -26,7 +26,7 @@ public class EventOccurrence : EntityInt, IAuditableEntity, ISoftDeletableEntity
     #endregion
 
     #region Constructor
-    public EventOccurrence(int id, Guid eventId, DateTime occurrenceDate, DateTime startTime, DateTime endTime, bool generatedFromRecurrence, string status, string? recordingUrl, string? notes, Guid? modifiedBy)
+    public EventOccurrence(int id, Guid eventId, DateTime occurrenceDate, DateTime startTime, DateTime endTime, bool generatedFromRecurrence, int eventOccurrenceStatusId, string? recordingUrl, string? notes, Guid? modifiedBy)
     {
         Id = id;
         EventId = eventId;
@@ -34,7 +34,7 @@ public class EventOccurrence : EntityInt, IAuditableEntity, ISoftDeletableEntity
         StartTime = startTime;
         EndTime = endTime;
         GeneratedFromRecurrence = generatedFromRecurrence;
-        Status = status;
+        EventOccurrenceStatusId = eventOccurrenceStatusId;
         RecordingUrl = recordingUrl;
         Notes = notes;
         ModifiedBy = modifiedBy;
