@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using B2aTech.CrossCuttingConcern.Abstractions;
+﻿using B2aTech.CrossCuttingConcern.Abstractions;
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
@@ -13,20 +12,19 @@ using Dhanman.MyHome.Application.Contracts.Residents;
 using Dhanman.MyHome.Application.Contracts.Users;
 using Dhanman.MyHome.Application.Features.BookingFacilities.Queries;
 using Dhanman.MyHome.Application.Features.EventOccurrences.Commands.CreateEventOccurrence;
+using Dhanman.MyHome.Application.Features.EventOccurrences.Commands.DeleteEventOccurrence;
+using Dhanman.MyHome.Application.Features.EventOccurrences.Commands.UpdateEventOccurrence;
+using Dhanman.MyHome.Application.Features.EventOccurrences.Queries;
 using Dhanman.MyHome.Application.Features.Events.Commands.CreateEvent;
 using Dhanman.MyHome.Application.Features.Events.Commands.DeleteCommand;
 using Dhanman.MyHome.Application.Features.Events.Commands.UpdateEvent;
 using Dhanman.MyHome.Application.Features.Events.Queries;
+using Dhanman.MyHome.Application.Features.MeetingAgendaItems.Commands.CreateMeetingAgendaItem;
 using Dhanman.MyHome.Application.Features.MeetingParticipants.Commands.UpdateMeetingParticipant;
 using Dhanman.MyHome.Application.Features.MeetingParticipants.Queries;
-using Dhanman.MyHome.Application.Features.MeetingAgendaItems.Commands.CreateMeetingAgendaItem;
 using Dhanman.MyHome.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using Dhanman.MyHome.Application.Features.EventOccurrences.Commands.UpdateEventOccurrence;
-using Dhanman.MyHome.Application.Features.Buildings.Commands.DeleteBuilding;
-using Dhanman.MyHome.Application.Features.EventOccurrences.Commands.DeleteEventOccurrence;
 
 namespace Dhanman.MyHome.Api.Controllers;
 
@@ -193,6 +191,14 @@ public class EventsController : ApiController
             return BadRequest(result.Error);
         }
     }
+
+    [HttpGet(ApiRoutes.EventOccurrences.GetEventOccurrence)]
+    [ProducesResponseType(typeof(EventOccurrenceResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetEventOccurrence(int id) =>
+   await Result.Success(new GetEventOccurrenceByIdQuery(id))
+   .Bind(query => Mediator.Send(query))
+   .Match(Ok, NotFound);
 
 
     #endregion

@@ -216,6 +216,8 @@ public static class ApiRoutes
         public const string UpdateEventOccurrence = apiVersion + "event-occurrences";
 
         public const string DeleteEventOccurrenceById = apiVersion + "event-occurrence/{id:int}";
+
+        public const string GetEventOccurrence = apiVersion + "event-occurrence/{id:int}";
     }
 
     public static class MeetingAgendaItems
