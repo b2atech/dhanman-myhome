@@ -142,7 +142,7 @@ internal static class TableNames
 
     internal const string VisitTypes = "visit_types";
 
-    internal const string ApprovedVisitorInfoById = "approved_visitor_info_by_id"; //// To Do //need to be removed
+    internal const string ApprovedVisitorInfoById = "approved_visitor_info_by_id";
 
     internal const string AllVisitorLog = "all_visitor_logs";
 
@@ -165,9 +165,15 @@ internal static class TableNames
     internal const string Portfolios = "portfolios";
 
     internal const string CommitteeMemberDto = "committee_member_dto";
+
     internal const string EventOccurrences = "event_occurrences";
+
     internal const string MeetingParticipants = "meeting_participants";
+
     internal const string MeetingAgendaItems = "meeting_agenda_items";
+
     internal const string MeetingActionItems = "meeting_action_items";
+
+    internal const string CommitteeAllMemberDto = "committee_all_member_dto";
 }
 
