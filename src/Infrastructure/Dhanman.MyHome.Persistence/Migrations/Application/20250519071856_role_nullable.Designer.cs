@@ -3,6 +3,7 @@ using System;
 using Dhanman.MyHome.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dhanman.MyHome.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250519071856_role_nullable")]
+    partial class role_nullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,54 +24,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("CommitteeAllMemberDto", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("EffectiveEndDate")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("effective_end_date");
-
-                    b.Property<DateTime>("EffectiveStartDate")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("effective_start_date");
-
-                    b.Property<int>("PortfolioId")
-                        .HasColumnType("integer")
-                        .HasColumnName("portfolio_id");
-
-                    b.Property<string>("PortfolioName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("portfolio_name");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("integer")
-                        .HasColumnName("role_id");
-
-                    b.Property<string>("RoleName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("role_name");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("Id")
-                        .HasName("pk_committee_all_member_dto");
-
-                    b.ToTable("committee_all_member_dto", null, t =>
-                        {
-                            t.ExcludeFromMigrations();
-                        });
-                });
 
             modelBuilder.Entity("Dhanan.MyHome.Domain.Entities.Banks.Bank", b =>
                 {
@@ -1012,27 +967,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.ToTable("delivery_company_categories", (string)null);
                 });
 
-            modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.EventOccurrenceStatuses.EventOccurrenceStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("name");
-
-                    b.HasKey("Id")
-                        .HasName("pk_event_occurrence_status");
-
-                    b.ToTable("event_occurrence_status", (string)null);
-                });
-
             modelBuilder.Entity("Dhanman.MyHome.Domain.Entities.EventOccurrences.EventOccurrence", b =>
                 {
                     b.Property<int>("Id")
@@ -1061,10 +995,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.Property<Guid>("EventId")
                         .HasColumnType("uuid")
                         .HasColumnName("event_id");
-
-                    b.Property<int>("EventOccurrenceStatusId")
-                        .HasColumnType("integer")
-                        .HasColumnName("EventOccurrenceStatusId");
 
                     b.Property<bool>("GeneratedFromRecurrence")
                         .HasColumnType("boolean")
@@ -1099,6 +1029,11 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("start_time");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("status");
 
                     b.HasKey("Id")
                         .HasName("pk_event_occurrences");
@@ -1263,10 +1198,6 @@ namespace Dhanman.MyHome.Persistence.Migrations
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("end_time");
-
-                    b.Property<int>("EventTypeId")
-                        .HasColumnType("integer")
-                        .HasColumnName("event_type_id");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
