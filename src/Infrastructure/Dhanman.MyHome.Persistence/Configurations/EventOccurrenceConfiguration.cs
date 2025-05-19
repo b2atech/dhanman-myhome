@@ -22,7 +22,7 @@ internal sealed class EventOccurrenceConfiguration : IEntityTypeConfiguration<Ev
 
         builder.Property(eventOccurrences => eventOccurrences.GeneratedFromRecurrence).HasColumnName("generated_from_recurrence");
 
-        builder.Property(eventOccurrences => eventOccurrences.Status).HasColumnName("status").IsRequired();
+        builder.Property(eventOccurrences => eventOccurrences.EventOccurrenceStatusId).HasColumnName("EventOccurrenceStatusId").IsRequired(true);
 
         builder.Property(eventOccurrences => eventOccurrences.RecordingUrl).HasColumnName("recording_url").IsRequired(false);
 
