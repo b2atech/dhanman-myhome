@@ -7,7 +7,7 @@ namespace Dhanman.MyHome.Domain.Abstractions;
 public interface IMeetingAgendaItemRepository
 {
     Task<MeetingAgendaItem> GetByIntIdAsync(int id);
-    void InsertInt(MeetingAgendaItem meetingAgendaItem);
-    void UpdateInt(MeetingAgendaItem meetingAgendaItem);
-    void DeleteInt(MeetingAgendaItem meetingAgendaItem);
+    void Insert(MeetingAgendaItem meetingAgendaItem);
+    void Update(MeetingAgendaItem meetingAgendaItem);
+    void Delete(MeetingAgendaItem meetingAgendaItem);
 }

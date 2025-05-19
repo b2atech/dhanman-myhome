@@ -223,6 +223,12 @@ public static class ApiRoutes
     public static class MeetingAgendaItems
     {
         public const string CreateMeetingAgendaItem = apiVersion + "meeting-agenda-items";
+
+        public const string UpdateMeetingAgendaItem = apiVersion + "meeting-agenda-items";
+
+        public const string DeleteMeetingAgendaItemById = apiVersion + "meeting-agenda-item/{id:int}";
+
+        public const string GetMeetingAgendaItemById = apiVersion + "meeting-agenda-item/{id:int}";
     }
 
     public static class ServiceProviders

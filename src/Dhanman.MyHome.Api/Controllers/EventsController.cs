@@ -20,6 +20,9 @@ using Dhanman.MyHome.Application.Features.Events.Commands.DeleteCommand;
 using Dhanman.MyHome.Application.Features.Events.Commands.UpdateEvent;
 using Dhanman.MyHome.Application.Features.Events.Queries;
 using Dhanman.MyHome.Application.Features.MeetingAgendaItems.Commands.CreateMeetingAgendaItem;
+using Dhanman.MyHome.Application.Features.MeetingAgendaItems.Commands.DeleteMeetingAgendaItem;
+using Dhanman.MyHome.Application.Features.MeetingAgendaItems.Commands.UpdateMeetingAgendaItem;
+using Dhanman.MyHome.Application.Features.MeetingAgendaItems.Query;
 using Dhanman.MyHome.Application.Features.MeetingParticipants.Commands.UpdateMeetingParticipant;
 using Dhanman.MyHome.Application.Features.MeetingParticipants.Queries;
 using Dhanman.MyHome.Domain;
@@ -216,6 +219,56 @@ public class EventsController : ApiController
                ))
             .Bind(command => Mediator.Send(command))
                   .Match(Ok, BadRequest);
+
+    [HttpPut(ApiRoutes.MeetingAgendaItems.UpdateMeetingAgendaItem)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateMeetingAgendaItem([FromBody] UpdateMeetingAgendaItemRequest? request)
+    {
+        var result = await Result.Create(request, Errors.General.BadRequest)
+          .Map(value => new UpdateMeetingAgendaItemCommand(
+              value.Id,
+              value.OccurrenceId,
+              value.ItemText,
+              value.OrderNo
+          ))
+          .Bind(command => Mediator.Send(command));
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
+
+
+    [HttpGet(ApiRoutes.MeetingAgendaItems.GetMeetingAgendaItemById)]
+    [ProducesResponseType(typeof(UserNameListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetMeetingAgendaItemById(int id) =>
+       await Result.Success(new GetMeetingAgendaItemByIdQuery(id))
+       .Bind(query => Mediator.Send(query))
+       .Match(Ok, NotFound);
+
+
+    [HttpDelete(ApiRoutes.MeetingAgendaItems.DeleteMeetingAgendaItemById)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteMeetingAgendaItemById(int id)
+    {
+        var result = await Result.Success(new DeleteMeetingAgendaItemCommand(id))
+                    .Bind(command => Mediator.Send(command));
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest(result.Error);
+        }
+    }
+
     #endregion
 
     #region Meeting Participants
