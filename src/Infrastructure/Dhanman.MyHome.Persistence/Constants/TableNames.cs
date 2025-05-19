@@ -86,6 +86,8 @@ internal static class TableNames
 
     internal const string EventStatus = "event_status";
 
+    internal const string EventOccurrenceStatus = "event_occurrence_status";
+
     internal const string VerificationTypes = "verification_types";
 
     internal const string ServiceProviderVerifications = "service_provider_verifications";
