@@ -150,7 +150,7 @@ public static class CacheKeys
     }
     #endregion
 
-    #region Events
+    #region EventOccurrences
     public static class EventOccurrences
     {
         public const string CacheKeyPrefix = "even-occurrences-{0}";
@@ -158,6 +158,17 @@ public static class CacheKeys
         public const string EventOccurrenceList = CacheKeyPrefix + "-list-{1}";
 
         public const string EventOccurrenceById = CacheKeyPrefix + "-by-id-{1}";
+    }
+    #endregion
+
+    #region MeetingAgendaItems
+    public static class MeetingAgendaItems
+    {
+        public const string CacheKeyPrefix = "meeting-agenda-items-{0}";
+
+        public const string MeetingAgendaItemList = CacheKeyPrefix + "-list-{1}";
+
+        public const string MeetingAgendaItemById = CacheKeyPrefix + "-by-id-{1}";
     }
     #endregion
 

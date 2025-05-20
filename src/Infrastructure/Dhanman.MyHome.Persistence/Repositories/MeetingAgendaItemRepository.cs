@@ -19,11 +19,11 @@ public class MeetingAgendaItemRepository : IMeetingAgendaItemRepository
 
     public Task<MeetingAgendaItem?> GetByIntIdAsync(int id)  => _dbContext.GetBydIdIntAsync<MeetingAgendaItem>(id);
 
-    public void DeleteInt(MeetingAgendaItem meetingAgendaItem) => _dbContext.RemoveInt(meetingAgendaItem);
+    public void Delete(MeetingAgendaItem meetingAgendaItem) => _dbContext.RemoveInt(meetingAgendaItem);
 
-    public void InsertInt(MeetingAgendaItem meetingAgendaItem) => _dbContext.InsertInt(meetingAgendaItem);
+    public void Insert(MeetingAgendaItem meetingAgendaItem) => _dbContext.InsertInt(meetingAgendaItem);
 
-    public void UpdateInt(MeetingAgendaItem meetingAgendaItem) => _dbContext.UpdateInt(meetingAgendaItem);
+    public void Update(MeetingAgendaItem meetingAgendaItem) => _dbContext.UpdateInt(meetingAgendaItem);
 
     #endregion
 }

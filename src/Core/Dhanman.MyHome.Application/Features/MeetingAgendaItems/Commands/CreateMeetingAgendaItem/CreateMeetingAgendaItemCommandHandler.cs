@@ -25,7 +25,7 @@ public class CreateMeetingAgendaItemCommandHandler : ICommandHandler<CreateMeeti
     {
         var entity = new MeetingAgendaItem(request.OccurrenceId, request.ItemText, request.OrderNo);
 
-        _repository.InsertInt(entity);
+        _repository.Insert(entity);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
