@@ -176,6 +176,8 @@ internal static class TableNames
 
     internal const string MeetingActionItems = "meeting_action_items";
 
+    internal const string MeetingNotes = "meeting_notes";
+
     internal const string CommitteeAllMemberDto = "committee_all_member_dto";
 }
 

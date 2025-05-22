@@ -431,4 +431,18 @@ public static class ApiRoutes
         public const string GetAllMeetingParticipants = apiVersion + "occurrences/{occurrenceId:int}/participants";
     }
     #endregion
+
+    #region MeetingActionItems
+    public static class MeetingActionItems
+    {
+        public const string UpdateMeetingActionItem = apiVersion + "action-items";
+    }
+    #endregion
+
+    #region MeetingNotes
+    public static class MeetingNotes
+    {
+        public const string UpdateMeetingNote = apiVersion + "notes";
+    }
+    #endregion
 }

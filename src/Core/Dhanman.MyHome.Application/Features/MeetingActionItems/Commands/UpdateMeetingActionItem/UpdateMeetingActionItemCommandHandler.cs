@@ -9,53 +9,50 @@ using Npgsql;
 using NpgsqlTypes;
 using System.Text.Json;
 
-namespace Dhanman.MyHome.Application.Features.MeetingParticipants.Commands.UpdateMeetingParticipant;
- 
-public class UpdateMeetingParticipantCommandHandler : ICommandHandler<UpdateMeetingParticipantCommand, Result<EntityUpdatedResponse>>
+namespace Dhanman.MyHome.Application.Features.MeetingActionItems.Commands.UpdateMeetingActionItem;
+
+public sealed class UpdateMeetingActionItemCommandHandler : ICommandHandler<UpdateMeetingActionItemCommand, Result<EntityUpdatedResponse>>
 {
-    #region Properties
     private readonly IApplicationDbContext _dbContext;
     private readonly IUserContextService _userContextService;
-    #endregion
+    private readonly IMediator _mediator;
 
-    #region Constructors
-    public UpdateMeetingParticipantCommandHandler(IApplicationDbContext dbContext,
-        IUserContextService userContextService)
+    public UpdateMeetingActionItemCommandHandler(IApplicationDbContext dbContext,
+        IUserContextService userContextService,
+        IMediator mediator)
     {
         _dbContext = dbContext;
         _userContextService = userContextService;
+        _mediator = mediator;
     }
-    #endregion
 
-    #region Methods
-    public async Task<Result<EntityUpdatedResponse>> Handle(UpdateMeetingParticipantCommand request, CancellationToken cancellationToken)
+    public async Task<Result<EntityUpdatedResponse>> Handle(UpdateMeetingActionItemCommand request, CancellationToken cancellationToken)
     {
         var currentUserId = _userContextService.GetCurrentUserId();
 
-        // Step 1: Convert user list to JSONB format expected by the procedure
-        var jsonParticipants = request.UserIds.Select(userId => new
+        var jsonActionItems = request.ActionItems.Select(item => new
         {
-            id = "-1",
-            user_id = userId
+            id = item.Id,
+            action_description = item.ActionDescription,
+            assigned_to_user_id = item.AssignedToUserId,
         });
-        var jsonString = JsonSerializer.Serialize(jsonParticipants);
+
+        var jsonString = JsonSerializer.Serialize(jsonActionItems);
 
         await using var connection = _dbContext.Database.GetDbConnection();
         await connection.OpenAsync(cancellationToken);
 
         await using var command = connection.CreateCommand();
-        command.CommandText = "CALL public.upsert_meeting_participants(@p_event_uuid, @p_occ_date, @p_user_uuid, @p_participant_user_ids)";
+        command.CommandText = "CALL public.upsert_meeting_action_items(@p_event_uuid, @p_occ_date, @p_user_uuid, @p_action_items)";
         command.CommandType = System.Data.CommandType.Text;
 
         command.Parameters.Add(new NpgsqlParameter("p_event_uuid", NpgsqlDbType.Uuid) { Value = request.EventId });
         command.Parameters.Add(new NpgsqlParameter("p_occ_date", NpgsqlDbType.Date) { Value = request.OccurrenceDate });
         command.Parameters.Add(new NpgsqlParameter("p_user_uuid", NpgsqlDbType.Uuid) { Value = currentUserId });
-        command.Parameters.Add(new NpgsqlParameter("p_participant_user_ids", NpgsqlDbType.Jsonb) { Value = jsonString });
+        command.Parameters.Add(new NpgsqlParameter("p_action_items", NpgsqlDbType.Jsonb) { Value = jsonString });
 
         await command.ExecuteNonQueryAsync(cancellationToken);
 
         return Result.Success(new EntityUpdatedResponse(new List<int>()));
     }
-    #endregion
-
 }
