@@ -15,15 +15,12 @@ public sealed class UpdateMeetingActionItemCommandHandler : ICommandHandler<Upda
 {
     private readonly IApplicationDbContext _dbContext;
     private readonly IUserContextService _userContextService;
-    private readonly IMediator _mediator;
 
     public UpdateMeetingActionItemCommandHandler(IApplicationDbContext dbContext,
-        IUserContextService userContextService,
-        IMediator mediator)
+        IUserContextService userContextService)
     {
         _dbContext = dbContext;
         _userContextService = userContextService;
-        _mediator = mediator;
     }
 
     public async Task<Result<EntityUpdatedResponse>> Handle(UpdateMeetingActionItemCommand request, CancellationToken cancellationToken)
