@@ -7,6 +7,7 @@ using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.EventOccurrences;
 using Dhanman.MyHome.Application.Contracts.Events;
 using Dhanman.MyHome.Application.Contracts.MeetingAgendaItems;
+using Dhanman.MyHome.Application.Contracts.MeetingDetails;
 using Dhanman.MyHome.Application.Contracts.MeetingNotes;
 using Dhanman.MyHome.Application.Contracts.MeetingParticipants;
 using Dhanman.MyHome.Application.Contracts.Residents;
@@ -22,6 +23,7 @@ using Dhanman.MyHome.Application.Features.Events.Commands.UpdateEvent;
 using Dhanman.MyHome.Application.Features.Events.Queries;
 using Dhanman.MyHome.Application.Features.MeetingActionItems.Commands.UpdateMeetingActionItem;
 using Dhanman.MyHome.Application.Features.MeetingAgendaItems.Commands.UpdateMeetingAgendaItem;
+using Dhanman.MyHome.Application.Features.MeetingDetails.Queries;
 using Dhanman.MyHome.Application.Features.MeetingNotes.Commands.UpdateMeetingNotes;
 using Dhanman.MyHome.Application.Features.MeetingParticipants.Commands.UpdateMeetingParticipant;
 using Dhanman.MyHome.Application.Features.MeetingParticipants.Queries;
@@ -203,6 +205,18 @@ public class EventsController : ApiController
    .Bind(query => Mediator.Send(query))
    .Match(Ok, NotFound);
 
+
+    #endregion
+
+
+    #region MeetingData
+    [HttpGet(ApiRoutes.MeetingDetails.GetMeetingDetails)]
+    [ProducesResponseType(typeof(MeetingDetailsDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetMeetingDetails( Guid eventId, DateTime occurrenceDate) =>
+    await Result.Success(new GetMeetingDetailsQuery(eventId, occurrenceDate))
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
 
     #endregion
 
