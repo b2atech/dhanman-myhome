@@ -9,11 +9,11 @@ public class GetMeetingDetailsQuery : ICacheableQuery<Result<MeetingDetailsDto>>
 {
     #region Properties 
     public Guid EventId { get; set; }
-    public DateTime OccurrenceDate { get; set; }
+    public DateOnly OccurrenceDate { get; set; }
     #endregion
 
     #region Constructors
-    public GetMeetingDetailsQuery(Guid eventId, DateTime occurrenceDate)
+    public GetMeetingDetailsQuery(Guid eventId, DateOnly occurrenceDate)
     {
         EventId = eventId;
         OccurrenceDate = occurrenceDate;

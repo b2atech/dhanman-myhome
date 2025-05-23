@@ -22,7 +22,7 @@ public class GetMeetingDetailsQueryHandler : IQueryHandler<GetMeetingDetailsQuer
 
     #region Methods
     public async Task<Result<MeetingDetailsDto>> Handle(GetMeetingDetailsQuery request, CancellationToken cancellationToken)
-    {
+{
         await using var connection = _dbContext.Database.GetDbConnection();
         await connection.OpenAsync(cancellationToken);
 

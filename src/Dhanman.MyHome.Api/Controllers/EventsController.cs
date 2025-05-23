@@ -213,7 +213,7 @@ public class EventsController : ApiController
     [HttpGet(ApiRoutes.MeetingDetails.GetMeetingDetails)]
     [ProducesResponseType(typeof(MeetingDetailsDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetMeetingDetails( Guid eventId, DateTime occurrenceDate) =>
+    public async Task<IActionResult> GetMeetingDetails( Guid eventId, DateOnly occurrenceDate) =>
     await Result.Success(new GetMeetingDetailsQuery(eventId, occurrenceDate))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
