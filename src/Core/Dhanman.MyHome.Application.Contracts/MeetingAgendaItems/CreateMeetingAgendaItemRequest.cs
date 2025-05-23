@@ -3,7 +3,7 @@
 public sealed class CreateMeetingAgendaItemRequest
 {
     #region Properties
-    public int OccurrenceId { get; set; }
+    public Guid EventId { get; set; }
     public string ItemText { get; set; } = string.Empty;
     public int OrderNo { get; set; }
     #endregion

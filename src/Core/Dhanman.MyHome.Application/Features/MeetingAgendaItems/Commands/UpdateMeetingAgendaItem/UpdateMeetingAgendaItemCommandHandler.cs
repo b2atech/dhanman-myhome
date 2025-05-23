@@ -1,45 +1,56 @@
-﻿using B2aTech.CrossCuttingConcern.Core.Result;
+﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Core.Result;
+using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Common;
-using Dhanman.MyHome.Application.Features.MeetingAgendaItems.Events;
-using Dhanman.MyHome.Domain.Abstractions;
-using Dhanman.MyHome.Domain.Exceptions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
+using NpgsqlTypes;
+using System.Text.Json;
 
 namespace Dhanman.MyHome.Application.Features.MeetingAgendaItems.Commands.UpdateMeetingAgendaItem;
 
 public sealed class UpdateMeetingAgendaItemCommandHandler : ICommandHandler<UpdateMeetingAgendaItemCommand, Result<EntityUpdatedResponse>>
 {
-    private readonly IMeetingAgendaItemRepository _meetingAgendaItemRepository;
-    private readonly IMediator _mediator;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IApplicationDbContext _dbContext;
+    private readonly IUserContextService _userContextService;
 
-    public UpdateMeetingAgendaItemCommandHandler(IMeetingAgendaItemRepository meetingAgendaItemRepository, IMediator mediator, IUnitOfWork unitOfWork)
+    public UpdateMeetingAgendaItemCommandHandler(IApplicationDbContext dbContext,
+        IUserContextService userContextService)
     {
-        _meetingAgendaItemRepository = meetingAgendaItemRepository;
-        _mediator = mediator;
-        _unitOfWork = unitOfWork;
+        _dbContext = dbContext;
+        _userContextService = userContextService;
     }
 
     public async Task<Result<EntityUpdatedResponse>> Handle(UpdateMeetingAgendaItemCommand request, CancellationToken cancellationToken)
     {
-        var meetingAgendaItem = await _meetingAgendaItemRepository.GetByIntIdAsync(request.Id);
+        var currentUserId = _userContextService.GetCurrentUserId();
 
-        if (meetingAgendaItem == null)
+        // Step 1: Convert agenda items to JSON (PostgreSQL expects 'item_text' and 'order_no' keys)
+        var jsonAgendaItems = request.AgendaItems.Select(item => new
         {
-            throw new MeetingAgendaItemNotFoundException(request.Id);
-        }
-        meetingAgendaItem.OccurrenceId = request.OccurrenceId;
-        meetingAgendaItem.ItemText = request.ItemText;
-        meetingAgendaItem.OrderNo = request.OrderNo;
+            id = item.Id,
+            item_text = item.ItemText,
+            order_no = item.OrderNo
+        });
 
+        var jsonString = JsonSerializer.Serialize(jsonAgendaItems);
 
-        _meetingAgendaItemRepository.Update(meetingAgendaItem);
+        await using var connection = _dbContext.Database.GetDbConnection();
+        await connection.OpenAsync(cancellationToken);
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await using var command = connection.CreateCommand();
+        command.CommandText = "CALL public.upsert_meeting_agenda_items(@p_event_uuid, @p_occ_date, @p_user_uuid, @p_agenda_items)";
+        command.CommandType = System.Data.CommandType.Text;
 
-        await _mediator.Publish(new MeetingAgendaItemUpdatedEvent(meetingAgendaItem.Id), cancellationToken);
+        command.Parameters.Add(new NpgsqlParameter("p_event_uuid", NpgsqlDbType.Uuid) { Value = request.EventId });
+        command.Parameters.Add(new NpgsqlParameter("p_occ_date", NpgsqlDbType.Date) { Value = request.OccurrenceDate });
+        command.Parameters.Add(new NpgsqlParameter("p_user_uuid", NpgsqlDbType.Uuid) { Value = currentUserId });
+        command.Parameters.Add(new NpgsqlParameter("p_agenda_items", NpgsqlDbType.Jsonb) { Value = jsonString });
 
-        return Result.Success(new EntityUpdatedResponse(meetingAgendaItem.Id));
+        await command.ExecuteNonQueryAsync(cancellationToken);
+
+        return Result.Success(new EntityUpdatedResponse(new List<int>()));
     }
 }

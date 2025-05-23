@@ -3,10 +3,9 @@
 public sealed class UpdateMeetingAgendaItemRequest
 {
     #region Properties
-    public int Id { get; set; }
-    public int OccurrenceId { get; set; }
-    public string ItemText { get; set; } = string.Empty;
-    public int OrderNo { get; set; }
+    public Guid EventId { get; set; }
+    public DateOnly OccurrenceDate { get; set; }
+    public AgendaItem[] AgendaItems { get; set; }
     #endregion
 
     #region Constructors
