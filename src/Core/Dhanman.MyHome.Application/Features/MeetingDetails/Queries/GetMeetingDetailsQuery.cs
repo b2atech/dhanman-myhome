@@ -21,6 +21,6 @@ public class GetMeetingDetailsQuery : ICacheableQuery<Result<MeetingDetailsDto>>
     #endregion
 
     #region Methodes
-    public string GetCacheKey() => string.Format(CacheKeys.MeetingDetails.CacheKeyPrefix, "meetingDetails", "");
+    public string GetCacheKey() => string.Format(CacheKeys.MeetingDetails.CacheKeyPrefix, "meetingDetails");
     #endregion
 }

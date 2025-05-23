@@ -2,7 +2,7 @@
 
 public class AgendaItem
 {
-    public int Id { get; set; } = -1;
+    public int Id { get; set; }
     public string ItemText { get; set; }
     public int OrderNo { get; set; }
 
