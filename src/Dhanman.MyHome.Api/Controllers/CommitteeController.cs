@@ -6,8 +6,12 @@ using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.CommitteeMembers;
 using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.MyHome.Application.Contracts.Portfolios;
+using Dhanman.MyHome.Application.Contracts.Roles;
 using Dhanman.MyHome.Application.Features.CommitteeMembers.Commands;
 using Dhanman.MyHome.Application.Features.CommitteeMembers.Queries;
+using Dhanman.MyHome.Application.Features.Portfolios.Queries;
+using Dhanman.MyHome.Application.Features.Roles;
 using Dhanman.MyHome.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -56,6 +60,26 @@ public class CommitteeController : ApiController
     public async Task<IActionResult> GetCommitteeAllMembersByApartment(Guid apartmentId)
     {
         return await Result.Success(new GetCommitteeAllMembersByApartmentQuery(apartmentId))
+            .Bind(query => Mediator.Send(query))
+            .Match(Ok, NotFound);
+    }
+
+    [HttpGet(ApiRoutes.CommitteeMembers.GetPortfolioByApartmentId)]
+    [ProducesResponseType(typeof(PortfolioListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetPortfoliosByApartment(Guid apartmentId)
+    {
+        return await Result.Success(new GetPortfoliosByApartmentQuery(apartmentId))
+            .Bind(query => Mediator.Send(query))
+            .Match(Ok, NotFound);
+    }
+
+    [HttpGet(ApiRoutes.CommitteeMembers.GetAllRoles)]
+    [ProducesResponseType(typeof(RoleListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllRoles()
+    {
+        return await Result.Success(new GetAllRolesQuery())
             .Bind(query => Mediator.Send(query))
             .Match(Ok, NotFound);
     }
