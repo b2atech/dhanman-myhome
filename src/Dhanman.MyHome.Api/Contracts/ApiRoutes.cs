@@ -427,6 +427,9 @@ public static class ApiRoutes
 
         public const string CreateCommitteeMember = apiVersion + "committee-member";
 
+        public const string GetPortfolioByApartmentId = apiVersion + "apartments/{apartmentId:guid}/portfolios";
+
+        public const string GetAllRoles = apiVersion + "roles";
 
 
     }
@@ -454,4 +457,5 @@ public static class ApiRoutes
         public const string UpdateMeetingNote = apiVersion + "notes";
     }
     #endregion
+  
 }
