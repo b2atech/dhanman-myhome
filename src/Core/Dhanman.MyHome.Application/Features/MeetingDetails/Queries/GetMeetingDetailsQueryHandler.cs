@@ -2,6 +2,7 @@
 using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.MeetingDetails;
+using Dhanman.MyHome.Application.Contracts.MeetingParticipants;
 using Dhanman.MyHome.Domain;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -50,8 +51,13 @@ public class GetMeetingDetailsQueryHandler : IQueryHandler<GetMeetingDetailsQuer
                     OrderNo = x.GetProperty("order_no").GetInt32()
                 }).ToList(),
 
-            ParticipantUserIds = root.GetProperty("participants").EnumerateArray()
-                .Select(x => x.GetProperty("user_id").GetGuid()).ToList(),
+            ParticipantItems = root.GetProperty("participants").EnumerateArray()
+                .Select(x => new MeetingParticipantDto
+                {
+                    Id = x.GetProperty("id").GetInt32(),
+                    UserId = x.GetProperty("user_id").GetGuid(),
+                    UserName = x.GetProperty("user_name").GetString() ?? "",
+                }).ToList(),
 
             ActionItems = root.GetProperty("actions").EnumerateArray()
                 .Select(x => new MeetingActionItemDto
@@ -59,6 +65,7 @@ public class GetMeetingDetailsQueryHandler : IQueryHandler<GetMeetingDetailsQuer
                     Id = x.GetProperty("id").GetInt32(),
                     ActionDescription = x.GetProperty("action_description").GetString() ?? "",
                     AssignedToUserId = x.GetProperty("assigned_to_user_id").GetGuid(),
+                    AssignedToUserName = x.GetProperty("assigned_to_user_name").GetString() ?? "",
                 }).ToList(),
 
             NoteText = root.TryGetProperty("notes", out var notes) && notes.ValueKind == JsonValueKind.Array
