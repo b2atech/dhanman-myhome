@@ -204,6 +204,13 @@ public static class ApiRoutes
         public const string GetCalendarEvents = apiVersion + "calendars/events";
     }
 
+    #region MeetingDetails
+    public static class MeetingDetails
+    {
+        public const string GetMeetingDetails = apiVersion + "events/{eventId:guid}/occurrence-date/{occurrenceDate:dateTime}/meeting-details";
+    }
+    #endregion
+
     public static class BokkingFacilities
     {
         public const string GetAllBokkingFacilities = apiVersion + "booking-facilities";
@@ -426,6 +433,8 @@ public static class ApiRoutes
 
 
     }
+
+   
 
     #region MeetingParticipants
     public static class MeetingParticipants

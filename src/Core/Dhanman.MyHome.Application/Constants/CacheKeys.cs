@@ -172,6 +172,14 @@ public static class CacheKeys
     }
     #endregion
 
+    #region MeetingDetails
+    public static class MeetingDetails
+    {
+        public const string CacheKeyPrefix = "meeting-details-{0}";
+        
+    }
+    #endregion
+
     #region BookingFacilities
     public static class BookingFacilities
     {
