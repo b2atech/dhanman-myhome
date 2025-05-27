@@ -6,7 +6,7 @@ public interface IWaterTankerDeliveryRepository
 {
     Task<WaterTankerDelivery> GetByIntIdAsync(int id);
     Task<IEnumerable<WaterTankerDelivery>> GetByCompanyAndVendorAsync(Guid companyId, Guid vendorId);
-    void Insert(WaterTankerDelivery entity);
-    void Update(WaterTankerDelivery entity);
-    void Delete(WaterTankerDelivery entity);
+    void Insert(WaterTankerDelivery WaterTankerDelivery);
+    void Update(WaterTankerDelivery WaterTankerDelivery);
+    void Delete(WaterTankerDelivery WaterTankerDelivery);
 }

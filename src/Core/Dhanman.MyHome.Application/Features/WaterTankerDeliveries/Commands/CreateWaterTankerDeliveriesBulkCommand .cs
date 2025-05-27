@@ -7,13 +7,9 @@ namespace Dhanman.MyHome.Application.Features.WaterTankerDeliveries.Commands;
 public sealed class CreateWaterTankerDeliveriesBulkCommand : ICommand<Result<EntityCreatedResponse>>
 {
     public IReadOnlyList<CreateWaterTankerDeliveryDto> Deliveries { get; }
-   // public Guid CreatedBy { get; }
-   // public DateTime CreatedOnUtc { get; }
 
     public CreateWaterTankerDeliveriesBulkCommand(IEnumerable<CreateWaterTankerDeliveryDto> deliveries)
     {
         Deliveries = deliveries.ToList();
-    //    CreatedBy = createdBy;
-    //    CreatedOnUtc = createdOnUtc;
     }
 }
