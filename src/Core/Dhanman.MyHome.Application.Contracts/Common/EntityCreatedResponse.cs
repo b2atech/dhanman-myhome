@@ -10,6 +10,7 @@ public sealed class EntityCreatedResponse
 
     public int IntId { get; }
     public List<int> IntIds { get; }
+    public int? Count { get; }
     #endregion
 
     #region Constructor
@@ -21,5 +22,7 @@ public sealed class EntityCreatedResponse
 
     public EntityCreatedResponse(int id) => IntId = id;
     public EntityCreatedResponse(List<int> ids) => IntIds = ids;
+
+    public EntityCreatedResponse(int count, bool isCountOnly = true) => Count = count;
     #endregion
 }

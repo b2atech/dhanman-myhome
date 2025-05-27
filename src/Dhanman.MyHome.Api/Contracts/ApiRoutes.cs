@@ -13,7 +13,7 @@ public static class ApiRoutes
 
     public static class Buildings
     {
-        public const string CreateBuilding = apiVersion + "building";  
+        public const string CreateBuilding = apiVersion + "building";
 
         public const string GetAllBuildings = apiVersion + "apartments/{apartmentId:guid}/buildings";
 
@@ -88,7 +88,7 @@ public static class ApiRoutes
     public static class MemberRequests
     {
         public const string GetAllMemberRequests = apiVersion + "communities/{apartmentId:guid}/member-requests";
-        public const string ApproveMemberRequest = apiVersion + "approve-member-request";         
+        public const string ApproveMemberRequest = apiVersion + "approve-member-request";
     }
     public static class Vehicles
     {
@@ -98,14 +98,14 @@ public static class ApiRoutes
 
         public const string GetAllVehicleNames = apiVersion + "vehicle-names";
 
-        public const string GetVehicleById = apiVersion + "vehicle/{id:int}"; 
+        public const string GetVehicleById = apiVersion + "vehicle/{id:int}";
 
         public const string UpdateVehicles = apiVersion + "update-vehicles";
     }
 
     public static class Apartments
     {
-        public const string CreateApartments = apiVersion + "apartment"; 
+        public const string CreateApartments = apiVersion + "apartment";
 
         public const string GetApartments = apiVersion + "apartments";
 
@@ -118,13 +118,13 @@ public static class ApiRoutes
 
     public static class Floors
     {
-        public const string CreateFloor = apiVersion + "floor";  
+        public const string CreateFloor = apiVersion + "floor";
 
         public const string GetFloors = apiVersion + "apartments/{apartmentId:guid}/floors";
 
         public const string GetFloorNames = apiVersion + "apartments/{apartmentId:guid}/buildings/{buildingId:int}/floor-names";
 
-        public const string GetFloorById = apiVersion + "floor/{id:int}"; 
+        public const string GetFloorById = apiVersion + "floor/{id:int}";
 
         public const string UpdateFloor = apiVersion + "floor";
 
@@ -133,7 +133,7 @@ public static class ApiRoutes
 
     public static class Gates
     {
-        public const string CreateGate = apiVersion + "gate"; 
+        public const string CreateGate = apiVersion + "gate";
 
         public const string GetAllGates = apiVersion + "apartments/{apartmentId:guid}/gates";
 
@@ -179,7 +179,7 @@ public static class ApiRoutes
 
         public const string GetVisitorsByUnitId = apiVersion + "apartments/{apartmentId:guid}/units/{unitId:int}/visitorsByUnitId";
 
-        public const string GetVisitorTypes = apiVersion + "visitor-types"; 
+        public const string GetVisitorTypes = apiVersion + "visitor-types";
 
         public const string GetVisitorIdentityTypes = apiVersion + "visitor-identity-types";
 
@@ -346,7 +346,7 @@ public static class ApiRoutes
 
     }
 
-    public static class TicketStatuses 
+    public static class TicketStatuses
     {
         public const string GetTicketStatuses = apiVersion + "ticket-statuses";
 
@@ -375,7 +375,7 @@ public static class ApiRoutes
 
     public static class Tickets
     {
-        public const string CreateTicket = apiVersion + "tickets"; 
+        public const string CreateTicket = apiVersion + "tickets";
         public const string GetAllTickets = apiVersion + "tickets/{apartmentId:guid}";
         public const string GetTicketById = apiVersion + "ticket/{id:guid}";
         public const string UpdateTicketServiceProvider = apiVersion + "ticket-service-provider";
@@ -434,7 +434,7 @@ public static class ApiRoutes
 
     }
 
-   
+
 
     #region MeetingParticipants
     public static class MeetingParticipants
@@ -457,5 +457,13 @@ public static class ApiRoutes
         public const string UpdateMeetingNote = apiVersion + "notes";
     }
     #endregion
-  
+
+
+    #region WaterTankerDeliveries
+    public static class WaterTankerDeliveries
+    {
+        public const string CreateWaterTankerDeliveries = apiVersion + "water-tanker-deliveries";
+    }
+    #endregion
+
 }
