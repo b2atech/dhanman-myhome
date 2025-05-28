@@ -184,6 +184,7 @@ internal static class TableNames
 
     internal const string RoleDto = "role_dto";
 
+    internal const string WaterTankerDeliveries = "water_tanker_deliveries";
 
 }
 
