@@ -88,7 +88,7 @@ public static class DependencyInjection
             services.AddTransient<IVisitorUnitLogRepository, VisitorUnitLogRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<ITicketRepository, TicketRepository>();
-            services.AddScoped<IVisitorApprovalsRepository, VisitorApprovalsRepository>(); 
+            services.AddScoped<IVisitorApprovalsRepository, VisitorApprovalsRepository>();
             services.AddScoped<ITicketServiceProviderOtpRepository, TicketServiceProviderOtpRepository>();
             services.AddScoped<IResidentTokenRepository, ResidentTokenRepository>();
             services.AddScoped<IMemberAdditionalDetailRepository, MemberAdditionalDetailRepository>();
@@ -96,6 +96,7 @@ public static class DependencyInjection
             services.AddScoped<ICommitteeMemberRepository, CommitteeMemberRepository>();
             services.AddScoped<IMeetingAgendaItemRepository, MeetingAgendaItemRepository>();
             services.AddScoped<IEventOccurrenceRepository, EventOccurrenceRepository>();
+            services.AddScoped<IWaterTankerDeliveryRepository, WaterTankerDeliveryRepository>();
         }
         return services;
     }
