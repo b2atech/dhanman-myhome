@@ -41,17 +41,17 @@ public sealed class GetVendorWaterTankerDeliveriesQueryHandler : IQueryHandler<G
                     {
                         Id = reader.GetInt32(0),
                         DeliveryDate = reader.GetDateTime(1),
-                        DeliveryTime = reader.GetFieldValue<TimeSpan>(2),
+                        DeliveryTime = await reader.GetFieldValueAsync<TimeSpan>(2, cancellationToken),
                         VendorId = reader.GetGuid(3),
-                        VendorName = reader.GetString(4),
+                        VendorName = reader.IsDBNull(4) ? null : reader.GetString(4),
                         TankerCapacityLiters = reader.GetInt32(5),
                         ActualReceivedLiters = reader.GetInt32(6),
                         CreatedBy = reader.GetGuid(7),
-                        CreatedByName = reader.GetString(8),
+                        CreatedByName = reader.IsDBNull(8) ? null : reader.GetString(8),
                         CreatedOnUtc = reader.GetDateTime(9),
-                        ModifiedBy = reader.GetGuid(10),
-                        ModifiedByName = reader.GetString(11),
-                        ModifiedOnUtc = reader.GetDateTime(12)
+                        ModifiedBy = reader.IsDBNull(10) ? (Guid?)null : reader.GetGuid(10),
+                        ModifiedByName = reader.IsDBNull(11) ? null : reader.GetString(11),
+                        ModifiedOnUtc = reader.IsDBNull(12) ? (DateTime?)null : reader.GetDateTime(12)
                     });
                 }
 
