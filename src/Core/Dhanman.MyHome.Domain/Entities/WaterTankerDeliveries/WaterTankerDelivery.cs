@@ -15,10 +15,10 @@ public sealed class WaterTankerDelivery : EntityInt, IAuditableEntity, ISoftDele
     #endregion
 
     #region Audit Properties
-    public DateTime CreatedOnUtc { get; }
-    public DateTime? ModifiedOnUtc { get; }
-    public DateTime? DeletedOnUtc { get; }
-    public bool IsDeleted { get; }
+    public DateTime CreatedOnUtc { get; set; }
+    public DateTime? ModifiedOnUtc { get; set; }
+    public DateTime? DeletedOnUtc { get; set; }
+    public bool IsDeleted { get; set; }
     public Guid CreatedBy { get; set; }
     public Guid? ModifiedBy { get; protected set; }
     #endregion

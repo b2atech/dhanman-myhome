@@ -463,6 +463,10 @@ public static class ApiRoutes
     public static class WaterTankerDeliveries
     {
         public const string CreateWaterTankerDeliveries = apiVersion + "water-tanker-deliveries";
+
+        public const string UpdateWaterTankerDelivery = apiVersion + "water-tanker-delivery";
+
+        public const string DeleteWaterTankerDeliveryById = apiVersion + "water-tanker-delivery/{id:int}";
     }
     #endregion
 

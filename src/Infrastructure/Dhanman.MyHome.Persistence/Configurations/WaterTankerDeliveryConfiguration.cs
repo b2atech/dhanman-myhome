@@ -53,6 +53,10 @@ internal sealed class WaterTankerDeliveryConfiguration : IEntityTypeConfiguratio
             .HasColumnType("timestamp with time zone")
             .IsRequired();
 
+        builder.Property(wtd => wtd.DeletedOnUtc)
+            .HasColumnType("timestamp").
+            IsRequired(false);
+
         builder.Property(wtd => wtd.ModifiedBy)
             .HasColumnName("modified_by")
             .HasColumnType("uuid");
