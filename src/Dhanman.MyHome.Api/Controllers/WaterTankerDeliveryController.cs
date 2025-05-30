@@ -3,8 +3,10 @@ using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.MyHome.Application.Contracts.WaterTankerDeliveries;
 using Dhanman.MyHome.Application.Features.WaterTankerDeliveries.Commands;
 using Dhanman.MyHome.Application.Features.WaterTankerDeliveries.Commands.DeleteWaterTankerDelivery;
+using Dhanman.MyHome.Application.Features.WaterTankerDeliveries.Queries;
 using Dhanman.MyHome.Domain;
 using Dhanman.MyHome.Domain.Entities.WaterTankerDeliveries;
 using MediatR;
@@ -72,6 +74,23 @@ public class WaterTankerDeliveryController : ApiController
             return BadRequest(result.Error);
         }
     }
+    //Fetch tanker count and its actual total liter's
+    [HttpGet(ApiRoutes.WaterTankerDeliveries.GetWaterTankerDeliverySummery)]
+    [ProducesResponseType(typeof(WaterTankerSummaryResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllVisitors(Guid companyId, DateTime startDate, DateTime endDate) =>
+   await Result.Success(new GetWaterTankerSummaryQuery(companyId, startDate, endDate))
+   .Bind(query => Mediator.Send(query))
+   .Match(Ok, NotFound);
+
+    //Fetch tanker delivery data by vendor and dates
+    [HttpGet(ApiRoutes.WaterTankerDeliveries.GetAWaterTankerDeliveriesByVendorId)]
+    [ProducesResponseType(typeof(WaterTankerSummaryResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAWaterTankerDeliveriesByVendorId(Guid companyId, Guid vendorId, DateTime startDate, DateTime endDate ) =>
+   await Result.Success(new GetVendorWaterTankerDeliveriesQuery(companyId, vendorId, startDate, endDate))
+   .Bind(query => Mediator.Send(query))
+   .Match(Ok, NotFound);
 
     #endregion
 
