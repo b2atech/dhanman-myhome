@@ -31,6 +31,15 @@ public class WaterTankerDeliveryController : ApiController
           .Bind(command => Mediator.Send(command))
           .Match(Ok, BadRequest);
 
+
+    [HttpGet(ApiRoutes.WaterTankerDeliveries.WaterTankerDeliveryById)]
+    [ProducesResponseType(typeof(WaterTankerDeliveryResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetBuildingById(int id) =>
+    await Result.Success(new WaterTankerDeliveryByIdQuery(id))
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
     [HttpPut(ApiRoutes.WaterTankerDeliveries.UpdateWaterTankerDelivery)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateWaterTankerDeliveries([FromBody] UpdateWaterTankerDeliveryRequest request)
