@@ -15,4 +15,23 @@ public sealed class WaterTankerDeliveryResponse
     public Guid? ModifiedBy { get; set; }
     public string? ModifiedByName { get; set; }
     public DateTime? ModifiedOnUtc { get; set; }
+
+    public WaterTankerDeliveryResponse() { }
+
+    public WaterTankerDeliveryResponse(int id, DateTime deliveryDate, TimeSpan deliveryTime, Guid vendorId, string? vendorName, int tankerCapacityLiters, int actualReceivedLiters, Guid createdBy, string? createdByName, DateTime createdOnUtc, Guid? modifiedBy, string? modifiedByName, DateTime? modifiedOnUtc)
+    {
+        Id = id;
+        DeliveryDate = deliveryDate;
+        DeliveryTime = deliveryTime;
+        VendorId = vendorId;
+        VendorName = vendorName;
+        TankerCapacityLiters = tankerCapacityLiters;
+        ActualReceivedLiters = actualReceivedLiters;
+        CreatedBy = createdBy;
+        CreatedByName = createdByName;
+        CreatedOnUtc = createdOnUtc;
+        ModifiedBy = modifiedBy;
+        ModifiedByName = modifiedByName;
+        ModifiedOnUtc = modifiedOnUtc;
+    }
 }

@@ -464,6 +464,8 @@ public static class ApiRoutes
     {
         public const string CreateWaterTankerDeliveries = apiVersion + "water-tanker-deliveries";
 
+        public const string WaterTankerDeliveryById = apiVersion + "water-tanker-delivery/{id:int}";
+
         public const string UpdateWaterTankerDelivery = apiVersion + "water-tanker-delivery";
 
         public const string DeleteWaterTankerDeliveryById = apiVersion + "water-tanker-delivery/{id:int}";
