@@ -22,7 +22,7 @@ private readonly IApplicationDbContext _dbContext;
 public GetAllResidentsQueryHandler(IApplicationDbContext dbContext) => _dbContext = dbContext;
     #endregion
 
-    #region Methods
+#region Methods
     public async Task<Result<ResidentListResponse>> Handle(GetAllResidentsQuery request, CancellationToken cancellationToken)
     {
         return await Result.Success(request)
@@ -48,14 +48,8 @@ public GetAllResidentsQueryHandler(IApplicationDbContext dbContext) => _dbContex
 
                         e.FirstName,
                         e.LastName,
-                        // Masked Email
-                        string.IsNullOrEmpty(e.Email)
-                            ? ""
-                            : MaskEmail(e.Email),
-                        // Masked Contact Number
-                        string.IsNullOrEmpty(e.ContactNumber)
-                            ? ""
-                            : MaskContactNumber(e.ContactNumber),
+                        string.IsNullOrEmpty(e.Email) ? "" : MaskEmail(e.Email),
+                        string.IsNullOrEmpty(e.ContactNumber) ? "" : MaskContactNumber(e.ContactNumber),
                         e.ResidentTypeId,
                         _dbContext.SetInt<ResidentType>()
                             .Where(p => p.Id == e.ResidentTypeId)
@@ -83,30 +77,61 @@ public GetAllResidentsQueryHandler(IApplicationDbContext dbContext) => _dbContex
                     ))
                     .ToListAsync(cancellationToken);
 
-                var listResponse = new ResidentListResponse(residents);
-                return listResponse;
+                return new ResidentListResponse(residents);
             });
     }
 
-    // Helper Methods
+    // Random mask 5 digits of contact number
     private static string MaskContactNumber(string number)
     {
-        return number.Length >= 4
-            ? new string('X', number.Length - 4) + number[^4..]
-            : new string('X', number.Length);
+        if (number.Length < 5)
+            return new string('X', number.Length);
+
+        var chars = number.ToCharArray();
+        var random = new Random();
+
+        var indicesToMask = new HashSet<int>();
+        while (indicesToMask.Count < 5)
+        {
+            int index = random.Next(0, number.Length);
+            indicesToMask.Add(index);
+        }
+
+        foreach (var i in indicesToMask)
+        {
+            chars[i] = 'X';
+        }
+
+        return new string(chars);
     }
 
+    // Random mask email username (before @)
     private static string MaskEmail(string email)
     {
         var atIndex = email.IndexOf('@');
-        if (atIndex <= 1) return email;
+        if (atIndex <= 0) return email;
 
         var namePart = email[..atIndex];
         var domainPart = email[atIndex..];
 
-        var visibleLength = Math.Min(4, namePart.Length);
-        return namePart[..visibleLength] + new string('X', namePart.Length - visibleLength) + domainPart;
-    }    
+        var random = new Random();
+        var chars = namePart.ToCharArray();
+
+        int toMask = Math.Max(1, namePart.Length <= 4 ? namePart.Length - 1 : namePart.Length - 4);
+        var indicesToMask = new HashSet<int>();
+        while (indicesToMask.Count < toMask)
+        {
+            int index = random.Next(0, namePart.Length);
+            indicesToMask.Add(index);
+        }
+
+        foreach (var i in indicesToMask)
+        {
+            chars[i] = 'X';
+        }
+
+        return new string(chars) + domainPart;
+    }
     #endregion
 
 }
