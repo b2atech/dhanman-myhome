@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="B2aTech.CrossCuttingConcern" Version="1.4.9" />
+  </ItemGroup>
+
 </Project>

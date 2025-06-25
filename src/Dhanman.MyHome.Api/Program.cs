@@ -3,6 +3,7 @@ using B2aTech.CrossCuttingConcern.Services;
 using B2aTech.CrossCuttingConcern.UserContext;
 using Dhanman.MyHome.Api;
 using Dhanman.MyHome.Api.Middleware;
+using Dhanman.MyHome.Api.Services;
 using Dhanman.MyHome.Application;
 using Dhanman.MyHome.Persistence;
 using Microsoft.AspNetCore.Mvc;
@@ -48,6 +49,8 @@ builder.Services.AddCustomAuthorization();
 builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddTemplateService(builder.Configuration);
 builder.Services.AddHealthChecks();
+builder.Services.AddScoped<RabbitMqCommandHandlers>();
+builder.Services.AddScoped<RabbitMqEventHandlers>();
 
 
 builder.Services.AddApiVersioning(config =>
