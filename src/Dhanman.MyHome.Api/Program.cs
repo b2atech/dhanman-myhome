@@ -1,8 +1,11 @@
 using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.Configurations;
+using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.DependencyInjection;
 using B2aTech.CrossCuttingConcern.Services;
 using B2aTech.CrossCuttingConcern.UserContext;
 using Dhanman.MyHome.Api;
 using Dhanman.MyHome.Api.Middleware;
+using Dhanman.MyHome.Api.Services;
 using Dhanman.MyHome.Application;
 using Dhanman.MyHome.Persistence;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +16,23 @@ using Prometheus;
 using Serilog;
 using System.IO.Compression;
 
+var builder = WebApplication.CreateBuilder(args);
+
 var DhanManSpecificOrigins = "_dhanmanAllowSpecificOrigins";
 
-var builder = WebApplication.CreateBuilder(args);
+// Configure Serilog
+var logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .Enrich.WithProperty("Application_name", nameof(Dhanman))
+    .Enrich.WithCorrelationIdHeader("correlation-id")
+    .CreateLogger();
+
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
+
+builder.Services.AddEndpointsApiExplorer();
+Console.WriteLine("Environment: " + builder.Environment.EnvironmentName);
 
 // Add configuration files based on environment
 builder.Configuration
@@ -23,19 +40,9 @@ builder.Configuration
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
 
-// Use Serilog, reading from configuration
-builder.Host.UseSerilog((context, services, configuration) =>
-{
-    configuration
-        .ReadFrom.Configuration(context.Configuration)
-        .ReadFrom.Services(services)
-        .Enrich.FromLogContext()
-        .Enrich.WithProperty("Application_name", nameof(Dhanman))
-        .Enrich.WithCorrelationIdHeader("correlation-id");
-});
-
 // Add services
 builder.Services.AddControllers();
+//builder.Services.AddRabbitMQ(builder.Configuration);
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHeaderPropagation(options => options.Headers.Add("correlation-id"));
 builder.Services.AddScoped<IUserContextService, UserContextService>();
@@ -48,7 +55,14 @@ builder.Services.AddCustomAuthorization();
 builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddTemplateService(builder.Configuration);
 builder.Services.AddHealthChecks();
+builder.Services.AddScoped<RabbitMqCommandHandlers>();
+builder.Services.AddScoped<RabbitMqEventHandlers>();
+builder.Services.AddRabbitMqMessaging(builder.Configuration);
+builder.Services.AddRabbitMqConsumers();
 
+// Register initializer and hosted service for consuming
+builder.Services.AddSingleton<RabbitMqInitializer>();
+builder.Services.AddHostedService<RabbitMqListenerHostedService>();
 
 builder.Services.AddApiVersioning(config =>
 {
@@ -86,7 +100,6 @@ builder.Services.Configure<GzipCompressionProviderOptions>(options =>
 });
 
 // Swagger setup
-builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Community", Version = "v1" });
