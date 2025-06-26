@@ -2,8 +2,10 @@
 using Dhanman.MyHome.Application.Behaviors;
 using Dhanman.MyHome.Application.Caching;
 using Dhanman.MyHome.Application.Extentions;
+using Dhanman.MyHome.Application.Handlers;
 using Dhanman.MyHome.Application.ServiceClient;
 using Dhanman.MyHome.Application.Services;
+using Dhanman.Shared.Contracts.Events;
 using MediatR;
 using MediatR.NotificationPublishers;
 using Microsoft.Extensions.Configuration;
@@ -51,7 +53,8 @@ public static class DependencyInjection
         //services.AddScoped(typeof(IPipelineBehavior<,>), typeof(CachingBehaviour<,>));
 
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehaviour<,>));
-
+        services.AddScoped<IMessageHandler<UserCreatedEvent>, UserCreatedEventHandler>();
+        services.AddScoped<IMessageHandler<BasicCompanyCreatedEvent>, CompanyCreatedEventHandler>();
         return services;
     }
 }
