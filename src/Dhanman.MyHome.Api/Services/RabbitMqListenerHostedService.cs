@@ -33,7 +33,7 @@ public class RabbitMqListenerHostedService : BackgroundService, IRabbitMqListene
     // Start consuming event queue
     private async Task StartCommandConsumersAsync(ICommandConsumer commandConsumer, CancellationToken token)
     {
-        var salesCommandQueue = "sales.commands";
+        var communityCommandQueue = "community.commands";
         using var scope = _serviceScopeFactory.CreateScope();
         var handlerInstance = scope.ServiceProvider.GetRequiredService<RabbitMqCommandHandlers>();
 
@@ -42,7 +42,7 @@ public class RabbitMqListenerHostedService : BackgroundService, IRabbitMqListene
 
             // Add more
         };
-        await commandConsumer.StartConsumingAsync(salesCommandQueue, handlerMap.Keys, async (routingKey, message) =>
+        await commandConsumer.StartConsumingAsync(communityCommandQueue, handlerMap.Keys, async (routingKey, message) =>
         {
             if (handlerMap.TryGetValue(routingKey, out var handler))
             {
@@ -60,13 +60,13 @@ public class RabbitMqListenerHostedService : BackgroundService, IRabbitMqListene
 
     private async Task StartEventConsumerAsync(IEventConsumer eventConsumer, CancellationToken cancellationToken)
     {
-        var salesEventQueue = "sales.events";
+        var communityEventQueue = "community.events";
 
         using var scope = _serviceScopeFactory.CreateScope();
         var handlerInstance = scope.ServiceProvider.GetRequiredService<RabbitMqEventHandlers>();
 
         await eventConsumer.StartConsumingAsync(
-            salesEventQueue,
+            communityEventQueue,
             async message => await handlerInstance.HandleAsync(message),
             cancellationToken);
     }
