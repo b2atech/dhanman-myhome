@@ -17,8 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="B2aTech.CrossCuttingConcern" Version="1.5.0" />
-    <PackageReference Include="Dhanman.Shared.Contracts" Version="1.0.7" />
+    <PackageReference Include="B2aTech.CrossCuttingConcern" Version="1.5.4" />
+    <PackageReference Include="Dhanman.Shared.Contracts" Version="1.0.9" />
     <PackageReference Include="FirebaseAdmin" Version="3.1.0" />
     <PackageReference Include="FluentValidation" Version="11.11.0" />
     <PackageReference Include="Google.Apis.Auth" Version="1.69.0" />

@@ -1,4 +1,7 @@
 ﻿using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.Abstractions;
+using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.Configurations;
+using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.Extensions;
+using Microsoft.Extensions.Options;
 
 namespace Dhanman.MyHome.Api.Services;
 
@@ -6,12 +9,15 @@ public class RabbitMqListenerHostedService : BackgroundService, IRabbitMqListene
 {
     private readonly ILogger<RabbitMqListenerHostedService> _logger;
     private readonly IServiceScopeFactory _serviceScopeFactory;
+    private readonly RabbitMqOptions _options;
     //private Dictionary<string, Func<string, Task>> _eventHandlerMap;
 
-    public RabbitMqListenerHostedService(ILogger<RabbitMqListenerHostedService> logger, IServiceScopeFactory serviceScopeFactory)
+    public RabbitMqListenerHostedService(ILogger<RabbitMqListenerHostedService> logger, IServiceScopeFactory serviceScopeFactory,
+        IOptions<RabbitMqOptions> options)
     {
         _logger = logger;
         _serviceScopeFactory = serviceScopeFactory;
+        _options = options.Value;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -33,7 +39,7 @@ public class RabbitMqListenerHostedService : BackgroundService, IRabbitMqListene
     // Start consuming event queue
     private async Task StartCommandConsumersAsync(ICommandConsumer commandConsumer, CancellationToken token)
     {
-        var communityCommandQueue = "community.commands";
+        var communityCommandQueue = _options.GetQueue("commands");
         using var scope = _serviceScopeFactory.CreateScope();
         var handlerInstance = scope.ServiceProvider.GetRequiredService<RabbitMqCommandHandlers>();
 
@@ -60,7 +66,7 @@ public class RabbitMqListenerHostedService : BackgroundService, IRabbitMqListene
 
     private async Task StartEventConsumerAsync(IEventConsumer eventConsumer, CancellationToken cancellationToken)
     {
-        var communityEventQueue = "community.events";
+        var communityEventQueue = _options.GetQueue("commands");
 
         using var scope = _serviceScopeFactory.CreateScope();
         var handlerInstance = scope.ServiceProvider.GetRequiredService<RabbitMqEventHandlers>();
