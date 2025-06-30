@@ -1,6 +1,7 @@
 using B2aTech.CrossCuttingConcern.Abstractions;
 using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.Configurations;
 using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.DependencyInjection;
+using B2aTech.CrossCuttingConcern.Middleware;
 using B2aTech.CrossCuttingConcern.Options;
 using B2aTech.CrossCuttingConcern.Services;
 using B2aTech.CrossCuttingConcern.UserContext;
@@ -175,6 +176,9 @@ app.UseStaticFiles();
 app.UseCors(DhanManSpecificOrigins);
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<UserContextEnrichmentMiddleware>();
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 // Metrics Middleware
 app.UseHttpMetrics(); // <-- Add this to start capturing metrics

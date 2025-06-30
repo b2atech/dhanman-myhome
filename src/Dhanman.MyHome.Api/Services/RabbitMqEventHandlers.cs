@@ -1,7 +1,9 @@
-﻿using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.Models;
-using Dhanman.MyHome.Application.Abstractions;
+﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Messaging;
+using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.Models;
 using Dhanman.Shared.Contracts.Events;
 using Newtonsoft.Json;
+
 
 namespace Dhanman.MyHome.Api.Services;
 
@@ -38,14 +40,24 @@ public class RabbitMqEventHandlers
 
         _logger.LogInformation("📥 Received Event: {EventType} from {Source}", envelope.EventType, envelope.Source);
 
+        var context = new MessageContext
+        {
+            UserId = envelope.UserId,
+            CorrelationId = envelope.CorrelationId
+        };
+
         switch (envelope.EventType)
         {
             case EventTypes.CommonBasicCompanyCreated:
-                await DispatchTypedEvent<BasicCompanyCreatedEvent>(envelope.Payload);
+                await DispatchTypedEvent<BasicCompanyCreatedEvent>(envelope.Payload, context);
                 break;
 
             case EventTypes.CommonUserCreated:
-                await DispatchTypedEvent<UserCreatedEvent>(envelope.Payload);
+                await DispatchTypedEvent<UserCreatedEvent>(envelope.Payload, context);
+                break;
+
+            case EventTypes.CommonOrganizationCreated:
+                await DispatchTypedEvent<BasicOrganizationCreatedEvent>(envelope.Payload, context);
                 break;
 
             // ➕ Add future event cases here...
@@ -56,7 +68,7 @@ public class RabbitMqEventHandlers
         }
     }
 
-    private async Task DispatchTypedEvent<TEvent>(object payload) where TEvent : class
+    private async Task DispatchTypedEvent<TEvent>(object payload, MessageContext context) where TEvent : class
     {
         try
         {
@@ -70,8 +82,8 @@ public class RabbitMqEventHandlers
             }
 
             using var scope = _scopeFactory.CreateScope();
-            var handler = scope.ServiceProvider.GetRequiredService<IMessageHandler<TEvent>>();
-            await handler.HandleAsync(@event);
+            var handler = scope.ServiceProvider.GetRequiredService<IEventMessageHandler<TEvent>>();
+            await handler.HandleAsync(@event, context);
 
             _logger.LogInformation("✅ Successfully handled event {EventType}", typeof(TEvent).Name);
         }

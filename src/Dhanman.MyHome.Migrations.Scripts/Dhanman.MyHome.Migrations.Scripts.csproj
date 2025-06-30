@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Dhanman.Shared.Contracts" Version="1.0.9" />
-  </ItemGroup>
-
 </Project>
