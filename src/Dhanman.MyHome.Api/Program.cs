@@ -1,6 +1,7 @@
 using B2aTech.CrossCuttingConcern.Abstractions;
 using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.Configurations;
 using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.DependencyInjection;
+using B2aTech.CrossCuttingConcern.Options;
 using B2aTech.CrossCuttingConcern.Services;
 using B2aTech.CrossCuttingConcern.UserContext;
 using Dhanman.MyHome.Api;
@@ -98,6 +99,8 @@ builder.Services.Configure<GzipCompressionProviderOptions>(options =>
 {
     options.Level = CompressionLevel.Optimal;
 });
+
+builder.Services.Configure<AuditingOptions>(builder.Configuration.GetSection("Auditing"));
 
 // Swagger setup
 builder.Services.AddSwaggerGen(c =>
