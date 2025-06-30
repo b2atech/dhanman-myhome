@@ -1,4 +1,5 @@
-using Dhanman.MyHome.Application.Abstractions;
+using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Messaging;
 using Newtonsoft.Json;
 
 namespace Dhanman.MyHome.Api.Services
@@ -29,9 +30,15 @@ namespace Dhanman.MyHome.Api.Services
                     return;
                 }
 
+                var context = new MessageContext
+                {
+                    UserId = Guid.NewGuid(),
+                    CorrelationId = Guid.NewGuid()
+                };
+
                 using var scope = _scopeFactory.CreateScope();
-                var handler = scope.ServiceProvider.GetRequiredService<IMessageHandler<TCommand>>();
-                await handler.HandleAsync(command);
+                var handler = scope.ServiceProvider.GetRequiredService<ICommandMessageHandler<TCommand>>();
+                await handler.HandleAsync(command, context);
             }
             catch (Exception ex)
             {

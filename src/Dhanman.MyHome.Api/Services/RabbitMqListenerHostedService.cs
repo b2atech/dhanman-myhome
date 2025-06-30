@@ -66,7 +66,7 @@ public class RabbitMqListenerHostedService : BackgroundService, IRabbitMqListene
 
     private async Task StartEventConsumerAsync(IEventConsumer eventConsumer, CancellationToken cancellationToken)
     {
-        var communityEventQueue = _options.GetQueue("commands");
+        var communityEventQueue = _options.GetQueue("events");
 
         using var scope = _serviceScopeFactory.CreateScope();
         var handlerInstance = scope.ServiceProvider.GetRequiredService<RabbitMqEventHandlers>();
