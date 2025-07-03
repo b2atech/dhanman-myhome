@@ -65,7 +65,7 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
 
     private void UpdateAuditableEntities(DateTime utcNow)
     {
-        var currentUsedId = _userContextService.GetCurrentUserId();
+        var currentUsedId = _userContextService.CurrentUserId;
         foreach (EntityEntry<IAuditableEntity> entityEntry in ChangeTracker.Entries<IAuditableEntity>())
         {
             if (entityEntry.State == EntityState.Added)
@@ -84,7 +84,7 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
 
     private void UpdateSoftDeletableEntities(DateTime utcNow)
     {
-        var currentUsedId = _userContextService.GetCurrentUserId();
+        var currentUsedId = _userContextService.CurrentUserId;
         foreach (EntityEntry<ISoftDeletableEntity> entityEntry in ChangeTracker.Entries<ISoftDeletableEntity>())
         {
             if (entityEntry.State == EntityState.Deleted)

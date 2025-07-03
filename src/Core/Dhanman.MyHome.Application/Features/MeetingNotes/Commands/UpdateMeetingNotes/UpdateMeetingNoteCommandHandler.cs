@@ -23,7 +23,7 @@ public sealed class UpdateMeetingNoteCommandHandler : ICommandHandler<UpdateMeet
 
     public async Task<Result<EntityUpdatedResponse>> Handle(UpdateMeetingNoteCommand request, CancellationToken cancellationToken)
     {
-        var currentUserId = _userContextService.GetCurrentUserId();
+        var currentUserId = _userContextService.CurrentUserId;
 
         await using var connection = _dbContext.Database.GetDbConnection();
         await connection.OpenAsync(cancellationToken);

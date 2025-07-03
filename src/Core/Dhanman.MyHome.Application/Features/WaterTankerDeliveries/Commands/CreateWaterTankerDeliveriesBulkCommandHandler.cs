@@ -54,7 +54,7 @@ public sealed class CreateWaterTankerDeliveriesBulkCommandHandler : ICommandHand
         command.CommandType = System.Data.CommandType.Text;
 
         command.Parameters.Add(new NpgsqlParameter("p_deliveries", NpgsqlDbType.Jsonb) {Value = json});
-        command.Parameters.Add(new NpgsqlParameter("p_created_by", NpgsqlDbType.Uuid) {Value = _userContext.GetCurrentUserId()});
+        command.Parameters.Add(new NpgsqlParameter("p_created_by", NpgsqlDbType.Uuid) {Value = _userContext.CurrentUserId});
         command.Parameters.Add(new NpgsqlParameter("p_created_on_utc", NpgsqlDbType.Date) {Value = DateTime.UtcNow});
 
         var result = (int)await command.ExecuteScalarAsync(cancellationToken);

@@ -39,7 +39,7 @@ public class OrganizationController : ApiController
                     value.UserLastName,
                     value.PhoneNumber,
                     value.Email,
-                    UserContextService.GetCurrentUserId()
+                    UserContextService.CurrentUserId
                    ))
                .Bind(command => Mediator.Send(command))
               .Match(Ok, BadRequest);

@@ -25,7 +25,7 @@ public sealed class UpdateMeetingActionItemCommandHandler : ICommandHandler<Upda
 
     public async Task<Result<EntityUpdatedResponse>> Handle(UpdateMeetingActionItemCommand request, CancellationToken cancellationToken)
     {
-        var currentUserId = _userContextService.GetCurrentUserId();
+        var currentUserId = _userContextService.CurrentUserId;
 
         var jsonActionItems = request.ActionItems.Select(item => new
         {

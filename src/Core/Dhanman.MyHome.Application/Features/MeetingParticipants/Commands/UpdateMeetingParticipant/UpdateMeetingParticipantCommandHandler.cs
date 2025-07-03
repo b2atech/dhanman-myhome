@@ -30,7 +30,7 @@ public class UpdateMeetingParticipantCommandHandler : ICommandHandler<UpdateMeet
     #region Methods
     public async Task<Result<EntityUpdatedResponse>> Handle(UpdateMeetingParticipantCommand request, CancellationToken cancellationToken)
     {
-        var currentUserId = _userContextService.GetCurrentUserId();
+        var currentUserId = _userContextService.CurrentUserId;
 
         // Step 1: Convert user list to JSONB format expected by the procedure
         var jsonParticipants = request.UserIds.Select(userId => new

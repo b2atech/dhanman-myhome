@@ -4,6 +4,7 @@ using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Features.Organizations.Events;
+using Dhanman.Shared.Contracts.Commands;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -46,7 +47,7 @@ public class InitializeOrganizationCommandHandler : ICommandHandler<InitializeOr
                 new NpgsqlParameter("p_user_last_name", NpgsqlDbType.Text) { Value = request.UserLastName },
                 new NpgsqlParameter("p_phone_number", NpgsqlDbType.Varchar) { Value = request.Email },
                 new NpgsqlParameter("p_email", NpgsqlDbType.Varchar) { Value = request.PhoneNumber },
-                new NpgsqlParameter("p_created_by", NpgsqlDbType.Uuid) { Value = _userContextService.GetCurrentUserId() }
+                new NpgsqlParameter("p_created_by", NpgsqlDbType.Uuid) { Value = _userContextService.CurrentUserId }
             );
 
         await _mediator.Publish(new InitializeOrganizationEvent(request.Id), cancellationToken);

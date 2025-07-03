@@ -10,7 +10,6 @@ public class RabbitMqListenerHostedService : BackgroundService, IRabbitMqListene
     private readonly ILogger<RabbitMqListenerHostedService> _logger;
     private readonly IServiceScopeFactory _serviceScopeFactory;
     private readonly RabbitMqOptions _options;
-    //private Dictionary<string, Func<string, Task>> _eventHandlerMap;
 
     public RabbitMqListenerHostedService(ILogger<RabbitMqListenerHostedService> logger, IServiceScopeFactory serviceScopeFactory,
         IOptions<RabbitMqOptions> options)

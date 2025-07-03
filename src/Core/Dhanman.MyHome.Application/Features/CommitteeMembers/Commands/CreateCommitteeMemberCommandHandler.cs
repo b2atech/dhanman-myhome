@@ -5,6 +5,8 @@ using Dhanman.MyHome.Application.Contracts.Common;
 using Dhanman.MyHome.Application.Features.CommitteeMembers.Events;
 using Dhanman.MyHome.Domain.Abstractions;
 using Dhanman.MyHome.Domain.Entities.CommitteeMembers;
+using Dhanman.Shared.Contracts.Abstractions.Messaging;
+using Dhanman.Shared.Contracts.Common;
 using MediatR;
 
 namespace Dhanman.MyHome.Application.Features.CommitteeMembers.Commands;
@@ -24,7 +26,7 @@ public sealed class CreateCommitteeMemberCommandHandler : ICommandHandler<Create
 
     public async Task<Result<EntityCreatedResponse>> Handle(CreateCommitteeMemberCommand request, CancellationToken cancellationToken)
     {
-        var currentUsedId = _userContextService.GetCurrentUserId();
+        var currentUsedId = _userContextService.CurrentUserId;
 
         var entity = new CommitteeMember(request.UserId, request.ApartmentId, request.EffectiveStartDate, request.EffectiveEndDate, request.RoleId, request.PortfolioId, currentUsedId);
 

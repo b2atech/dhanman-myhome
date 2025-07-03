@@ -25,7 +25,7 @@ public sealed class UpdateMeetingAgendaItemCommandHandler : ICommandHandler<Upda
 
     public async Task<Result<EntityUpdatedResponse>> Handle(UpdateMeetingAgendaItemCommand request, CancellationToken cancellationToken)
     {
-        var currentUserId = _userContextService.GetCurrentUserId();
+        var currentUserId = _userContextService.CurrentUserId;
 
         // Step 1: Convert agenda items to JSON (PostgreSQL expects 'item_text' and 'order_no' keys)
         var jsonAgendaItems = request.AgendaItems.Select(item => new

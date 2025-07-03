@@ -72,7 +72,7 @@ public class TicketsController : ApiController
             .Map(value => new UpdateTicketServiceProviderCommand(
                 value.TicketId,
                 value.ServiceProviderId,
-                UserContextService.GetCurrentUserId()
+                UserContextService.CurrentUserId
             ))
             .Bind(command => Mediator.Send(command));
 
@@ -131,7 +131,7 @@ public class TicketsController : ApiController
                 value.TicketIds,
                 value.ApartmentId,
                 TicketStatuses.IN_PROGRESS,
-                UserContextService.GetCurrentUserId()
+                UserContextService.CurrentUserId
             ))
             .Bind(command => Mediator.Send(command));
 
@@ -154,7 +154,7 @@ public class TicketsController : ApiController
                 value.TicketIds,
                 value.ApartmentId,
                 TicketStatuses.RESOLVED,
-                UserContextService.GetCurrentUserId()
+                UserContextService.CurrentUserId
             ))
             .Bind(command => Mediator.Send(command));
 
@@ -177,7 +177,7 @@ public class TicketsController : ApiController
                 value.TicketIds,
                 value.ApartmentId,
                 TicketStatuses.CLOSED,
-                UserContextService.GetCurrentUserId()
+                UserContextService.CurrentUserId
             ))
             .Bind(command => Mediator.Send(command));
 
@@ -200,7 +200,7 @@ public class TicketsController : ApiController
                 value.TicketIds,
                 value.ApartmentId,
                 TicketStatuses.RESOLVED,
-                UserContextService.GetCurrentUserId()
+                UserContextService.CurrentUserId
             ))
             .Bind(command => Mediator.Send(command));
 
@@ -223,7 +223,7 @@ public class TicketsController : ApiController
                 value.TicketIds,
                 value.ApartmentId,
                 TicketStatuses.REJECTED,
-                UserContextService.GetCurrentUserId()
+                UserContextService.CurrentUserId
             ))
             .Bind(command => Mediator.Send(command));
 
