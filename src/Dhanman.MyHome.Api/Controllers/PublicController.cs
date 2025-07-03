@@ -3,7 +3,7 @@ using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Apartments;
 using Dhanman.MyHome.Application.Contracts.Buildings;
-using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.Shared.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.Floors;
 using Dhanman.MyHome.Application.Contracts.MemberRequests;
 using Dhanman.MyHome.Application.Contracts.ResidentRequests;

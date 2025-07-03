@@ -1,5 +1,5 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
-using Dhanman.MyHome.Application.Abstractions.Messaging;
+using Dhanman.Shared.Contracts.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Features.Companies.Events;
 using Dhanman.MyHome.Domain.Abstractions;
 using Dhanman.MyHome.Domain.Entities.Companies;
@@ -17,7 +17,7 @@ public class CreateCompanyCommandHandler : ICommandHandler<CreateBasicCompanyCom
     #endregion
 
     #region Constructor
-    public CreateCompanyCommandHandler(ICompanyRepository companyRepository, IMediator mediator,CancellationToken cancellationToken)
+    public CreateCompanyCommandHandler(ICompanyRepository companyRepository, IMediator mediator)
     {
         _companyRepository = companyRepository;
         _mediator = mediator;

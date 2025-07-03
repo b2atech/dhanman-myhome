@@ -4,9 +4,9 @@ using B2aTech.CrossCuttingConcern.Messaging;
 using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.Abstractions;
 using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.Models;
 using Dhanman.MyHome.Application.Abstractions;
-using Dhanman.MyHome.Application.Abstractions.Messaging;
+using Dhanman.Shared.Contracts.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts;
-using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.Shared.Contracts.Common;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Events;
 using Dhanman.MyHome.Domain.Abstractions;
 using Dhanman.MyHome.Domain.Entities.Residents;
@@ -98,7 +98,7 @@ public class UpdateRequestApproveStatusCommandHandler : ICommandHandler<UpdateRe
         var email = new Domain.Entities.Users.Email(user.Email);
         var contactNumber = new ContactNumber(user.ContactNumber);
 
-        var userCopy = new UserDto(newUserId, user.ApartmentId, firstName, lastName, email, contactNumber);
+        //var userCopy = new UserDto(newUserId, user.ApartmentId, firstName, lastName, email, contactNumber);
 
         MessageContext messageContext = new MessageContext
         {

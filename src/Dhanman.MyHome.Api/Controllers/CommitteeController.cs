@@ -5,7 +5,7 @@ using B2aTech.CrossCuttingConcern.UserContext;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.CommitteeMembers;
-using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.Shared.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.Portfolios;
 using Dhanman.MyHome.Application.Contracts.Roles;
 using Dhanman.MyHome.Application.Features.CommitteeMembers.Commands;

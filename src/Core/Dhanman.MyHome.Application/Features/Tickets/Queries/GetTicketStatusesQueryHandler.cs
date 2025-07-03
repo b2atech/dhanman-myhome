@@ -1,6 +1,6 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Application.Abstractions.Data;
-using Dhanman.MyHome.Application.Abstractions.Messaging;
+using Dhanman.Shared.Contracts.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.TicketStatuses;
 using Dhanman.MyHome.Domain;
 using Dhanman.MyHome.Domain.Entities.TicketStatuses;

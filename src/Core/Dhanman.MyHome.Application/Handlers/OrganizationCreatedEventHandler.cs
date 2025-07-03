@@ -2,7 +2,7 @@
 //using B2aTech.CrossCuttingConcern.Core.Result;
 //using B2aTech.CrossCuttingConcern.Messaging;
 //using Dhanman.MyHome.Application.Abstractions.Data;
-//using Dhanman.MyHome.Application.Contracts.Common;
+//using Dhanman.Shared.Contracts.Common;
 //using Dhanman.MyHome.Application.Features.Organizations.Events;
 //using Dhanman.Shared.Contracts.Events;
 //using MediatR;

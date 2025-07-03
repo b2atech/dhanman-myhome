@@ -3,7 +3,7 @@ using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.BookingFacilites;
-using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.Shared.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.EventOccurrences;
 using Dhanman.MyHome.Application.Contracts.Events;
 using Dhanman.MyHome.Application.Contracts.MeetingAgendaItems;
