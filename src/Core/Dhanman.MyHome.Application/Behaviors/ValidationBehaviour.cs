@@ -1,4 +1,4 @@
-﻿using Dhanman.MyHome.Application.Abstractions.Messaging;
+﻿using Dhanman.Shared.Contracts.Abstractions.Messaging;
 using B2aTech.CrossCuttingConcern.Core.Exceptions;
 using FluentValidation;
 using MediatR;

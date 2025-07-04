@@ -1,5 +1,5 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
-using Dhanman.MyHome.Application.Abstractions.Messaging;
+using Dhanman.Shared.Contracts.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Constants;
 using Dhanman.MyHome.Application.Contracts.Floors;
 

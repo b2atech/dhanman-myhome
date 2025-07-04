@@ -2,7 +2,7 @@
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
-using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.Shared.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.Units;
 using Dhanman.MyHome.Application.Contracts.UnitTypes;
 using Dhanman.MyHome.Application.Features.Units.Command.CreateMultipleUnits;

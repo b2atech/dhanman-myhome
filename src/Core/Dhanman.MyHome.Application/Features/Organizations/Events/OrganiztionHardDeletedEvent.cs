@@ -1,4 +1,4 @@
-﻿using Dhanman.MyHome.Application.Abstractions.Messaging;
+﻿using Dhanman.Shared.Contracts.Abstractions.Messaging;
 
 namespace Dhanman.MyHome.Application.Features.Organizations.Events;
 

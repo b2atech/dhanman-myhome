@@ -1,8 +1,8 @@
 ﻿using B2aTech.CrossCuttingConcern.Abstractions;
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Application.Abstractions.Data;
-using Dhanman.MyHome.Application.Abstractions.Messaging;
-using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.Shared.Contracts.Abstractions.Messaging;
+using Dhanman.Shared.Contracts.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -25,7 +25,7 @@ public sealed class UpdateMeetingActionItemCommandHandler : ICommandHandler<Upda
 
     public async Task<Result<EntityUpdatedResponse>> Handle(UpdateMeetingActionItemCommand request, CancellationToken cancellationToken)
     {
-        var currentUserId = _userContextService.GetCurrentUserId();
+        var currentUserId = _userContextService.CurrentUserId;
 
         var jsonActionItems = request.ActionItems.Select(item => new
         {

@@ -1,10 +1,14 @@
-﻿using B2aTech.CrossCuttingConcern.Core.Result;
+﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Core.Result;
+using B2aTech.CrossCuttingConcern.Messaging;
+using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.Abstractions;
+using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.Models;
 using Dhanman.MyHome.Application.Abstractions;
 using Dhanman.MyHome.Application.Abstractions.Data;
-using Dhanman.MyHome.Application.Abstractions.Messaging;
+using Dhanman.Shared.Contracts.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Constants.Enums;
 using Dhanman.MyHome.Application.Contracts;
-using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.Shared.Contracts.Common;
 using Dhanman.MyHome.Application.Features.Residents.Events;
 using Dhanman.MyHome.Domain.Abstractions;
 using Dhanman.MyHome.Domain.Entities.Addresses;
@@ -12,6 +16,8 @@ using Dhanman.MyHome.Domain.Entities.Cities;
 using Dhanman.MyHome.Domain.Entities.Residents;
 using Dhanman.MyHome.Domain.Entities.ResidentUnits;
 using Dhanman.MyHome.Domain.Entities.Users;
+using Dhanman.Shared.Contracts.Commands;
+using Dhanman.Shared.Contracts.Events;
 using MediatR;
 using System.Threading.Tasks;
 using ResidentAddress = Dhanman.MyHome.Application.Contracts.ServiceProviders.Address;
@@ -31,10 +37,13 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
     private readonly IMediator _mediator;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IApplicationDbContext _dbContext;
+    private readonly IUserContextService _userContextService;
+    private readonly IEventPublisher _eventPublisher;
+
     #endregion
 
     #region Constructors
-    public CreateResidentCommandHandler(IResidentRepository residentRepository, IAddressRepository addressRepository, IResidentUnitRepository residentUnitRepository, IUserRepository userRepository, ICommonServiceClient commonServiceClient, ISalesServiceClient salesServiceClient, IPurchaseServiceClient purchaseServiceClient, IMediator mediator, IApplicationDbContext dbContext, IUnitOfWork unitOfWork)
+    public CreateResidentCommandHandler(IResidentRepository residentRepository, IAddressRepository addressRepository, IResidentUnitRepository residentUnitRepository, IUserRepository userRepository, ICommonServiceClient commonServiceClient, ISalesServiceClient salesServiceClient, IPurchaseServiceClient purchaseServiceClient, IMediator mediator, IApplicationDbContext dbContext, IUnitOfWork unitOfWork,IUserContextService userContextService, IEventPublisher eventPublisher)
     {
         _residentRepository = residentRepository;
         _addressRepository = addressRepository;
@@ -46,6 +55,8 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
         _mediator = mediator;
         _dbContext = dbContext;
         _unitOfWork = unitOfWork;
+        _userContextService = userContextService;
+        _eventPublisher = eventPublisher;
     }
     #endregion
 
@@ -106,11 +117,33 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
 
             _userRepository.Insert(userResident);
 
-            var user = new UserDto(newUserId, request.ApartmentId, firstName, lastName, email, contactNumber);
 
-            await _commonServiceClient.CreateUserAsync(user);
-            await _salesServiceClient.CreateUserAsync(user);
-            await _purchaseServiceClient.CreateUserAsync(user);
+            MessageContext messageContext = new MessageContext
+            {
+                UserId = _userContextService.CurrentUserId,
+                CorrelationId = _userContextService.CorrelationId,
+                OrganizationId = _userContextService.OrganizationId,
+
+            };
+
+            //var user = new UserDto(newUserId, request.ApartmentId, firstName, lastName, email, contactNumber);
+            var user = new CreateUserCommand(newUserId, request.ApartmentId, firstName, lastName, email, contactNumber,  messageContext);
+
+            var eventEnevelop = new EventEnvelope<CreateUserCommand>
+            {
+                EventType = EventTypes.CommunityUserAfterResidentCreated,
+                Source = "CommunityService",
+                UserId = _userContextService.CurrentUserId,
+                OrganizationId = _userContextService.OrganizationId,
+                CorrelationId = _userContextService.CorrelationId,
+                Payload = user
+            };
+
+            await _eventPublisher.PublishAsync(eventEnevelop);
+
+           // await _commonServiceClient.CreateUserAsync(user);
+           // await _salesServiceClient.CreateUserAsync(user);
+           // await _purchaseServiceClient.CreateUserAsync(user);
 
             //TODO
             // this ensure no duplicate entry in DB but multiple calls

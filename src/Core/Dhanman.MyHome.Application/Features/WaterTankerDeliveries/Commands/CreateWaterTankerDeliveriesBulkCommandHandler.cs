@@ -1,8 +1,8 @@
 ﻿using B2aTech.CrossCuttingConcern.Abstractions;
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Application.Abstractions.Data;
-using Dhanman.MyHome.Application.Abstractions.Messaging;
-using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.Shared.Contracts.Abstractions.Messaging;
+using Dhanman.Shared.Contracts.Common;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using NpgsqlTypes;
@@ -54,7 +54,7 @@ public sealed class CreateWaterTankerDeliveriesBulkCommandHandler : ICommandHand
         command.CommandType = System.Data.CommandType.Text;
 
         command.Parameters.Add(new NpgsqlParameter("p_deliveries", NpgsqlDbType.Jsonb) {Value = json});
-        command.Parameters.Add(new NpgsqlParameter("p_created_by", NpgsqlDbType.Uuid) {Value = _userContext.GetCurrentUserId()});
+        command.Parameters.Add(new NpgsqlParameter("p_created_by", NpgsqlDbType.Uuid) {Value = _userContext.CurrentUserId});
         command.Parameters.Add(new NpgsqlParameter("p_created_on_utc", NpgsqlDbType.Date) {Value = DateTime.UtcNow});
 
         var result = (int)await command.ExecuteScalarAsync(cancellationToken);

@@ -1,8 +1,8 @@
 ﻿using B2aTech.CrossCuttingConcern.Abstractions;
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Application.Abstractions.Data;
-using Dhanman.MyHome.Application.Abstractions.Messaging;
-using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.Shared.Contracts.Abstractions.Messaging;
+using Dhanman.Shared.Contracts.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -30,7 +30,7 @@ public class UpdateMeetingParticipantCommandHandler : ICommandHandler<UpdateMeet
     #region Methods
     public async Task<Result<EntityUpdatedResponse>> Handle(UpdateMeetingParticipantCommand request, CancellationToken cancellationToken)
     {
-        var currentUserId = _userContextService.GetCurrentUserId();
+        var currentUserId = _userContextService.CurrentUserId;
 
         // Step 1: Convert user list to JSONB format expected by the procedure
         var jsonParticipants = request.UserIds.Select(userId => new

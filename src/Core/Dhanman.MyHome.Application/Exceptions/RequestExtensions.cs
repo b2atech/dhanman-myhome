@@ -1,4 +1,4 @@
-﻿using Dhanman.MyHome.Application.Abstractions.Messaging;
+﻿using Dhanman.Shared.Contracts.Abstractions.Messaging;
 using MediatR;
 
 namespace Dhanman.MyHome.Application.Exceptions;

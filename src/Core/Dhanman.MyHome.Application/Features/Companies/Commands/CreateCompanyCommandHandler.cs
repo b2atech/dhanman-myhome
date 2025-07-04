@@ -1,14 +1,15 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
-using Dhanman.MyHome.Application.Abstractions.Messaging;
-using Dhanman.MyHome.Application.Contracts.Common;
+using Dhanman.Shared.Contracts.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Features.Companies.Events;
 using Dhanman.MyHome.Domain.Abstractions;
 using Dhanman.MyHome.Domain.Entities.Companies;
+using Dhanman.Shared.Contracts.Commands;
+using Dhanman.Shared.Contracts.Common;
 using MediatR;
 
 namespace Dhanman.MyHome.Application.Features.Companies.Commands;
 
-public class CreateCompanyCommandHandler : ICommandHandler<CreateCompanyCommand, Result<EntityCreatedResponse>>
+public class CreateCompanyCommandHandler : ICommandHandler<CreateBasicCompanyCommand, Result<EntityCreatedResponse>>
 {
     #region Properties
     private readonly ICompanyRepository _companyRepository;
@@ -24,7 +25,7 @@ public class CreateCompanyCommandHandler : ICommandHandler<CreateCompanyCommand,
     #endregion
 
     #region Methods
-    public async Task<Result<EntityCreatedResponse>> Handle(CreateCompanyCommand request, CancellationToken cancellationToken)
+    public async Task<Result<EntityCreatedResponse>> Handle(CreateBasicCompanyCommand request, CancellationToken cancellationToken)
     {
         var company = new Company(request.CompanyId, request.OrganizationId, request.Name, request.IsApartment);
 
