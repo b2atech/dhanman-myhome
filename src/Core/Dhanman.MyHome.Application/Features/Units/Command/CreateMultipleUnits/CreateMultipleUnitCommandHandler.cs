@@ -3,12 +3,13 @@ using B2aTech.CrossCuttingConcern.Core.Result;
 using B2aTech.CrossCuttingConcern.Messaging;
 using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.Abstractions;
 using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.Models;
+using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.Services;
 using Dhanman.MyHome.Application.Abstractions;
-using Dhanman.Shared.Contracts.Abstractions.Messaging;
-using Dhanman.Shared.Contracts.Common;
 using Dhanman.MyHome.Application.Features.Units.Event;
 using Dhanman.MyHome.Domain.Abstractions;
+using Dhanman.Shared.Contracts.Abstractions.Messaging;
 using Dhanman.Shared.Contracts.Commands;
+using Dhanman.Shared.Contracts.Common;
 using Dhanman.Shared.Contracts.Events;
 using Dhanman.Shared.Contracts.Routing;
 using MediatR;
@@ -24,18 +25,18 @@ public class CreateMultipleUnitCommandHandler : ICommandHandler<CreateMultipleUn
     private readonly ICommonServiceClient _commonServiceClient;
     private readonly ISalesServiceClient _salesServiceClient;
     private readonly IUserContextService _userContextService;
-    private readonly IEventPublisher _eventPublisher;
+    private readonly ICommandPublisher _commandPublisher;
     #endregion
 
     #region Constructor
-    public CreateMultipleUnitCommandHandler(IUnitRepository unitRepository, IMediator mediator, ICommonServiceClient commonServiceClient, ISalesServiceClient salesServiceClient, IUserContextService userContextService, IEventPublisher eventPublisher)
+    public CreateMultipleUnitCommandHandler(IUnitRepository unitRepository, IMediator mediator, ICommonServiceClient commonServiceClient, ISalesServiceClient salesServiceClient, IUserContextService userContextService, ICommandPublisher commandPublisher)
     {
         _unitRepository = unitRepository;
         _mediator = mediator;
         _commonServiceClient = commonServiceClient;
         _salesServiceClient = salesServiceClient;
         _userContextService = userContextService;
-        _eventPublisher = eventPublisher;
+        _commandPublisher = commandPublisher;
     }
     #endregion
 
@@ -83,22 +84,47 @@ public class CreateMultipleUnitCommandHandler : ICommandHandler<CreateMultipleUn
                 OrganizationId = _userContextService.OrganizationId,
 
             };
+            //var command = new CreateBasicCustomerCommand();
+
+            //var eventEnevlop = new EventEnvelope<CreateBasicCustomerCommand>()
+            //{
+            //    EventType = EventTypes.CommunityCustomerAfterUnitCreated,
+            //    Source = "CommunityService",
+            //    UserId = messageContext.UserId,
+            //    CorrelationId = messageContext.CorrelationId,
+            //    OrganizationId = messageContext.OrganizationId,
+            //    Payload = command,
+            //    // CommandType = RoutingKeys.Community.UnitAsCustomerCreated,
+            //};
+            //await _eventPublisher.PublishAsync(eventEnevlop);
+
             var command = new CreateBasicCustomerCommand(unit.CustomerId, unitDto.ApartmentId, messageContext.OrganizationId, unitDto.Name, null, null, null, null, null, null, null, 0, false, 0, false, messageContext);
 
-            var eventEnevlop = new EventEnvelope<CreateBasicCustomerCommand>()
+            var commandEnevlopCommon = new CommandEnvelope<CreateBasicCustomerCommand>()
             {
-                EventType = EventTypes.CommunityCustomerAfterUnitCreated,
+                CommandType = RoutingKeys.Community.CreateCustomerinCommonAfterUnit,
                 Source = "CommunityService",
                 UserId = messageContext.UserId,
                 CorrelationId = messageContext.CorrelationId,
                 OrganizationId = messageContext.OrganizationId,
                 Payload = command,
-                // CommandType = RoutingKeys.Community.UnitAsCustomerCreated,
             };
-            await _eventPublisher.PublishAsync(eventEnevlop);
+            await _commandPublisher.PublishAsync(RoutingKeys.Community.CreateCustomerinCommonAfterUnit, commandEnevlopCommon);
+
+            //var commandEnevlopSales = new CommandEnvelope<CreateBasicCustomerCommand>()
+            //{
+            //    CommandType = RoutingKeys.Community.SalesUnitAsCustomerCreate,
+            //    Source = "CommunityService",
+            //    UserId = messageContext.UserId,
+            //    CorrelationId = messageContext.CorrelationId,
+            //    OrganizationId = messageContext.OrganizationId,
+            //    Payload = command,
+            //};
+            //await _commandPublisher.PublishAsync(RoutingKeys.Community.SalesUnitAsCustomerCreate, commandEnevlopSales);
+
 
             //await _commonServiceClient.CreateCustomerAsync(new Contracts.CustomerDto() { Id = unit.CustomerId, Name = unitDto.Name, CompanyId = unitDto.ApartmentId, CreatedBy = _userContextService.GetCurrentUserId() });
-           // await _salesServiceClient.CreateCustomerAsync(new Contracts.CustomerDto() { Id = unit.CustomerId, Name = unitDto.Name, CompanyId = unitDto.ApartmentId, CreatedBy = _userContextService.GetCurrentUserId() });
+            // await _salesServiceClient.CreateCustomerAsync(new Contracts.CustomerDto() { Id = unit.CustomerId, Name = unitDto.Name, CompanyId = unitDto.ApartmentId, CreatedBy = _userContextService.GetCurrentUserId() });
 
             await _mediator.Publish(new UnitCreatedEvent(unit.Id), cancellationToken);
 

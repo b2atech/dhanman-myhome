@@ -47,14 +47,14 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
     private readonly IApplicationDbContext _dbContext;
     private readonly IEmailService _emailService;
     private readonly ILogger<UpdateMemberApproveStatusCommandHandler> _logger;
-    private readonly IEventPublisher _eventPublisher;
+    private readonly ICommandPublisher _commandPublisher;
     #endregion
 
     #region Constructors
     public UpdateMemberApproveStatusCommandHandler(IUnitRepository unitRepository, ICommonServiceClient commonServiceClient, ISalesServiceClient salesServiceClient, IPurchaseServiceClient purchaseServiceClient,
                                                    IResidentRequestRepository residentRequestRepository, IResidentRepository residentRepository, IResidentUnitRepository residentUnitRepository,
                                                    IUserRepository userRepository, IMemberAdditionalDetailRepository memberAdditionalDetailRepository, IMediator mediator, IUserContextService userContextService,
-                                                   IApplicationDbContext dbContext, IEmailService emailService, ILogger<UpdateMemberApproveStatusCommandHandler> logger, IUnitOfWork unitOfWork,  IEventPublisher eventPublisher)
+                                                   IApplicationDbContext dbContext, IEmailService emailService, ILogger<UpdateMemberApproveStatusCommandHandler> logger, IUnitOfWork unitOfWork, ICommandPublisher commandPublisher)
     {
         _unitRepository = unitRepository;
         _commonServiceClient = commonServiceClient;
@@ -71,7 +71,7 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
         _emailService = emailService;
         _logger = logger;
         _unitOfWork = unitOfWork;
-        _eventPublisher = eventPublisher;
+        _commandPublisher = commandPublisher;
     }
     #endregion
 
@@ -124,22 +124,49 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
         };
         var memberCustomer = new CreateBasicCustomerCommand(unit.CustomerId, residentRequest.ApartmentId, messageContext.OrganizationId, unitName, null, null, null, null, null, null, null, 0, false, 0, false, messageContext);
 
-        var enevlop = new EventEnvelope<CreateBasicCustomerCommand>()
+        var commandEnevelop = new CommandEnvelope<CreateBasicCustomerCommand>
         {
-            EventType = EventTypes.CommunityCustomerAfterMemberCreated,
+            CommandType = RoutingKeys.Community.CreateCustomerinCommonAfterMember,
             Source = "CommunityService",
-            UserId = messageContext.UserId,
-            CorrelationId = messageContext.CorrelationId,
-            OrganizationId = messageContext.OrganizationId,
+            UserId = _userContextService.CurrentUserId,
+            OrganizationId = _userContextService.OrganizationId,
+            CorrelationId = _userContextService.CorrelationId,
             Payload = memberCustomer
-
+            //EventType = EventTypes.CommunityUserAfterResidentCreated,
         };
-        await _eventPublisher.PublishAsync(enevlop);
+
+        await _commandPublisher.PublishAsync(RoutingKeys.Community.CreateCustomerinCommonAfterMember, commandEnevelop);
+
+        //var commandEnevelop = new CommandEnvelope<CreateBasicCustomerCommand>
+        //{
+        //    CommandType = RoutingKeys.Community.SalesMemberAsCustomerCreate,
+        //    Source = "CommunityService",
+        //    UserId = _userContextService.CurrentUserId,
+        //    OrganizationId = _userContextService.OrganizationId,
+        //    CorrelationId = _userContextService.CorrelationId,
+        //    Payload = memberCustomer
+        //    //EventType = EventTypes.CommunityUserAfterResidentCreated,
+        //};
+
+        //await _eventPublisher.PublishAsync(RoutingKeys.Community.CommonResidentAsUserCreate, commandEnevelop);
+
+
+        //var enevlop = new EventEnvelope<CreateBasicCustomerCommand>()
+        //{
+        //    EventType = EventTypes.CommunityCustomerAfterMemberCreated,
+        //    Source = "CommunityService",
+        //    UserId = messageContext.UserId,
+        //    CorrelationId = messageContext.CorrelationId,
+        //    OrganizationId = messageContext.OrganizationId,
+        //    Payload = memberCustomer
+
+        //};
+        //await _eventPublisher.PublishAsync(enevlop);
 
 
 
-       // await _commonServiceClient.CreateCustomerAsync(customerDto);
-       // await _salesServiceClient.CreateCustomerAsync(customerDto);
+        // await _commonServiceClient.CreateCustomerAsync(customerDto);
+        // await _salesServiceClient.CreateCustomerAsync(customerDto);
 
         residentRequest.RequestStatusId = ResidentRequestStatus.APPROVED;
         residentRequest.UnitId = unit.Id;
@@ -161,23 +188,29 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
 
         //var user = new UserDto(newUserId, request.ApartmentId, firstName, lastName, email, contactNumber);
         var memberAsUser = new CreateUserCommand(newUserId, residentRequest.ApartmentId, user.FirstName, user.LastName, user.Email, user.ContactNumber, messageContext);
+        //*****************************
 
-        var eventEnevelop = new EventEnvelope<CreateUserCommand>
-        {
-            EventType = EventTypes.CommunityUserAfterMemberCreated,
-            Source = "CommunityService",
-            UserId = _userContextService.CurrentUserId,
-            CorrelationId = _userContextService.CorrelationId,
-            OrganizationId = _userContextService.OrganizationId,
-            Payload = memberAsUser
-        };
+        //TODO: This is a should be create in common service as after customer from there send to all services
+        //but for here "IS OWNER" required for user
 
-        await _eventPublisher.PublishAsync(eventEnevelop);
+        //*****************************
+
+        //var eventEnevelop = new EventEnvelope<CreateUserCommand>
+        //{
+        //    EventType = EventTypes.CommunityUserAfterMemberCreated,
+        //    Source = "CommunityService",
+        //    UserId = _userContextService.CurrentUserId,
+        //    CorrelationId = _userContextService.CorrelationId,
+        //    OrganizationId = _userContextService.OrganizationId,
+        //    Payload = memberAsUser
+        //};
+
+        //await _eventPublisher.PublishAsync(eventEnevelop);
 
 
-       // await _commonServiceClient.CreateUserAsync(userDto);
-       // await _salesServiceClient.CreateUserAsync(userDto);
-      //  await _purchaseServiceClient.CreateUserAsync(userDto);
+        // await _commonServiceClient.CreateUserAsync(userDto);
+        // await _salesServiceClient.CreateUserAsync(userDto);
+        //  await _purchaseServiceClient.CreateUserAsync(userDto);
 
         var memberDetail = await _dbContext.Set<MemberAdditionalDetail>().FirstOrDefaultAsync(m => m.Id == residentRequest.MemberAdditionalDetailsId);
 
