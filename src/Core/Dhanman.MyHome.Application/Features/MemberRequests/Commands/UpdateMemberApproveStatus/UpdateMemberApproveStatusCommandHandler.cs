@@ -5,11 +5,9 @@ using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.Abstractions;
 using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.Models;
 using Dhanman.MyHome.Application.Abstractions;
 using Dhanman.MyHome.Application.Abstractions.Data;
-using Dhanman.Shared.Contracts.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Constants;
 using Dhanman.MyHome.Application.Constants.Enums;
 using Dhanman.MyHome.Application.Contracts;
-using Dhanman.Shared.Contracts.Common;
 using Dhanman.MyHome.Application.Features.MemberRequests.Events;
 using Dhanman.MyHome.Domain.Abstractions;
 using Dhanman.MyHome.Domain.Entities.Apartments;
@@ -18,12 +16,15 @@ using Dhanman.MyHome.Domain.Entities.Residents;
 using Dhanman.MyHome.Domain.Entities.ResidentUnits;
 using Dhanman.MyHome.Domain.Entities.Users;
 using Dhanman.MyHome.Domain.Exceptions;
+using Dhanman.Shared.Contracts.Abstractions.Messaging;
 using Dhanman.Shared.Contracts.Commands;
+using Dhanman.Shared.Contracts.Common;
 using Dhanman.Shared.Contracts.Events;
 using Dhanman.Shared.Contracts.Routing;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using static Dhanman.MyHome.Domain.Errors;
 //using static Dhanman.MyHome.Domain.Errors;
 using Unit = Dhanman.MyHome.Domain.Entities.Units.Unit;
 
@@ -107,14 +108,6 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
         _unitRepository.Insert(unit);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        //var customerDto = new Contracts.CustomerDto
-        //{
-        //    Id = unit.CustomerId,
-        //    Name = unitName,
-        //    CompanyId = residentRequest.ApartmentId,
-        //    CreatedBy = _userContextService.CurrentUserId
-        //};
-
         MessageContext messageContext = new MessageContext
         {
             UserId = _userContextService.CurrentUserId,
@@ -132,41 +125,9 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
             OrganizationId = _userContextService.OrganizationId,
             CorrelationId = _userContextService.CorrelationId,
             Payload = memberCustomer
-            //EventType = EventTypes.CommunityUserAfterResidentCreated,
         };
 
         await _commandPublisher.PublishAsync(RoutingKeys.Community.CreateCustomerinCommonAfterMember, commandEnevelop);
-
-        //var commandEnevelop = new CommandEnvelope<CreateBasicCustomerCommand>
-        //{
-        //    CommandType = RoutingKeys.Community.SalesMemberAsCustomerCreate,
-        //    Source = "CommunityService",
-        //    UserId = _userContextService.CurrentUserId,
-        //    OrganizationId = _userContextService.OrganizationId,
-        //    CorrelationId = _userContextService.CorrelationId,
-        //    Payload = memberCustomer
-        //    //EventType = EventTypes.CommunityUserAfterResidentCreated,
-        //};
-
-        //await _eventPublisher.PublishAsync(RoutingKeys.Community.CommonResidentAsUserCreate, commandEnevelop);
-
-
-        //var enevlop = new EventEnvelope<CreateBasicCustomerCommand>()
-        //{
-        //    EventType = EventTypes.CommunityCustomerAfterMemberCreated,
-        //    Source = "CommunityService",
-        //    UserId = messageContext.UserId,
-        //    CorrelationId = messageContext.CorrelationId,
-        //    OrganizationId = messageContext.OrganizationId,
-        //    Payload = memberCustomer
-
-        //};
-        //await _eventPublisher.PublishAsync(enevlop);
-
-
-
-        // await _commonServiceClient.CreateCustomerAsync(customerDto);
-        // await _salesServiceClient.CreateCustomerAsync(customerDto);
 
         residentRequest.RequestStatusId = ResidentRequestStatus.APPROVED;
         residentRequest.UnitId = unit.Id;
@@ -180,37 +141,22 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
         _residentUnitRepository.Insert(residentUnit);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var user = new User(newUserId, residentRequest.ApartmentId, new Domain.Entities.Users.FirstName(residentRequest.FirstName), new LastName(residentRequest.LastName), new Email(residentRequest.Email), new ContactNumber(residentRequest.ContactNumber), residentRequest.ResidentTypeId == (int)ResidentType.OWNER);
+        var user = new User(newUserId, residentRequest.ApartmentId, new Domain.Entities.Users.FirstName(residentRequest.FirstName), new Domain.Entities.Users.LastName(residentRequest.LastName), new Domain.Entities.Users.Email(residentRequest.Email), new ContactNumber(residentRequest.ContactNumber), residentRequest.ResidentTypeId == (int)ResidentType.OWNER);
         _userRepository.Insert(user);
 
-       var userDto = new UserDto(newUserId, residentRequest.ApartmentId, user.FirstName, user.LastName, user.Email, user.ContactNumber);
-        
+        var userDto = new CreateUserCommand(newUserId, residentRequest.ApartmentId, user.FirstName, user.LastName, user.Email, user.ContactNumber, messageContext);
 
-        //var user = new UserDto(newUserId, request.ApartmentId, firstName, lastName, email, contactNumber);
-        var memberAsUser = new CreateUserCommand(newUserId, residentRequest.ApartmentId, user.FirstName, user.LastName, user.Email, user.ContactNumber, messageContext);
-        //*****************************
+        var eventEnevelop = new CommandEnvelope<CreateUserCommand>
+        {
+            CommandType = RoutingKeys.Community.CreateUserinCommonAfterMember,
+            Source = "CommunityService",
+            UserId = _userContextService.CurrentUserId,
+            OrganizationId = _userContextService.OrganizationId,
+            CorrelationId = _userContextService.CorrelationId,
+            Payload = userDto
+        };
 
-        //TODO: This is a should be create in common service as after customer from there send to all services
-        //but for here "IS OWNER" required for user
-
-        //*****************************
-
-        //var eventEnevelop = new EventEnvelope<CreateUserCommand>
-        //{
-        //    EventType = EventTypes.CommunityUserAfterMemberCreated,
-        //    Source = "CommunityService",
-        //    UserId = _userContextService.CurrentUserId,
-        //    CorrelationId = _userContextService.CorrelationId,
-        //    OrganizationId = _userContextService.OrganizationId,
-        //    Payload = memberAsUser
-        //};
-
-        //await _eventPublisher.PublishAsync(eventEnevelop);
-
-
-        // await _commonServiceClient.CreateUserAsync(userDto);
-        // await _salesServiceClient.CreateUserAsync(userDto);
-        //  await _purchaseServiceClient.CreateUserAsync(userDto);
+        await _commandPublisher.PublishAsync(RoutingKeys.Community.CreateUserinCommonAfterMember, eventEnevelop);
 
         var memberDetail = await _dbContext.Set<MemberAdditionalDetail>().FirstOrDefaultAsync(m => m.Id == residentRequest.MemberAdditionalDetailsId);
 

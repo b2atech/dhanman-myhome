@@ -3,18 +3,21 @@ using B2aTech.CrossCuttingConcern.Core.Result;
 using B2aTech.CrossCuttingConcern.Messaging;
 using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.Abstractions;
 using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.Models;
+using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.Services;
 using Dhanman.MyHome.Application.Abstractions;
-using Dhanman.Shared.Contracts.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts;
-using Dhanman.Shared.Contracts.Common;
 using Dhanman.MyHome.Application.Features.ResidentRequests.Events;
 using Dhanman.MyHome.Domain.Abstractions;
 using Dhanman.MyHome.Domain.Entities.Residents;
 using Dhanman.MyHome.Domain.Entities.ResidentUnits;
+using Dhanman.MyHome.Domain.Entities.Units;
 using Dhanman.MyHome.Domain.Entities.Users;
 using Dhanman.MyHome.Domain.Exceptions;
+using Dhanman.Shared.Contracts.Abstractions.Messaging;
 using Dhanman.Shared.Contracts.Commands;
+using Dhanman.Shared.Contracts.Common;
 using Dhanman.Shared.Contracts.Events;
+using Dhanman.Shared.Contracts.Routing;
 using MediatR;
 using ResidentRequestStatus = Dhanman.MyHome.Application.Constants.ResidentRequestStatus;
 
@@ -32,11 +35,12 @@ public class UpdateRequestApproveStatusCommandHandler : ICommandHandler<UpdateRe
     private readonly ISalesServiceClient _salesServiceClient;
     private readonly IPurchaseServiceClient _purchaseServiceClient;
     private readonly IEventPublisher _eventPublisher;
+    private readonly ICommandPublisher _commandPublisher;
     private readonly IUserContextService _userContextService;
     #endregion
 
     #region Constructors
-    public UpdateRequestApproveStatusCommandHandler(IResidentRequestRepository residentRequestRepository, IResidentRepository residentRepository, IResidentUnitRepository residentUnitRepository, IMediator mediator, IUnitOfWork unitOfWork, ICommonServiceClient commonServiceClient, ISalesServiceClient salesServiceClient, IPurchaseServiceClient purchaseServiceClient, IEventPublisher eventPublisher, IUserContextService userContextService)
+    public UpdateRequestApproveStatusCommandHandler(IResidentRequestRepository residentRequestRepository, IResidentRepository residentRepository, IResidentUnitRepository residentUnitRepository, IMediator mediator, IUnitOfWork unitOfWork, ICommonServiceClient commonServiceClient, ISalesServiceClient salesServiceClient, IPurchaseServiceClient purchaseServiceClient, IEventPublisher eventPublisher, ICommandPublisher commandPublisher, IUserContextService userContextService)
     {
         _residentRequestRepository = residentRequestRepository;
         _residentRepository = residentRepository;
@@ -47,6 +51,7 @@ public class UpdateRequestApproveStatusCommandHandler : ICommandHandler<UpdateRe
         _salesServiceClient = salesServiceClient;
         _purchaseServiceClient = purchaseServiceClient;
         _eventPublisher = eventPublisher;
+        _commandPublisher = commandPublisher;
         _userContextService = userContextService;
     }
     #endregion
@@ -111,9 +116,9 @@ public class UpdateRequestApproveStatusCommandHandler : ICommandHandler<UpdateRe
         //var user = new UserDto(newUserId, request.ApartmentId, firstName, lastName, email, contactNumber);
         var userResident = new CreateUserCommand(newUserId, user.ApartmentId, firstName, lastName, email, contactNumber, messageContext);
 
-        var eventEnevelop = new EventEnvelope<CreateUserCommand>
+        var commandCustomerEnevelop = new CommandEnvelope<CreateUserCommand>
         {
-            EventType = EventTypes.CommunityUserAfterResidentCreated,
+            CommandType = RoutingKeys.Community.CreateCustomerinCommonAfterMember,
             Source = "CommunityService",
             UserId = messageContext.UserId,
             OrganizationId = messageContext.OrganizationId,
@@ -121,13 +126,21 @@ public class UpdateRequestApproveStatusCommandHandler : ICommandHandler<UpdateRe
             Payload = userResident
         };
 
-        await _eventPublisher.PublishAsync(eventEnevelop);
+        await _commandPublisher.PublishAsync(RoutingKeys.Community.CreateCustomerinCommonAfterMember, commandCustomerEnevelop);
 
+        var commandUser = new CreateUserCommand(newUserId, user.ApartmentId, firstName, lastName, email, contactNumber, messageContext);
 
-       // await _commonServiceClient.CreateUserAsync(userCopy);
-       // await _salesServiceClient.CreateUserAsync(userCopy);
-       // await _purchaseServiceClient.CreateUserAsync(userCopy);
-
+        //
+        var commandUserEnevlop = new CommandEnvelope<CreateUserCommand>()
+        {
+            CommandType = RoutingKeys.Community.CreateUserinCommonAfterMember,
+            Source = "CommunityService",
+            UserId = messageContext.UserId,
+            CorrelationId = messageContext.CorrelationId,
+            OrganizationId = messageContext.OrganizationId,
+            Payload = commandUser,
+        };
+        await _commandPublisher.PublishAsync(RoutingKeys.Community.CreateUserinCommonAfterMember, commandUserEnevlop);
 
         await _mediator.Publish(new ResidentRequestUpdatedEvent(updateRequestApproveStatus.Id), cancellationToken);
         return Result.Success(new EntityUpdatedResponse(updateRequestApproveStatus.Id));

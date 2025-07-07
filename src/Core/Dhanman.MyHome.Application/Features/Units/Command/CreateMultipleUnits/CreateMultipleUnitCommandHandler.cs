@@ -111,6 +111,19 @@ public class CreateMultipleUnitCommandHandler : ICommandHandler<CreateMultipleUn
             };
             await _commandPublisher.PublishAsync(RoutingKeys.Community.CreateCustomerinCommonAfterUnit, commandEnevlopCommon);
 
+            var commandUser = new CreateUserCommand(unit.CustomerId, unit.ApartmentId, unit.Name, null, null, null, messageContext);
+
+            var commandUserEnevlopCommon = new CommandEnvelope<CreateUserCommand>()
+            {
+                CommandType = RoutingKeys.Community.CreateUserinCommonAfterUnit,
+                Source = "CommunityService",
+                UserId = messageContext.UserId,
+                CorrelationId = messageContext.CorrelationId,
+                OrganizationId = messageContext.OrganizationId,
+                Payload = commandUser,
+            };
+            await _commandPublisher.PublishAsync(RoutingKeys.Community.CreateUserinCommonAfterUnit, commandUserEnevlopCommon);
+
             //var commandEnevlopSales = new CommandEnvelope<CreateBasicCustomerCommand>()
             //{
             //    CommandType = RoutingKeys.Community.SalesUnitAsCustomerCreate,
