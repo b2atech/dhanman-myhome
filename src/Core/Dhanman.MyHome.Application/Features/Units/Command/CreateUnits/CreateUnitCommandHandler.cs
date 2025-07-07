@@ -27,12 +27,12 @@ namespace Dhanman.MyHome.Application.Features.Units.Command.CreateUnits
         private readonly ISalesServiceClient _salesServiceClient;
         private readonly IUserContextService _userContextService;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IEventPublisher _eventPublisher;
+        private readonly ICommandPublisher _commandPublisher;
 
         #endregion
 
         #region Constructor
-        public CreateUnitCommandHandler(IUnitRepository unitRepository, IMediator mediator, ICommonServiceClient commonServiceClient, ISalesServiceClient salesServiceClient, IUserContextService userContextService, IUnitOfWork unitOfWork,IEventPublisher eventPublisher
+        public CreateUnitCommandHandler(IUnitRepository unitRepository, IMediator mediator, ICommonServiceClient commonServiceClient, ISalesServiceClient salesServiceClient, IUserContextService userContextService, IUnitOfWork unitOfWork, ICommandPublisher commandPublisher
     )
         {
             _unitRepository = unitRepository;
@@ -41,7 +41,7 @@ namespace Dhanman.MyHome.Application.Features.Units.Command.CreateUnits
             _salesServiceClient = salesServiceClient; 
             _userContextService = userContextService;
             _unitOfWork = unitOfWork;
-            _eventPublisher = eventPublisher;
+            _commandPublisher = commandPublisher;
         }
         #endregion
 
@@ -77,24 +77,33 @@ namespace Dhanman.MyHome.Application.Features.Units.Command.CreateUnits
                 UserId = _userContextService.CurrentUserId,
                 CorrelationId = _userContextService.CorrelationId,
                 OrganizationId = _userContextService.OrganizationId,
-
             };
             var command = new CreateBasicCustomerCommand(unit.CustomerId, unit.ApartmentId, messageContext.OrganizationId, request.Name,null, null, null, null, null, null, null, 0, false, 0, false, messageContext);
 
-            var eventEnevlop = new EventEnvelope<CreateBasicCustomerCommand>()
+            var commandEnevlopCommon = new CommandEnvelope<CreateBasicCustomerCommand>()
             {
-                EventType = EventTypes.CommunityCustomerAfterUnitCreated,
+                CommandType = RoutingKeys.Community.CreateCustomerinCommonAfterUnit,
                 Source = "CommunityService",
                 UserId = messageContext.UserId,
                 CorrelationId = messageContext.CorrelationId,
                 OrganizationId = messageContext.OrganizationId,
                 Payload = command,
-                // CommandType = RoutingKeys.Community.UnitAsCustomerCreated,
             };
-            await _eventPublisher.PublishAsync(eventEnevlop);
+            await _commandPublisher.PublishAsync( RoutingKeys.Community.CreateCustomerinCommonAfterUnit, commandEnevlopCommon);
 
-          //  await _commonServiceClient.CreateCustomerAsync(new Contracts.CustomerDto() { Id = unit.CustomerId, Name = request.Name, CompanyId = request.ApartmentId, CreatedBy = _userContextService.CurrentUserId });
-          //  await _salesServiceClient.CreateCustomerAsync(new Contracts.CustomerDto() { Id = unit.CustomerId, Name = request.Name, CompanyId = request.ApartmentId, CreatedBy = _userContextService.CurrentUserId });
+            //var commandEnevlopSales = new CommandEnvelope<CreateBasicCustomerCommand>()
+            //{
+            //    CommandType = RoutingKeys.Community.SalesUnitAsCustomerCreate,
+            //    Source = "CommunityService",
+            //    UserId = messageContext.UserId,
+            //    CorrelationId = messageContext.CorrelationId,
+            //    OrganizationId = messageContext.OrganizationId,
+            //    Payload = command,
+            //};
+            //await _commandPublisher.PublishAsync(RoutingKeys.Community.SalesUnitAsCustomerCreate, commandEnevlopSales);
+
+            //  await _commonServiceClient.CreateCustomerAsync(new Contracts.CustomerDto() { Id = unit.CustomerId, Name = request.Name, CompanyId = request.ApartmentId, CreatedBy = _userContextService.CurrentUserId });
+            //  await _salesServiceClient.CreateCustomerAsync(new Contracts.CustomerDto() { Id = unit.CustomerId, Name = request.Name, CompanyId = request.ApartmentId, CreatedBy = _userContextService.CurrentUserId });
 
             await _mediator.Publish(new UnitCreatedEvent(unit.Id), cancellationToken);
 
