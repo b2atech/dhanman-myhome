@@ -24,24 +24,24 @@ public class UsersController : ApiController
 
     #region Users     
 
-    [Authorize(Policy = "DynamicPermissionPolicy")]
-    [RequiresPermissions("Dhanman.MyHome.Write")]
-    [HttpPost(ApiRoutes.Users.CreateUser)]
-    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest? request) =>
-           await Result.Create(request, Errors.General.BadRequest)
-               .Map(value => new CreateUserCommand(
-                   value.UserId,
-                   value.CompanyId,
-                   value.FirstName,
-                   value.LastName,
-                   value.Email,
-                   value.PhoneNumber,
-                   value.IsOwner
-                   ))
-               .Bind(command => Mediator.Send(command))
-              .Match(Ok, BadRequest);
+    //[Authorize(Policy = "DynamicPermissionPolicy")]
+    //[RequiresPermissions("Dhanman.MyHome.Write")]
+    //[HttpPost(ApiRoutes.Users.CreateUser)]
+    //[ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
+    //[ProducesResponseType(StatusCodes.Status404NotFound)]
+    //public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest? request) =>
+    //       await Result.Create(request, Errors.General.BadRequest)
+    //           .Map(value => new CreateUserCommand(
+    //               value.UserId,
+    //               value.CompanyId,
+    //               value.FirstName,
+    //               value.LastName,
+    //               value.Email,
+    //               value.PhoneNumber,
+    //               value.IsOwner
+    //               ))
+    //           .Bind(command => Mediator.Send(command))
+    //          .Match(Ok, BadRequest);
 
     [HttpGet(ApiRoutes.Users.GetAllUsers)]
     [ProducesResponseType(typeof(UserListResponse), StatusCodes.Status200OK)]
