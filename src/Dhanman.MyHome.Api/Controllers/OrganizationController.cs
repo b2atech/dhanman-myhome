@@ -22,27 +22,27 @@ public class OrganizationController : ApiController
 
     #region OrganizationController
 
-    [Authorize(Policy = "DynamicPermissionPolicy")]
-    [RequiresPermissions("Dhanman.MyHome.Write")]
-    [HttpPost(ApiRoutes.Organizations.InitializeOrganization)]
-    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> CreateInitializeOrganization([FromBody] CreateInitializeOrganizationRequest? request) =>
-           await Result.Create(request, Errors.General.BadRequest)
-               .Map(value => new InitializeOrganizationCommand(
-                    value.Id,
-                    value.Name,
-                    value.CompanyGuids,
-                    value.CompanyNames,
-                    value.UserId,
-                    value.UserFirstName,
-                    value.UserLastName,
-                    value.PhoneNumber,
-                    value.Email,
-                    UserContextService.CurrentUserId
-                   ))
-               .Bind(command => Mediator.Send(command))
-              .Match(Ok, BadRequest);
+    //[Authorize(Policy = "DynamicPermissionPolicy")]
+    //[RequiresPermissions("Dhanman.MyHome.Write")]
+    //[HttpPost(ApiRoutes.Organizations.InitializeOrganization)]
+    //[ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
+    //[ProducesResponseType(StatusCodes.Status404NotFound)]
+    //public async Task<IActionResult> CreateInitializeOrganization([FromBody] CreateInitializeOrganizationRequest? request) =>
+    //       await Result.Create(request, Errors.General.BadRequest)
+    //           .Map(value => new InitializeOrganizationCommand(
+    //                value.Id,
+    //                value.Name,
+    //                value.CompanyGuids,
+    //                value.CompanyNames,
+    //                value.UserId,
+    //                value.UserFirstName,
+    //                value.UserLastName,
+    //                value.PhoneNumber,
+    //                value.Email,
+    //                UserContextService.CurrentUserId
+    //               ))
+    //           .Bind(command => Mediator.Send(command))
+    //          .Match(Ok, BadRequest);
 
     [Authorize(Policy = "DynamicPermissionPolicy")]
     [RequiresPermissions("Dhanman.MyHome.Delete")]

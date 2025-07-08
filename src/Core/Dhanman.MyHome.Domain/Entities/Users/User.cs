@@ -24,7 +24,7 @@ public class User : Entity, IAuditableEntity, ISoftDeletableEntity
         Ensure.NotEmpty(id, "The identifier is required.", nameof(id));
         Ensure.NotEmpty(id, "The identifier is required.", nameof(companyId));
         Ensure.NotEmpty(firstName, "The first name is required.", nameof(firstName));
-       // Ensure.NotEmpty(lastName, "The last name is required.", nameof(lastName));
+        // Ensure.NotEmpty(lastName, "The last name is required.", nameof(lastName));
         Ensure.NotEmpty(email, "The email is required.", nameof(email));
         Ensure.NotEmpty(contactNumber, "The contact number is required.", nameof(contactNumber));
 
@@ -36,6 +36,26 @@ public class User : Entity, IAuditableEntity, ISoftDeletableEntity
         ContactNumber = contactNumber;
         IsOwner = isOwner;
     }
+
+    public User(Guid id, Guid companyId, FirstName firstName, LastName lastName, Email email, ContactNumber contactNumber)
+       : this()
+    {
+        Ensure.NotEmpty(id, "The identifier is required.", nameof(id));
+        Ensure.NotEmpty(id, "The identifier is required.", nameof(companyId));
+        Ensure.NotEmpty(firstName, "The first name is required.", nameof(firstName));
+        // Ensure.NotEmpty(lastName, "The last name is required.", nameof(lastName));
+        Ensure.NotEmpty(email, "The email is required.", nameof(email));
+        Ensure.NotEmpty(contactNumber, "The contact number is required.", nameof(contactNumber));
+
+        Id = id;
+        CompanyId = companyId;
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+        ContactNumber = contactNumber;
+    }
+
+
 
     /// <summary>
     /// Initializes a new instance of the <see cref="User"/> class.

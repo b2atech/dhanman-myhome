@@ -5,6 +5,7 @@ using Dhanman.MyHome.Application.Features.Users.Events;
 using Dhanman.MyHome.Domain.Abstractions;
 using Dhanman.MyHome.Domain.Entities.Users;
 using MediatR;
+using Dhanman.Shared.Contracts.Commands;
 
 namespace Dhanman.MyHome.Application.Features.Users.Commands.CreateUser;
 
@@ -26,14 +27,23 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Resul
     #region Methods
     public async Task<Result<EntityCreatedResponse>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        var user = new User(request.Id, request.CompanyId, new FirstName(request.FirstName), new LastName(request.LastName), new Email(request.Email), new ContactNumber(request.PhoneNumber), request.IsOwner);
 
-        _userRepository.Insert(user);
+        var existingVendor = await _userRepository.GetByIdAsync(request.UserId);
+        if (existingVendor is not null)
+        {
+            return Result.Success(new EntityCreatedResponse(request.UserId));
+        }
 
-        await _mediator.Publish(new UserCreatedEvent(user.Id), cancellationToken);
+        else
+        {
+            var user = new User(request.UserId, request.CompanyId, new FirstName(request.FirstName), new LastName(request.LastName), new Email(request.Email), new ContactNumber(request.PhoneNumber));
 
-        return Result.Success(new EntityCreatedResponse(user.Id));
+            _userRepository.Insert(user);
+
+            await _mediator.Publish(new UserCreatedEvent(user.Id), cancellationToken);
+
+            return Result.Success(new EntityCreatedResponse(user.Id));
+        }
     }
-
     #endregion
 }
