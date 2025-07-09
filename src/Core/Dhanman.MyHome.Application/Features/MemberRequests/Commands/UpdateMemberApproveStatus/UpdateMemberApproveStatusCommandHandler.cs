@@ -119,7 +119,7 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
 
         var commandEnevelop = new CommandEnvelope<CreateBasicCustomerCommand>
         {
-            CommandType = RoutingKeys.Community.CreateCustomerinCommonAfterMember,
+            CommandType = RoutingKeys.Community.CreateCustomerinSalesAfterMember,
             Source = "CommunityService",
             UserId = _userContextService.CurrentUserId,
             OrganizationId = _userContextService.OrganizationId,
@@ -127,7 +127,7 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
             Payload = memberCustomer
         };
 
-        await _commandPublisher.PublishAsync(RoutingKeys.Community.CreateCustomerinCommonAfterMember, commandEnevelop);
+        await _commandPublisher.PublishAsync(RoutingKeys.Community.CreateCustomerinSalesAfterMember, commandEnevelop);
 
         residentRequest.RequestStatusId = ResidentRequestStatus.APPROVED;
         residentRequest.UnitId = unit.Id;
