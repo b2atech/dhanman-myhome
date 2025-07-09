@@ -102,42 +102,27 @@ public class CreateMultipleUnitCommandHandler : ICommandHandler<CreateMultipleUn
 
             var commandEnevlopCommon = new CommandEnvelope<CreateBasicCustomerCommand>()
             {
-                CommandType = RoutingKeys.Community.CreateCustomerinCommonAfterUnit,
+                CommandType = RoutingKeys.Community.CreateCustomerInSalesAfterUnit,
                 Source = "CommunityService",
                 UserId = messageContext.UserId,
                 CorrelationId = messageContext.CorrelationId,
                 OrganizationId = messageContext.OrganizationId,
                 Payload = command,
             };
-            await _commandPublisher.PublishAsync(RoutingKeys.Community.CreateCustomerinCommonAfterUnit, commandEnevlopCommon);
+            await _commandPublisher.PublishAsync(RoutingKeys.Community.CreateCustomerInSalesAfterUnit, commandEnevlopCommon);
 
-            var commandUser = new CreateUserCommand(unit.CustomerId, unit.ApartmentId, unit.Name, null, null, null, messageContext);
+            //var commandUser = new CreateUserCommand(unit.CustomerId, unit.ApartmentId, unit.Name, null, null, null, messageContext);
 
-            var commandUserEnevlopCommon = new CommandEnvelope<CreateUserCommand>()
-            {
-                CommandType = RoutingKeys.Community.CreateUserinCommonAfterUnit,
-                Source = "CommunityService",
-                UserId = messageContext.UserId,
-                CorrelationId = messageContext.CorrelationId,
-                OrganizationId = messageContext.OrganizationId,
-                Payload = commandUser,
-            };
-            await _commandPublisher.PublishAsync(RoutingKeys.Community.CreateUserinCommonAfterUnit, commandUserEnevlopCommon);
-
-            //var commandEnevlopSales = new CommandEnvelope<CreateBasicCustomerCommand>()
+            //var commandUserEnevlopCommon = new CommandEnvelope<CreateUserCommand>()
             //{
-            //    CommandType = RoutingKeys.Community.SalesUnitAsCustomerCreate,
+            //    CommandType = RoutingKeys.Community.CreateUserinCommonAfterUnit,
             //    Source = "CommunityService",
             //    UserId = messageContext.UserId,
             //    CorrelationId = messageContext.CorrelationId,
             //    OrganizationId = messageContext.OrganizationId,
-            //    Payload = command,
+            //    Payload = commandUser,
             //};
-            //await _commandPublisher.PublishAsync(RoutingKeys.Community.SalesUnitAsCustomerCreate, commandEnevlopSales);
-
-
-            //await _commonServiceClient.CreateCustomerAsync(new Contracts.CustomerDto() { Id = unit.CustomerId, Name = unitDto.Name, CompanyId = unitDto.ApartmentId, CreatedBy = _userContextService.GetCurrentUserId() });
-            // await _salesServiceClient.CreateCustomerAsync(new Contracts.CustomerDto() { Id = unit.CustomerId, Name = unitDto.Name, CompanyId = unitDto.ApartmentId, CreatedBy = _userContextService.GetCurrentUserId() });
+            //await _commandPublisher.PublishAsync(RoutingKeys.Community.CreateUserinCommonAfterUnit, commandUserEnevlopCommon);
 
             await _mediator.Publish(new UnitCreatedEvent(unit.Id), cancellationToken);
 

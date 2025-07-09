@@ -135,7 +135,7 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
 
             var eventEnevelop = new CommandEnvelope<CreateUserCommand>
             {
-                CommandType = RoutingKeys.Community.CreateUserinCommonAfterResident,
+                CommandType = RoutingKeys.Community.CreateUserInCommonAfterResident,
                 Source = "CommunityService",
                 UserId = _userContextService.CurrentUserId,
                 OrganizationId = _userContextService.OrganizationId,
@@ -144,7 +144,7 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
                 //EventType = EventTypes.CommunityUserAfterResidentCreated,
             };
 
-            await _commandPublisher.PublishAsync(RoutingKeys.Community.CreateUserinCommonAfterResident, eventEnevelop);
+            await _commandPublisher.PublishAsync(RoutingKeys.Community.CreateUserInCommonAfterResident, eventEnevelop);
 
             //TODO: This is a should be come from common event not from here
             // await _commonServiceClient.CreateUserAsync(user);
