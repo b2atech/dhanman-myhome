@@ -113,21 +113,7 @@ public class UpdateRequestApproveStatusCommandHandler : ICommandHandler<UpdateRe
 
         };
 
-        //var user = new UserDto(newUserId, request.ApartmentId, firstName, lastName, email, contactNumber);
-        var userResident = new CreateUserCommand(newUserId, user.ApartmentId, firstName, lastName, email, contactNumber, messageContext);
-
-        var commandCustomerEnevelop = new CommandEnvelope<CreateUserCommand>
-        {
-            CommandType = RoutingKeys.Community.CreateCustomerinSalesAfterMember,
-            Source = "CommunityService",
-            UserId = messageContext.UserId,
-            OrganizationId = messageContext.OrganizationId,
-            CorrelationId = messageContext.CorrelationId,
-            Payload = userResident
-        };
-
-        await _commandPublisher.PublishAsync(RoutingKeys.Community.CreateCustomerinSalesAfterMember, commandCustomerEnevelop);
-
+       
         var commandUser = new CreateUserCommand(newUserId, user.ApartmentId, firstName, lastName, email, contactNumber, messageContext);
 
         //
