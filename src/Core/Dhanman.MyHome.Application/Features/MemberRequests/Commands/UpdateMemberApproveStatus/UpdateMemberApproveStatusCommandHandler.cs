@@ -121,9 +121,9 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
         {
             CommandType = RoutingKeys.Community.CreateCustomerinSalesAfterMember,
             Source = "CommunityService",
-            UserId = _userContextService.CurrentUserId,
-            OrganizationId = _userContextService.OrganizationId,
-            CorrelationId = _userContextService.CorrelationId,
+            UserId = messageContext.UserId,
+            OrganizationId = messageContext.OrganizationId,
+            CorrelationId = messageContext.CorrelationId,
             Payload = memberCustomer
         };
 
@@ -150,9 +150,9 @@ public class UpdateMemberApproveStatusCommandHandler : ICommandHandler<UpdateMem
         {
             CommandType = RoutingKeys.Community.CreateUserinCommonAfterMember,
             Source = "CommunityService",
-            UserId = _userContextService.CurrentUserId,
-            OrganizationId = _userContextService.OrganizationId,
-            CorrelationId = _userContextService.CorrelationId,
+            UserId = messageContext.UserId,
+            OrganizationId = messageContext.OrganizationId,
+            CorrelationId = messageContext.CorrelationId,
             Payload = userDto
         };
 

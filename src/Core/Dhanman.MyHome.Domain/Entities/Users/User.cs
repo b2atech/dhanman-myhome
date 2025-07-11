@@ -37,6 +37,26 @@ public class User : Entity, IAuditableEntity, ISoftDeletableEntity
         IsOwner = isOwner;
     }
 
+    public User(Guid id, Guid companyId,Guid createdBy ,FirstName firstName, LastName lastName, Email email, ContactNumber contactNumber, bool isOwner)
+        : this()
+    {
+        Ensure.NotEmpty(id, "The identifier is required.", nameof(id));
+        Ensure.NotEmpty(id, "The identifier is required.", nameof(companyId));
+        Ensure.NotEmpty(createdBy, "The creator identifier is required.", nameof(createdBy));
+        Ensure.NotEmpty(firstName, "The first name is required.", nameof(firstName));
+        // Ensure.NotEmpty(lastName, "The last name is required.", nameof(lastName));
+        Ensure.NotEmpty(email, "The email is required.", nameof(email));
+        Ensure.NotEmpty(contactNumber, "The contact number is required.", nameof(contactNumber));
+
+        Id = id;
+        CompanyId = companyId;
+        CreatedBy = createdBy;
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+        ContactNumber = contactNumber;
+        IsOwner = isOwner;
+    }
     public User(Guid id, Guid companyId, FirstName firstName, LastName lastName, Email email, ContactNumber contactNumber)
        : this()
     {

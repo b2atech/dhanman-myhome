@@ -137,9 +137,9 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
             {
                 CommandType = RoutingKeys.Community.CreateUserInCommonAfterResident,
                 Source = "CommunityService",
-                UserId = _userContextService.CurrentUserId,
-                OrganizationId = _userContextService.OrganizationId,
-                CorrelationId = _userContextService.CorrelationId,
+                UserId = messageContext.UserId,
+                OrganizationId = messageContext.OrganizationId,
+                CorrelationId = messageContext.CorrelationId,
                 Payload = user
                 //EventType = EventTypes.CommunityUserAfterResidentCreated,
             };

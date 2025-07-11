@@ -36,7 +36,7 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Resul
 
         else
         {
-            var user = new User(request.UserId, request.CompanyId, new FirstName(request.FirstName), new LastName(request.LastName), new Email(request.Email), new ContactNumber(request.PhoneNumber));
+            var user = new User(request.UserId, request.CompanyId,new FirstName(request.FirstName), new LastName(request.LastName), new Email(request.Email), new ContactNumber(request.PhoneNumber));
 
             _userRepository.Insert(user);
 
