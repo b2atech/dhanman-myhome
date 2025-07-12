@@ -52,7 +52,7 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddPermissionService(builder.Configuration);
-builder.Services.AddAuthentication(builder.Configuration, "");
+builder.Services.AddAuthentication(builder.Configuration, builder.Environment.EnvironmentName);
 builder.Services.AddCustomAuthorization();
 builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddTemplateService(builder.Configuration);
@@ -158,6 +158,8 @@ var app = builder.Build();
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Community");
         if (app.Environment.IsProduction())
             c.InjectJavascript("/swagger/custom.prod.js");
+        else if (app.Environment.EnvironmentName.ToLowerInvariant() == "test")
+            c.InjectJavascript("/swagger/custom.test.js");
         else
             c.InjectJavascript("/swagger/custom.qa.js");
         c.InjectStylesheet("/swagger/SwaggerHeader.css");
