@@ -1,0 +1,52 @@
+name: Deploy to TEST - COMMUNITY
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      DOTNET_ENVIRONMENT: test
+      ConnectionStrings__CommunityDb: ${{ secrets.CONNECTIONSTRINGS__COMMUNITYDB_TEST }}
+      ConnectionStrings__PermissionsDb: ${{ secrets.CONNECTIONSTRINGS__PERMISSIONDB_TEST }}
+      ConnectionStrings__TemplatesDb: ${{ secrets.CONNECTIONSTRINGS__TEMPLATESDB_TEST }}
+      DO_HOST: ${{ secrets.DO_HOST }}
+      DO_USER: ${{ secrets.DO_USER }}
+      DO_SSH_KEY: ${{ secrets.DO_SSH_KEY }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Publish App
+        run: dotnet publish src/Dhanman.MyHome.Api/Dhanman.MyHome.Api.csproj -c Release -r linux-x64 --self-contained false -o publish
+
+      - name: Upload to TEST
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USER }}
+          key: ${{ secrets.DO_SSH_KEY }}
+          source: "publish/*"
+          target: "/var/www/test/dhanman-community"
+          strip_components: 1
+
+      - name: Restart TEST Service
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USER }}
+          key: ${{ secrets.DO_SSH_KEY }}
+          script: |
+            export ConnectionStrings__CommunityDb="${{ secrets.CONNECTIONSTRINGS__COMMUNITYDB_TEST }}"
+            export ConnectionStrings__PermissionsDb="${{ secrets.CONNECTIONSTRINGS__PERMISSIONDB_TEST }}"
+            export ConnectionStrings__TemplatesDb="${{ secrets.CONNECTIONSTRINGS__TEMPLATESDB_TEST }}"
+            export DOTNET_ENVIRONMENT=test
+            sudo systemctl restart dhanman-community-test.service
