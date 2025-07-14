@@ -23,8 +23,6 @@ namespace Dhanman.MyHome.Application.Features.Units.Command.CreateUnits
         #region Properties
         private readonly IUnitRepository _unitRepository;
         private readonly IMediator _mediator;
-        private readonly ICommonServiceClient _commonServiceClient;
-        private readonly ISalesServiceClient _salesServiceClient;
         private readonly IUserContextService _userContextService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICommandPublisher _commandPublisher;
@@ -32,13 +30,11 @@ namespace Dhanman.MyHome.Application.Features.Units.Command.CreateUnits
         #endregion
 
         #region Constructor
-        public CreateUnitCommandHandler(IUnitRepository unitRepository, IMediator mediator, ICommonServiceClient commonServiceClient, ISalesServiceClient salesServiceClient, IUserContextService userContextService, IUnitOfWork unitOfWork, ICommandPublisher commandPublisher
+        public CreateUnitCommandHandler(IUnitRepository unitRepository, IMediator mediator, IUserContextService userContextService, IUnitOfWork unitOfWork, ICommandPublisher commandPublisher
     )
         {
             _unitRepository = unitRepository;
             _mediator = mediator;
-            _commonServiceClient = commonServiceClient;
-            _salesServiceClient = salesServiceClient; 
             _userContextService = userContextService;
             _unitOfWork = unitOfWork;
             _commandPublisher = commandPublisher;
@@ -90,19 +86,6 @@ namespace Dhanman.MyHome.Application.Features.Units.Command.CreateUnits
                 Payload = command,
             };
             await _commandPublisher.PublishAsync(RoutingKeys.Community.CreateCustomerInSalesAfterUnit, commandEnevlopCommon);
-
-            var commandUser = new CreateUserCommand(unit.CustomerId, unit.ApartmentId, unit.Name,null,null,null, messageContext);
-
-            //var commandUserEnevlopCommon = new CommandEnvelope<CreateUserCommand>()
-            //{
-            //    CommandType = RoutingKeys.Community.CreateUserinCommonAfterUnit,
-            //    Source = "CommunityService",
-            //    UserId = messageContext.UserId,
-            //    CorrelationId = messageContext.CorrelationId,
-            //    OrganizationId = messageContext.OrganizationId,
-            //    Payload = commandUser,
-            //};
-            //await _commandPublisher.PublishAsync(RoutingKeys.Community.CreateUserinCommonAfterUnit, commandUserEnevlopCommon);
 
             await _mediator.Publish(new UnitCreatedEvent(unit.Id), cancellationToken);
 
