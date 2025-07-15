@@ -16,7 +16,7 @@ public class RabbitMqListenerHostedService : BackgroundService, IRabbitMqListene
     {
         _logger = logger;
         _serviceScopeFactory = serviceScopeFactory;
-        _options = options.Value;
+        _options = options.Value ?? throw new ArgumentNullException(nameof(options), "RabbitMqOptions cannot be null");
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)

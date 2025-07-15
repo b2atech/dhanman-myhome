@@ -1,5 +1,8 @@
-using B2aTech.CrossCuttingConcern.Abstractions;
+﻿using B2aTech.CrossCuttingConcern.Abstractions;
 using B2aTech.CrossCuttingConcern.Messaging;
+using B2aTech.CrossCuttingConcern.Messaging.RabbitMQ.Models;
+using Dhanman.Shared.Contracts.Commands;
+using MediatR;
 using Newtonsoft.Json;
 
 namespace Dhanman.MyHome.Api.Services
@@ -15,34 +18,43 @@ namespace Dhanman.MyHome.Api.Services
             _logger = logger;
         }
 
-
-
         private async Task HandleMessageAsync<TCommand>(string message, string source) where TCommand : class
         {
             _logger.LogInformation($"[Command] {source} received: {message}");
 
             try
             {
-                var command = JsonConvert.DeserializeObject<TCommand>(message);
-                if (command == null)
+                var envelope = JsonConvert.DeserializeObject<CommandEnvelope<TCommand>>(message);
+                if (envelope?.Payload == null)
                 {
-                    _logger.LogWarning($"{source} deserialized to null.");
+                    _logger.LogWarning($"{source} deserialized to null or missing payload.");
                     return;
                 }
-
-                var context = new MessageContext
+                MessageContext context = new()
                 {
-                    UserId = Guid.NewGuid(),
-                    CorrelationId = Guid.NewGuid()
+                    CorrelationId = envelope.CorrelationId,
+                    UserId = envelope.UserId,
+                    OrganizationId = envelope.OrganizationId
                 };
+                var command = envelope.Payload;
 
-                using var scope = _scopeFactory.CreateScope();
-                var handler = scope.ServiceProvider.GetRequiredService<ICommandMessageHandler<TCommand>>();
-                await handler.HandleAsync(command, context);
+                // Create a new scope for resolving services (including IMediator) from DI container
+                using (var scope = _scopeFactory.CreateScope())
+                {
+                    // Resolve IMediator inside the scope
+                    var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+
+
+                    // Now, instead of manually resolving the handler, we use MediatR
+                    await mediator.Send(command, new CancellationToken());
+
+                }
+                _logger.LogInformation($"✅ Successfully handled {source}.");
+
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error handling {source} message.");
+                _logger.LogError(ex, $"❌ Error handling {source} message.");
             }
         }
     }

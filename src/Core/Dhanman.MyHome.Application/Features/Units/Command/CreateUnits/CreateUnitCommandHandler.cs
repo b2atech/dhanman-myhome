@@ -68,7 +68,7 @@ namespace Dhanman.MyHome.Application.Features.Units.Command.CreateUnits
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            MessageContext messageContext = new MessageContext
+            MessageContext messageContext = new ()
             {
                 UserId = _userContextService.CurrentUserId,
                 CorrelationId = _userContextService.CorrelationId,
