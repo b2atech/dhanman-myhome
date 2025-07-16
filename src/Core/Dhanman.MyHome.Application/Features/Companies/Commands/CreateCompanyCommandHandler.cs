@@ -14,13 +14,15 @@ public class CreateCompanyCommandHandler : ICommandHandler<CreateBasicCompanyCom
     #region Properties
     private readonly ICompanyRepository _companyRepository;
     private readonly IMediator _mediator;
+    private readonly IUnitOfWork _unitOfWork;
     #endregion
 
     #region Constructor
-    public CreateCompanyCommandHandler(ICompanyRepository companyRepository, IMediator mediator)
+    public CreateCompanyCommandHandler(ICompanyRepository companyRepository, IMediator mediator, IUnitOfWork unitOfWork)
     {
         _companyRepository = companyRepository;
         _mediator = mediator;
+        _unitOfWork = unitOfWork;
     }
     #endregion
 
@@ -30,6 +32,8 @@ public class CreateCompanyCommandHandler : ICommandHandler<CreateBasicCompanyCom
         var company = new Company(request.CompanyId, request.OrganizationId,request.MessageContext.UserId ,request.Name, request.IsApartment);
 
         _companyRepository.Insert(company);
+
+        await _unitOfWork.SaveChangesAsync(request.MessageContext.UserId ,cancellationToken);
 
         await _mediator.Publish(new CompanyCreatedEvent(company.Id), cancellationToken);
 

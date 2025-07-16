@@ -11,7 +11,7 @@
 	  <PackageReference Include="Azure.Identity" Version="1.13.2" />
 	  <PackageReference Include="Azure.Security.KeyVault.Secrets" Version="4.7.0" />
 	  <PackageReference Include="B2aTech.CrossCuttingConcern" Version="1.6.2" />
-	  <PackageReference Include="Dhanman.Shared.Contracts" Version="1.2.8" />
+	  <PackageReference Include="Dhanman.Shared.Contracts" Version="1.2.9" />
 	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.4" />
 	  <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.3.0" />
 	  <!--<PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.13.0" />
