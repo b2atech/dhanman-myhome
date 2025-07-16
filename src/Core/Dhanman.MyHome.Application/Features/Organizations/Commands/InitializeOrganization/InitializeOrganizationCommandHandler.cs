@@ -47,7 +47,7 @@ public class InitializeOrganizationCommandHandler : ICommandHandler<InitializeOr
                 new NpgsqlParameter("p_user_last_name", NpgsqlDbType.Text) { Value = request.UserLastName },
                 new NpgsqlParameter("p_phone_number", NpgsqlDbType.Varchar) { Value = request.Email },
                 new NpgsqlParameter("p_email", NpgsqlDbType.Varchar) { Value = request.PhoneNumber },
-                new NpgsqlParameter("p_created_by", NpgsqlDbType.Uuid) { Value = _userContextService.CurrentUserId }
+                new NpgsqlParameter("p_created_by", NpgsqlDbType.Uuid) { Value = request.MessageContext.UserId }
             );
 
         await _mediator.Publish(new InitializeOrganizationEvent(request.Id), cancellationToken);
