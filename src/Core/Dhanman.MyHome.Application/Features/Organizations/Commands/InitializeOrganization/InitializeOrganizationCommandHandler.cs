@@ -18,7 +18,7 @@ public class InitializeOrganizationCommandHandler : ICommandHandler<InitializeOr
     #region Properties
     private readonly IApplicationDbContext _dbContext;
     private readonly IMediator _mediator;
-    IUserContextService _userContextService;
+    private readonly IUserContextService _userContextService;
     #endregion
 
     #region Constructors

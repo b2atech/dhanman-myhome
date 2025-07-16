@@ -21,11 +21,10 @@ public class Company : Entity, IAuditableEntity, ISoftDeletableEntity
     #region Constructors
     public Company() { }
 
-    public Company(Guid id, Guid organizationId,Guid createdBy ,string name, bool isApartment)
+    public Company(Guid id, Guid organizationId,string name, bool isApartment)
     {
         Id = id;
         OrganizationId = organizationId;
-        CreatedBy = createdBy;
         Name = name;       
         IsApartment = isApartment;
     } 

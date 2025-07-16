@@ -29,7 +29,7 @@ public class CreateCompanyCommandHandler : ICommandHandler<CreateBasicCompanyCom
     #region Methods
     public async Task<Result<EntityCreatedResponse>> Handle(CreateBasicCompanyCommand request, CancellationToken cancellationToken)
     {
-        var company = new Company(request.CompanyId, request.OrganizationId,request.MessageContext.UserId ,request.Name, request.IsApartment);
+        var company = new Company(request.CompanyId, request.OrganizationId,request.Name, request.IsApartment);
 
         _companyRepository.Insert(company);
 
