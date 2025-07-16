@@ -14,13 +14,15 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Resul
     #region Properties
     private readonly IUserRepository _userRepository;
     private readonly IMediator _mediator;
+    private readonly IUnitOfWork _unitOfWork;
     #endregion
 
     #region Constructors
-    public CreateUserCommandHandler(IUserRepository userRepository, IMediator mediator)
+    public CreateUserCommandHandler(IUserRepository userRepository, IMediator mediator, IUnitOfWork unitOfWork)
     {
         _userRepository = userRepository;
         _mediator = mediator;
+        _unitOfWork = unitOfWork;
     }
     #endregion
 
@@ -39,6 +41,8 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Resul
             var user = new User(request.UserId, request.CompanyId,new FirstName(request.FirstName), new LastName(request.LastName), new Email(request.Email), new ContactNumber(request.PhoneNumber));
 
             _userRepository.Insert(user);
+
+            await _unitOfWork.SaveChangesAsync(request.MessageContext.UserId, cancellationToken);
 
             await _mediator.Publish(new UserCreatedEvent(user.Id), cancellationToken);
 

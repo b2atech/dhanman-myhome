@@ -22,6 +22,7 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
     #region Properties
     private readonly IDateTime _dateTime;
     private readonly IUserContextService _userContextService;
+    private Guid? _overrideUserId;
 
     #endregion
 
@@ -52,6 +53,14 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
 
     }
 
+    public Task<int> SaveChangesAsync(Guid userId, CancellationToken cancellationToken = default)
+    {
+        _overrideUserId = userId;
+        var result = SaveChangesAsync(cancellationToken); // Calls the main override
+        _overrideUserId = null;
+        return result;
+    }
+
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         DateTime utcNow = _dateTime.UtcNow;
@@ -65,26 +74,26 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
 
     private void UpdateAuditableEntities(DateTime utcNow)
     {
-        var currentUsedId = _userContextService.CurrentUserId;
+        var currentUserId = _overrideUserId ?? _userContextService?.CurrentUserId;
         foreach (EntityEntry<IAuditableEntity> entityEntry in ChangeTracker.Entries<IAuditableEntity>())
         {
             if (entityEntry.State == EntityState.Added)
             {
                 entityEntry.Property(nameof(IAuditableEntity.CreatedOnUtc)).CurrentValue = utcNow.SetKindUtc();
-                entityEntry.Property(nameof(IAuditableEntity.CreatedBy)).CurrentValue = currentUsedId;
+                entityEntry.Property(nameof(IAuditableEntity.CreatedBy)).CurrentValue = currentUserId;
             }
 
             if (entityEntry.State == EntityState.Modified)
             {
                 entityEntry.Property(nameof(IAuditableEntity.ModifiedOnUtc)).CurrentValue = utcNow.SetKindUtc();
-                entityEntry.Property(nameof(IAuditableEntity.ModifiedBy)).CurrentValue = currentUsedId;
+                entityEntry.Property(nameof(IAuditableEntity.ModifiedBy)).CurrentValue = currentUserId;
             }
         }
     }
 
     private void UpdateSoftDeletableEntities(DateTime utcNow)
     {
-        var currentUsedId = _userContextService.CurrentUserId;
+        var currentUserId = _overrideUserId ?? _userContextService?.CurrentUserId;
         foreach (EntityEntry<ISoftDeletableEntity> entityEntry in ChangeTracker.Entries<ISoftDeletableEntity>())
         {
             if (entityEntry.State == EntityState.Deleted)
@@ -94,7 +103,7 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
                 entityEntry.Property(nameof(ISoftDeletableEntity.IsDeleted)).CurrentValue = true;
 
                 entityEntry.State = EntityState.Modified;
-                entityEntry.Property(nameof(IAuditableEntity.ModifiedBy)).CurrentValue = currentUsedId;
+                entityEntry.Property(nameof(IAuditableEntity.ModifiedBy)).CurrentValue = currentUserId;
 
 
                 UpdateDeletedEntityEntryReferencesToUnchanged(entityEntry);
