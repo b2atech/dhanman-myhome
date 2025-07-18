@@ -327,6 +327,7 @@ public static class ApiRoutes
     {
         public const string InitializeOrganization = apiVersion + "initialize-organizations";
         public const string HardDeleteOrganization = apiVersion + "organizations/{organizationId:guid}";
+        public const string GetOrganizationById = apiVersion + "organizations/{id:guid}";
     }
 
     public static class Companies

@@ -371,4 +371,14 @@ public static class CacheKeys
 
     }
     #endregion
+
+    #region Organizations
+    public static class Organizations
+    {
+        public const string CacheKeyPrefix = "organizations-{0}";
+
+        public const string Organization = CacheKeyPrefix + "-view";
+
+    }
+    #endregion
 }

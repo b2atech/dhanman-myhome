@@ -11,6 +11,7 @@ using Dhanman.MyHome.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Dhanman.MyHome.Application.Features.Organizations.Queries;
 
 namespace Dhanman.MyHome.Api.Controllers;
 
@@ -43,6 +44,16 @@ public class OrganizationController : ApiController
     //               ))
     //           .Bind(command => Mediator.Send(command))
     //          .Match(Ok, BadRequest);
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.Purchase.Read")]
+    [HttpGet(ApiRoutes.Organizations.GetOrganizationById)]
+    [ProducesResponseType(typeof(OrganizationResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetOrganizationById(Guid id) =>
+    await Result.Success(new GetOrganizationByIdQuery(id))
+   .Bind(query => Mediator.Send(query))
+   .Match(Ok, NotFound);
 
     [Authorize(Policy = "DynamicPermissionPolicy")]
     [RequiresPermissions("Dhanman.MyHome.Delete")]
