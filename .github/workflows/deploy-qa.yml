@@ -4,7 +4,8 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:  
+  workflow_dispatch:
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -19,19 +20,34 @@ jobs:
       DO_SSH_KEY: ${{ secrets.DO_SSH_KEY }}
 
     steps:
-      - name: Checkout
+      - name: 📥 Checkout
         uses: actions/checkout@v3
 
-      - name: Set up .NET
+      - name: 🛠 Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
 
-      - name: Publish App
+      - name: 🛡️ Run Gatekeeper (Permission Check - Warning Only)
+        continue-on-error: true
+        run: |
+          echo "🔐 Running Gatekeeper permission check..."
+          dotnet tool install --global B2A.Gatekeeper.Cli --prerelease
+
+          OUTPUT=$(b2a-gatekeeper src/Dhanman.MyHome.Api/ 2>&1) || true
+          echo "$OUTPUT"
+
+          if [[ "$OUTPUT" == *"Missing [RequiresPermissions]"* ]]; then
+            echo "::warning title=Gatekeeper Warning::Some public controller actions are missing [RequiresPermissions]. See logs above."
+          else
+            echo "✅ Gatekeeper passed with no permission violations."
+          fi
+
+      - name: 🚀 Publish App
         run: |
           dotnet publish src/Dhanman.MyHome.Api/Dhanman.MyHome.Api.csproj -c Release -r linux-x64 --self-contained false -o publish
 
-      - name: Upload to QA Droplet
+      - name: 📤 Upload to QA Droplet
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.DO_HOST }}
@@ -41,7 +57,7 @@ jobs:
           target: "/var/www/qa/dhanman-community"
           strip_components: 1
 
-      - name: Restart QA App
+      - name: 🔁 Restart QA App
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.DO_HOST }}
