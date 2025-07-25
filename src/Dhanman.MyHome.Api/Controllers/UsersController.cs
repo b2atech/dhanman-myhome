@@ -43,6 +43,8 @@ public class UsersController : ApiController
     //           .Bind(command => Mediator.Send(command))
     //          .Match(Ok, BadRequest);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Users.read")]
     [HttpGet(ApiRoutes.Users.GetAllUsers)]
     [ProducesResponseType(typeof(UserListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

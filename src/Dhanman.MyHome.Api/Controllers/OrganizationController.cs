@@ -46,7 +46,7 @@ public class OrganizationController : ApiController
     //          .Match(Ok, BadRequest);
 
     [Authorize(Policy = "DynamicPermissionPolicy")]
-    [RequiresPermissions("Dhanman.Purchase.Read")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.Organizations.GetOrganizationById)]
     [ProducesResponseType(typeof(OrganizationResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

@@ -1,15 +1,17 @@
 ﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Attributes;
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
-using Dhanman.Shared.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.WaterTankerDeliveries;
 using Dhanman.MyHome.Application.Features.WaterTankerDeliveries.Commands;
 using Dhanman.MyHome.Application.Features.WaterTankerDeliveries.Commands.DeleteWaterTankerDelivery;
 using Dhanman.MyHome.Application.Features.WaterTankerDeliveries.Queries;
 using Dhanman.MyHome.Domain;
 using Dhanman.MyHome.Domain.Entities.WaterTankerDeliveries;
+using Dhanman.Shared.Contracts.Common;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dhanman.MyHome.Api.Controllers;
@@ -21,6 +23,8 @@ public class WaterTankerDeliveryController : ApiController
 
     }
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.WaterTankerDelivery.Write")]
     #region WaterTankerDelivery
     [HttpPost(ApiRoutes.WaterTankerDeliveries.CreateWaterTankerDeliveries)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
@@ -32,6 +36,8 @@ public class WaterTankerDeliveryController : ApiController
           .Match(Ok, BadRequest);
 
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.WaterTankerDeliveries.WaterTankerDeliveryById)]
     [ProducesResponseType(typeof(WaterTankerDeliveryResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -40,6 +46,9 @@ public class WaterTankerDeliveryController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.WaterTankerDelivery.Write")]
     [HttpPut(ApiRoutes.WaterTankerDeliveries.UpdateWaterTankerDelivery)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateWaterTankerDeliveries([FromBody] UpdateWaterTankerDeliveryRequest request)
@@ -66,7 +75,8 @@ public class WaterTankerDeliveryController : ApiController
         }
     }
 
-    //Delete
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.WaterTankerDelivery.Delete")]
     [HttpDelete(ApiRoutes.WaterTankerDeliveries.DeleteWaterTankerDeliveryById)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteWaterTankerDelivery(int id)
@@ -84,6 +94,9 @@ public class WaterTankerDeliveryController : ApiController
         }
     }
     //Fetch tanker count and its actual total liter's
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.WaterTankerDeliveries.GetWaterTankerDeliverySummery)]
     [ProducesResponseType(typeof(WaterTankerSummaryResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -93,6 +106,9 @@ public class WaterTankerDeliveryController : ApiController
    .Match(Ok, NotFound);
 
     //Fetch tanker delivery data by vendor and dates
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.WaterTankerDeliveries.GetAWaterTankerDeliveriesByVendorId)]
     [ProducesResponseType(typeof(WaterTankerSummaryResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

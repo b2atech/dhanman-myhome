@@ -1,9 +1,9 @@
 ﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Attributes;
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.BookingFacilites;
-using Dhanman.Shared.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.EventOccurrences;
 using Dhanman.MyHome.Application.Contracts.Events;
 using Dhanman.MyHome.Application.Contracts.MeetingAgendaItems;
@@ -28,7 +28,9 @@ using Dhanman.MyHome.Application.Features.MeetingNotes.Commands.UpdateMeetingNot
 using Dhanman.MyHome.Application.Features.MeetingParticipants.Commands.UpdateMeetingParticipant;
 using Dhanman.MyHome.Application.Features.MeetingParticipants.Queries;
 using Dhanman.MyHome.Domain;
+using Dhanman.Shared.Contracts.Common;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dhanman.MyHome.Api.Controllers;
@@ -42,6 +44,8 @@ public class EventsController : ApiController
     #endregion
 
     #region Events
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Event.Read")]
     [HttpGet(ApiRoutes.Events.GetAllEvents)]
     [ProducesResponseType(typeof(EventResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -50,6 +54,8 @@ public class EventsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Event.Read")]
     [HttpGet(ApiRoutes.Events.GetEvent)]
     [ProducesResponseType(typeof(EventResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -58,6 +64,8 @@ public class EventsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Event.Write")]
     [HttpPost(ApiRoutes.Events.CreateEvent)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -80,6 +88,8 @@ public class EventsController : ApiController
             .Bind(command => Mediator.Send(command))
                   .Match(Ok, BadRequest);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Event.Write")]
     [HttpPut(ApiRoutes.Events.UpdateEvent)]
     [ProducesResponseType(typeof(EntityUpdatedResponse), StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -102,6 +112,9 @@ public class EventsController : ApiController
             .Bind(command => Mediator.Send(command))
                   .Match(Ok, BadRequest);
 
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Event.Delete")]
     [HttpDelete(ApiRoutes.Events.DeleteEvent)]
     [ProducesResponseType(typeof(EntityDeletedResponse), StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -120,6 +133,9 @@ public class EventsController : ApiController
         }
     }
 
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Event.Read")]
     [HttpGet(ApiRoutes.Events.GetCalendarEvents)]
     [ProducesResponseType(typeof(EventListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -130,7 +146,9 @@ public class EventsController : ApiController
     #endregion
 
     #region Bookings
-    [HttpGet(ApiRoutes.BokkingFacilities.GetAllBokkingFacilities)]
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
+    [HttpGet(ApiRoutes.BookingFacilities.GetAllBookingFacilities)]
     [ProducesResponseType(typeof(BookingFacilitesResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAllBokkingFacilities() =>
@@ -142,6 +160,8 @@ public class EventsController : ApiController
 
     #region Event Occurrence
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Event.Write")]
     [HttpPost(ApiRoutes.EventOccurrences.CreateEventOccurrence)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -161,6 +181,9 @@ public class EventsController : ApiController
             .Bind(command => Mediator.Send(command))
                   .Match(Ok, BadRequest);
 
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Event.Write")]
     [HttpPut(ApiRoutes.EventOccurrences.UpdateEventOccurrence)]
     [ProducesResponseType(typeof(EntityUpdatedResponse), StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -180,6 +203,9 @@ public class EventsController : ApiController
            .Bind(command => Mediator.Send(command))
                  .Match(Ok, BadRequest);
 
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Event.Delete")]
     [HttpDelete(ApiRoutes.EventOccurrences.DeleteEventOccurrenceById)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteEventOccurrenceById(int id)
@@ -197,6 +223,9 @@ public class EventsController : ApiController
         }
     }
 
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Event.Read")]
     [HttpGet(ApiRoutes.EventOccurrences.GetEventOccurrence)]
     [ProducesResponseType(typeof(EventOccurrenceResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -210,6 +239,9 @@ public class EventsController : ApiController
 
 
     #region MeetingData
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.MeetingDetails.GetMeetingDetails)]
     [ProducesResponseType(typeof(MeetingDetailsDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -221,6 +253,8 @@ public class EventsController : ApiController
     #endregion
 
     #region MeetingAgenda
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Event.Write")]
     [HttpPut(ApiRoutes.MeetingAgendaItems.UpdateMeetingAgendaItem)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateMeetingAgendaItem([FromBody] UpdateMeetingAgendaItemRequest? request)
@@ -245,6 +279,8 @@ public class EventsController : ApiController
     #endregion
 
     #region Meeting Participants
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Event.Write")]
     [HttpPut(ApiRoutes.MeetingParticipants.UpdateMeetingParticipant)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateMeetingParticipant([FromBody] UpdateMeetingParticipantRequest? request)
@@ -266,7 +302,8 @@ public class EventsController : ApiController
         }
     }
 
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.MeetingParticipants.GetAllMeetingParticipants)]
     [ProducesResponseType(typeof(UserNameListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -278,6 +315,8 @@ public class EventsController : ApiController
     #endregion
 
     #region Meeting ActionItems
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Event.Write")]
     [HttpPut(ApiRoutes.MeetingActionItems.UpdateMeetingActionItem)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateMeetingActionItem([FromBody] UpdateMeetingActionItemRequest? request)
@@ -302,6 +341,8 @@ public class EventsController : ApiController
     #endregion
 
     #region Meeting Note
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Event.Write")]
     [HttpPut(ApiRoutes.MeetingNotes.UpdateMeetingNote)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateMeetingNote([FromBody] UpdateMeetingNoteRequest? request)

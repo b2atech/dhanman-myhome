@@ -1,11 +1,11 @@
 ﻿
 using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Attributes;
 using B2aTech.CrossCuttingConcern.Core.Result;
 using B2aTech.CrossCuttingConcern.UserContext;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.CommitteeMembers;
-using Dhanman.Shared.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.Portfolios;
 using Dhanman.MyHome.Application.Contracts.Roles;
 using Dhanman.MyHome.Application.Features.CommitteeMembers.Commands;
@@ -13,7 +13,9 @@ using Dhanman.MyHome.Application.Features.CommitteeMembers.Queries;
 using Dhanman.MyHome.Application.Features.Portfolios.Queries;
 using Dhanman.MyHome.Application.Features.Roles;
 using Dhanman.MyHome.Domain;
+using Dhanman.Shared.Contracts.Common;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,7 +30,8 @@ public class CommitteeController : ApiController
     #endregion
 
     #region Methods
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.CommitteeMembers.GetAllCommitteeMemberNames)]
     [ProducesResponseType(typeof(CommitteeMemberResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -37,6 +40,8 @@ public class CommitteeController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.CommitteeMember.Write")]
     [HttpPost(ApiRoutes.CommitteeMembers.CreateCommitteeMember)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -54,6 +59,8 @@ public class CommitteeController : ApiController
             .Bind(command => Mediator.Send(command))
             .Match(Ok, BadRequest);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.CommitteeMembers.GetAllCommitteeMembers)]
     [ProducesResponseType(typeof(CommitteeAllMemberListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -64,6 +71,8 @@ public class CommitteeController : ApiController
             .Match(Ok, NotFound);
     }
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.CommitteeMembers.GetPortfolioByApartmentId)]
     [ProducesResponseType(typeof(PortfolioListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -73,7 +82,8 @@ public class CommitteeController : ApiController
             .Bind(query => Mediator.Send(query))
             .Match(Ok, NotFound);
     }
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.CommitteeMembers.GetAllRoles)]
     [ProducesResponseType(typeof(RoleListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

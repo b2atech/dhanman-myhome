@@ -1,8 +1,8 @@
 ﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Attributes;
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
-using Dhanman.Shared.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.VisitorApprovals;
 using Dhanman.MyHome.Application.Contracts.VisitorLogs;
 using Dhanman.MyHome.Application.Contracts.Visitors;
@@ -20,7 +20,9 @@ using Dhanman.MyHome.Application.Features.Visitors.Commands.DeleteVisitor;
 using Dhanman.MyHome.Application.Features.Visitors.Commands.UpdateVisitor;
 using Dhanman.MyHome.Application.Features.Visitors.Queries;
 using Dhanman.MyHome.Domain;
+using Dhanman.Shared.Contracts.Common;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dhanman.MyHome.Api.Controllers;
@@ -32,7 +34,8 @@ public class VisitorsController : ApiController
     }
 
     #region Visitors   
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Visitor.Read")]
     [HttpGet(ApiRoutes.Visitors.GetAllVisitors)]
     [ProducesResponseType(typeof(VisitorListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -41,6 +44,8 @@ public class VisitorsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Visitor.Read")]
     [HttpGet(ApiRoutes.Visitors.GetAllVisitorNames)]
     [ProducesResponseType(typeof(VisitorNameListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -49,6 +54,8 @@ public class VisitorsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Visitor.Write")]
     [HttpPost(ApiRoutes.Visitors.CreateVisitor)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -69,6 +76,8 @@ public class VisitorsController : ApiController
          .Bind(command => Mediator.Send(command))
          .Match(Ok, BadRequest);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Write")]
     [HttpPost(ApiRoutes.Visitors.CreateVisitorPending)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -92,6 +101,8 @@ public class VisitorsController : ApiController
                    .Match(Ok, BadRequest);
 
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Visitor.Write")]
     [HttpPut(ApiRoutes.Visitors.UpdateVisitor)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateVisitor([FromBody] UpdateVisitorRequest? request)
@@ -122,6 +133,8 @@ public class VisitorsController : ApiController
         }
     }
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Visitor.Delete")]
     [HttpDelete(ApiRoutes.Visitors.DeleteVisitorById)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteVisitorById(int id)
@@ -139,6 +152,8 @@ public class VisitorsController : ApiController
         }
     }
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Visitor.Read")]
     [HttpGet(ApiRoutes.Visitors.GetVisitorsByUnitId)]
     [ProducesResponseType(typeof(VisitorsByUnitIdListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -150,6 +165,8 @@ public class VisitorsController : ApiController
 
     #region VisitorLogs 
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Visitor.Read")]
     [HttpGet(ApiRoutes.Visitors.GetAllVisitorLogs)]
     [ProducesResponseType(typeof(AllVisitorLogListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -158,6 +175,9 @@ public class VisitorsController : ApiController
    .Bind(query => Mediator.Send(query))
    .Match(Ok, NotFound);
 
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Visitor.Read")]
     [HttpGet(ApiRoutes.Visitors.GetSingleVisitorLogs)]
     [ProducesResponseType(typeof(VisitorLogListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -166,6 +186,9 @@ public class VisitorsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Visitor.Write")]
     [HttpPost(ApiRoutes.Visitors.CheckInVisitorLog)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -186,6 +209,10 @@ public class VisitorsController : ApiController
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Visitor.Write")]
     [HttpPut(ApiRoutes.Visitors.CheckOutVisitorLog)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateVisitorLog([FromBody] UpdateVisitorLogRequest? request)
@@ -210,6 +237,8 @@ public class VisitorsController : ApiController
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Visitor.Approve")]
     [HttpPut(ApiRoutes.Visitors.ApproveVisitorLog)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> ApproveVisitorLog([FromBody] ApproveVisitorLogRequest? request)
@@ -234,6 +263,8 @@ public class VisitorsController : ApiController
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Visitor.Approve")]
     [HttpPut(ApiRoutes.Visitors.RejectVisitorLog)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> RejectVisitorLog([FromBody] RejectVisitorLogRequest? request)
@@ -255,6 +286,9 @@ public class VisitorsController : ApiController
     }
     #endregion
 
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     #region VisitorTypes Identity
     [HttpGet(ApiRoutes.Visitors.GetVisitorTypes)]
     [ProducesResponseType(typeof(VisitorTypeListResponse), StatusCodes.Status200OK)]
@@ -264,6 +298,8 @@ public class VisitorsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.Visitors.GetVisitorIdentityTypes)]
     [ProducesResponseType(typeof(VisitorIdentityTypeListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -273,6 +309,9 @@ public class VisitorsController : ApiController
     .Match(Ok, NotFound);
     #endregion
 
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Visitor.Approve")]
     #region VisitorApprovals
     [HttpPost(ApiRoutes.Visitors.CreateVisitorApproval)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
@@ -296,6 +335,8 @@ public class VisitorsController : ApiController
              .Bind(command => Mediator.Send(command))
                    .Match(Ok, BadRequest);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.Visitors.GetVisitorApprovalInfoById)]
     [ProducesResponseType(typeof(VisitorApprovalsInfoByIdResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -304,6 +345,8 @@ public class VisitorsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Visitor.Approve")]
     [HttpPut(ApiRoutes.Visitors.UpdateVisitorApproval)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateVisitorApproval([FromBody] UpadateVisitorApproveRequest? request)
