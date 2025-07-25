@@ -211,9 +211,9 @@ public static class ApiRoutes
     }
     #endregion
 
-    public static class BokkingFacilities
+    public static class BookingFacilities
     {
-        public const string GetAllBokkingFacilities = apiVersion + "booking-facilities";
+        public const string GetAllBookingFacilities = apiVersion + "booking-facilities";
     }
 
     public static class EventOccurrences
