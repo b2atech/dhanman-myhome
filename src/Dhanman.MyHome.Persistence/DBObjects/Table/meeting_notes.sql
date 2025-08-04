@@ -1,0 +1,1 @@
+CREATE TABLE "meeting_notes" ("id" integer NOT NULL, "occurrence_id" integer NOT NULL, "note_text" text, "created_on_utc" timestamp without time zone NOT NULL, "modified_on_utc" timestamp without time zone, "is_deleted" boolean DEFAULT false NOT NULL, "deleted_on_utc" timestamp without time zone, "created_by" uuid NOT NULL, "modified_by" uuid, PRIMARY KEY ("id"));

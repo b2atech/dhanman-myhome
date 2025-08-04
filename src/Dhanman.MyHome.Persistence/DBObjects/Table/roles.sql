@@ -1,0 +1,1 @@
+CREATE TABLE "roles" ("id" integer NOT NULL, "name" varchar(50), "description" varchar(200), PRIMARY KEY ("id"));

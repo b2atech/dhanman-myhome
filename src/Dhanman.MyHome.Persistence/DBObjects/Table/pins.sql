@@ -1,0 +1,1 @@
+CREATE TABLE "pins" ("id" integer DEFAULT nextval('pins_id_seq'::regclass) NOT NULL, "service_provider_id" integer, "visitor_id" integer, "delivery_id" integer, "pin_code" varchar(6) NOT NULL, "effective_start_date_time" timestamp without time zone NOT NULL, "effective_end_date_time" timestamp without time zone, PRIMARY KEY ("id"));

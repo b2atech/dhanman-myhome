@@ -1,0 +1,1 @@
+CREATE TABLE "resident_units" ("id" integer NOT NULL, "unit_id" integer NOT NULL, "resident_id" integer NOT NULL, "created_on_utc" timestamp without time zone NOT NULL, "deleted_on_utc" timestamp without time zone, "is_deleted" boolean DEFAULT false NOT NULL, "created_by" uuid NOT NULL, PRIMARY KEY ("id"));

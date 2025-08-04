@@ -1,0 +1,1 @@
+CREATE TABLE "event_occurrence_status" ("id" integer NOT NULL, "name" varchar(100) NOT NULL, PRIMARY KEY ("id"));
