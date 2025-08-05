@@ -1,1 +1,0 @@
-CREATE TABLE "service_provider_types" ("id" integer NOT NULL, "name" varchar(100) NOT NULL, "deleted_on_utc" timestamp without time zone, "is_deleted" boolean DEFAULT false NOT NULL, PRIMARY KEY ("id"));

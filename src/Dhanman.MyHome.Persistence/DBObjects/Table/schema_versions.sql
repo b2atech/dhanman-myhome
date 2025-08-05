@@ -1,1 +1,0 @@
-CREATE TABLE "schema_versions" ("script_name" varchar(255) NOT NULL, "applied_on_utc" timestamp without time zone NOT NULL, "hash" varchar(64), PRIMARY KEY ("script_name"));

@@ -1,1 +1,0 @@
-CREATE TABLE "resident_tokens" ("id" uuid NOT NULL, "resident_id" integer NOT NULL, "fcm_token" text NOT NULL, PRIMARY KEY ("id"));

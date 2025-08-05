@@ -1,1 +1,0 @@
-CREATE TABLE "service_provider_ticket_categories" ("id" integer NOT NULL, "service_provider_id" integer NOT NULL, "ticket_category_id" integer NOT NULL, "deleted_on_utc" timestamp without time zone, "is_deleted" boolean DEFAULT false NOT NULL, PRIMARY KEY ("id"));

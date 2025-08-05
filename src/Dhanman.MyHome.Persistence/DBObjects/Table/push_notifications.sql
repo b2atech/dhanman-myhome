@@ -1,1 +1,0 @@
-CREATE TABLE "push_notifications" ("id" uuid NOT NULL, "caller_id" text NOT NULL, "receiver_id" text NOT NULL, "status" text NOT NULL, "created_at" timestamp without time zone NOT NULL, "responded_at" timestamp without time zone, PRIMARY KEY ("id"));

@@ -1,1 +1,0 @@
-CREATE TABLE "__EFMigrationsHistory" ("migration_id" varchar(150) NOT NULL, "product_version" varchar(32) NOT NULL, PRIMARY KEY ("migration_id"));

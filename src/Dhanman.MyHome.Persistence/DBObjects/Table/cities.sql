@@ -1,1 +1,0 @@
-CREATE TABLE "cities" ("id" uuid NOT NULL, "name" text NOT NULL, "state_id" uuid NOT NULL, "zip_code" text NOT NULL, "created_on_utc" timestamp without time zone NOT NULL, "modified_on_utc" timestamp without time zone, "deleted_on_utc" timestamp without time zone, "is_deleted" boolean DEFAULT false NOT NULL, "created_by" uuid NOT NULL, "modified_by" uuid, PRIMARY KEY ("id"));

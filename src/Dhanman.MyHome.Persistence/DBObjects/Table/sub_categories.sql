@@ -1,1 +1,0 @@
-CREATE TABLE "sub_categories" ("id" integer NOT NULL, "name" text NOT NULL, "created_on_utc" timestamp without time zone NOT NULL, "modified_on_utc" timestamp without time zone, "deleted_on_utc" timestamp without time zone, "is_deleted" boolean DEFAULT false NOT NULL, "created_by" uuid NOT NULL, "modified_by" uuid, "category_id" integer DEFAULT 0 NOT NULL, PRIMARY KEY ("id"));

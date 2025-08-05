@@ -1,1 +1,0 @@
-CREATE TABLE "visitor_unit_logs" ("id" integer NOT NULL, "visitor_log_id" integer NOT NULL, "unit_id" integer NOT NULL, "deleted_on_utc" timestamp without time zone, "is_deleted" boolean DEFAULT false NOT NULL, PRIMARY KEY ("id"));

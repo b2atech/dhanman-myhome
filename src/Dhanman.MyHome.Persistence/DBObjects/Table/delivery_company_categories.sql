@@ -1,1 +1,0 @@
-CREATE TABLE "delivery_company_categories" ("id" integer NOT NULL, "name" text NOT NULL, "deleted_on_utc" timestamp without time zone, "is_deleted" boolean DEFAULT false NOT NULL, PRIMARY KEY ("id"));

@@ -1,1 +1,0 @@
-CREATE TABLE "UserToRoleMapping" ("user_id" uuid NOT NULL, "role_name" text NOT NULL, PRIMARY KEY ("user_id", "role_name"));

@@ -1,1 +1,0 @@
-CREATE TABLE "ticket_service_provider_otps" ("id" uuid NOT NULL, "otp" text NOT NULL, "expiration_time" timestamp without time zone NOT NULL, "ticket_id" uuid NOT NULL, PRIMARY KEY ("id"));
