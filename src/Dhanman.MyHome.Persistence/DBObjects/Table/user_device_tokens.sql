@@ -1,0 +1,1 @@
+CREATE TABLE "user_device_tokens" ("id" uuid NOT NULL, "user_id" text NOT NULL, "device_token" text NOT NULL, PRIMARY KEY ("id"));

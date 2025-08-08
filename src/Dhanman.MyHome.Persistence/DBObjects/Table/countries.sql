@@ -1,0 +1,1 @@
+CREATE TABLE "countries" ("id" uuid NOT NULL, "name" text NOT NULL, "iso_alpha_code" text NOT NULL, "created_by" uuid NOT NULL, "modified_by" uuid, "created_on_utc" timestamp without time zone NOT NULL, "modified_on_utc" timestamp without time zone, "deleted_on_utc" timestamp without time zone, "is_deleted" boolean DEFAULT false NOT NULL, PRIMARY KEY ("id"));
