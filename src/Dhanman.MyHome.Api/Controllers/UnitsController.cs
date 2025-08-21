@@ -87,7 +87,7 @@ public class UnitsController : ApiController
     [Authorize(Policy = "DynamicPermissionPolicy")]
     [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.Units.GetUnitIdByUserId)]
-    [ProducesResponseType(typeof(GetUnitIdbyUserIdResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BasicUnitInfoResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetUnitIdByUserId(Guid userId, Guid apartmentId) =>
     await Result.Success(new GetUnitIdByUserIdQuery(userId,apartmentId))
