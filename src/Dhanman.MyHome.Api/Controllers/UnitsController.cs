@@ -31,7 +31,7 @@ public class UnitsController : ApiController
     #region Units     
 
     [Authorize(Policy = "DynamicPermissionPolicy")]
-    [RequiresPermissions("Dhanman.MyHome.Unit.read")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.Units.GetAllUnits)]
     [ProducesResponseType(typeof(UnitListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -42,7 +42,7 @@ public class UnitsController : ApiController
 
 
     [Authorize(Policy = "DynamicPermissionPolicy")]
-    [RequiresPermissions("Dhanman.MyHome.Unit.read")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     //need to verify VERB with actual use
     [HttpPost(ApiRoutes.Units.GetAllUnitDetails)]
     [ProducesResponseType(typeof(UnitDetailListResponse), StatusCodes.Status200OK)]
