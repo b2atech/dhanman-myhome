@@ -1,15 +1,17 @@
 ﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Attributes;
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
-using Dhanman.Shared.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.Vehicles;
 using Dhanman.MyHome.Application.Contracts.Visitors;
 using Dhanman.MyHome.Application.Features.Vehicles.commands.create;
 using Dhanman.MyHome.Application.Features.Vehicles.Queries;
 using Dhanman.MyHome.Application.Features.Visitors.Commands.CreateVisitor;
 using Dhanman.MyHome.Domain;
+using Dhanman.Shared.Contracts.Common;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dhanman.MyHome.Api.Controllers;
@@ -22,7 +24,8 @@ public class VehiclesController : ApiController
 
 
     #region Vehicles     
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.read")]
     [HttpGet(ApiRoutes.Vehicles.GetAllVehicles)]
     [ProducesResponseType(typeof(VehicleListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -31,6 +34,8 @@ public class VehiclesController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.read")]
     [HttpGet(ApiRoutes.Vehicles.GetAllVehicleNames)]
     [ProducesResponseType(typeof(VehicleNameListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -42,7 +47,8 @@ public class VehiclesController : ApiController
     #endregion
 
     #region Visitor Vehicle
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Write")]
     [HttpPost(ApiRoutes.Vehicles.CreateVisitorVehicle)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

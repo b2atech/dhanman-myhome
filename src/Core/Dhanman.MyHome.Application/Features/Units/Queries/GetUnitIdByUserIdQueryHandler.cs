@@ -3,13 +3,12 @@ using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.Shared.Contracts.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Units;
 using Dhanman.MyHome.Domain;
-using Dhanman.MyHome.Domain.Entities.Residents;
-using Dhanman.MyHome.Domain.Entities.ResidentUnits;
 using Microsoft.EntityFrameworkCore;
+using Dhanman.MyHome.Domain.Entities.Units;
 
 namespace Dhanman.MyHome.Application.Features.Units.Queries;
 
-public class GetUnitIdByUserIdQueryHandler : IQueryHandler<GetUnitIdByUserIdQuery, Result<GetUnitIdbyUserIdResponse>>
+public class GetUnitIdByUserIdQueryHandler : IQueryHandler<GetUnitIdByUserIdQuery, Result<BasicUnitInfoResponse>>
 {
     #region Properties
     private readonly IApplicationDbContext _dbContext;
@@ -20,29 +19,30 @@ public class GetUnitIdByUserIdQueryHandler : IQueryHandler<GetUnitIdByUserIdQuer
     #endregion
 
     #region Methods
-    public async Task<Result<GetUnitIdbyUserIdResponse>> Handle(GetUnitIdByUserIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<BasicUnitInfoResponse>> Handle(GetUnitIdByUserIdQuery request, CancellationToken cancellationToken)
     {
         return await Result.Success(request)
             .Ensure(query => query != null, Errors.General.EntityNotFound)
             .Bind(async query =>
             {
-                var unitIds = await (from ru in _dbContext.SetInt<ResidentUnit>().AsNoTracking()
-                                    join r in _dbContext.SetInt<Resident>().AsNoTracking()
-                                on ru.ResidentId equals r.Id
-                                    where r.UserId == request.UserId
-                                       && r.ApartmentId == request.ApartmentId
-                                    select ru.UnitId)
-                                    .ToListAsync(cancellationToken);
-                if (unitIds == null || !unitIds.Any())
-                {
-                    return Result.Failure<GetUnitIdbyUserIdResponse>(Errors.General.EntityNotFound);
-                }
 
-                var response = new GetUnitIdbyUserIdResponse(request.UserId, request.ApartmentId, unitIds);
+                var unit = await _dbContext.SetInt<UnitInfo>()
+                                   .FromSqlInterpolated(
+                                       $"SELECT * FROM public.get_unit_info_by_user_apartment({request.UserId}, {request.ApartmentId})"
+                                   )
+                                   .AsNoTracking()
+                                   .Select(u => new BasicUnitInfo(u.Id, u.UnitId, u.UnitName, u.UserName, u.ApartmentId))
+                                   .FirstOrDefaultAsync(cancellationToken);
 
+                if (unit is null)
+                    return Result.Failure<BasicUnitInfoResponse>(Errors.General.EntityNotFound);
+
+                var response = new BasicUnitInfoResponse(unit);
                 return Result.Success(response);
             });
     }
+
+
     #endregion
 
 }

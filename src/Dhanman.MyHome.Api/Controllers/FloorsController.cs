@@ -1,15 +1,17 @@
 ﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Attributes;
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
-using Dhanman.Shared.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.Floors;
 using Dhanman.MyHome.Application.Features.Floors.Commands.CreateFloor;
 using Dhanman.MyHome.Application.Features.Floors.Commands.DeleteFloor;
 using Dhanman.MyHome.Application.Features.Floors.Commands.UpdateFloor;
 using Dhanman.MyHome.Application.Features.Floors.Queries;
 using Dhanman.MyHome.Domain;
+using Dhanman.Shared.Contracts.Common;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dhanman.MyHome.Api.Controllers;
@@ -21,7 +23,8 @@ public class FloorsController : ApiController
     }
 
     #region Floors
-
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.Floors.GetFloors)]
     [ProducesResponseType(typeof(FloorListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -30,7 +33,8 @@ public class FloorsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
-   
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.Floors.GetFloorById)]
     [ProducesResponseType(typeof(FloorResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -39,6 +43,8 @@ public class FloorsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Apartment.Write")]
     [HttpPost(ApiRoutes.Floors.CreateFloor)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -53,6 +59,8 @@ public class FloorsController : ApiController
          .Bind(command => Mediator.Send(command))
          .Match(Ok, BadRequest);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Apartment.Write")]
     [HttpPut(ApiRoutes.Floors.UpdateFloor)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateFloors([FromBody] UpdateFloorRequest? request)
@@ -76,6 +84,8 @@ public class FloorsController : ApiController
         }
     }
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Apartment.Delete")]
     [HttpDelete(ApiRoutes.Floors.DeleteFloorById)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteFloorById(int id)

@@ -5,7 +5,7 @@ using Dhanman.MyHome.Application.Contracts.Units;
 
 namespace Dhanman.MyHome.Application.Features.Units.Queries;
 
-public class GetUnitIdByUserIdQuery : ICacheableQuery<Result<GetUnitIdbyUserIdResponse>>
+public class GetUnitIdByUserIdQuery : ICacheableQuery<Result<BasicUnitInfoResponse>>
 {
     #region Properties
     public Guid UserId { get; set; }

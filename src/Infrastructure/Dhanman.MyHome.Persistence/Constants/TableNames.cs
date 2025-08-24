@@ -186,5 +186,7 @@ internal static class TableNames
 
     internal const string WaterTankerDeliveries = "water_tanker_deliveries";
 
+    internal const string UnitInfo = "unit_info";
+
 }
 

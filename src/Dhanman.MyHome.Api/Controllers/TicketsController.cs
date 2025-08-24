@@ -1,9 +1,9 @@
 ﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Attributes;
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Constants;
-using Dhanman.Shared.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.TicketCategories;
 using Dhanman.MyHome.Application.Contracts.TicketPriorities;
 using Dhanman.MyHome.Application.Contracts.Tickets;
@@ -16,7 +16,9 @@ using Dhanman.MyHome.Application.Features.TicketServiceProviderOtps.Commands.Cre
 using Dhanman.MyHome.Application.Features.TicketServiceProviderOtps.Queries;
 using Dhanman.MyHome.Application.Features.TicketStatuses.Commands.UpdateTicketNextStatus;
 using Dhanman.MyHome.Domain;
+using Dhanman.Shared.Contracts.Common;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dhanman.MyHome.Api.Controllers;
@@ -29,6 +31,8 @@ public class TicketsController : ApiController
 
     #region Tickets
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Ticket.Write")]
     [HttpPost(ApiRoutes.Tickets.CreateTicket)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -48,6 +52,8 @@ public class TicketsController : ApiController
          .Bind(command => Mediator.Send(command))
          .Match(Ok, BadRequest);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Ticket.Read")]
     [HttpGet(ApiRoutes.Tickets.GetAllTickets)]
     [ProducesResponseType(typeof(TicketListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -56,6 +62,9 @@ public class TicketsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Ticket.Read")]
     [HttpGet(ApiRoutes.Tickets.GetTicketById)]
     [ProducesResponseType(typeof(TicketResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -64,6 +73,9 @@ public class TicketsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Ticket.Write")]
     [HttpPut(ApiRoutes.Tickets.UpdateTicketServiceProvider)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateTicketServiceProvider([FromBody] UpdateTicketServiceProvicerRequest? request)
@@ -86,6 +98,8 @@ public class TicketsController : ApiController
         }
     }
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Ticket.Read")]
     [HttpGet(ApiRoutes.Tickets.GetAllServiceProviderTicketCategories)]
     [ProducesResponseType(typeof(ServiceProviderTicketCategoryListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -96,6 +110,9 @@ public class TicketsController : ApiController
     #endregion
 
     #region Status Catetory priority 
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.TicketStatuses.GetTicketStatuses)]
     [ProducesResponseType(typeof(TicketStatusListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -104,6 +121,9 @@ public class TicketsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.TicketCategories.GetTicketCategories)]
     [ProducesResponseType(typeof(TicketCategoryListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -112,6 +132,9 @@ public class TicketsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Ticket.Read")]
     [HttpGet(ApiRoutes.TicketPriorities.GetTicketPriorities)]
     [ProducesResponseType(typeof(TicketPriorityListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -122,6 +145,8 @@ public class TicketsController : ApiController
     #endregion
 
     #region Ticket Status
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.TicketStatus.Assign")]
     [HttpPut(ApiRoutes.TicketStatuses.UpdateTicketStatusAssign)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateTicketStatusAssign([FromBody] UpdateTicketStatusRequest? request)
@@ -145,6 +170,9 @@ public class TicketsController : ApiController
         }
     }
 
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.TicketStatus.Resolve")]
     [HttpPut(ApiRoutes.TicketStatuses.UpdateTicketStatusResolved)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateTicketStatusResolved([FromBody] UpdateTicketStatusRequest? request)
@@ -168,6 +196,9 @@ public class TicketsController : ApiController
         }
     }
 
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.TicketStatus.Close")]
     [HttpPut(ApiRoutes.TicketStatuses.UpdateTicketStatusClosed)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateTicketStatusClosed([FromBody] UpdateTicketStatusRequest? request)
@@ -191,6 +222,9 @@ public class TicketsController : ApiController
         }
     }
 
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.TicketStatus.Cancel")]
     [HttpPut(ApiRoutes.TicketStatuses.UpdateTicketStatusCancelled)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateTicketStatusCancelled([FromBody] UpdateTicketStatusRequest? request)
@@ -214,6 +248,9 @@ public class TicketsController : ApiController
         }
     }
 
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.TicketStatus.Reject")]
     [HttpPut(ApiRoutes.TicketStatuses.UpdateTicketStatusRejected)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateTicketStatusRejected([FromBody] UpdateTicketStatusRequest? request)
@@ -242,6 +279,8 @@ public class TicketsController : ApiController
 
     #region TicketServiceProviderOtps
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Ticket.Write")]
     [HttpPost(ApiRoutes.TicketServiceProviderOtp.CreateTicketServiceProviderOtp)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -261,6 +300,8 @@ public class TicketsController : ApiController
     }
 
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.TicketServiceProviderOtp.GetOtpByTicketId)]
     [ProducesResponseType(typeof(TicketServiceProviderOtpResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

@@ -1,13 +1,15 @@
 ﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Attributes;
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
-using Dhanman.Shared.Contracts.Common;
 using Dhanman.MyHome.Application.Contracts.Notifications;
 using Dhanman.MyHome.Application.Features.Notifications.Commands.SendPushNotifications;
 using Dhanman.MyHome.Application.Features.ResidentTokens.Commands.SaveTokens;
 using Dhanman.MyHome.Domain;
+using Dhanman.Shared.Contracts.Common;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dhanman.MyHome.Api.Controllers;
@@ -21,6 +23,8 @@ public class ComminicationController : ApiController
     #endregion
 
     #region Methods
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Write")]
     [HttpPost(ApiRoutes.PushNotification.CreatePushNotification)]
     [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -33,6 +37,8 @@ public class ComminicationController : ApiController
            .Bind(command => Mediator.Send(command))
           .Match(Ok, BadRequest);
 
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Resident.Write")]
     [HttpPost(ApiRoutes.PushNotification.CreateResidentToken)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
