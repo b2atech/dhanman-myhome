@@ -51,7 +51,7 @@ public class BuildingsController : ApiController
     .Match(Ok, NotFound);
 
     [Authorize(Policy = "DynamicPermissionPolicy")]
-    [RequiresPermissions("Dhanman.MyHome.Apartment.Write")]
+    [RequiresPermissions("Dhanman.MyHome.Building.Write")]
     [HttpPost(ApiRoutes.Buildings.CreateBuilding)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
