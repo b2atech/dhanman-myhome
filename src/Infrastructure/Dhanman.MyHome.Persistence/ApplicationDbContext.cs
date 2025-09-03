@@ -2,6 +2,7 @@
 using B2aTech.CrossCuttingConcern.Core.Abstractions;
 using B2aTech.CrossCuttingConcern.Core.Primitives;
 using Dhanman.MyHome.Application.Abstractions.Data;
+using Dhanman.MyHome.Application.Contracts.Residents;
 using Dhanman.MyHome.Domain.Abstractions;
 using Dhanman.MyHome.Domain.Entities.CommitteeMembers;
 using Dhanman.MyHome.Domain.Entities.Portfolios;
@@ -52,6 +53,7 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
         modelBuilder.Entity<RoleDto>().ToTable(TableNames.RoleDto, t => t.ExcludeFromMigrations());
         modelBuilder.Entity<UnitInfo>().ToTable(TableNames.UnitInfo, t => t.ExcludeFromMigrations());
         modelBuilder.Entity<VehicleInfo>().ToTable(TableNames.VehicleInfo, t => t.ExcludeFromMigrations());
+        modelBuilder.Entity<ResidentNames>().ToTable(TableNames.ResidentNames, t => t.ExcludeFromMigrations());
 
         modelBuilder.ApplyUtcDateTimeConverter();
         base.OnModelCreating(modelBuilder);

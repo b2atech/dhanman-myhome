@@ -1,10 +1,10 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Application.Abstractions.Data;
-using Dhanman.Shared.Contracts.Abstractions.Messaging;
 using Dhanman.MyHome.Application.Contracts.Residents;
-using Dhanman.MyHome.Domain;
-using Dhanman.MyHome.Domain.Entities.Residents;
+using Dhanman.Shared.Contracts.Abstractions.Messaging;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
+using NpgsqlTypes;
 
 namespace Dhanman.MyHome.Application.Features.Residents.Queries;
 
@@ -21,25 +21,22 @@ public class GetAllResidentNamesQueryHandler : IQueryHandler<GetAllResidentNames
     #region Methods
     public async Task<Result<ResidentNameListResponse>> Handle(GetAllResidentNamesQuery request, CancellationToken cancellationToken)
     {
-        return await Result.Success(request)
-              .Ensure(query => query != null, Errors.General.EntityNotFound)
-              .Bind(async query =>
-              {
-                  var residents = await _dbContext.SetInt<Resident>()
-                  .AsNoTracking()
-                  .Where(e => e.ApartmentId == request.ApartmentId)
-                  .Select(e => new ResidentNameResponse(
-                          e.Id,                           
-                          e.FirstName,
-                          e.LastName,
-                          e.UserId))
-                  .ToListAsync(cancellationToken);
+        var apartmentId = new NpgsqlParameter("apartmentid", NpgsqlDbType.Uuid) { Value = request.ApartmentId };
+        var isGetAll = new NpgsqlParameter("isGetAll", NpgsqlDbType.Boolean) { Value = request.IsGetAll };
 
-                  var listResponse = new ResidentNameListResponse(residents);
+        var residentNames = await _dbContext.SetInt<ResidentNames>()
+            .FromSqlRaw("SELECT * FROM get_all_apartment_or_org_residents(@apartmentid, @isGetAll)", apartmentId, isGetAll)
+            .Select(v => new ResidentNameResponse(
+                v.Id,
+                v.ResidentName,
+                v.UserId
+            ))
+            .ToListAsync(cancellationToken);
 
-                  return listResponse;
-              });
+        var listResponse = new ResidentNameListResponse(residentNames);
+        return Result.Success(listResponse);
     }
+
     #endregion
 
 }

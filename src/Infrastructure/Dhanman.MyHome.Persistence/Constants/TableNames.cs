@@ -190,5 +190,7 @@ internal static class TableNames
 
     internal const string VehicleInfo = "vehicle_info";
 
+    internal const string ResidentNames = "resident_name";
+
 }
 

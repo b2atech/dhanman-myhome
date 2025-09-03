@@ -9,9 +9,14 @@ public class GetAllResidentNamesQuery : ICacheableQuery<Result<ResidentNameListR
 {
     #region Properties  
     public Guid ApartmentId { get; }
+    public bool IsGetAll{ get; }
     #endregion
     #region Constructors
-    public GetAllResidentNamesQuery(Guid apartmentId) => ApartmentId = apartmentId;
+    public GetAllResidentNamesQuery(Guid apartmentId, bool isGetAll)
+    {
+        ApartmentId = apartmentId;
+        IsGetAll = isGetAll;
+    } 
     #endregion
 
     #region Methodes
