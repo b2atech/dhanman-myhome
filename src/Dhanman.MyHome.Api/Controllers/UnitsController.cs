@@ -186,6 +186,16 @@ public class UnitsController : ApiController
 
     #endregion
 
+    #region Unit Information
+    [HttpGet(ApiRoutes.Units.GetRelatedDetails)]
+    [ProducesResponseType(typeof(UnitRelatedDetailsDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetUnitRelatedDetails(int unitId) =>
+    await Result.Success(new GetUnitRelatedDetailsQuery(unitId))
+        .Bind(query => Mediator.Send(query))
+        .Match(Ok, NotFound);
+    #endregion
+
     #region UnitTypes
     [Authorize(Policy = "DynamicPermissionPolicy")]
     [RequiresPermissions("Dhanman.MyHome.Basic.read")]
