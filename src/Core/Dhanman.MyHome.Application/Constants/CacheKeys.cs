@@ -60,6 +60,8 @@ public static class CacheKeys
         public const string VehicleList = CacheKeyPrefix + "-list-{1}";
 
         public const string VehicleById = CacheKeyPrefix + "-by-id-{1}";
+
+        public const string VehicleByUnitId = CacheKeyPrefix + "-by-id-{1}";
     }
     #endregion
 

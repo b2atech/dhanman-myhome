@@ -6,6 +6,7 @@ using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Vehicles;
 using Dhanman.MyHome.Application.Contracts.Visitors;
 using Dhanman.MyHome.Application.Features.Vehicles.commands.create;
+using Dhanman.MyHome.Application.Features.Vehicles.commands.CreateVehicle;
 using Dhanman.MyHome.Application.Features.Vehicles.Queries;
 using Dhanman.MyHome.Application.Features.Visitors.Commands.CreateVisitor;
 using Dhanman.MyHome.Domain;
@@ -25,7 +26,7 @@ public class VehiclesController : ApiController
 
     #region Vehicles     
     [Authorize(Policy = "DynamicPermissionPolicy")]
-    [RequiresPermissions("Dhanman.MyHome.Basic.read")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.Vehicles.GetAllVehicles)]
     [ProducesResponseType(typeof(VehicleListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -35,7 +36,7 @@ public class VehiclesController : ApiController
     .Match(Ok, NotFound);
 
     [Authorize(Policy = "DynamicPermissionPolicy")]
-    [RequiresPermissions("Dhanman.MyHome.Basic.read")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.Vehicles.GetAllVehicleNames)]
     [ProducesResponseType(typeof(VehicleNameListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -43,6 +44,35 @@ public class VehiclesController : ApiController
     await Result.Success(new GetAllVehicleNamesQuery())
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
+
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
+    [HttpGet(ApiRoutes.Vehicles.GetVehicleByUnitsId)]
+    [ProducesResponseType(typeof(BasicVehicleInfoListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllVehicleByUnitId(int unitId) =>
+     await Result.Success(new GetVehiclesByUnitIdQuery(unitId))
+    .Bind(query => Mediator.Send(query))
+    .Match(Ok, NotFound);
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Write")]
+    [HttpPost(ApiRoutes.Vehicles.CreateUnitVehicle)]
+    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> CreateUnitVehicle([FromBody] CreateUnitVehicleRequest? request) =>
+        await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new CreateVehicleCommand(
+                value.VehicleNumber,
+                value.VehicleTypeId,
+                value.UnitId,
+                value.VehicleRfId,
+                value.VehicleRfIdSecretcode,
+                UserContextService.CurrentUserId
+                ))
+            .Bind(command => Mediator.Send(command))
+            .Match(Ok, BadRequest);
 
     #endregion
 
@@ -64,3 +94,4 @@ public class VehiclesController : ApiController
     #endregion
 
 }
+

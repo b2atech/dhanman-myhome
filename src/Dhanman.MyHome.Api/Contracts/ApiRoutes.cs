@@ -94,11 +94,15 @@ public static class ApiRoutes
     {
         public const string CreateVisitorVehicle = apiVersion + "visitor-vehicles";
 
+        public const string CreateUnitVehicle = apiVersion + "unit-vehicles";
+
         public const string GetAllVehicles = apiVersion + "vehicles";
 
         public const string GetAllVehicleNames = apiVersion + "vehicle-names";
 
         public const string GetVehicleById = apiVersion + "vehicle/{id:int}";
+
+        public const string GetVehicleByUnitsId = apiVersion + "vehicle/{unitId:int}";
 
         public const string UpdateVehicles = apiVersion + "update-vehicles";
     }

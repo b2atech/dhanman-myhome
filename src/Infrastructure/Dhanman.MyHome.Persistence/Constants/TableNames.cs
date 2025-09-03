@@ -188,5 +188,7 @@ internal static class TableNames
 
     internal const string UnitInfo = "unit_info";
 
+    internal const string VehicleInfo = "vehicle_info";
+
 }
 

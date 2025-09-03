@@ -7,6 +7,7 @@ using Dhanman.MyHome.Domain.Entities.CommitteeMembers;
 using Dhanman.MyHome.Domain.Entities.Portfolios;
 using Dhanman.MyHome.Domain.Entities.Roles;
 using Dhanman.MyHome.Domain.Entities.Units;
+using Dhanman.MyHome.Domain.Entities.Vehicals;
 using Dhanman.MyHome.Domain.Entities.VisitorApprovals;
 using Dhanman.MyHome.Domain.Entities.VisitorLogs;
 using Dhanman.MyHome.Domain.Entities.Visitors;
@@ -50,6 +51,7 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
         modelBuilder.Entity<PortfolioDto>().ToTable(TableNames.PortfolioDto, t => t.ExcludeFromMigrations());
         modelBuilder.Entity<RoleDto>().ToTable(TableNames.RoleDto, t => t.ExcludeFromMigrations());
         modelBuilder.Entity<UnitInfo>().ToTable(TableNames.UnitInfo, t => t.ExcludeFromMigrations());
+        modelBuilder.Entity<VehicleInfo>().ToTable(TableNames.VehicleInfo, t => t.ExcludeFromMigrations());
 
         modelBuilder.ApplyUtcDateTimeConverter();
         base.OnModelCreating(modelBuilder);
