@@ -54,6 +54,8 @@ public static class ApiRoutes
         public const string DeleteUnit = apiVersion + "unit/{id:int}";
 
         public const string GetUnitByFloorId = apiVersion + "floors/{floorId:guid}/units";
+
+        public const string GetRelatedDetails = apiVersion + "units/{unitId:int}/unit-related-details";
     }
 
     public static class Residents
