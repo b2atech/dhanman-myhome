@@ -62,115 +62,113 @@ public class CreateResidentCommandHandler : ICommandHandler<CreateResidentComman
     #endregion
 
     #region Methodes
+
     public async Task<Result<EntityCreatedResponse>> Handle(CreateResidentCommand request, CancellationToken cancellationToken)
     {
-        var existingUserResult = await _commonServiceClient.GetUserByEmailOrPhoneAsync(request.Email, request.ContactNumber);
+        // 1. Find or create User by Email
+        var (user, isNewUser) = await FindOrCreateUserByEmailAsync(request.Email, request);
 
 
-        Guid newUserId;
-        if (existingUserResult != null)
+        // 2. Find or create Resident
+        var resident = await FindOrCreateResidentAsync(request, user.Id);
+
+        // 3. Add ResidentUnit
+        await AddResidentUnitAsync(request.UnitId, resident.Id);
+
+        // 3a. Publish UserCreated command to Common service if User is newly created
+        if (isNewUser) // User is newly created
         {
-            newUserId = existingUserResult.Id;
-        }
-        else
-        {
-            newUserId = Guid.NewGuid();
-        }
-        ResidentUnit residentUnit;
-        Resident resident = _residentRepository.GetByEmail(request.Email, request.ApartmentId);
-
-        if (resident != null)
-        {            
-            //int lastResidentUnitId = await _residentUnitRepository.GetLastResidentIdAsync();
-            //int newResidentUnitId = lastResidentUnitId + 1;
-
-            residentUnit = new ResidentUnit(request.UnitId, resident.Id);
-            _residentUnitRepository.Insert(residentUnit);
-            await _unitOfWork.SaveChangesAsync();
-        }
-        else
-        {
-            Guid? permanentAddressId = null;
-            if (request.PermanentAddress != null)
-            {
-                Guid cityId = await GetCityId(request.PermanentAddress.CityName, request.PermanentAddress.ZipCode, request.PermanentAddress.StateId);
-
-                 var permanentAddress = GetAddress(request.PermanentAddress, cityId);
-                _addressRepository.Insert(permanentAddress);
-                permanentAddressId = permanentAddress.Id;
-            }
-
-         //   int lastResidentId = await _residentRepository.GetLastResidentIdAsync();
-         //   int newResidentId = lastResidentId + 1;
-
-            resident = new Resident(request.ApartmentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, permanentAddressId, newUserId, request.ResidentTypeId, request.OccupancyStatusId);
-            _residentRepository.Insert(resident);
-            await _unitOfWork.SaveChangesAsync();
-
-
-            var firstName = new Domain.Entities.Users.FirstName(request.FirstName);
-            var lastName = new Domain.Entities.Users.LastName(request.LastName);
-            var email = new Domain.Entities.Users.Email(request.Email);
-            var contactNumber = new ContactNumber(request.ContactNumber);
-
-
-            var userResident = new User(newUserId, request.ApartmentId, firstName, lastName, email, contactNumber, request.ResidentTypeId == (int)ResidentType.OWNER);
-
-            _userRepository.Insert(userResident);
-
-
-            MessageContext messageContext = new MessageContext
+            var messageContext = new MessageContext
             {
                 UserId = _userContextService.CurrentUserId,
-                CorrelationId = _userContextService.CorrelationId,
                 OrganizationId = _userContextService.OrganizationId,
-
+                CorrelationId = Guid.NewGuid()
             };
-
-            //var user = new UserDto(newUserId, request.ApartmentId, firstName, lastName, email, contactNumber);
-            //TODO: This is a should be create in common service as command not here
-            //TODO*************
-
-            var user = new CreateUserCommand(newUserId, request.ApartmentId, firstName, lastName, email, contactNumber,  messageContext);
-
-            var eventEnevelop = new CommandEnvelope<CreateUserCommand>
-            {
-                CommandType = RoutingKeys.Community.CreateUserInCommonAfterResident,
-                Source = "CommunityService",
-                UserId = messageContext.UserId,
-                OrganizationId = messageContext.OrganizationId,
-                CorrelationId = messageContext.CorrelationId,
-                Payload = user
-                //EventType = EventTypes.CommunityUserAfterResidentCreated,
-            };
-
-            await _commandPublisher.PublishAsync(RoutingKeys.Community.CreateUserInCommonAfterResident, eventEnevelop);
-
-            //TODO: This is a should be come from common event not from here
-            // await _commonServiceClient.CreateUserAsync(user);
-            // await _salesServiceClient.CreateUserAsync(user);
-            // await _purchaseServiceClient.CreateUserAsync(user);
-
-            //TODO
-            // this ensure no duplicate entry in DB but multiple calls
-            //bool alreadyExists = _residentUnitRepository.Exists(resident.Id, request.UnitId);
-
-            //if (!alreadyExists)
-            //{
-            //    residentUnit = new ResidentUnit(request.UnitId, resident.Id);
-            //    _residentUnitRepository.Insert(residentUnit);
-            //}            
-
-            // int lastResidentUnitId = await _residentUnitRepository.GetLastResidentIdAsync();
-            // int newResidentUnitId = lastResidentUnitId + 1;
-            residentUnit = new ResidentUnit(request.UnitId, resident.Id); 
-            _residentUnitRepository.Insert(residentUnit);
-            await _unitOfWork.SaveChangesAsync();
+            await PublishUserCreatedAsync(user.Id, request.ApartmentId, request.FirstName, request.LastName, request.Email, request.ContactNumber, messageContext);
         }
-
+        // 4. Publish domain event
         await _mediator.Publish(new ResidentCreatedEvent(resident.Id), cancellationToken);
 
+        // 5. Return result
         return Result.Success(new EntityCreatedResponse(resident.Id));
+    }
+
+    // Private helpers
+
+    private async Task<(User user, bool isNew)> FindOrCreateUserByEmailAsync(string email, CreateResidentCommand request)
+    {
+        var existingUser = await _userRepository.GetByEmailAsync(email);
+        if (existingUser != null)
+            return (existingUser, false);
+
+        // Create new User
+        var newUser = new User(
+            Guid.NewGuid(),
+            request.ApartmentId,
+            new Domain.Entities.Users.FirstName(request.FirstName),
+            new Domain.Entities.Users.LastName(request.LastName),
+            new Domain.Entities.Users.Email(request.Email),
+            new ContactNumber(request.ContactNumber),
+            request.ResidentTypeId == (int)ResidentType.OWNER
+        );
+        _userRepository.Insert(newUser);
+        await _unitOfWork.SaveChangesAsync();
+        return (newUser, true);
+    }
+
+    private async Task<Resident> FindOrCreateResidentAsync(CreateResidentCommand request, Guid userId)
+    {
+        var existingResident = _residentRepository.GetByEmail(request.Email, request.ApartmentId);
+        if (existingResident != null)
+            return existingResident;
+
+        Guid? permanentAddressId = null;
+        if (request.PermanentAddress != null)
+        {
+            Guid cityId = await GetCityId(request.PermanentAddress.CityName, request.PermanentAddress.ZipCode, request.PermanentAddress.StateId);
+            var permanentAddress = GetAddress(request.PermanentAddress, cityId);
+            _addressRepository.Insert(permanentAddress);
+            permanentAddressId = permanentAddress.Id;
+        }
+
+        var resident = new Resident(
+            request.ApartmentId,
+            request.FirstName,
+            request.LastName,
+            request.Email,
+            request.ContactNumber,
+            permanentAddressId,
+            userId,
+            request.ResidentTypeId,
+            request.OccupancyStatusId
+        );
+        _residentRepository.Insert(resident);
+        await _unitOfWork.SaveChangesAsync();
+        return resident;
+    }
+
+    private async Task AddResidentUnitAsync(int unitId, int residentId)
+    {
+        var residentUnit = new ResidentUnit(unitId, residentId);
+        _residentUnitRepository.Insert(residentUnit);
+        await _unitOfWork.SaveChangesAsync();
+    }
+
+    private async Task PublishUserCreatedAsync(Guid userId, Guid apartmentId, string firstName, string lastName, string email, string contactNumber, MessageContext messageContext)
+    {
+        var userCommand = new CreateUserCommand(userId, apartmentId, firstName, lastName, email, contactNumber, messageContext);
+
+        var eventEnvelope = new CommandEnvelope<CreateUserCommand>
+        {
+            CommandType = RoutingKeys.Community.CreateUserInCommonAfterResident,
+            Source = "CommunityService",
+            UserId = messageContext.UserId,
+            OrganizationId = messageContext.OrganizationId,
+            CorrelationId = messageContext.CorrelationId,
+            Payload = userCommand
+        };
+
+        await _commandPublisher.PublishAsync(RoutingKeys.Community.CreateUserInCommonAfterResident, eventEnvelope);
     }
 
     private async Task<Guid> GetCityId(string cityName, string zipCode, Guid stateId)
