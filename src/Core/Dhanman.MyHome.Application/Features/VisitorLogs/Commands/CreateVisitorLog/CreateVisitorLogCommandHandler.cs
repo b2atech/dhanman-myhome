@@ -37,20 +37,26 @@ public class CreateVisitorLogCommandHandler : ICommandHandler<CreateVisitorLogCo
 
     public async Task<Result<EntityCreatedResponse>> Handle(CreateVisitorLogCommand request, CancellationToken cancellationToken)
     {
+        // Step 1: Create and save VisitorLog
         var visitorLog = CreateVisitorLogEntity(request);
         _visitorLogRepository.Insert(visitorLog);
-        //int nextVisitorUnitLogId = _visitorUnitLogRepository.GetTotalRecordsCount();
-        foreach (var unitId in request.VisitingUnitIds)
-        {
-            //nextVisitorUnitLogId = nextVisitorUnitLogId + 1;            
-            var visitorUnitLog = new VisitorUnitLog(visitorLog.Id, unitId);
-            _visitorUnitLogRepository.Insert(visitorUnitLog);
-            
-        }
+
+        // Save so visitorLog.Id is generated
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
+        // Step 2: Insert VisitorUnitLogs with valid visitorLog.Id
+        foreach (var unitId in request.VisitingUnitIds)
+        {
+            var visitorUnitLog = new VisitorUnitLog(visitorLog.Id, unitId);
+            _visitorUnitLogRepository.Insert(visitorUnitLog);
+        }
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        // Step 3: Publish event
         await _mediator.Publish(new VisitorLogCreatedEvent(request.VisitorId), cancellationToken);
-        return Result.Success(new EntityCreatedResponse(request.VisitorId));
+
+        return Result.Success(new EntityCreatedResponse(visitorLog.Id));
     }
 
     private VisitorLog CreateVisitorLogEntity(CreateVisitorLogCommand visitorLog)
