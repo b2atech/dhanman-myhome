@@ -8,7 +8,7 @@ public sealed class ApartmentResponse
     public string Name { get; }
     public int ApartmentTypeId { get; }
     public string ApartmentTypeName { get; }
-    public Guid AddressId { get; }
+    public Guid? AddressId { get; }
     public string Phone { get; }
     public string PAN { get; }
     public string TAN { get; }
@@ -23,7 +23,7 @@ public sealed class ApartmentResponse
     #endregion
 
     #region Constructor
-    public ApartmentResponse(Guid id, string name, int apartmentTypeId, string apartmentTypeName, Guid addressId, string phone, string pAN, string tAN, string associationName, Guid createdBy, DateTime createdOnUtc, Guid? modifiedBy, DateTime? modifiedOnUtc, string createdByName, string? modifiedByName)
+    public ApartmentResponse(Guid id, string name, int apartmentTypeId, string apartmentTypeName, Guid? addressId, string phone, string pAN, string tAN, string associationName, Guid createdBy, DateTime createdOnUtc, Guid? modifiedBy, DateTime? modifiedOnUtc, string createdByName, string? modifiedByName)
     {
         Id = id;
         Name = name;
