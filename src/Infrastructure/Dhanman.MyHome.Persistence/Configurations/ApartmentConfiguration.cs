@@ -14,6 +14,8 @@ internal sealed class ApartmentConfiguration : IEntityTypeConfiguration<Apartmen
 
         builder.Property(apartments => apartments.Name).HasColumnName("name").IsRequired();
 
+        builder.Property(apartments => apartments.OrganizationId).HasColumnName("organization_id").HasColumnType("uuid");
+
         builder.Property(apartments => apartments.ApartmentTypeId).HasColumnName("apartment_type_id");
 
         builder.Property(apartments => apartments.AddressId).HasColumnName("address_id");
