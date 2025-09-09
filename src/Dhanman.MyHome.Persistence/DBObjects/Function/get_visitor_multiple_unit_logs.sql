@@ -9,7 +9,7 @@ BEGIN
         v.id AS visitor_id,
         v.first_name,
         v.last_name,
-        muv.unit_id,
+        vul.unit_id,
         u.name AS unit_name,
         MAX(vl.entry_time) AS latest_entry_time,
         MAX(vl.exit_time) AS latest_exit_time,
@@ -22,9 +22,9 @@ BEGIN
     JOIN 
         visitor_logs vl ON v.id = vl.visitor_id
     LEFT JOIN 
-        multi_unit_visits muv ON muv.visitor_log_id = vl.id AND muv.is_deleted = FALSE
+		public.visitor_unit_logs vul on vul.visitor_log_id = vl.id AND vul.is_deleted = FALSE
     LEFT JOIN 
-        units u ON u.id = muv.unit_id
+        units u ON u.id = vul.unit_id
     LEFT JOIN 
         visitor_types vt ON vt.id = v.visitor_type_id  
     WHERE 
@@ -33,7 +33,7 @@ BEGIN
         AND v.is_deleted = FALSE
         AND vl.is_deleted = FALSE
     GROUP BY 
-        vl.id, v.id, v.first_name, v.last_name, muv.unit_id, u.name, 
+        vl.id, v.id, v.first_name, v.last_name, vul.unit_id, u.name, 
         vl.visiting_from, v.contact_number, v.visitor_type_id, vt.name;
 END;
 $function$
