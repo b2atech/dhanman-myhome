@@ -1,0 +1,1 @@
+CREATE TABLE "has_default" ("?column?" boolean);

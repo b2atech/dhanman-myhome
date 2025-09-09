@@ -1,0 +1,1 @@
+CREATE TABLE "UserToPaidModulesMapping" ("user_id" uuid NOT NULL, "paid_modules" bigint NOT NULL, PRIMARY KEY ("user_id"));

@@ -1,0 +1,1 @@
+CREATE TABLE "portfolios" ("id" integer NOT NULL, "apartment_id" uuid NOT NULL, "name" text NOT NULL, "description" text, PRIMARY KEY ("id"));
