@@ -192,5 +192,7 @@ internal static class TableNames
 
     internal const string ResidentNames = "resident_name";
 
+    internal const string UnitOwnerNameEntity = "unit_owner_name_entity";
+
 }
 
