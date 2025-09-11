@@ -18,6 +18,8 @@ internal sealed class ResidentUnitConfiguration : IEntityTypeConfiguration<Resid
 
         builder.Property(resident => resident.ResidentId).HasColumnName("resident_id").IsRequired();
 
+        builder.Property(resident => resident.IsPrimaryOwner).HasColumnName("is_primary_owner");
+
         builder.Property(resident => resident.CreatedBy).HasColumnType("uuid");
 
         builder.Property(resident => resident.CreatedOnUtc).HasColumnType("timestamp").IsRequired();
