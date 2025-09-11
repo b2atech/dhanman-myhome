@@ -9,10 +9,13 @@ public class GuestPushNotificationRequest
     #endregion
 
     #region Constructors
-    public GuestPushNotificationRequest()
+    public GuestPushNotificationRequest(int residentId, string guestName, int guestId)
     {
-
-    }
+        ResidentId = residentId;
+        GuestName = guestName;
+        GuestId = guestId;
+    }   
     #endregion
 
 }
+    

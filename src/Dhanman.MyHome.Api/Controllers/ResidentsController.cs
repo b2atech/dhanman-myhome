@@ -50,6 +50,8 @@ public class ResidentsController : ApiController
              .Bind(command => Mediator.Send(command))
                    .Match(Ok, BadRequest);
 
+    
+
     [Authorize(Policy = "DynamicPermissionPolicy")]
     [RequiresPermissions("Dhanman.MyHome.Resident.Read")]
     [HttpGet(ApiRoutes.Residents.GetAllResidents)]
@@ -174,5 +176,20 @@ public class ResidentsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
+    #endregion
+
+    #region GuestPushNotification
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [HttpPost("residents/send-guest-push-notification")]
+    [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> SendGuestPushNotification([FromBody] Dhanman.MyHome.Application.Contracts.Notifications.GuestPushNotificationRequest request) =>
+        await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new Dhanman.MyHome.Application.Features.Notifications.Commands.SendPushNotifications.SendPushNotificationCommand(
+                value.ResidentId,
+                value.GuestName,
+                value.GuestId))
+            .Bind(command => Mediator.Send(command))
+            .Match(Ok, BadRequest);
     #endregion
 }

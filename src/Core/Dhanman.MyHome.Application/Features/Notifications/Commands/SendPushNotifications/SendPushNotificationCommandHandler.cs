@@ -33,13 +33,14 @@ public class SendPushNotificationCommandHandler : ICommandHandler<SendPushNotifi
         if (residentToken == null || string.IsNullOrEmpty(residentToken.FCMToken))
             throw new Exception("Resident or FCM token not found");
 
+        //var residentToken = "e13g5evXSV6s_nQBMmmSrl:APA91bGCdc2tSrA0Tp4ZXZOMLjH8Qw8bwn8oRrNTOS1yq9jmflsy4VcEoXtApRH2S4OtB1cHjPr_FgnPIFVwRBMhQBObvKzKwx3GegNysrlSi2dkskTjWzE";
+
         await _fcm.SendNotificationAsync(
             residentToken.FCMToken,
             "Guest Approval Needed",
             $"Guest {request.GuestName} is at the gate.",
              request.GuestId 
         );
-
         return Unit.Value;
     }
 
