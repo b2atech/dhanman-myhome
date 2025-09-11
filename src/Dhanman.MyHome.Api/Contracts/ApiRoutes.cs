@@ -47,6 +47,8 @@ public static class ApiRoutes
 
         public const string GetUnitIdByUserId = apiVersion + "users/{userId:guid}/apartments/{apartmentId:guid}/unit-id";
 
+        public const string GetUnitsWithPrimaryOwner = apiVersion + "apartments/{apartmentId:guid}/units/primary-owners";
+
         public const string UpdateUnit = apiVersion + "unit";
 
         public const string GetAllUnitDetails = apiVersion + "unit-details";

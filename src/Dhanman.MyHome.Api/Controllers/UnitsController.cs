@@ -94,6 +94,14 @@ public class UnitsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(unitId => Ok(unitId), NotFound);
 
+    [HttpGet(ApiRoutes.Units.GetUnitsWithPrimaryOwner)]
+    [ProducesResponseType(typeof(UnitOwnerNameListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetUnitsWithPrimaryOwner(Guid apartmentId) =>
+    await Result.Success(new GetUnitsWithPrimaryOwnerQuery(apartmentId))
+        .Bind(query => Mediator.Send(query))
+        .Match(Ok, NotFound);
+
 
     [Authorize(Policy = "DynamicPermissionPolicy")]
     [RequiresPermissions("Dhanman.MyHome.Unit.Write")]
