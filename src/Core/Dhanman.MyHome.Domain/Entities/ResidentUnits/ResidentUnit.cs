@@ -9,6 +9,7 @@ public class ResidentUnit:EntityInt, IAuditableEntity, ISoftDeletableEntity
     public int Id { get; set; }
     public int UnitId { get; set; }
     public int ResidentId { get; set; }
+    public bool IsPrimaryOwner { get; set; }
     public DateTime CreatedOnUtc { get; }
     public DateTime? ModifiedOnUtc { get; set; }
     public DateTime? DeletedOnUtc { get; }
