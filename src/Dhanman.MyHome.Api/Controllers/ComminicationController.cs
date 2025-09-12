@@ -5,6 +5,7 @@ using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Notifications;
 using Dhanman.MyHome.Application.Features.Notifications.Commands.SendPushNotifications;
+using Dhanman.MyHome.Application.Features.Notifications.Commands.SendUnitPushNotifications;
 using Dhanman.MyHome.Application.Features.ResidentTokens.Commands.SaveTokens;
 using Dhanman.MyHome.Domain;
 using Dhanman.Shared.Contracts.Common;
@@ -36,6 +37,19 @@ public class ComminicationController : ApiController
                value.GuestId))
            .Bind(command => Mediator.Send(command))
           .Match(Ok, BadRequest);
+
+    [HttpPost(ApiRoutes.PushNotification.CreateUnitPushNotification)]
+    [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> SendUnitPushNotification([FromRoute] int unitId, [FromBody] UnitPushNotificationRequest request) =>
+    await Result.Create(request, Errors.General.BadRequest)
+        .Map(value => new SendUnitPushNotificationCommand(
+            unitId,
+            value.GuestName,
+            value.GuestId))
+        .Bind(command => Mediator.Send(command))
+        .Match(Ok, BadRequest);
+
 
     [Authorize(Policy = "DynamicPermissionPolicy")]
     [RequiresPermissions("Dhanman.MyHome.Resident.Write")]
