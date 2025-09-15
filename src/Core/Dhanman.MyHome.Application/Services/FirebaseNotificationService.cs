@@ -45,8 +45,18 @@ public class FirebaseNotificationService : IFirebaseService
             ["version"] = version,
             ["title"] = title,
             ["body"] = body,
-            ["payload"] = payload ?? new { }
+            //      ["payload"] = payload ?? new { }
         };
+
+        // Flatten payload object -> string values
+        if (payload != null)
+        {
+            foreach (var prop in payload.GetType().GetProperties())
+            {
+                var value = prop.GetValue(payload)?.ToString() ?? string.Empty;
+                messageEnvelope[prop.Name] = value;
+            }
+        }
 
         var errors = new List<string>();
 
