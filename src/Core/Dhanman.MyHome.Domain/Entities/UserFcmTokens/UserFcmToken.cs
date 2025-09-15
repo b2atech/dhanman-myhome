@@ -13,17 +13,19 @@ namespace Dhanman.MyHome.Domain.Entities.UserFcmTokens
         public Guid  UserId { get; set; }
         public string DeviceId { get; set; }
         public string FCMToken { get; set; }
+        public string Platform { get; set; }
         #endregion
 
         #region Constructors
         public UserFcmToken() { }
 
-        public UserFcmToken(int id, Guid userId, string deviceId, string fCMToken)
+        public UserFcmToken(int id, Guid userId, string deviceId, string fCMToken, string platform)
         {
             Id = id;
             UserId = userId;
             DeviceId = deviceId;
             FCMToken = fCMToken;
+            Platform = platform;
         }
         #endregion
     }

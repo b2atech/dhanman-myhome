@@ -90,7 +90,8 @@ public class ComminicationController : ApiController
         .Map(value => new SaveUserFcmTokenCommand(
             value.UserId,
             value.DeviceId,
-            value.FCMToken))
+            value.FCMToken,
+            value.Platform))
         .Bind(command => Mediator.Send(command))
         .Match(Ok, BadRequest);
     #endregion

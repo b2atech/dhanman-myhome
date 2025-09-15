@@ -12,6 +12,7 @@ namespace Dhanman.MyHome.Application.Contracts.Notifications
         public Guid UserId { get; set; }
         public string DeviceId { get; set; }
         public string FCMToken { get; set; }
+        public string Platform { get; set; }
         #endregion
 
         #region Constructors
@@ -19,11 +20,12 @@ namespace Dhanman.MyHome.Application.Contracts.Notifications
         {
         }
 
-        public CreateUserFcmTokenRequest(Guid userId, string deviceId, string fcmToken)
+        public CreateUserFcmTokenRequest(Guid userId, string deviceId, string fcmToken, string platform )
         {
             UserId = userId;
             DeviceId = deviceId;
             FCMToken = fcmToken;
+            Platform = platform;
         }
         #endregion
     }

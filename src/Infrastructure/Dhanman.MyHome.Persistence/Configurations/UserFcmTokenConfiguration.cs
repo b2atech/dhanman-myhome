@@ -18,10 +18,9 @@ public class UserFcmTokenConfiguration : IEntityTypeConfiguration<UserFcmToken>
         builder.ToTable(TableNames.UserFcmTokens);
         builder.HasKey(reidentToken => reidentToken.Id);
         builder.Property(reidentToken => reidentToken.Id).UseIdentityColumn();
-
         builder.Property(reidentToken => reidentToken.UserId).HasColumnName("user_id").IsRequired();
         builder.Property(reidentToken => reidentToken.DeviceId).HasColumnName("device_id").IsRequired();
-
+        builder.Property(reidentToken => reidentToken.Platform).HasColumnName("platform").IsRequired();
         builder.Property(reidentToken => reidentToken.FCMToken).HasColumnName("fcm_token").IsRequired();
     }
     #endregion

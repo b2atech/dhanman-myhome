@@ -40,7 +40,8 @@ public class SaveUserFcmTokenCommandHandler : ICommandHandler<SaveUserFcmTokenCo
             {
                 UserId = request.UserId,
                 DeviceId = request.DeviceId,
-                FCMToken = request.FCMToken
+                FCMToken = request.FCMToken,
+                Platform = request.Platform
             };
             _userFcmTokenRepository.Insert(userFcmToken);
         }
