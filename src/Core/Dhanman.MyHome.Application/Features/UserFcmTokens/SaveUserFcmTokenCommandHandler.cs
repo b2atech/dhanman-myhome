@@ -1,5 +1,6 @@
 ﻿using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Application.Features.Companies.Events;
+using Dhanman.MyHome.Application.Features.UserFcmTokens.Events;
 using Dhanman.MyHome.Domain.Abstractions;
 using Dhanman.Shared.Contracts.Abstractions.Messaging;
 using Dhanman.Shared.Contracts.Common;
@@ -50,7 +51,7 @@ public class SaveUserFcmTokenCommandHandler : ICommandHandler<SaveUserFcmTokenCo
         }
 
         // If you have a domain event, publish that instead. For now, this matches your pattern.
-        await _mediator.Publish(new EntityCreatedResponse(userFcmToken.Id), cancellationToken);
+        await _mediator.Publish(new UserFcmTokenCreatedEvent(userFcmToken.Id), cancellationToken);
 
         return Result.Success(new EntityCreatedResponse(userFcmToken.Id));
     }
