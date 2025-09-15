@@ -135,6 +135,7 @@ internal static class TableNames
     internal const string TicketServiceProviderOtps = "ticket_service_provider_otps";
 
     internal const string ResidentTokens = "resident_tokens";
+    internal const string UserFcmTokens = "user_fcm_tokens";
 
     internal const string ApprovedVisitors = "approved_visitors";
 

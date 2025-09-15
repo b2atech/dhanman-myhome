@@ -407,6 +407,7 @@ public static class ApiRoutes
         public const string CreateUnitPushNotification = apiVersion + "units/{unitId:int}/guest-requests";
 
         public const string CreateResidentToken = apiVersion + "resident-token";
+        public const string CreateUserFcmToken = apiVersion + "user-token";
     }
 
     public static class PublicApartments

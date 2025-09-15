@@ -7,6 +7,7 @@ using Dhanman.MyHome.Application.Contracts.Notifications;
 using Dhanman.MyHome.Application.Features.Notifications.Commands.SendPushNotifications;
 using Dhanman.MyHome.Application.Features.Notifications.Commands.SendUnitPushNotifications;
 using Dhanman.MyHome.Application.Features.ResidentTokens.Commands.SaveTokens;
+using Dhanman.MyHome.Application.Features.UserFcmTokens;
 using Dhanman.MyHome.Domain;
 using Dhanman.Shared.Contracts.Common;
 using MediatR;
@@ -63,5 +64,20 @@ public class ComminicationController : ApiController
               value.FCMToken))
           .Bind(command => Mediator.Send(command))
          .Match(Ok, BadRequest);
+
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Resident.Write")]
+    [HttpPost(ApiRoutes.PushNotification.CreateUserFcmToken)]
+    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> CreateUserFcmToken([FromBody] CreateUserFcmTokenRequest request) =>
+    await Result.Create(request, Errors.General.BadRequest)
+        .Map(value => new SaveUserFcmTokenCommand(
+            value.UserId,
+            value.DeviceId,
+            value.FCMToken))
+        .Bind(command => Mediator.Send(command))
+        .Match(Ok, BadRequest);
     #endregion
 }

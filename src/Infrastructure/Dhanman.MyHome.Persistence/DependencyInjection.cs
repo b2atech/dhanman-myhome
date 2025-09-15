@@ -67,6 +67,7 @@ public static class DependencyInjection
                 sp.GetRequiredService<ApplicationDbContext>());
  
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserFcmTokenRepository, UserFcmTokenRepository>();
             services.AddScoped<IResidentRequestRepository, ResidentRequestRepository>();
             services.AddTransient<IResidentRepository, ResidentRepository>();
             services.AddTransient<IUnitRepository, UnitRepository>();
