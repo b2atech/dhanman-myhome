@@ -404,6 +404,8 @@ public static class ApiRoutes
     {
         public const string CreatePushNotification = apiVersion + "guest-notification";
 
+        public const string RequestApprovalAction = apiVersion + "request-approval-action";
+
         public const string CreateUnitPushNotification = apiVersion + "units/{unitId:int}/guest-requests";
 
         public const string CreateResidentToken = apiVersion + "resident-token";
