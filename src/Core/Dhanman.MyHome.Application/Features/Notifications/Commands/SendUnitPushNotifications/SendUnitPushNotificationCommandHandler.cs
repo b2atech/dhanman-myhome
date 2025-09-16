@@ -30,7 +30,7 @@ public class SendUnitPushNotificationCommandHandler
     public async Task<Result<object>> Handle(SendRequestApprovalActionCommand request, CancellationToken cancellationToken)
     {
 
-        const string sqlFunction = "SELECT * FROM public.GetUserIdsByVisitorLogId(@p_VisitorLogId)";
+        const string sqlFunction = "SELECT * FROM public.get_user_ids_by_visitor_log_id(@p_VisitorLogId)";
 
         var visitorData = await _dbContext.SetInt<VisitorUserIdsDto>()
          //   .FromSqlRaw("SELECT * FROM public.GetUserIdsByVisitorLogId({visitorLogIdParam})" )
