@@ -167,9 +167,9 @@ public class VisitorsController : ApiController
     [HttpGet(ApiRoutes.Visitors.GetVisitorsByContactNumber)]
     [ProducesResponseType(typeof(VisitorByContactListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetVisitorByContact(Guid apartmentId, string contactNumber)
+    public async Task<IActionResult> GetVisitorByContact(Guid apartmentId,[FromQuery] string contactNumber, [FromQuery] string email)
     {
-        return await Result.Success(new GetVisitorByContactQuery(apartmentId, contactNumber))
+        return await Result.Success(new GetVisitorByContactQuery(apartmentId, contactNumber,email))
             .Bind(query => Mediator.Send(query))
             .Match(Ok, NotFound);
     }

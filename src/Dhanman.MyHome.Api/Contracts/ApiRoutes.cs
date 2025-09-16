@@ -201,7 +201,7 @@ public static class ApiRoutes
 
         public const string UpdateVisitorApproval = apiVersion + "visitor-approval";
 
-        public const string GetVisitorsByContactNumber = apiVersion + "apartments/{apartmentId:guid}/contacts/{contactNumber}/by-contact";
+        public const string GetVisitorsByContactNumber = apiVersion + "apartments/{apartmentId:guid}/by-contact";
 
 
     }

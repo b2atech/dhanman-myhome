@@ -4,7 +4,6 @@ using Dhanman.MyHome.Application.Contracts.Visitors;
 using Dhanman.MyHome.Domain.Entities.Visitors;
 using Dhanman.MyHome.Domain;
 using Dhanman.Shared.Contracts.Abstractions.Messaging;
-using Npgsql;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dhanman.MyHome.Application.Features.Visitors.Queries
@@ -25,8 +24,15 @@ namespace Dhanman.MyHome.Application.Features.Visitors.Queries
               .Ensure(query => query != null, Errors.General.EntityNotFound)
               .Bind(async query =>
               {
+                  // Call updated function with apartmentId, contactNumber, and email
                   var visitorsResponse = await _dbContext.SetInt<VisitorByContactDto>()
-                      .FromSqlInterpolated($"SELECT * FROM public.get_visitor_by_contact({request.ApartmentId}, {request.ContactNumber})")
+                      .FromSqlInterpolated($@"
+                          SELECT * 
+                          FROM public.get_visitor_by_contact_or_email(
+                              {request.ApartmentId}, 
+                              {request.ContactNumber}, 
+                              {request.Email}
+                          )")
                       .AsNoTracking()
                       .Select(e => new VisitorByContactResponse(
                             e.Id,
@@ -38,7 +44,7 @@ namespace Dhanman.MyHome.Application.Features.Visitors.Queries
                             e.VehicleNumber,
                             e.IdentityTypeId,
                             e.IdentityNumber))
-                    .ToListAsync(cancellationToken);
+                      .ToListAsync(cancellationToken);
 
                   var visitorListResponse = new VisitorByContactListResponse(visitorsResponse);
 

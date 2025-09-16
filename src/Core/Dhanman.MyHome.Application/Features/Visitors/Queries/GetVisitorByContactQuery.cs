@@ -7,11 +7,13 @@ namespace Dhanman.MyHome.Application.Features.Visitors.Queries;
 public sealed class GetVisitorByContactQuery : IQuery<Result<VisitorByContactListResponse>>
 {
     public Guid ApartmentId { get; }
-    public string ContactNumber { get; }
+    public string? ContactNumber { get; }
+    public string? Email { get; set; }
 
-    public GetVisitorByContactQuery(Guid apartmentId, string contactNumber)
+    public GetVisitorByContactQuery(Guid apartmentId, string contactNumber, string email)
     {
         ApartmentId = apartmentId;
         ContactNumber = contactNumber;
+        Email = email;
     }
 }
