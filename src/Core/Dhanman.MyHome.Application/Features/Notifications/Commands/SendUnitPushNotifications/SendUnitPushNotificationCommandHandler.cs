@@ -53,7 +53,7 @@ public class SendUnitPushNotificationCommandHandler
 
         var visitorName = $"{visitorData.First().FirstName} {visitorData.First().LastName}";
 
-        var visitorid = visitorData.Select(x => x.VisitorId).ToList();
+        var visitorId = visitorData.Select(x => x.VisitorId).ToList();
 
 
         if (!userIds.Any())
@@ -83,7 +83,7 @@ public class SendUnitPushNotificationCommandHandler
             FirebaseMessageType.GateApprovalRequest,
             "Guest Approval Needed",              
             $"Guest {visitorName} is at the gate.",
-            new { GuestId = request.VisitorLogId } 
+            new { GuestId = visitorId } 
         );
 
         return Result.Success<object>(new { SentCount = tokens.Count });
