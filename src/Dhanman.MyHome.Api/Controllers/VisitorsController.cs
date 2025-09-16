@@ -6,6 +6,7 @@ using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.VisitorApprovals;
 using Dhanman.MyHome.Application.Contracts.VisitorLogs;
 using Dhanman.MyHome.Application.Contracts.Visitors;
+using Dhanman.MyHome.Application.Enums;
 using Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.CreateVisitorApproval;
 using Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.UpdateVisitorApproval;
 using Dhanman.MyHome.Application.Features.VisitorApprovals.Queries;
@@ -168,6 +169,46 @@ public class VisitorsController : ApiController
             .Bind(query => Mediator.Send(query))
             .Match(Ok, NotFound);
     }
+
+
+    //[Authorize(Policy = "DynamicPermissionPolicy")]
+    //[RequiresPermissions("Dhanman.MyHome.Basic.Write")]
+    [HttpPost(ApiRoutes.Visitors.VisitorsApproved)]
+    [ProducesResponseType(typeof(ApprovalActionResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ApproveVisitors([FromBody] UpdateVisitorApprovalActionRequest? request) =>
+       await Result.Create(request, Errors.General.BadRequest)
+           .Map(value => new UpdateVisitorApprovalActionCommand(
+               value.VisitorLogId,
+               value.UnitId,
+               VisitorStatus.APPROVED,
+               value.ModifiedBy
+           ))
+           .Bind(command => Mediator.Send(command))
+           .Match(
+               onSuccess: Ok,
+               onFailure: error => error == Errors.General.EntityNotFound
+                   ? NotFound(error)
+                   : BadRequest(error)
+           );
+
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Write")]
+    [HttpPost(ApiRoutes.Visitors.VisitorsReject)]
+    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> RejectVisitors([FromBody] UpdateVisitorApprovalActionRequest? request) =>
+          await Result.Create(request, Errors.General.BadRequest)
+          .Map(value => new UpdateVisitorApprovalActionCommand(
+              value.VisitorLogId,
+              value.UnitId,
+              VisitorStatus.REJECTED,
+              value.ModifiedBy
+              ))
+           .Bind(command => Mediator.Send(command))
+                 .Match(Ok, BadRequest);
     #endregion
 
     #region VisitorLogs 

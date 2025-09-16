@@ -57,6 +57,7 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
         modelBuilder.Entity<UnitOwnerNameEntity>().ToTable(TableNames.UnitOwnerNameEntity, t => t.ExcludeFromMigrations());
         modelBuilder.Entity<VisitorByContactDto>().ToTable(TableNames.VisitorByContactDto, t => t.ExcludeFromMigrations());
         modelBuilder.Entity<VisitorUserIdsDto>().ToTable(TableNames.VisitorUserIdsDto, t => t.ExcludeFromMigrations());
+        modelBuilder.Entity<ResponseOverApprovalActionDto>().ToTable(TableNames.ResponseOverApprovalActionDto, t => t.ExcludeFromMigrations());
 
         modelBuilder.ApplyUtcDateTimeConverter();
         base.OnModelCreating(modelBuilder);

@@ -203,6 +203,10 @@ public static class ApiRoutes
 
         public const string GetVisitorsByContactNumber = apiVersion + "apartments/{apartmentId:guid}/by-contact";
 
+        public const string VisitorsApproved = apiVersion + "approve-visitor ";
+
+        public const string VisitorsReject = apiVersion + "reject-visitor";
+
 
     }
 

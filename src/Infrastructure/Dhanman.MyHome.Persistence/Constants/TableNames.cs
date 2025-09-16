@@ -199,5 +199,7 @@ internal static class TableNames
 
     internal const string VisitorUserIdsDto = "visitor_user_ids_dto";
 
+    internal const string ResponseOverApprovalActionDto = "response_over_approval_action_dto";
+
 }
 
