@@ -161,6 +161,18 @@ public class VisitorsController : ApiController
     await Result.Success(new GetVisitorsByUnitIdQuery(apartmentId, unitId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
+
+    [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Visitor.Read")]
+    [HttpGet(ApiRoutes.Visitors.GetVisitorsByContactNumber)]
+    [ProducesResponseType(typeof(VisitorByContactListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetVisitorByContact(Guid apartmentId,[FromQuery] string contactNumber, [FromQuery] string email)
+    {
+        return await Result.Success(new GetVisitorByContactQuery(apartmentId, contactNumber,email))
+            .Bind(query => Mediator.Send(query))
+            .Match(Ok, NotFound);
+    }
     #endregion
 
     #region VisitorLogs 
