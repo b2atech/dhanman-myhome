@@ -5,12 +5,12 @@ namespace Dhanman.MyHome.Application.Features.VisitorLogs.Events;
 public sealed class VisitorLogCreatedEvent : IEvent
 {
     #region Properties
-    public int VisitorId { get; }
+    public int VisitorLogId { get; }
 
     #endregion
 
     #region Constructors
-    public VisitorLogCreatedEvent(int visitorId) => VisitorId = visitorId;
+    public VisitorLogCreatedEvent(int visitorLogId) => VisitorLogId = visitorLogId;
 
     #endregion
 

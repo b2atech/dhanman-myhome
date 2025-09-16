@@ -78,22 +78,17 @@ public class VisitorsController : ApiController
 
     [Authorize(Policy = "DynamicPermissionPolicy")]
     [RequiresPermissions("Dhanman.MyHome.Basic.Write")]
-    [HttpPost(ApiRoutes.Visitors.CreateVisitorPending)]
+    [HttpPost(ApiRoutes.Visitors.CreateVisitorWithPendingApproval)]
     [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> CreateVisitorPending([FromBody] CreateVisitorPendingRequest? request) =>
+    public async Task<IActionResult> CreateVisitorPending([FromBody] CreateVisitorWithPendingApprovalRequest? request) =>
             await Result.Create(request, Errors.General.BadRequest)
-            .Map(value => new CreateVisitorPendingCommand(
+            .Map(value => new CreateVisitorWithPendingApprovalCommand(
                 value.ApartmentId,
                 value.FirstName,
                 value.LastName,
-                value.Email,
-                value.VisitingFrom,
                 value.ContactNumber,
                 value.VisitorTypeId,
-                value.VehicleNumber,
-                value.IdentityTypeId,
-                value.IdentityNumber,
                 value.CreatedBy,
                 value.UnitIds
                 ))

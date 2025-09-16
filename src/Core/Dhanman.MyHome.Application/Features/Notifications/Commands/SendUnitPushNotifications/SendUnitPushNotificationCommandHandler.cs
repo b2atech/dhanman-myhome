@@ -2,12 +2,16 @@
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Application.Abstractions;
 using Dhanman.MyHome.Application.Abstractions.Data;
+using Dhanman.MyHome.Application.Contracts.Visitors;
 using Dhanman.MyHome.Application.Enums;
-using Dhanman.MyHome.Domain.Entities.Residents;
-using Dhanman.MyHome.Domain.Entities.ResidentUnits;
 using Dhanman.MyHome.Domain.Entities.UserFcmTokens;
+using Dhanman.MyHome.Domain.Entities.Visitors;
 using Dhanman.Shared.Contracts.Abstractions.Messaging;
+using Dhanman.Shared.Contracts.Common;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
+using NpgsqlTypes;
+using System.Linq;
 
 namespace Dhanman.MyHome.Application.Features.Notifications.Commands.SendUnitPushNotifications;
 
@@ -25,20 +29,41 @@ public class SendUnitPushNotificationCommandHandler
 
     public async Task<Result<object>> Handle(SendRequestApprovalActionCommand request, CancellationToken cancellationToken)
     {
-        // Step 1: Get active resident IDs for this unit
-        var userIds = await (
-            from ru in _dbContext.SetInt<ResidentUnit>()
-            join r in _dbContext.SetInt<Resident>() on ru.ResidentId equals r.Id
-            where ru.UnitId == request.UnitId
-                  && !ru.IsDeleted
-                  && !r.IsDeleted
-            select r.UserId
-        ).ToListAsync(cancellationToken);
+
+        const string sqlFunction = "SELECT * FROM public.GetUserIdsByVisitorLogId(@p_VisitorLogId)";
+
+        var visitorData = await _dbContext.SetInt<VisitorUserIdsDto>()
+         //   .FromSqlRaw("SELECT * FROM public.GetUserIdsByVisitorLogId({visitorLogIdParam})" )
+            .FromSqlRaw(sqlFunction, new NpgsqlParameter("p_VisitorLogId", request.VisitorLogId))
+             .AsNoTracking()
+                    .Select(e => new VisitorUserIdsResponse(
+                        e.Id,
+                        e.UserIds,
+                        e.VisitorId,
+                        e.FirstName,
+                        e.LastName
+                        ))
+                    .ToListAsync(cancellationToken);
+
+        if (visitorData == null || visitorData.Count == 0)
+        {
+            return Result.Failure<EntityCreatedResponse>(
+                new Error("User.NotFound", $"No active users found for visitor log {request.VisitorLogId}")
+            );
+        }
+
+        // Fix for CS1503: Ensure `userIds` is a collection of `Guid` and not a collection of collections.
+        var userIds = visitorData.SelectMany(x => x.UserIds).ToList();
+
+        var visitorName = string.Join(" ", visitorData.Select(x => x.FirstName).ToList(), visitorData.Select(x => x.LastName).ToList());
+
+        var visitorid = visitorData.Select(x => x.VisitorId).ToList();
+
 
         if (!userIds.Any())
         {
             return Result.Failure<object>(
-                new Error("User.NotFound", $"No active users found for unit {request.UnitId}")
+                new Error("User.NotFound", $"No active users found for unit {request.VisitorLogId}")
             );
         }
 
@@ -52,7 +77,7 @@ public class SendUnitPushNotificationCommandHandler
         if (!tokens.Any())
         {
             return Result.Failure<object>(
-                new Error("UserFcmToken.NotFound", $"No valid FCM tokens found for unit {request.UnitId}")
+                new Error("UserFcmToken.NotFound", $"No valid FCM tokens found for unit {request.VisitorLogId}")
             );
         }
 
@@ -61,8 +86,8 @@ public class SendUnitPushNotificationCommandHandler
             tokens,                               // ✅ list of tokens
             FirebaseMessageType.GateApprovalRequest,    // ✅ use your enum
             "Guest Approval Needed",              // title
-            $"Guest {request.GuestName} is at the gate.",  // body
-            new { GuestId = request.GuestId }     // ✅ payload as object
+            $"Guest {visitorName} is at the gate.",  // body
+            new { GuestId = request.VisitorLogId }     // ✅ payload as object
         );
 
         return Result.Success<object>(new { SentCount = tokens.Count });

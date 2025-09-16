@@ -47,23 +47,21 @@ public class ComminicationController : ApiController
     public async Task<IActionResult> RequestApprovalAction([FromBody] RequestApprovalActionRequest request) =>
          await Result.Create(request, Errors.General.BadRequest)
         .Map(value => new SendRequestApprovalActionCommand(
-               value.UnitId ,
-               value.GuestName,
-               value.GuestId))
+               value.VisitorLogId ))
            .Bind(command => Mediator.Send(command))
           .Match(Ok, BadRequest);
 
-    [HttpPost(ApiRoutes.PushNotification.CreateUnitPushNotification)]
-    [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> SendUnitPushNotification([FromRoute] int unitId, [FromBody] UnitPushNotificationRequest request) =>
-    await Result.Create(request, Errors.General.BadRequest)
-        .Map(value => new SendRequestApprovalActionCommand(
-            unitId,
-            value.GuestName,
-            value.GuestId))
-        .Bind(command => Mediator.Send(command))
-        .Match(Ok, BadRequest);
+    //[HttpPost(ApiRoutes.PushNotification.CreateUnitPushNotification)]
+    //[ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
+    //[ProducesResponseType(StatusCodes.Status404NotFound)]
+    //public async Task<IActionResult> SendUnitPushNotification([FromRoute] int unitId, [FromBody] VisitorLogIdRequest request) =>
+    //await Result.Create(request, Errors.General.BadRequest)
+    //    .Map(value => new SendRequestApprovalActionCommand(
+    //        unitId,
+    //        value.GuestName,
+    //        value.GuestId))
+    //    .Bind(command => Mediator.Send(command))
+    //    .Match(Ok, BadRequest);
 
 
     [Authorize(Policy = "DynamicPermissionPolicy")]

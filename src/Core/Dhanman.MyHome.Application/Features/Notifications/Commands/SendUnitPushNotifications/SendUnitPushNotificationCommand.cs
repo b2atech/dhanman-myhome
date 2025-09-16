@@ -5,14 +5,10 @@ namespace Dhanman.MyHome.Application.Features.Notifications.Commands.SendUnitPus
 
 public class SendRequestApprovalActionCommand : ICommand<Result<object>>
 {
-    public int UnitId { get; }
-    public string GuestName { get; }
-    public int GuestId { get; }
+    public int VisitorLogId { get; }
 
-    public SendRequestApprovalActionCommand(int unitId, string guestName, int guestId)
+    public SendRequestApprovalActionCommand( int visitorLogId)
     {
-        UnitId = unitId;
-        GuestName = guestName;
-        GuestId = guestId;
+        VisitorLogId = visitorLogId;
     }
 }

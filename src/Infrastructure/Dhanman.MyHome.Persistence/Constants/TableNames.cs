@@ -197,5 +197,7 @@ internal static class TableNames
 
     internal const string VisitorByContactDto = "visitor_by_contact_dto";
 
+    internal const string VisitorUserIdsDto = "visitor_user_ids_dto";
+
 }
 
