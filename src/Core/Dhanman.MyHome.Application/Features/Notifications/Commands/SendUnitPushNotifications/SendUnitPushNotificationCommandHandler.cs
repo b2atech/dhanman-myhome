@@ -10,8 +10,6 @@ using Dhanman.Shared.Contracts.Abstractions.Messaging;
 using Dhanman.Shared.Contracts.Common;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
-using NpgsqlTypes;
-using System.Linq;
 
 namespace Dhanman.MyHome.Application.Features.Notifications.Commands.SendUnitPushNotifications;
 
@@ -33,7 +31,6 @@ public class SendUnitPushNotificationCommandHandler
         const string sqlFunction = "SELECT * FROM public.get_user_ids_by_visitor_log_id(@p_VisitorLogId)";
 
         var visitorData = await _dbContext.SetInt<VisitorUserIdsDto>()
-         //   .FromSqlRaw("SELECT * FROM public.GetUserIdsByVisitorLogId({visitorLogIdParam})" )
             .FromSqlRaw(sqlFunction, new NpgsqlParameter("p_VisitorLogId", request.VisitorLogId))
              .AsNoTracking()
                     .Select(e => new VisitorUserIdsResponse(
@@ -52,10 +49,9 @@ public class SendUnitPushNotificationCommandHandler
             );
         }
 
-        // Fix for CS1503: Ensure `userIds` is a collection of `Guid` and not a collection of collections.
         var userIds = visitorData.SelectMany(x => x.UserIds).ToList();
 
-        var visitorName = string.Join(" ", visitorData.Select(x => x.FirstName).ToList(), visitorData.Select(x => x.LastName).ToList());
+        var visitorName = $"{visitorData.First().FirstName} {visitorData.First().LastName}";
 
         var visitorid = visitorData.Select(x => x.VisitorId).ToList();
 
@@ -83,11 +79,11 @@ public class SendUnitPushNotificationCommandHandler
 
         // Step 3: Send notification to all tokens at once
         await _fcm.SendNotificationAsync(
-            tokens,                               // ✅ list of tokens
-            FirebaseMessageType.GateApprovalRequest,    // ✅ use your enum
-            "Guest Approval Needed",              // title
-            $"Guest {visitorName} is at the gate.",  // body
-            new { GuestId = request.VisitorLogId }     // ✅ payload as object
+            tokens,                               
+            FirebaseMessageType.GateApprovalRequest,
+            "Guest Approval Needed",              
+            $"Guest {visitorName} is at the gate.",
+            new { GuestId = request.VisitorLogId } 
         );
 
         return Result.Success<object>(new { SentCount = tokens.Count });
