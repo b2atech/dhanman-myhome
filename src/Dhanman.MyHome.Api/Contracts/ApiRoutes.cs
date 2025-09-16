@@ -200,6 +200,9 @@ public static class ApiRoutes
         public const string GetVisitorApprovalInfoById = apiVersion + "visitor-approval/{visitorApprovalId:int}";
 
         public const string UpdateVisitorApproval = apiVersion + "visitor-approval";
+
+        public const string GetVisitorsByContactNumber = apiVersion + "apartments/{apartmentId:guid}/contacts/{contactNumber:string}/by-contact";
+
     }
 
     public static class Events
