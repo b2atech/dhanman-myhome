@@ -4,7 +4,7 @@ using Dhanman.Shared.Contracts.Abstractions.Messaging;
 
 namespace Dhanman.MyHome.Application.Features.Visitors.Queries;
 
-public sealed class GetVisitorByContactQuery : IQuery<Result<VisitorByContactListResponse?>>
+public sealed class GetVisitorByContactQuery : IQuery<Result<VisitorByContactListResponse>>
 {
     public Guid ApartmentId { get; }
     public string ContactNumber { get; }

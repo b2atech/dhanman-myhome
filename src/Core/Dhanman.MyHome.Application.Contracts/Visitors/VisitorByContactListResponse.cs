@@ -3,7 +3,6 @@
     public class VisitorByContactListResponse
     {
 
-
         #region Properties 
         public string Cursor { get; }
         public IReadOnlyCollection<VisitorByContactResponse> Items { get; }

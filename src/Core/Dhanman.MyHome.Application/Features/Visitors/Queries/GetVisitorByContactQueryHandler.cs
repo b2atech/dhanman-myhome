@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Dhanman.MyHome.Application.Features.Visitors.Queries
 {
     public sealed class GetVisitorByContactQueryHandler
-     : IQueryHandler<GetVisitorByContactQuery, Result<VisitorByContactListResponse?>>
+     : IQueryHandler<GetVisitorByContactQuery, Result<VisitorByContactListResponse>>
     {
         private readonly IApplicationDbContext _dbContext;
 
@@ -19,35 +19,31 @@ namespace Dhanman.MyHome.Application.Features.Visitors.Queries
             _dbContext = dbContext;
         }
 
-        public async Task<Result<VisitorByContactListResponse?>> Handle(GetVisitorByContactQuery request, CancellationToken cancellationToken)
+        public async Task<Result<VisitorByContactListResponse>> Handle(GetVisitorByContactQuery request, CancellationToken cancellationToken)
         {
-            const string sql = "SELECT * FROM public.get_visitor_by_contact(@p_apartment_id, @p_contact_number)";
+            return await Result.Success(request)
+              .Ensure(query => query != null, Errors.General.EntityNotFound)
+              .Bind(async query =>
+              {
+                  var visitorsResponse = await _dbContext.SetInt<VisitorByContactDto>()
+                      .FromSqlInterpolated($"SELECT * FROM public.get_visitor_by_contact({request.ApartmentId}, {request.ContactNumber})")
+                      .AsNoTracking()
+                      .Select(e => new VisitorByContactResponse(
+                            e.Id,
+                            e.FirstName,
+                            e.LastName,
+                            e.Email,
+                            e.ContactNumber,
+                            e.VisitorTypeId,
+                            e.VehicleNumber,
+                            e.IdentityTypeId,
+                            e.IdentityNumber))
+                    .ToListAsync(cancellationToken);
 
-            var parameters = new[]
-            {
-            new NpgsqlParameter("p_apartment_id", request.ApartmentId),
-            new NpgsqlParameter("p_contact_number", request.ContactNumber)
-        };
+                  var visitorListResponse = new VisitorByContactListResponse(visitorsResponse);
 
-            var dto = await _dbContext.SetInt<VisitorByContactDto>()
-                .FromSqlRaw(sql, parameters)
-                .AsNoTracking()
-                .Select(e => new VisitorByContactResponse(
-                        e.Id,
-                        e.FirstName,
-                        e.LastName,
-                        e.Email,
-                        e.ContactNumber,
-                        e.VisitorTypeId,
-                        e.VehicleNumber,
-                        e.IdentityTypeId,
-                        e.IdentityNumber))
-                .ToListAsync(cancellationToken);
-
-            
-
-            var visitorListResponse = new VisitorByContactListResponse(dto);
-            return visitorListResponse;
+                  return visitorListResponse;
+              });
         }
     }
 }
