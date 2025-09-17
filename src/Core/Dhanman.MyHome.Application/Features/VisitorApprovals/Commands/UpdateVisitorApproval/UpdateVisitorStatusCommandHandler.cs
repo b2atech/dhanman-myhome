@@ -83,14 +83,20 @@ public sealed class UpdateVisitorStatusCommandHandler(IApplicationDbContext _dbC
         var title = request.VisitorStatusId == 2 ? $"Visitor Approved: {visitorName}" : $"Visitor Rejected: {visitorName}";
         var body = $"An approval action was taken for visitor {visitorName}.";
         var fireBaseMsgType = request.VisitorStatusId == 2 ? FirebaseMessageType.GateApproved : FirebaseMessageType.GateRejected;
+      
+        var data = new Dictionary<string, string>
+        {
+            { "VisitorLogId", request.VisitorLogId.ToString() },
+            { "VisitorName", visitorName },
+            { "UnitId", request.UnitId.ToString() }
+        };
 
         await _fcm.SendNotificationAsync(
             fcmTokens,
             fireBaseMsgType,
             title,
-            body
-            //,
-          //  new { VisitorLogId = request.VisitorLogId, UnitId = request.UnitId }
+            body,
+            data
             );
     }
     #endregion
