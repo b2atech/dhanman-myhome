@@ -88,8 +88,10 @@ public sealed class UpdateVisitorStatusCommandHandler(IApplicationDbContext _dbC
             fcmTokens,
             fireBaseMsgType,
             title,
-            body,
-            new { VisitorLogId = request.VisitorLogId, UnitId = request.UnitId });
+            body
+            //,
+          //  new { VisitorLogId = request.VisitorLogId, UnitId = request.UnitId }
+            );
     }
     #endregion
 }
