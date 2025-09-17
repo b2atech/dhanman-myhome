@@ -177,10 +177,6 @@ public static class ApiRoutes
 
         public const string CheckOutVisitorLog = apiVersion + "check-out";
 
-        public const string ApproveVisitorLog = apiVersion + "approve";
-
-        public const string RejectVisitorLog = apiVersion + "reject";
-
         public const string GetAllVisitorLogs = apiVersion + "apartments/{apartmentId:guid}/dates/{date:dateTime}/visitorLogs";
 
         public const string GetSingleVisitorLogs = apiVersion + "apartments/{apartmentId:guid}/visitors/{visitorId:int}/visitorTypeIds/{visitorTypeId:int}/visitorLogs";
@@ -193,15 +189,15 @@ public static class ApiRoutes
 
         public const string UpdateVisitor = apiVersion + "visitor";
 
-        public const string CreateVisitorApproval = apiVersion + "visitor-approval";
-
         public const string CreateVisitorWithPendingApproval = apiVersion + "visitor-with-pending-approval";
 
         public const string GetVisitorApprovalInfoById = apiVersion + "visitor-approval/{visitorApprovalId:int}";
 
-        public const string UpdateVisitorApproval = apiVersion + "visitor-approval";
+        public const string GetVisitorsByEmailOrContactNumber = apiVersion + "apartments/{apartmentId:guid}/visitors";
 
-        public const string GetVisitorsByContactNumber = apiVersion + "apartments/{apartmentId:guid}/by-contact";
+        public const string VisitorsApproved = apiVersion + "approve";
+
+        public const string VisitorsReject = apiVersion + "reject";
 
 
     }
