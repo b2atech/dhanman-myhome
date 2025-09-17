@@ -189,7 +189,7 @@ public static class ApiRoutes
 
         public const string UpdateVisitor = apiVersion + "visitor";
 
-        public const string CreateVisitorWithPendingApproval = apiVersion + "visitor-with-pending-approval";
+        public const string CreateVisitorWithPendingApproval = apiVersion + "visitors";
 
         public const string GetVisitorApprovalInfoById = apiVersion + "visitor-approval/{visitorApprovalId:int}";
 
@@ -404,7 +404,7 @@ public static class ApiRoutes
     {
         public const string CreatePushNotification = apiVersion + "guest-notification";
 
-        public const string RequestApprovalAction = apiVersion + "request-approval-action";
+        public const string RequestApprovalAction = apiVersion + "visitor-approvals";
 
         public const string CreateUnitPushNotification = apiVersion + "units/{unitId:int}/guest-requests";
 
