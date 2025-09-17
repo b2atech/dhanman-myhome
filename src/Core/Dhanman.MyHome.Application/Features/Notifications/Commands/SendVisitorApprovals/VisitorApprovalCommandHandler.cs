@@ -10,21 +10,21 @@ using Dhanman.Shared.Contracts.Common;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
-namespace Dhanman.MyHome.Application.Features.Notifications.Commands.SendUnitPushNotifications;
+namespace Dhanman.MyHome.Application.Features.Notifications.Commands.SendVisitorApprovals;
 
-public class SendUnitPushNotificationCommandHandler
-    : ICommandHandler<SendRequestApprovalActionCommand, Result<object>>
+public class VisitorApprovalCommandHandler
+    : ICommandHandler<VisitorApprovalCommand, Result<object>>
 {
     private readonly IApplicationDbContext _dbContext;
     private readonly IFirebaseService _fcm;
 
-    public SendUnitPushNotificationCommandHandler(IApplicationDbContext dbContext, IFirebaseService fcm)
+    public VisitorApprovalCommandHandler(IApplicationDbContext dbContext, IFirebaseService fcm)
     {
         _dbContext = dbContext;
         _fcm = fcm;
     }
 
-    public async Task<Result<object>> Handle(SendRequestApprovalActionCommand request, CancellationToken cancellationToken)
+    public async Task<Result<object>> Handle(VisitorApprovalCommand request, CancellationToken cancellationToken)
     {
 
         const string sqlFunction = "SELECT * FROM public.get_resident_fcm_tokens_by_visitor_log_id(@p_VisitorLogId)";

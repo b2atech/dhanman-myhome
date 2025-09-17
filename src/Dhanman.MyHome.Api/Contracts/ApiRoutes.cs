@@ -199,6 +199,7 @@ public static class ApiRoutes
 
         public const string VisitorsReject = apiVersion + "reject";
 
+        public const string VisitorApprovals = apiVersion + "visitor-approvals";
 
     }
 
@@ -403,8 +404,6 @@ public static class ApiRoutes
     public static class PushNotification
     {
         public const string CreatePushNotification = apiVersion + "guest-notification";
-
-        public const string RequestApprovalAction = apiVersion + "visitor-approvals";
 
         public const string CreateUnitPushNotification = apiVersion + "units/{unitId:int}/guest-requests";
 

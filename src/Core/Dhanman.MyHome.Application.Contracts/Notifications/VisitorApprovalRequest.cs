@@ -1,13 +1,13 @@
 ﻿namespace Dhanman.MyHome.Application.Contracts.Notifications;
 
-public class RequestApprovalActionRequest
+public class VisitorApprovalRequest
 {
     #region Properties
     public int VisitorLogId { get; set; }
     #endregion
 
     #region Constructors
-    public RequestApprovalActionRequest(int visitorLogId)
+    public VisitorApprovalRequest(int visitorLogId)
     {
         VisitorLogId = visitorLogId;
     }

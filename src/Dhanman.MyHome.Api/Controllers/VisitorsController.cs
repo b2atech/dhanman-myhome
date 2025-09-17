@@ -275,14 +275,13 @@ public class VisitorsController : ApiController
             return BadRequest(result.Error);
         }
     }
-  
-   
+
+
     #endregion
 
-
+    #region Visitor Types
     [Authorize(Policy = "DynamicPermissionPolicy")]
     [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
-    #region VisitorTypes Identity
     [HttpGet(ApiRoutes.Visitors.GetVisitorTypes)]
     [ProducesResponseType(typeof(VisitorTypeListResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -290,7 +289,9 @@ public class VisitorsController : ApiController
     await Result.Success(new GetVisitorTypesQuery())
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
+    #endregion
 
+    #region Visitor Identity Types
     [Authorize(Policy = "DynamicPermissionPolicy")]
     [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.Visitors.GetVisitorIdentityTypes)]
@@ -302,7 +303,7 @@ public class VisitorsController : ApiController
     .Match(Ok, NotFound);
     #endregion
 
-
+    #region Visitor Approval Info
     [Authorize(Policy = "DynamicPermissionPolicy")]
     [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.Visitors.GetVisitorApprovalInfoById)]
@@ -312,5 +313,5 @@ public class VisitorsController : ApiController
     await Result.Success(new GetVisitorApprovalInfoByIdQuery(visitorApprovalId))
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
-
+    #endregion
 }
