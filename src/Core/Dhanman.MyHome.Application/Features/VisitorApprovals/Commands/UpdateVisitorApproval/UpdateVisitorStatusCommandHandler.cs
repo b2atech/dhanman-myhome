@@ -3,12 +3,12 @@ using Dhanman.MyHome.Application.Abstractions;
 using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Contracts.VisitorApprovals;
 using Dhanman.MyHome.Application.Enums;
-using Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.UpdateVisitorApproval;
 using Dhanman.MyHome.Domain;
 using Dhanman.MyHome.Domain.Entities.VisitorApprovals;
 using Dhanman.Shared.Contracts.Abstractions.Messaging;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
+namespace Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.UpdateVisitorApproval;
 
 public sealed class UpdateVisitorStatusCommandHandler(IApplicationDbContext _dbContext, IFirebaseService _fcm)
     : ICommandHandler<UpdateVisitorStatusCommand, Result<UpdateVisitorStatusResponse>>
@@ -21,8 +21,6 @@ public sealed class UpdateVisitorStatusCommandHandler(IApplicationDbContext _dbC
         {
             return Result.Failure<UpdateVisitorStatusResponse>(updateResult.Error);
         }
-
-        var responseData = updateResult.Value;
 
         _ = Task.Run(() => SendVisitorStausNotificationsAsync(request, cancellationToken), cancellationToken);
 

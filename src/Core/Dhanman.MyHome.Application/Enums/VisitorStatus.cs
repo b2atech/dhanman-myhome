@@ -1,6 +1,6 @@
 ﻿namespace Dhanman.MyHome.Application.Enums;
 
-public class VisitorStatus
+public static class VisitorStatus
 {
     public const int PENDING = 1;
     public const int APPROVED = 2;
