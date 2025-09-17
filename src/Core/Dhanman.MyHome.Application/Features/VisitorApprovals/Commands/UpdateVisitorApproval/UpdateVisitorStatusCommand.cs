@@ -4,14 +4,14 @@ using Dhanman.Shared.Contracts.Abstractions.Messaging;
 
 namespace Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.UpdateVisitorApproval;
 
-public sealed class UpdateVisitorApprovalActionCommand : ICommand<Result<ApprovalActionResponse>>
+public sealed class UpdateVisitorStatusCommand : ICommand<Result<UpdateVisitorStatusResponse>>
 {
     public int VisitorLogId { get; }
     public int UnitId { get; }
     public int VisitorStatusId { get; } 
     public Guid ModifiedBy { get; }
 
-    public UpdateVisitorApprovalActionCommand(
+    public UpdateVisitorStatusCommand(
         int visitorLogId,
         int unitId,
         int visitorStatusId,
