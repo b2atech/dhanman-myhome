@@ -199,5 +199,10 @@ internal static class TableNames
 
     internal const string VisitorUserIdsDto = "visitor_user_ids_dto";
 
+    internal const string VisitorNotificationDataDto = "visitor_notification_data_dto";
+
+    internal const string UpdateVisitorStatusDto = "update_visitor_status_dto";
+
+
 }
 
