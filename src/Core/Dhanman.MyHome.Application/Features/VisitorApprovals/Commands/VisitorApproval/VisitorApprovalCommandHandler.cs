@@ -27,7 +27,7 @@ public class VisitorApprovalCommandHandler
     public async Task<Result<object>> Handle(VisitorApprovalCommand request, CancellationToken cancellationToken)
     {
 
-        const string sqlFunction = "SELECT * FROM public.get_resident_fcm_tokens_by_visitor_log_id(@p_VisitorLogId)";
+        const string sqlFunction = "SELECT * FROM public.visitor_approval_fcm_tokens_by_visitor_log_id(@p_VisitorLogId)";
 
         var visitorData = await _dbContext.SetInt<VisitorUserIdsDto>()
             .FromSqlRaw(sqlFunction, new NpgsqlParameter("p_VisitorLogId", request.VisitorLogId))
