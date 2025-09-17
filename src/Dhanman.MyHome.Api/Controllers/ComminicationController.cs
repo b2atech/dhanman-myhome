@@ -5,7 +5,7 @@ using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Notifications;
 using Dhanman.MyHome.Application.Features.Notifications.Commands.SendPushNotifications;
-using Dhanman.MyHome.Application.Features.Notifications.Commands.SendUnitPushNotifications;
+using Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.VisitorApproval;
 using Dhanman.MyHome.Application.Features.ResidentTokens.Commands.SaveTokens;
 using Dhanman.MyHome.Application.Features.UserFcmTokens;
 using Dhanman.MyHome.Domain;
@@ -41,12 +41,12 @@ public class ComminicationController : ApiController
 
     [Authorize(Policy = "DynamicPermissionPolicy")]
     [RequiresPermissions("Dhanman.MyHome.Write")]
-    [HttpPost(ApiRoutes.PushNotification.RequestApprovalAction)]
+    [HttpPost(ApiRoutes.Visitors.VisitorApprovals)]
     [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> RequestApprovalAction([FromBody] RequestApprovalActionRequest request) =>
+    public async Task<IActionResult> RequestVisitorApprovals([FromBody] VisitorApprovalRequest request) =>
          await Result.Create(request, Errors.General.BadRequest)
-        .Map(value => new SendRequestApprovalActionCommand(
+        .Map(value => new VisitorApprovalCommand(
                value.VisitorLogId ))
            .Bind(command => Mediator.Send(command))
           .Match(Ok, BadRequest);
