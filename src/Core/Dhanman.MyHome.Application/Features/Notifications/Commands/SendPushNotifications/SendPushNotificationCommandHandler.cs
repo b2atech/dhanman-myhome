@@ -50,7 +50,13 @@ public class SendPushNotificationCommandHandler : ICommandHandler<SendPushNotifi
             FirebaseMessageType.GateApprovalRequest,
             "Guest Approval Needed",
             "You have a guest request from the gate.",
-            payload
+            new Dictionary<string, string>
+            {
+                { "AppData.GuestId", string.Join(",", request.GuestId) },
+                { "AppData.VisitorName", request.GuestName },
+                { "AppData.Type", FirebaseMessageType.GateApprovalRequest.ToString() },
+            }
+
         );
 
         //if (residentToken == null || string.IsNullOrEmpty(residentToken.FCMToken))

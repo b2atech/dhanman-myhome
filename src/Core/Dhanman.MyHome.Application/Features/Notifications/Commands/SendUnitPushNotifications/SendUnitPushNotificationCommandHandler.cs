@@ -4,7 +4,6 @@ using Dhanman.MyHome.Application.Abstractions;
 using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Contracts.Visitors;
 using Dhanman.MyHome.Application.Enums;
-using Dhanman.MyHome.Domain.Entities.UserFcmTokens;
 using Dhanman.MyHome.Domain.Entities.Visitors;
 using Dhanman.Shared.Contracts.Abstractions.Messaging;
 using Dhanman.Shared.Contracts.Common;
@@ -28,7 +27,7 @@ public class SendUnitPushNotificationCommandHandler
     public async Task<Result<object>> Handle(SendRequestApprovalActionCommand request, CancellationToken cancellationToken)
     {
 
-        const string sqlFunction = "SELECT * FROM public.get_user_ids_by_visitor_log_id(@p_VisitorLogId)";
+        const string sqlFunction = "SELECT * FROM public.get_resident_fcm_tokens_by_visitor_log_id(@p_VisitorLogId)";
 
         var visitorData = await _dbContext.SetInt<VisitorUserIdsDto>()
             .FromSqlRaw(sqlFunction, new NpgsqlParameter("p_VisitorLogId", request.VisitorLogId))
@@ -38,7 +37,9 @@ public class SendUnitPushNotificationCommandHandler
                         e.UserIds,
                         e.VisitorId,
                         e.FirstName,
-                        e.LastName
+                        e.LastName,
+                        e.FcmTokens,
+                        e.DeviceIds
                         ))
                     .ToListAsync(cancellationToken);
 
@@ -49,26 +50,19 @@ public class SendUnitPushNotificationCommandHandler
             );
         }
 
-        var userIds = visitorData.SelectMany(x => x.UserIds).ToList();
-
         var visitorName = $"{visitorData.First().FirstName} {visitorData.First().LastName}";
-
         var visitorId = visitorData.Select(x => x.VisitorId).ToList();
 
+        var userIds = visitorData.SelectMany(x => x.UserIds).ToList();
 
-        if (!userIds.Any())
+        if (userIds.Count == 0)
         {
             return Result.Failure<object>(
                 new Error("User.NotFound", $"No active users found for unit {request.VisitorLogId}")
             );
         }
 
-        // Step 2: Get their tokens
-        var tokens = await _dbContext.SetInt<UserFcmToken>()
-            .Where(x => userIds.Contains(x.UserId) && !string.IsNullOrWhiteSpace(x.FCMToken))
-            .Select(x => x.FCMToken)
-            .Distinct()
-            .ToListAsync(cancellationToken);
+        var tokens = visitorData.SelectMany(x => x.FcmTokens).ToList(); // Step 2: Get their tokens
 
         if (!tokens.Any())
         {
@@ -79,14 +73,21 @@ public class SendUnitPushNotificationCommandHandler
 
         // Step 3: Send notification to all tokens at once
         await _fcm.SendNotificationAsync(
-            tokens,                               
+            tokens,
             FirebaseMessageType.GateApprovalRequest,
-            "Guest Approval Needed",              
+            "Guest Approval Needed",
             $"Guest {visitorName} is at the gate.",
-            new { GuestId = visitorId } 
+            new Dictionary<string, string>
+            {
+                { "AppData.GuestId", string.Join(",", visitorId) },
+                { "AppData.VisitorName", visitorName },
+                { "AppData.VisitorLogId", request.VisitorLogId.ToString() },
+                { "AppData.Type", FirebaseMessageType.GateApprovalRequest.ToString() },
+                { "AppData.Version", "1.0" }
+            }
         );
 
         return Result.Success<object>(new { SentCount = tokens.Count });
-        
+
     }
 }
