@@ -7,7 +7,6 @@ using Dhanman.MyHome.Application.Contracts.VisitorApprovals;
 using Dhanman.MyHome.Application.Contracts.VisitorLogs;
 using Dhanman.MyHome.Application.Contracts.Visitors;
 using Dhanman.MyHome.Application.Enums;
-using Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.CreateVisitorApproval;
 using Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.UpdateVisitorApproval;
 using Dhanman.MyHome.Application.Features.VisitorApprovals.Queries;
 using Dhanman.MyHome.Application.Features.VisitorLogs.Commands.CreateVisitorLog;
@@ -305,31 +304,6 @@ public class VisitorsController : ApiController
 
 
     [Authorize(Policy = "DynamicPermissionPolicy")]
-    [RequiresPermissions("Dhanman.MyHome.Visitor.Approve")]
-    #region VisitorApprovals
-    [HttpPost(ApiRoutes.Visitors.CreateVisitorApproval)]
-    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> CreateVisitorApproval([FromBody] CreateVisitorApprovalRequest? request) =>
-            await Result.Create(request, Errors.General.BadRequest)
-            .Map(value => new CreateVisitorApprovalCommand(
-                value.ApartmentId,
-                value.FirstName,
-                value.ContactNumber,
-                value.VisitorTypeId,
-                value.VisitTypeId,
-                value.StartDate,
-                value.EndDate,
-                value.EntryTime,
-                value.ExitTime,
-                value.VehicleNumber,
-                value.CompanyName,
-                value.CreatedBy
-                ))
-             .Bind(command => Mediator.Send(command))
-                   .Match(Ok, BadRequest);
-
-    [Authorize(Policy = "DynamicPermissionPolicy")]
     [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
     [HttpGet(ApiRoutes.Visitors.GetVisitorApprovalInfoById)]
     [ProducesResponseType(typeof(VisitorApprovalsInfoByIdResponse), StatusCodes.Status200OK)]
@@ -339,34 +313,4 @@ public class VisitorsController : ApiController
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
 
-    [Authorize(Policy = "DynamicPermissionPolicy")]
-    [RequiresPermissions("Dhanman.MyHome.Visitor.Approve")]
-    [HttpPut(ApiRoutes.Visitors.UpdateVisitorApproval)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> UpdateVisitorApproval([FromBody] UpadateVisitorApproveRequest? request)
-    {
-        var result = await Result.Create(request, Errors.General.BadRequest)
-            .Map(value => new UpdateVisitorApproveCommand(
-                 value.Id,
-                 value.VisitTypeId,
-                 value.StartDate,
-                 value.EndDate,
-                 value.EntryTime,
-                 value.ExitTime,
-                 value.VehicleNumber,
-                 value.CompanyName,
-                 value.CreatedBy
-                ))
-            .Bind(command => Mediator.Send(command));
-
-        if (result.IsSuccess)
-        {
-            return NoContent();
-        }
-        else
-        {
-            return BadRequest(result.Error);
-        }
-    }
-    #endregion
 }
