@@ -5,7 +5,7 @@ using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.Notifications;
 using Dhanman.MyHome.Application.Features.Notifications.Commands.SendPushNotifications;
-using Dhanman.MyHome.Application.Features.Notifications.Commands.SendVisitorApprovals;
+using Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.VisitorApproval;
 using Dhanman.MyHome.Application.Features.ResidentTokens.Commands.SaveTokens;
 using Dhanman.MyHome.Application.Features.UserFcmTokens;
 using Dhanman.MyHome.Domain;

@@ -10,7 +10,7 @@ using Dhanman.Shared.Contracts.Common;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
-namespace Dhanman.MyHome.Application.Features.Notifications.Commands.SendVisitorApprovals;
+namespace Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.VisitorApproval;
 
 public class VisitorApprovalCommandHandler
     : ICommandHandler<VisitorApprovalCommand, Result<object>>
