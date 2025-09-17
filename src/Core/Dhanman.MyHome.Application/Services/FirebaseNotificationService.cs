@@ -31,7 +31,8 @@ public class FirebaseNotificationService : IFirebaseService
         FirebaseMessageType type,
         string title,
         string body,
-        object payload = null,
+    //    object payload = null,
+        Dictionary<string, string>? dictionaryData = null,
         string version = "1.0"
     )
     {
@@ -39,24 +40,14 @@ public class FirebaseNotificationService : IFirebaseService
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
         // Envelope with type, version, and payload
-        var messageEnvelope = new Dictionary<string, object>
+        var messageEnvelope = new Dictionary<string, string>(dictionaryData ?? new())
         {
             ["type"] = type.ToString(),
             ["version"] = version,
             ["title"] = title,
             ["body"] = body,
-            //      ["payload"] = payload ?? new { }
+            ["payload"] = dictionaryData != null ? JsonSerializer.Serialize(dictionaryData) : "{}"
         };
-
-        // Flatten payload object -> string values
-        if (payload != null)
-        {
-            foreach (var prop in payload.GetType().GetProperties())
-            {
-                var value = prop.GetValue(payload)?.ToString() ?? string.Empty;
-                messageEnvelope[prop.Name] = value;
-            }
-        }
 
         var errors = new List<string>();
 

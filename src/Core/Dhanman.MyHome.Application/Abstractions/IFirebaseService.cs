@@ -17,7 +17,8 @@ public interface IFirebaseService
         FirebaseMessageType type,
         string title,
         string body,
-        object payload = null,
+        //       object payload = null,
+        Dictionary<string, string>? data = null,
         string version = "1.0"
     );
 }

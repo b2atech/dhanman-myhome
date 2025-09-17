@@ -19,12 +19,20 @@ public class VisitorUserIdsResponse
     [Column("last_name")]
     public string? LastName { get; set; }
 
-    public VisitorUserIdsResponse(int id, Guid[] userIds, int visitorId, string firstName, string? lastName)
+    [Column("fcm_tokens")]
+    public string[] FcmTokens { get; set; } = Array.Empty<string>();
+
+    [Column("device_ids")]
+    public string[] DeviceIds { get; set; } = Array.Empty<string>();
+
+    public VisitorUserIdsResponse(int id, Guid[] userIds, int visitorId, string firstName, string? lastName, string[] fcmTokens, string[] deviceIds)
     {
         Id = id;
         UserIds = userIds;
         VisitorId = visitorId;
         FirstName = firstName;
         LastName = lastName;
+        FcmTokens = fcmTokens;
+        DeviceIds = deviceIds;
     }
 }
