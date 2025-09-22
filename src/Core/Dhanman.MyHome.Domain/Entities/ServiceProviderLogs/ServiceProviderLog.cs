@@ -32,9 +32,8 @@ public class ServiceProviderLog : EntityInt, IAuditableEntity, ISoftDeletableEnt
     #endregion
 
     #region Constructor
-    public ServiceProviderLog(int id, int serviceProviderId, int visitingUnitId, int? visitPurposeId, string visitingFrom, int currentStatusId, DateTime entryTime, DateTime? exitTime)
+    public ServiceProviderLog(int serviceProviderId, int visitingUnitId, int? visitPurposeId, string visitingFrom, int currentStatusId, DateTime entryTime, DateTime? exitTime)
     {
-        Id = id;
         ServiceProviderId = serviceProviderId;
         VisitingUnitId = visitingUnitId;
         VisitPurposeId = visitPurposeId;

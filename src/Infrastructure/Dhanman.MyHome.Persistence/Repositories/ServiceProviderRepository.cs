@@ -20,6 +20,13 @@ internal sealed class ServiceProviderRepository : IServiceProviderRepository
     #region Methods
     public DbSet<ServiceProvider> ServiceProvider => _dbContext.SetInt<ServiceProvider>();
     public async Task<ServiceProvider?> GetBydIdIntAsync(int id) => await _dbContext.GetBydIdIntAsync<ServiceProvider>(id);
+    
+    public async Task<ServiceProvider?> GetByApartmentIdAndPinAsync(Guid apartmentId, string pin)
+    {
+        return await ServiceProvider
+            .Where(sp => sp.ApartmentId == apartmentId && sp.Pin == pin && !sp.IsDeleted)
+            .FirstOrDefaultAsync();
+    }
     //public void Insert(ServiceProvider serviceProvider) => _dbContext.InsertInt(serviceProvider);
     public void Insert(ServiceProvider serviceProvider)
     {

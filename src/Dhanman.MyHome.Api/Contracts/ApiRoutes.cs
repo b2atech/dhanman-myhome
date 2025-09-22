@@ -260,6 +260,8 @@ public static class ApiRoutes
         public const string GetServiceProviderById = apiVersion + "service-provider/{id:int}";
 
         public const string UpdateServiceProviders = apiVersion + "update-service-providers";
+
+        public const string CheckinServiceProvider = apiVersion + "apartments/{apartmentId:guid}/service-providers/checkin";
     }
 
     public static class ServiceProviderSubType

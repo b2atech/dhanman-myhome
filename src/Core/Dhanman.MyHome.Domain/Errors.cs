@@ -124,5 +124,12 @@ namespace Dhanman.MyHome.Domain
                 "The address line is longer than allowed.");
         }
         #endregion
+
+        public static class ServiceProvider
+        {
+            public static Error NotFound => new Error(
+                "ServiceProvider.NotFound", 
+                "Service provider not found with the provided apartment ID and PIN.");
+        }
     }
 }

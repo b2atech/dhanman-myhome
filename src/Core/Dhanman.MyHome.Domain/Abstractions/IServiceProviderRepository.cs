@@ -7,6 +7,8 @@ public interface IServiceProviderRepository
     #region Methods
     Task<ServiceProvider?> GetBydIdIntAsync(int id);
 
+    Task<ServiceProvider?> GetByApartmentIdAndPinAsync(Guid apartmentId, string pin);
+
     void Insert(ServiceProvider serviceProvider);
 
     void Delete(ServiceProvider serviceProvider);
