@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="dbup-postgresql" Version="5.0.8" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>

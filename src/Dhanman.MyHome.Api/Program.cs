@@ -12,11 +12,12 @@ using Dhanman.MyHome.Application;
 using Dhanman.MyHome.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
-using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.AspNetCore.ResponseCompression;using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using Prometheus;
 using Serilog;
 using System.IO.Compression;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
