@@ -56,6 +56,7 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext, IUn
         modelBuilder.Entity<VehicleInfo>().ToTable(TableNames.VehicleInfo, t => t.ExcludeFromMigrations());
         modelBuilder.Entity<ResidentNames>().ToTable(TableNames.ResidentNames, t => t.ExcludeFromMigrations());
         modelBuilder.Entity<UnitOwnerNameEntity>().ToTable(TableNames.UnitOwnerNameEntity, t => t.ExcludeFromMigrations());
+        modelBuilder.Entity<UnitNamesByAparmentEntity>().ToTable(TableNames.UnitNamesByAparmentEntity, t => t.ExcludeFromMigrations());
         modelBuilder.Entity<VisitorByContactDto>().ToTable(TableNames.VisitorByContactDto, t => t.ExcludeFromMigrations());
         modelBuilder.Entity<VisitorUserIdsDto>().ToTable(TableNames.VisitorUserIdsDto, t => t.ExcludeFromMigrations());
         modelBuilder.Entity<VisitorNotificationDataDto>().ToTable(TableNames.VisitorNotificationDataDto, t => t.ExcludeFromMigrations());
