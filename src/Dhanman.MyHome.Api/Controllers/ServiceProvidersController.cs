@@ -4,19 +4,16 @@ using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
 using Dhanman.MyHome.Application.Contracts.IdendityTypes;
-using Dhanman.MyHome.Application.Contracts.OccupantTypes;
 using Dhanman.MyHome.Application.Contracts.ServiceProviders;
 using Dhanman.MyHome.Application.Contracts.ServiceProviderSubTypes;
 using Dhanman.MyHome.Application.Contracts.ServiceProviderTypes;
-using Dhanman.MyHome.Application.Contracts.Units;
 using Dhanman.MyHome.Application.Contracts.UnitServiceProviders;
 using Dhanman.MyHome.Application.Features.IdendityTypes.Queries;
-using Dhanman.MyHome.Application.Features.OccupantTypes.Queries;
+using Dhanman.MyHome.Application.Features.ServiceProviders.Commands.CheckinServiceProvider;
 using Dhanman.MyHome.Application.Features.ServiceProviders.Commands.CreateServiceProvider;
 using Dhanman.MyHome.Application.Features.ServiceProviders.Queries;
 using Dhanman.MyHome.Application.Features.ServiceProviderSubType.Queries;
 using Dhanman.MyHome.Application.Features.ServiceProviderTypes.Queries;
-using Dhanman.MyHome.Application.Features.Units.Command.GetUnitDetails;
 using Dhanman.MyHome.Application.Features.UnitServiceProviders.Commands.CreateUnitServiceProvider;
 using Dhanman.MyHome.Application.Features.UnitServiceProviders.Commands.GetAssignUnits;
 using Dhanman.MyHome.Application.Features.UnitServiceProviders.Queries;
@@ -86,6 +83,16 @@ public class ServiceProvidersController : ApiController
     await Result.Success(new GetAllServiceProviderNamesQuery())
     .Bind(query => Mediator.Send(query))
     .Match(Ok, NotFound);
+
+    [HttpPost(ApiRoutes.ServiceProviders.CheckinServiceProvider)]
+    [ProducesResponseType(typeof(EntityCreatedResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> CheckinServiceProvider(Guid apartmentId, [FromBody] CheckinServiceProviderRequest? request) =>
+        await Result.Create(request, Errors.General.BadRequest)
+            .Map(value => new CheckinServiceProviderCommand(apartmentId, value.Pin))
+            .Bind(command => Mediator.Send(command))
+            .Match(Ok, BadRequest);
 
     #endregion
 
