@@ -20,6 +20,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Moq" Version="4.20.69" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Core\Dhanman.MyHome.Application\Dhanman.MyHome.Application.csproj" />
+    <ProjectReference Include="..\..\..\src\Core\Dhanman.MyHome.Domain\Dhanman.MyHome.Domain.csproj" />
+    <ProjectReference Include="..\..\..\src\Dhanman.MyHome.Api\Dhanman.MyHome.Api.csproj" />
   </ItemGroup>
 
 </Project>

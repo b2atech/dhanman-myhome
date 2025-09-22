@@ -16,7 +16,7 @@ internal sealed class ServiceProviderLogConfiguration : IEntityTypeConfiguration
 
         builder.Property(serviceProviderLogs => serviceProviderLogs.VisitingUnitId).HasColumnName("visiting_unit_id").IsRequired();
 
-        builder.Property(serviceProviderLogs => serviceProviderLogs.VisitPurposeId).HasColumnName("visit_purpose_id").IsRequired();
+        builder.Property(serviceProviderLogs => serviceProviderLogs.VisitPurposeId).HasColumnName("visit_purpose_id").IsRequired(false);
          
         builder.Property(serviceProviderLogs => serviceProviderLogs.VisitingFrom).HasColumnName("visiting_from").IsRequired();
 
@@ -24,7 +24,7 @@ internal sealed class ServiceProviderLogConfiguration : IEntityTypeConfiguration
 
         builder.Property(serviceProviderLogs => serviceProviderLogs.EntryTime).HasColumnName("entry_time").IsRequired();
 
-        builder.Property(serviceProviderLogs => serviceProviderLogs.ExitTime).HasColumnName("exit_time").IsRequired();
+        builder.Property(serviceProviderLogs => serviceProviderLogs.ExitTime).HasColumnName("exit_time").IsRequired(false);
 
         builder.Property(serviceProviderLogs => serviceProviderLogs.CreatedBy).HasColumnType("uuid");
 
