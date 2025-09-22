@@ -7,9 +7,7 @@ public class ServiceProviderLog : EntityInt, IAuditableEntity, ISoftDeletableEnt
 {
     #region Properties
     public int ServiceProviderId { get; set; }
-    public int VisitingUnitId { get; set; }
-    public int? VisitPurposeId { get; set; }
-    public string VisitingFrom { get; set; }
+    public string? VisitingFrom { get; set; }
     //checked-in, checked-out, pending approval
     public int CurrentStatusId { get; set; }
     public DateTime EntryTime { get; set; }
@@ -32,16 +30,11 @@ public class ServiceProviderLog : EntityInt, IAuditableEntity, ISoftDeletableEnt
     #endregion
 
     #region Constructor
-    public ServiceProviderLog(int id, int serviceProviderId, int visitingUnitId, int? visitPurposeId, string visitingFrom, int currentStatusId, DateTime entryTime, DateTime? exitTime)
+    public ServiceProviderLog( int serviceProviderId, int currentStatusId, DateTime entryTime)
     {
-        Id = id;
         ServiceProviderId = serviceProviderId;
-        VisitingUnitId = visitingUnitId;
-        VisitPurposeId = visitPurposeId;
-        VisitingFrom = visitingFrom;
         CurrentStatusId = currentStatusId;
         EntryTime = entryTime;
-        ExitTime = exitTime;
     }
     #endregion
 }
