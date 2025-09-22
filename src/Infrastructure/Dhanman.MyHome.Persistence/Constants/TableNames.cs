@@ -195,6 +195,8 @@ internal static class TableNames
 
     internal const string UnitOwnerNameEntity = "unit_owner_name_entity";
 
+    internal const string UnitNamesByAparmentEntity = "unit_names_by_aparment_entity";
+
     internal const string VisitorByContactDto = "visitor_by_contact_dto";
 
     internal const string VisitorUserIdsDto = "visitor_user_ids_dto";

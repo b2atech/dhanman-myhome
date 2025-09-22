@@ -58,6 +58,16 @@ public class UnitsController : ApiController
                .Match(Ok, BadRequest);
 
     [Authorize(Policy = "DynamicPermissionPolicy")]
+    [RequiresPermissions("Dhanman.MyHome.Basic.Read")]
+    [HttpGet(ApiRoutes.Units.GetAllUnitNamesByApartmentId)]
+    [ProducesResponseType(typeof(UnitNamesWithApartmentListResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllUnitNamesByApartmentId([FromRoute] Guid apartmentId) =>
+    await Result.Success(new GetAllUnitNamesByApartmentIdQuery(apartmentId))
+        .Bind(query => Mediator.Send(query))
+        .Match(Ok, NotFound);
+    
+    [Authorize(Policy = "DynamicPermissionPolicy")]
     [RequiresPermissions("Dhanman.MyHome.Basic.read")]
     [HttpPost(ApiRoutes.Units.GetUnitByFloorId)]
     [ProducesResponseType(typeof(UnitByFloorIdListResponse), StatusCodes.Status200OK)]

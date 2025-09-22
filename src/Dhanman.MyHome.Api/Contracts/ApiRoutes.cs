@@ -43,6 +43,8 @@ public static class ApiRoutes
 
         public const string GetAllUnitNames = apiVersion + "apartments/{apartmentId:guid}/buildings/{buildingId:int}/floors/{floorId:int}/unit-names";
 
+        public const string GetAllUnitNamesByApartmentId = apiVersion + "apartments/{apartmentId:guid}/unit-names-of-apartment";
+
         public const string GetUnitById = apiVersion + "unit/{id:int}";
 
         public const string GetUnitIdByUserId = apiVersion + "users/{userId:guid}/apartments/{apartmentId:guid}/unit-id";
