@@ -31,12 +31,13 @@ public class CheckinServiceProviderCommandHandler : ICommandHandler<CheckinServi
             .Ensure(query => query != null, Errors.General.EntityNotFound)
             .Bind(async query =>
             {
-                var sql = "SELECT * FROM public.checkin_service_provider(@p_apartment_id, @p_pin, @p_created_by)";
+                var sql = "SELECT * FROM public.checkin_service_provider(@p_apartment_id, @p_pin, @p_created_by,@p_entry_time)";
 
                 var parameters = new[] {
                 new NpgsqlParameter("p_apartment_id", request.ApartmentId),
                 new NpgsqlParameter("p_pin", request.Pin),
-                new NpgsqlParameter("p_created_by", _userContextService.CurrentUserId)
+                new NpgsqlParameter("p_created_by", _userContextService.CurrentUserId),
+                new NpgsqlParameter("p_entry_time", DateTime.UtcNow)
             };
 
                 var logId = await _dbContext.Database
