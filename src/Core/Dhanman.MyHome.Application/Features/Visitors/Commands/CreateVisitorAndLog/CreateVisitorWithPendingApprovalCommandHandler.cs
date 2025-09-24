@@ -35,7 +35,7 @@ public class CreateVisitorWithPendingApprovalCommandHandler : ICommandHandler<Cr
         await connection.OpenAsync(cancellationToken);
 
         await using var command = connection.CreateCommand();
-        command.CommandText = "SELECT public.create_visitor_with_pending_approval(@p_apartment_id, @p_first_name, @p_last_name, @p_contact_number, @p_visitor_type_id, @p_unit_ids, @p_created_by)";
+        command.CommandText = "SELECT public.create_visitor_with_pending_approval(@p_apartment_id, @p_first_name, @p_last_name, @p_contact_number, @p_visitor_type_id, @p_unit_ids,@p_entry_time, @p_created_by)";
         command.CommandType = System.Data.CommandType.Text;
 
         command.Parameters.Add(new NpgsqlParameter("p_apartment_id", NpgsqlDbType.Uuid) { Value = request.ApartmentId });
@@ -47,6 +47,7 @@ public class CreateVisitorWithPendingApprovalCommandHandler : ICommandHandler<Cr
         {
             Value = request.UnitIds.ToArray()
         });
+        command.Parameters.Add(new NpgsqlParameter("p_entry_time", NpgsqlDbType.Timestamp) { Value = DateTime.UtcNow });
         command.Parameters.Add(new NpgsqlParameter("p_created_by", NpgsqlDbType.Uuid) { Value = request.CreatedBy });
 
         var result = await command.ExecuteScalarAsync(cancellationToken);
