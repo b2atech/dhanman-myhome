@@ -12,8 +12,10 @@ using Npgsql;
 
 namespace Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.VisitorApproval;
 
+
+
 public class VisitorApprovalCommandHandler
-    : ICommandHandler<VisitorApprovalCommand, Result<object>>
+: ICommandHandler<VisitorApprovalCommand, Result<object>>
 {
     private readonly IApplicationDbContext _dbContext;
     private readonly IFirebaseService _fcm;
@@ -26,7 +28,6 @@ public class VisitorApprovalCommandHandler
 
     public async Task<Result<object>> Handle(VisitorApprovalCommand request, CancellationToken cancellationToken)
     {
-
         const string sqlFunction = "SELECT * FROM public.visitor_approval_fcm_tokens_by_visitor_log_id(@p_VisitorLogId)";
 
         var visitorData = await _dbContext.SetInt<VisitorUserIdsDto>()
@@ -71,7 +72,7 @@ public class VisitorApprovalCommandHandler
             );
         }
 
-        // Step 3: Send notification to all tokens at once
+        // Step 3: Send "approval request" notification to all tokens (existing logic, unchanged)
         await _fcm.SendNotificationAsync(
             tokens,
             FirebaseMessageType.GateApprovalRequest,
@@ -87,7 +88,26 @@ public class VisitorApprovalCommandHandler
             }
         );
 
-        return Result.Success<object>(new { SentCount = tokens.Count });
+        // Step 4: Send "ApprovalDecision" notification after approval/rejection for multi-device sync
+        // You need to know the decision and the actor ("by").
+        // Replace the below lines with actual logic to determine decision and actor.
+        var decision = "Approved"; // TODO: Get the real decision ("Approved" or "Rejected")
+        var approvedBy = "John Doe"; // TODO: Get real user name/id who made the decision
 
+        await _fcm.SendNotificationAsync(
+            tokens,
+            FirebaseMessageType.GateApprovalRequest, // <-- Use the enum, not a string
+            "Visitor Approval Updated",
+            $"Visitor was {decision} by {approvedBy}",
+            new Dictionary<string, string>
+            {
+                { "AppData.Type", "ApprovalDecision" },
+                { "AppData.VisitorLogId", request.VisitorLogId.ToString() },
+                { "AppData.Decision", decision },
+                { "AppData.By", approvedBy }
+            }
+        );
+
+        return Result.Success<object>(new { SentCount = tokens.Count });
     }
 }
