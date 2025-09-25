@@ -1,4 +1,5 @@
-﻿using B2aTech.CrossCuttingConcern.Core.Result;
+﻿using B2aTech.CrossCuttingConcern.Abstractions;
+using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Application.Abstractions;
 using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Application.Contracts.VisitorApprovals;
@@ -10,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Npgsql;
 namespace Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.UpdateVisitorApproval;
 
-public sealed class UpdateVisitorStatusCommandHandler(IApplicationDbContext _dbContext, IFirebaseService _fcm)
+public sealed class UpdateVisitorStatusCommandHandler(IApplicationDbContext _dbContext, IFirebaseService _fcm,IUserContextService _userContextService)
     : ICommandHandler<UpdateVisitorStatusCommand, Result<UpdateVisitorStatusResponse>>
 {
     #region Methods
@@ -22,7 +23,7 @@ public sealed class UpdateVisitorStatusCommandHandler(IApplicationDbContext _dbC
             return Result.Failure<UpdateVisitorStatusResponse>(updateResult.Error);
         }
 
-        _ = Task.Run(() => SendVisitorStausNotificationsAsync(request, cancellationToken), cancellationToken);
+        _ = Task.Run(() => SendApprovalDecisionNotificationAsync(request, cancellationToken), cancellationToken);
 
         return new UpdateVisitorStatusResponse();
     }
@@ -63,7 +64,49 @@ public sealed class UpdateVisitorStatusCommandHandler(IApplicationDbContext _dbC
         return responseDto;
     }
 
-    private async Task SendVisitorStausNotificationsAsync(UpdateVisitorStatusCommand request, CancellationToken cancellationToken)
+    //private async Task SendVisitorStausNotificationsAsync(UpdateVisitorStatusCommand request, CancellationToken cancellationToken)
+    //{
+    //    const string sqlFunction = "SELECT * FROM public.get_resident_fcm_tokens_by_visitor_log_id(@p_visitorlogid)";
+
+    //    var notificationData = await _dbContext.SetInt<VisitorNotificationDataDto>()
+    //        .FromSqlRaw(sqlFunction, new NpgsqlParameter("p_visitorlogid", request.VisitorLogId))
+    //        .AsNoTracking()
+    //        .FirstOrDefaultAsync(cancellationToken);
+
+    //    if (notificationData == null || !notificationData.FcmTokens.Any())
+    //    {
+    //        return;
+    //    }
+
+    //    var fcmTokens = notificationData.FcmTokens.Distinct().ToList();
+
+    //    var visitorName = $"{notificationData.FirstName} {notificationData.LastName}";
+    //    var title = request.VisitorStatusId == 2 ? $"Visitor Approved: {visitorName}" : $"Visitor Rejected: {visitorName}";
+    //    var body = $"An approval action was taken for visitor {visitorName}.";
+    //    var fireBaseMsgType = request.VisitorStatusId == 2 ? FirebaseMessageType.GateApproved
+    //                        : (request.VisitorStatusId == 6
+    //                        ? FirebaseMessageType.GateRejected
+    //                        : FirebaseMessageType.SystemAnnouncement);
+
+    //    var data = new Dictionary<string, string>
+    //    {
+    //        { "VisitorLogId", request.VisitorLogId.ToString() },
+    //        { "VisitorName", visitorName },
+    //        { "UnitId", request.UnitId.ToString() }
+    //    };
+
+    //    await _fcm.SendNotificationAsync(
+    //        fcmTokens,
+    //        fireBaseMsgType,
+    //        title,
+    //        body,
+    //        data
+    //        );
+    //}
+
+
+    // NEW: Multi-device sync notification for Approval/Reject broadcast
+    private async Task SendApprovalDecisionNotificationAsync(UpdateVisitorStatusCommand request, CancellationToken cancellationToken)
     {
         const string sqlFunction = "SELECT * FROM public.get_resident_fcm_tokens_by_visitor_log_id(@p_visitorlogid)";
 
@@ -78,29 +121,28 @@ public sealed class UpdateVisitorStatusCommandHandler(IApplicationDbContext _dbC
         }
 
         var fcmTokens = notificationData.FcmTokens.Distinct().ToList();
-
         var visitorName = $"{notificationData.FirstName} {notificationData.LastName}";
-        var title = request.VisitorStatusId == 2 ? $"Visitor Approved: {visitorName}" : $"Visitor Rejected: {visitorName}";
-        var body = $"An approval action was taken for visitor {visitorName}.";
-        var fireBaseMsgType = request.VisitorStatusId == 2 ? FirebaseMessageType.GateApproved 
-                            : (request.VisitorStatusId == 6
-                            ? FirebaseMessageType.GateRejected
-                            : FirebaseMessageType.SystemAnnouncement);
+
+        // Decision string: map status id to "Approved"/"Rejected"
+        var decisionStr = request.VisitorStatusId == 2 ? "Approved"
+                        : (request.VisitorStatusId == 6 ? "Rejected" : "Unknown");
+        var byStr = _userContextService.CurrentUserId.ToString();
 
         var data = new Dictionary<string, string>
         {
-            { "VisitorLogId", request.VisitorLogId.ToString() },
-            { "VisitorName", visitorName },
-            { "UnitId", request.UnitId.ToString() }
+            { "AppData.Type", "ApprovalDecision" },
+            { "AppData.VisitorLogId", request.VisitorLogId.ToString() },
+            { "AppData.Decision", decisionStr },
+            { "AppData.By", byStr }
         };
 
         await _fcm.SendNotificationAsync(
             fcmTokens,
-            fireBaseMsgType,
-            title,
-            body,
+            FirebaseMessageType.GateApprovalRequest, // Make sure this enum exists!
+            "Visitor Approval Updated",
+            $"Visitor was {decisionStr} by {byStr}",
             data
-            );
+        );
     }
     #endregion
 }
