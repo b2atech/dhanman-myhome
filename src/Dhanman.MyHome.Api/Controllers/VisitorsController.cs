@@ -7,6 +7,8 @@ using Dhanman.MyHome.Application.Contracts.VisitorApprovals;
 using Dhanman.MyHome.Application.Contracts.VisitorLogs;
 using Dhanman.MyHome.Application.Contracts.Visitors;
 using Dhanman.MyHome.Application.Enums;
+using Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.ApproveVisitor;
+using Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.RejectVisitor;
 using Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.UpdateVisitorApproval;
 using Dhanman.MyHome.Application.Features.VisitorApprovals.Queries;
 using Dhanman.MyHome.Application.Features.VisitorLogs.Commands.CreateVisitorLog;
@@ -178,10 +180,10 @@ public class VisitorsController : ApiController
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> ApproveVisitors([FromBody] UpdateVisitorApprovalActionRequest? request) =>
        await Result.Create(request, Errors.General.BadRequest)
-           .Map(value => new UpdateVisitorStatusCommand(
+           .Map(value => new ApproveVisitorCommand(
                value.VisitorLogId,
                value.UnitId,
-               VisitorStatus.APPROVED,
+               value.DeviceId,
                value.ModifiedBy
            ))
            .Bind(command => Mediator.Send(command))
@@ -200,10 +202,10 @@ public class VisitorsController : ApiController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> RejectVisitors([FromBody] UpdateVisitorApprovalActionRequest? request) =>
           await Result.Create(request, Errors.General.BadRequest)
-          .Map(value => new UpdateVisitorStatusCommand(
+          .Map(value => new RejectVisitorCommand(
               value.VisitorLogId,
               value.UnitId,
-              VisitorStatus.REJECTED,
+              value.DeviceId,
               value.ModifiedBy
               ))
            .Bind(command => Mediator.Send(command))

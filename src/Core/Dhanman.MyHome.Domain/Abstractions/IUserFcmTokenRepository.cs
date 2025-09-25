@@ -12,4 +12,11 @@ public interface IUserFcmTokenRepository
     Task<UserFcmToken?> GetByUserIdAndDeviceIdAsync(Guid userId, string deviceId);
     void Insert(UserFcmToken token);
     void Update(UserFcmToken token);
+
+    /// <summary>
+    /// Returns all FCM tokens and devices for residents of a given unit.
+    /// </summary>
+    Task<IReadOnlyList<UnitResidentFcmTokenResponse>> GetUnitResidentFcmTokensAsync(
+        int unitId,
+        CancellationToken cancellationToken = default);
 }
