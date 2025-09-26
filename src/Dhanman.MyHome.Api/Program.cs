@@ -23,6 +23,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 var DhanManSpecificOrigins = "_dhanmanAllowSpecificOrigins";
 
+Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
+
 // Configure Serilog
 var logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
