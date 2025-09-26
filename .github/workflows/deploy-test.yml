@@ -2,9 +2,9 @@ name: Deploy to TEST - COMMUNITY
 
 on:
   workflow_dispatch: {}
-  schedule:
-    # Runs every day at 19:00 UTC = 00:30 IST (next calendar day in India)
-    - cron: "0 19 * * *"
+  # schedule:
+  #   # Runs every day at 19:00 UTC = 00:30 IST (next calendar day in India)
+  #   - cron: "0 19 * * *"
     
 jobs:
   deploy:
