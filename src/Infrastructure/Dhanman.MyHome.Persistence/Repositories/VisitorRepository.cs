@@ -50,13 +50,7 @@ public class VisitorRepository : IVisitorRepository
         VisitorStatus action,
         CancellationToken cancellationToken = default)
     {
-        const string sql = @"
-            SELECT * 
-            FROM public.take_visitor_action(
-                @p_visitor_log_id, 
-                @p_unit_id, 
-                @p_resident_user, 
-                @p_action_status)";
+        const string sql = @"SELECT * FROM public.take_visitor_action(@p_visitor_log_id, @p_unit_id, @p_resident_user, @p_action_status)";
 
         using var conn = _dbContext.Database.GetDbConnection();
 

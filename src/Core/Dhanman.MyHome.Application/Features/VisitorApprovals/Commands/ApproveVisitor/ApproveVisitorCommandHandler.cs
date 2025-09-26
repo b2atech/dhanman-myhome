@@ -19,10 +19,10 @@ public sealed class ApproveVisitorCommandHandler(
             visitorRepository,
             fcmTokenRepository,
             fcm,
-            8,
-            904,
-            Guid.Parse("21e44259-9472-4931-91d9-fc21cc43bb69"),
-            "37baef73318bffd7",
+            request.VisitorLogId,
+            request.UnitId,
+            request.ModifiedBy,
+            request.DeviceId,
             VisitorStatus.APPROVED,
             cancellationToken);
     }
