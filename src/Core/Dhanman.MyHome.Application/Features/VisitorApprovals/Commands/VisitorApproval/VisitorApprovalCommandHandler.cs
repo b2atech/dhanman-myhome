@@ -2,6 +2,7 @@
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Application.Abstractions;
 using Dhanman.MyHome.Application.Abstractions.Data;
+using Dhanman.MyHome.Application.Contracts.VisitorApprovals;
 using Dhanman.MyHome.Application.Contracts.Visitors;
 using Dhanman.MyHome.Application.Enums;
 using Dhanman.MyHome.Domain.Entities.Visitors;
@@ -13,7 +14,7 @@ using Npgsql;
 namespace Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.VisitorApproval;
 
 public class VisitorApprovalCommandHandler
-    : ICommandHandler<VisitorApprovalCommand, Result<object>>
+    : ICommandHandler<VisitorApprovalCommand, Result<VisitorApprovalNotificationResponse>>
 {
     private readonly IApplicationDbContext _dbContext;
     private readonly IFirebaseService _fcm;
@@ -24,7 +25,7 @@ public class VisitorApprovalCommandHandler
         _fcm = fcm;
     }
 
-    public async Task<Result<object>> Handle(VisitorApprovalCommand request, CancellationToken cancellationToken)
+    public async Task<Result<VisitorApprovalNotificationResponse>> Handle(VisitorApprovalCommand request, CancellationToken cancellationToken)
     {
 
         const string sqlFunction = "SELECT * FROM public.visitor_approval_fcm_tokens_by_visitor_log_id(@p_VisitorLogId)";
@@ -45,7 +46,7 @@ public class VisitorApprovalCommandHandler
 
         if (visitorData == null || visitorData.Count == 0)
         {
-            return Result.Failure<EntityCreatedResponse>(
+            return Result.Failure<VisitorApprovalNotificationResponse>(
                 new Error("User.NotFound", $"No active users found for visitor log {request.VisitorLogId}")
             );
         }
@@ -57,7 +58,7 @@ public class VisitorApprovalCommandHandler
 
         if (userIds.Count == 0)
         {
-            return Result.Failure<object>(
+            return Result.Failure<VisitorApprovalNotificationResponse>(
                 new Error("User.NotFound", $"No active users found for unit {request.VisitorLogId}")
             );
         }
@@ -66,7 +67,7 @@ public class VisitorApprovalCommandHandler
 
         if (!tokens.Any())
         {
-            return Result.Failure<object>(
+            return Result.Failure<VisitorApprovalNotificationResponse>(
                 new Error("UserFcmToken.NotFound", $"No valid FCM tokens found for unit {request.VisitorLogId}")
             );
         }
@@ -87,7 +88,13 @@ public class VisitorApprovalCommandHandler
             }
         );
 
-        return Result.Success<object>(new { SentCount = tokens.Count });
-
+        // return new response object
+        return
+            new VisitorApprovalNotificationResponse(
+                tokens.Count,
+                visitorData.First().VisitorId,
+                visitorData.First().FirstName,
+                 visitorData.First().LastName ?? string.Empty
+            );
     }
 }
