@@ -25,12 +25,12 @@ jobs:
         with:
           dotnet-version: '9.0.x'
 
-      # NEW: Write the Firebase service account key to a file
-      - name: Write Firebase service account key
-        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}' > ./serviceAccountKey.json
-
       - name: Publish App
         run: dotnet publish src/Dhanman.MyHome.Api/Dhanman.MyHome.Api.csproj -c Release -r linux-x64 --self-contained false -o publish
+
+      # Write Firebase service account key into the publish directory AFTER publishing
+      - name: Write Firebase service account key
+        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}' > ./publish/serviceAccountKey.json
 
       - name: Upload to PROD
         uses: appleboy/scp-action@v0.1.4
