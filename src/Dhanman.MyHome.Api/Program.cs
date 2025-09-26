@@ -21,9 +21,11 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var DhanManSpecificOrigins = "_dhanmanAllowSpecificOrigins";
 
 Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
+
+var DhanManSpecificOrigins = "_dhanmanAllowSpecificOrigins";
+
 
 // Configure Serilog
 var logger = new LoggerConfiguration()

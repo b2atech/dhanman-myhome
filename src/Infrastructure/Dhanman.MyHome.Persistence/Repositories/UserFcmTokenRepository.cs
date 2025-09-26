@@ -1,8 +1,10 @@
-﻿using Dapper;
+﻿using B2aTech.CrossCuttingConcern.Persistence;
+using Dapper;
 using Dhanman.MyHome.Application.Abstractions.Data;
 using Dhanman.MyHome.Domain.Abstractions;
 using Dhanman.MyHome.Domain.Entities.UserFcmTokens;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,10 +18,15 @@ public class UserFcmTokenRepository : IUserFcmTokenRepository
 {
     #region Properties
     private readonly IApplicationDbContext _dbContext;
+    private readonly IServiceScopeFactory _serviceScopeFactory;
     #endregion
 
     #region Constructor
-    public UserFcmTokenRepository(IApplicationDbContext dbContext) => _dbContext = dbContext;
+    public UserFcmTokenRepository(IApplicationDbContext dbContext, IServiceScopeFactory serviceScopeFactory)
+    {
+        _dbContext = dbContext;
+        _serviceScopeFactory = serviceScopeFactory;
+    }
     #endregion
 
     #region Methods
@@ -31,25 +38,40 @@ public class UserFcmTokenRepository : IUserFcmTokenRepository
     public void Insert(UserFcmToken userFcmToken) => _dbContext.InsertInt(userFcmToken);
 
     public void Update(UserFcmToken userFcmToken) => _dbContext.UpdateInt(userFcmToken);
-
     public async Task<IReadOnlyList<UnitResidentFcmTokenResponse>> GetUnitResidentFcmTokensAsync(
         int unitId,
         CancellationToken cancellationToken = default)
     {
-        const string sql = "SELECT * FROM public.unit_resident_fcm_tokens(@p_unit_id)";
+        try
+        {
+            const string sql = "SELECT * FROM public.unit_resident_fcm_tokens(@p_unit_id)";
 
-        using var conn = _dbContext.Database.GetDbConnection();
-        if (conn.State == ConnectionState.Closed)
-            await conn.OpenAsync(cancellationToken);
+            using var scope = _serviceScopeFactory.CreateScope();
+            var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-        var results = await conn.QueryAsync<UnitResidentFcmTokenResponse>(
-            new CommandDefinition(
-                sql,
-                new { p_unit_id = unitId },
-                cancellationToken: cancellationToken
-            ));
+            var conn = dbContext.Database.GetDbConnection(); // <-- Use the scoped dbContext here!
+            if (conn.State == ConnectionState.Closed)
+                await conn.OpenAsync(cancellationToken);
 
-        return results.ToList();
+            var results = await conn.QueryAsync<UnitResidentFcmTokenResponse>(
+                new CommandDefinition(
+                    sql,
+                    new { p_unit_id = unitId },
+                    cancellationToken: cancellationToken
+                ));
+
+            foreach (var item in results)
+            {
+                Console.WriteLine($"ResidentId: {item.ResidentId}, UserId: {item.UserId}, DeviceId: {item.DeviceId}, FcmToken: {item.FcmToken}");
+            }
+
+            return results.ToList();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching FCM tokens for unit {unitId}: {ex.Message}");
+            throw;
+        }
     }
     #endregion
 }

@@ -38,13 +38,12 @@ internal static class VisitorActionHelper
             FinalStatusId = result.FinalStatusId
         };
 
-        // Step 3: Notifications (fire & forget)
-        _ = Task.Run(async () =>
-        {
-            var tokens = await fcmTokenRepository.GetUnitResidentFcmTokensAsync(unitId, cancellationToken);
-            if (tokens == null || !tokens.Any())
-                return;
+        // Step 3: Notifications (awaited)
+        var tokens = await fcmTokenRepository.GetUnitResidentFcmTokensAsync(unitId, cancellationToken);
 
+        Console.WriteLine($"FcmTokens: {tokens}");
+        if (tokens != null && tokens.Any())
+        {
             var filtered = tokens
                 .Where(t => t.ResidentId != result.ApproverResidentId ||
                             (t.ResidentId == result.ApproverResidentId && t.DeviceId != deviceId))
@@ -52,28 +51,28 @@ internal static class VisitorActionHelper
                 .Distinct()
                 .ToList();
 
-            if (!filtered.Any())
-                return;
-
-            var approverName = $"{result.ApproverFirstName} {result.ApproverLastName}";
-            var title = action == VisitorStatus.APPROVED
-                ? $"Visitor Approved by {approverName}"
-                : $"Visitor Rejected by {approverName}";
-            var body = $"Action taken on visitor log {result.VisitorLogId}";
-
-            var msgType = action == VisitorStatus.APPROVED
-                ? FirebaseMessageType.GateApproved
-                : FirebaseMessageType.GateRejected;
-
-            var data = new Dictionary<string, string>
+            if (filtered.Any())
             {
-                { "VisitorLogId", visitorLogId.ToString() },
-                { "VisitorName", approverName },
-                { "UnitId", unitId.ToString() }
-            };
+                var approverName = $"{result.ApproverFirstName} {result.ApproverLastName}";
+                var title = action == VisitorStatus.APPROVED
+                    ? $"Visitor Approved by {approverName}"
+                    : $"Visitor Rejected by {approverName}";
+                var body = $"Action taken on visitor log {result.VisitorLogId}";
 
-            await fcm.SendNotificationAsync(filtered, msgType, title, body, data);
-        }, cancellationToken);
+                var msgType = action == VisitorStatus.APPROVED
+                    ? FirebaseMessageType.GateApproved
+                    : FirebaseMessageType.GateRejected;
+
+                var data = new Dictionary<string, string>
+                {
+                    { "VisitorLogId", visitorLogId.ToString() },
+                    { "VisitorName", approverName },
+                    { "UnitId", unitId.ToString() }
+                };
+
+                await fcm.SendNotificationAsync(filtered, msgType, title, body, data);
+            }
+        }
 
         return response;
     }
