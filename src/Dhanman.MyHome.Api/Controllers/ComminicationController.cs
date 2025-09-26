@@ -39,17 +39,6 @@ public class ComminicationController : ApiController
            .Bind(command => Mediator.Send(command))
           .Match(Ok, BadRequest);
 
-    [Authorize(Policy = "DynamicPermissionPolicy")]
-    [RequiresPermissions("Dhanman.MyHome.Write")]
-    [HttpPost(ApiRoutes.Visitors.VisitorApprovals)]
-    [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> RequestVisitorApprovals([FromBody] VisitorApprovalRequest request) =>
-         await Result.Create(request, Errors.General.BadRequest)
-        .Map(value => new VisitorApprovalCommand(
-               value.VisitorLogId ))
-           .Bind(command => Mediator.Send(command))
-          .Match(Ok, BadRequest);
 
     //[HttpPost(ApiRoutes.PushNotification.CreateUnitPushNotification)]
     //[ProducesResponseType(typeof(object), StatusCodes.Status200OK)]

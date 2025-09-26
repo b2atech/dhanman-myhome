@@ -3,6 +3,7 @@ using B2aTech.CrossCuttingConcern.Attributes;
 using B2aTech.CrossCuttingConcern.Core.Result;
 using Dhanman.MyHome.Api.Contracts;
 using Dhanman.MyHome.Api.Infrastructure;
+using Dhanman.MyHome.Application.Contracts.Notifications;
 using Dhanman.MyHome.Application.Contracts.VisitorApprovals;
 using Dhanman.MyHome.Application.Contracts.VisitorLogs;
 using Dhanman.MyHome.Application.Contracts.Visitors;
@@ -10,6 +11,7 @@ using Dhanman.MyHome.Application.Enums;
 using Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.ApproveVisitor;
 using Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.RejectVisitor;
 using Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.UpdateVisitorApproval;
+using Dhanman.MyHome.Application.Features.VisitorApprovals.Commands.VisitorApproval;
 using Dhanman.MyHome.Application.Features.VisitorApprovals.Queries;
 using Dhanman.MyHome.Application.Features.VisitorLogs.Commands.CreateVisitorLog;
 using Dhanman.MyHome.Application.Features.VisitorLogs.Commands.UpdateVisiotLog;
@@ -171,6 +173,16 @@ public class VisitorsController : ApiController
     #endregion
 
     #region Visitor Approval Actions
+
+    [HttpPost(ApiRoutes.Visitors.VisitorApprovals)]
+    [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> RequestVisitorApprovals([FromBody] VisitorApprovalRequest request) =>
+        await Result.Create(request, Errors.General.BadRequest)
+       .Map(value => new VisitorApprovalCommand(
+              value.VisitorLogId))
+          .Bind(command => Mediator.Send(command))
+         .Match(Ok, BadRequest);
 
     //[Authorize(Policy = "DynamicPermissionPolicy")]
     //[RequiresPermissions("Dhanman.MyHome.Basic.Write")]
