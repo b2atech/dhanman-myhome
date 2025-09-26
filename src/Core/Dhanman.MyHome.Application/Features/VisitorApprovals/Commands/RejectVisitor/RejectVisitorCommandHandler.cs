@@ -20,7 +20,7 @@ public sealed class RejectVisitorCommandHandler(
             fcmTokenRepository,
             fcm,
             request.VisitorLogId,
-            request.UnitId,
+            8,
              Guid.Parse("21e44259-9472-4931-91d9-fc21cc43bb69"),
             "37baef73318bffd7",
             VisitorStatus.REJECTED,
