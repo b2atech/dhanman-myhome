@@ -24,8 +24,16 @@ public class FirebaseAuth
         {
             credential = credential.CreateScoped(Scopes);
         }
-
-        var accessToken = await credential.UnderlyingCredential.GetAccessTokenForRequestAsync();
-        return accessToken;
+        string accessToken;
+        try
+        {
+             accessToken = await credential.UnderlyingCredential.GetAccessTokenForRequestAsync();
+            return accessToken;
+        }
+        catch (Exception ex)
+        {
+            // Log full exception here!
+            throw new Exception("Error fetching Firebase access token.", ex);
+        }
     }
 }
