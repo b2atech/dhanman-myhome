@@ -12,8 +12,8 @@ public static class TemplateExtensions
     public static IServiceCollection AddTemplateService(this IServiceCollection services, IConfiguration configuration)
     {
         // Register TemplateDbContext
-        var connectionString = Environment.GetEnvironmentVariable(ConnectionString.TemplateDBKey)
-                    ?? configuration.GetConnectionString(ConnectionString.TemplateDBKey);
+        var connectionString = configuration.GetConnectionString(ConnectionString.TemplateDBKey)
+                    ?? Environment.GetEnvironmentVariable(ConnectionString.TemplateDBKey);
         services.AddDbContext<TemplateDbContext>(options =>
                    options
                .UseNpgsql(connectionString)

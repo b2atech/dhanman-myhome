@@ -25,8 +25,8 @@ public static class DependencyInjection
         
         if (configuration != null)
         {
-            var connectionString = Environment.GetEnvironmentVariable(ConnectionString.SettingsKey)
-                     ?? configuration.GetConnectionString(ConnectionString.SettingsKey);
+            var connectionString = configuration.GetConnectionString(ConnectionString.SettingsKey)
+                     ?? Environment.GetEnvironmentVariable(ConnectionString.SettingsKey);
 
 
             //string key = ConnectionString.SettingsKey;
